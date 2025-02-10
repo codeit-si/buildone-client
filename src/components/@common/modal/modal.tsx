@@ -30,10 +30,6 @@ type ModalElementProps<T extends ElementType> = ComponentProps<T> & {
   asChild?: boolean;
 };
 
-interface ModalCommonProps {
-  className?: string;
-}
-
 const modalContext = createContext<ModalContextProps>({
   open: false,
   setOpen: () => {},
