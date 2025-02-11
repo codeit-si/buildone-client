@@ -83,7 +83,7 @@ function ModalRoot({
 
   return (
     <modalContext.Provider value={providerValue}>
-      {children({ Trigger: ModalTrigger, Portal: ModalPortal })}
+      {children}
     </modalContext.Provider>
   );
 }
