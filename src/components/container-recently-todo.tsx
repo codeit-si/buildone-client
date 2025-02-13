@@ -45,7 +45,7 @@ const getRandomNote = () => {
   const randomIndex = Math.floor(Math.random() * notes.length);
   return notes[randomIndex];
 };
-// ✅ Mock 데이터 (API 대체)
+
 const mockFetchTodos = async () => {
   return new Promise<{ todos: Todo[] }>((resolve) => {
     setTimeout(() => {
@@ -131,7 +131,7 @@ export default function ContainerRecentlyTodo({
   };
 
   return (
-    <div className="mx-auto max-h-250 w-full max-w-2xl space-y-16 rounded-xl border-slate-300 bg-slate-50 px-20 py-15 text-sm text-slate-800">
+    <div className="mx-auto flex h-250 w-full max-w-2xl flex-col justify-between rounded-xl border-slate-300 bg-slate-50 px-25 py-15 text-sm text-slate-800">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-10">
           <RecentlyIcon />
@@ -141,11 +141,11 @@ export default function ContainerRecentlyTodo({
           모두 보기 {">"}
         </Link>
       </div>
-      <div className="max-h-154 overflow-hidden overflow-y-scroll">
+      <div className="mb-10 h-154 overflow-hidden overflow-y-auto">
         {recentTodos.length === 0 ? (
           <p>아직 해야 할 일이 없어요</p>
         ) : (
-          <ul className="space-y-15">
+          <ul className="space-y-15 pb-20">
             {recentTodos.map((todo, index) => (
               <li key={todo.id} className="flex flex-col">
                 <TodoTitleAndCheckBox
