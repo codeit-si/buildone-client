@@ -151,10 +151,14 @@ export default function ListTodo({
     initialPageParam: 1,
   });
 
-  const { setTarget } = useInfiniteScroll({
+  /* const { setTarget } = useInfiniteScroll({
     fetchNextPage,
     hasNextPage,
-  });
+  }); 옵저버 api 사용 */
+  useInfiniteScroll({
+    fetchNextPage,
+    hasNextPage,
+  }); // 스크롤 이벤트 기반
 
   useEffect(() => {
     setTodos(
@@ -225,7 +229,7 @@ export default function ListTodo({
           </li>
         ))}
       </ul>
-      <div ref={setTarget} className="h-[.5px]" />
+      {/* <div ref={setTarget} className="h-[.5px]" /> 옵저버 api 기반 바닥 감지 */}
     </div>
   );
 }

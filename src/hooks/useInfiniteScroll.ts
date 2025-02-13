@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+/* import { useCallback, useEffect, useState } from "react";
 
 import { InfiniteQueryObserverResult } from "@tanstack/react-query";
 
-interface IuseIntersectionObserverProps {
+interface useIntersectionObserverProps {
   threshold?: number;
   hasNextPage: boolean | undefined;
   fetchNextPage: () => Promise<InfiniteQueryObserverResult>;
@@ -12,7 +12,7 @@ export const useInfiniteScroll = ({
   threshold = 0.1,
   hasNextPage,
   fetchNextPage,
-}: IuseIntersectionObserverProps) => {
+}: useIntersectionObserverProps) => {
   // 관찰할 요소입니다. 스크롤 최하단 div요소에 setTarget을 ref로 넣어 사용할 것입니다.
   const [target, setTarget] = useState<HTMLDivElement | null | undefined>(null);
 
@@ -44,4 +44,41 @@ export const useInfiniteScroll = ({
   }, [observerCallback, threshold, target]);
 
   return { setTarget };
+}; */
+import { useCallback, useEffect, useState } from "react";
+
+import { InfiniteQueryObserverResult } from "@tanstack/react-query";
+
+interface useInfiniteScrollProps {
+  hasNextPage: boolean | undefined;
+  fetchNextPage: () => Promise<InfiniteQueryObserverResult>;
+}
+
+export const useInfiniteScroll = ({
+  hasNextPage,
+  fetchNextPage,
+}: useInfiniteScrollProps) => {
+  const [isFetching, setIsFetching] = useState(false);
+
+  const handleScroll = useCallback(() => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+    if (
+      scrollHeight - scrollTop <= clientHeight * 1.2 &&
+      hasNextPage &&
+      !isFetching
+    ) {
+      setIsFetching(true);
+      fetchNextPage().finally(() => setIsFetching(false));
+    }
+  }, [hasNextPage, fetchNextPage, isFetching]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
+
+  return {};
 };
