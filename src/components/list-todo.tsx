@@ -114,7 +114,7 @@ const TodoEditAndDeleteAndIcons = ({
           <KebabIcon />
         </button>
         <div
-          className={`${activeKebab !== index ? "hidden" : "flex"} absolute -left-60 z-10 w-80 flex-col items-center gap-10 rounded-lg bg-slate-50 p-10 shadow-md`}
+          className={`${activeKebab !== index ? "hidden" : "flex"} absolute -left-60 z-10 w-80 flex-col items-center gap-10 rounded-lg bg-[#fff] p-10 shadow-md`}
         >
           <button>수정하기</button>
           <button>삭제하기</button>
@@ -156,14 +156,10 @@ export default function ListTodo({
     initialPageParam: 1,
   });
 
-  /* const { setTarget } = useInfiniteScroll({
+  const { ref } = useInfiniteScroll({
     fetchNextPage,
     hasNextPage,
-  }); 옵저버 api 사용 */
-  useInfiniteScroll({
-    fetchNextPage,
-    hasNextPage,
-  }); // 스크롤 이벤트 기반
+  });
 
   // 로딩 상태 처리
   if (isPending) return <div>Loading...</div>;
@@ -220,7 +216,7 @@ export default function ListTodo({
     setActiveKebab((prev) => (prev === index ? null : index));
 
   return (
-    <div className="mx-auto min-h-[2080px] w-full max-w-2xl rounded-xl rounded-b-none border-slate-300 bg-slate-50 p-20 text-sm text-slate-800">
+    <div className="mx-auto min-h-[2080px] w-full max-w-2xl rounded-xl rounded-b-none border-slate-300 bg-[#fff] p-20 text-sm text-slate-800">
       <ul className="mb-20 flex gap-10">{statusMap}</ul>
       <ul className="space-y-15">
         {filteredTodos.map((todo, index) => (
@@ -242,7 +238,7 @@ export default function ListTodo({
           </li>
         ))}
       </ul>
-      {/* <div ref={setTarget} className="h-[.5px]" /> 옵저버 api 기반 바닥 감지 */}
+      <div ref={ref} className="h-[.5px]" />
     </div>
   );
 }
