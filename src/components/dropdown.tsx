@@ -1,48 +1,105 @@
 "use client";
 
-import { useId } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// Dropdown 컴포넌트를 사용할 때는 다음과 같이 사용할 수 있습니다:
-// import Dropdown from "@/components/dropdown";
-// 예시 1:
-// <Dropdown size="md" items={[ { label: "수정하기", onClick: handleEdit }, { label: "삭제하기", onClick: handleDelete } ]} />
+import { cva } from "class-variance-authority";
 
-// 예시 2:
-// <Dropdown size="sm" items={[ { label: "수정하기", onClick: handleEdit }, { label: "삭제하기", onClick: handleDelete } ]} />
+interface DropdownItem {
+  id: string;
+  label: string;
+  onClick: () => void;
+}
 
 interface DropdownProps {
   size?: "sm" | "md";
-  items: { txt: string; onClick: () => void }[];
+  items: DropdownItem[];
 }
 
-function Dropdown({ size = "md", items }: DropdownProps) {
-  const dropdownId = useId();
+const dropdownVariants = cva(
+  "absolute z-50 right-0 h-auto overflow-hidden rounded-17 bg-white shadow-lg",
+  {
+    variants: {
+      size: {
+        sm: "w-81",
+        md: "w-106",
+      },
+    },
+    defaultVariants: {
+      size: "md",
+    },
+  },
+);
 
-  const widthClass = size === "sm" ? "w-81" : "w-106";
-  const itemHeightClass =
-    size === "sm" ? "h-34 px-2 text-sm" : "h-42 px-4 text-lg";
+const itemVariants = cva(
+  "flex w-full items-center justify-center font-slate-700 hover:bg-slate-100",
+  {
+    variants: {
+      size: {
+        sm: "h-34 px-2 text-sm",
+        md: "h-42 px-4 text-lg",
+      },
+    },
+  },
+);
+
+// 점 세개
+const Dot = () => <div className="h-1.5 w-1.5 rounded-full bg-slate-400" />;
+
+function Dropdown({ size = "md", items }: DropdownProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const toggleDropdown = () => setIsOpen((prev) => !prev); // 닫고 열고
+
+  // 드롭다운 외부 클릭 시 닫힘
+  const closeDropdown = () => setIsOpen(false);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        closeDropdown();
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <div
-      id={dropdownId}
-      role="menu"
-      aria-label="옵션 선택 드롭다운"
-      className={`absolute z-50 h-auto ${widthClass} overflow-hidden rounded-[12px] bg-white shadow-lg`}
-    >
-      {items.map(({ txt, onClick }) => {
-        const key = crypto.randomUUID(); // 중복 방지를 위한 유니크한 key
-
-        return (
-          <button
-            key={key}
-            onClick={onClick}
-            role="menuitem"
-            className={`font-pretendard flex w-full items-center justify-center font-normal text-[#334155] ${itemHeightClass}`}
-          >
-            {txt}
-          </button>
-        );
-      })}
+    <div className="relative" ref={dropdownRef}>
+      <button
+        aria-haspopup="true"
+        aria-expanded={isOpen}
+        aria-label="메뉴 열기"
+        onClick={toggleDropdown}
+        className="flex h-24 w-24 items-center justify-center rounded-full bg-white"
+      >
+        <div className="flex flex-col items-center gap-1">
+          <Dot />
+          <Dot />
+          <Dot />
+        </div>
+      </button>
+      {isOpen && (
+        <div
+          role="menu"
+          aria-label="옵션 선택 드롭다운"
+          className={dropdownVariants({ size })}
+        >
+          {items.map(({ id, label, onClick }) => (
+            <button
+              key={id}
+              onClick={onClick}
+              role="menuitem"
+              className={itemVariants({ size })}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
