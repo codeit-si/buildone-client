@@ -55,10 +55,10 @@ interface useInfiniteScrollProps {
 }
 
 export const useInfiniteScroll = ({
-  hasNextPage,
-  fetchNextPage,
+  hasNextPage, // 다음 페이지 여부
+  fetchNextPage, // 다음페이지 데이터 가져오기
 }: useInfiniteScrollProps) => {
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetching, setIsFetching] = useState(false); // 데이터 가져오는지 여부
 
   const handleScroll = useCallback(() => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;

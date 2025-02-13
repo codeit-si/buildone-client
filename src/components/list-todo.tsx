@@ -1,45 +1,53 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   useInfiniteQuery,
   InfiniteQueryObserverResult,
   InfiniteData,
+  useQueryClient,
 } from "@tanstack/react-query";
 
+import CheckBoxOffIcon from "@/assets/checkbox_off.svg";
+import CheckBoxOnIcon from "@/assets/checkbox_on.svg";
+import FileIcon from "@/assets/file.svg";
+import KebabIcon from "@/assets/kebab.svg";
+import LinkIcon from "@/assets/link.svg";
 import NoteIcon from "@/assets/note.svg";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 
-export type Todo = {
+interface Todo {
   id: string;
   title: string;
   status: "todo" | "done";
   hasNote: string | null;
   hasLink: boolean;
   hasFile: boolean;
-};
+}
+interface TodosResponse {
+  todos: Todo[];
+  nextCursor?: string;
+}
 interface ListTodoProps {
   fetchTodos?: (
     pageParam?: number,
   ) => Promise<{ todos: Todo[]; nextPage?: number }>;
 }
-type BaseTodoProps = {
+interface BaseTodoProps {
   index: number;
   todo: Todo;
-};
-type TodoTitleAndCheckBoxProps = BaseTodoProps & {
+}
+interface TodoTitleAndCheckBoxProps extends BaseTodoProps {
   toggleStatus: (id: string) => void;
-};
-
-type TodoEditAndDeleteAndIconsProps = BaseTodoProps & {
+}
+interface TodoEditAndDeleteAndIconsProps extends BaseTodoProps {
   activeKebab: number | null;
   handleKebabClick: (index: number) => void;
-};
-type NoteProps = {
+}
+interface NoteProps {
   todo: Todo;
-  noteIcon: JSX.Element;
-};
+}
 
 const notes = [
   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, quod.",
@@ -71,6 +79,7 @@ const TodoTitleAndCheckBox = ({
   todo,
   toggleStatus,
 }: TodoTitleAndCheckBoxProps) => {
+  const isDone = todo.status === "done";
   return (
     <div className="flex items-center gap-10">
       <label
@@ -80,19 +89,13 @@ const TodoTitleAndCheckBox = ({
         <input
           type="checkbox"
           id={`todo-check-${index}`}
-          checked={todo.status === "done"}
+          checked={isDone}
           onChange={() => toggleStatus(todo.id)}
           className="peer absolute hidden"
         />
-        <div className="flex h-20 w-20 items-center justify-center rounded-md border peer-checked:border-purple-500 peer-checked:bg-purple-500">
-          <span className="absolute h-full w-full text-center text-sm font-bold text-slate-50">
-            ✓
-          </span>
-        </div>
+        {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
       </label>
-      <span className={`${todo.status === "done" ? "line-through" : ""}`}>
-        {todo.title}
-      </span>
+      <span className={`${isDone ? "line-through" : ""}`}>{todo.title}</span>
     </div>
   );
 };
@@ -104,14 +107,14 @@ const TodoEditAndDeleteAndIcons = ({
 }: TodoEditAndDeleteAndIconsProps) => {
   return (
     <div className="flex items-center gap-15">
-      {todo.hasLink && <p>링크</p>}
-      {todo.hasFile && <p>파일</p>}
-      <div className="relative">
-        <button className="px-3" onClick={() => handleKebabClick(index)}>
-          ⋮
+      {todo.hasLink && <LinkIcon />}
+      {todo.hasFile && <FileIcon />}
+      <div className="relative h-24">
+        <button onClick={() => handleKebabClick(index)}>
+          <KebabIcon />
         </button>
         <div
-          className={`${activeKebab !== index ? "hidden" : "flex"} absolute -left-70 z-10 w-80 flex-col items-center gap-10 rounded-lg bg-slate-50 p-10 shadow-md`}
+          className={`${activeKebab !== index ? "hidden" : "flex"} absolute -left-60 z-10 w-80 flex-col items-center gap-10 rounded-lg bg-slate-50 p-10 shadow-md`}
         >
           <button>수정하기</button>
           <button>삭제하기</button>
@@ -120,28 +123,30 @@ const TodoEditAndDeleteAndIcons = ({
     </div>
   );
 };
-const Note = ({ noteIcon, todo }: NoteProps) => {
+const Note = ({ todo }: NoteProps) => {
   if (!todo.hasNote) return;
   return (
     <div className="ml-30 mt-10 flex items-center gap-10 text-slate-700">
-      {noteIcon}
+      <NoteIcon />
       <p className={`${todo.status === "done" ? "line-through" : ""}`}>
         {todo.hasNote}
       </p>
     </div>
   );
 };
-
 export default function ListTodo({
   fetchTodos = mockFetchTodos,
 }: ListTodoProps) {
+  const queryClient = useQueryClient();
   const [filter, setFilter] = useState<"all" | "todo" | "done">("all");
-  const [todos, setTodos] = useState<Todo[]>([]);
   const [activeKebab, setActiveKebab] = useState<null | number>(null);
   const {
     data,
     fetchNextPage,
     hasNextPage,
+    isPending,
+    isError,
+    error,
   }: InfiniteQueryObserverResult<
     InfiniteData<{ todos: Todo[]; nextPage?: number }>
   > = useInfiniteQuery({
@@ -160,32 +165,40 @@ export default function ListTodo({
     hasNextPage,
   }); // 스크롤 이벤트 기반
 
-  useEffect(() => {
-    setTodos(
-      (data?.pages ?? [])
-        .flatMap((page) => page.todos)
-        .filter((x) => filter === "all" || x.status === filter),
-    );
-  }, [data, filter]);
+  // 로딩 상태 처리
+  if (isPending) return <div>Loading...</div>;
+
+  // 에러 상태 처리
+  if (isError) return <div>Error: {error.message}</div>;
 
   const toggleStatus = (id: string) => {
-    setTodos((prevTodos) => {
-      const updatedTodos = new Map(prevTodos.map((todo) => [todo.id, todo]));
-      if (updatedTodos.has(id)) {
-        updatedTodos.set(id, {
-          ...updatedTodos.get(id)!,
-          status: updatedTodos.get(id)!.status === "todo" ? "done" : "todo",
-        });
-      }
-      return Array.from(updatedTodos.values());
-    });
+    queryClient.setQueryData<InfiniteData<TodosResponse>>(
+      ["todos", filter],
+      (oldData) => {
+        if (!oldData) return oldData;
+        const clonedData = structuredClone(oldData);
+        clonedData.pages = clonedData.pages.map((page) => ({
+          ...page,
+          todos: page.todos.map((todo) =>
+            todo.id === id
+              ? { ...todo, status: todo.status === "todo" ? "done" : "todo" }
+              : todo,
+          ),
+        }));
+        return clonedData;
+      },
+    );
   };
 
-  const statusLabels: Record<"all" | "todo" | "done", string> = {
+  const filteredTodos = data.pages
+    .flatMap((page) => page.todos)
+    .filter((todo) => filter === "all" || todo.status === filter);
+
+  const statusLabels = {
     all: "All",
     todo: "To do",
     done: "Done",
-  };
+  } as const;
 
   const statusMap = (["all", "todo", "done"] as const).map((status) => (
     <li
@@ -207,10 +220,10 @@ export default function ListTodo({
     setActiveKebab((prev) => (prev === index ? null : index));
 
   return (
-    <div className="mx-auto min-h-[2080px] w-full max-w-2xl rounded-xl border-slate-300 bg-slate-50 p-20 text-sm text-slate-800">
+    <div className="mx-auto min-h-[2080px] w-full max-w-2xl rounded-xl rounded-b-none border-slate-300 bg-slate-50 p-20 text-sm text-slate-800">
       <ul className="mb-20 flex gap-10">{statusMap}</ul>
       <ul className="space-y-15">
-        {todos.map((todo, index) => (
+        {filteredTodos.map((todo, index) => (
           <li key={todo.id}>
             <div className="flex items-center justify-between">
               <TodoTitleAndCheckBox
@@ -225,7 +238,7 @@ export default function ListTodo({
                 todo={todo}
               />
             </div>
-            <Note todo={todo} noteIcon={<NoteIcon />} />
+            <Note todo={todo} />
           </li>
         ))}
       </ul>
