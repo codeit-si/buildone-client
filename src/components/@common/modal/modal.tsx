@@ -12,6 +12,9 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 
+import { cva, VariantProps } from "class-variance-authority";
+
+import IcClose from "@/assets/ic_close.svg";
 import { cn } from "@/lib/cn";
 import splitChildrenByComponents from "@/utils/react-child-utils/split-children-by-component";
 
@@ -146,29 +149,60 @@ function ModalOverlay({
     />
   );
 }
+
+const ModalContentVariants = cva(
+  "flex flex-col gap-24 fixed modal:px-24 left-[50%] top-[50%] z-50 w-full translate-x-[-50%] translate-y-[-50%] border bg-white px-16 py-24 shadow-xl duration-200",
+  {
+    variants: {
+      type: {
+        modal:
+          "h-full modal:max-w-520 modal:overflow-auto modal:h-auto modal:rounded-xl ",
+        popup: "max-w-300 modal:max-w-450 rounded-lg pt-24 pb-26 py-24",
+      },
+    },
+    defaultVariants: {
+      type: "popup",
+    },
+  },
+);
+
 function ModalContent({
   children,
   className,
   asChild = false,
-}: ModalElementProps<"div">) {
-  const [[title, description], nonContentChild] = splitChildrenByComponents(
-    [ModalTitle, ModalDescription],
-    children,
-  );
+  hasCloseIcon = true,
+  type = "popup",
+}: ModalElementProps<"div"> & { hasCloseIcon?: boolean } & VariantProps<
+    typeof ModalContentVariants
+  >) {
+  const { setOpen } = useModal();
+  const [[title, description, footer], nonContentChild] =
+    splitChildrenByComponents(
+      [ModalTitle, ModalDescription, ModalFooter],
+      children,
+    );
   const Comp = asChild ? Slot : "div";
 
   return (
     <Comp
-      className={cn(
-        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 rounded-md border bg-white p-6 shadow-xl duration-200",
-        className,
-      )}
+      className={cn(ModalContentVariants({ type }), className)}
       role="dialog"
       aria-modal="true"
     >
-      {title && <div className="flex justify-between">{title}</div>}
+      <div className={cn("flex justify-between")}>
+        <div className="grow">{title}</div>
+        {hasCloseIcon && (
+          <button
+            className="flex h-28 w-28 items-center justify-center"
+            onClick={() => setOpen(false)}
+          >
+            <IcClose />
+          </button>
+        )}
+      </div>
       {description}
       {nonContentChild}
+      {footer}
     </Comp>
   );
 }
@@ -181,7 +215,7 @@ function ModalTitle({
   const Comp = asChild ? Slot : "h2";
 
   return (
-    <Comp className={cn("text-xl font-semibold", className)}>{children}</Comp>
+    <Comp className={cn("grow text-lg font-bold", className)}>{children}</Comp>
   );
 }
 
@@ -192,11 +226,34 @@ function ModalDescription({
 }: ModalElementProps<"p">) {
   const Comp = asChild ? Slot : "p";
 
-  return <Comp className={cn("", className)}>{children}</Comp>;
+  return (
+    <Comp
+      className={cn(
+        "grow justify-center overflow-scroll [&::-webkit-scrollbar]:hidden",
+        className,
+      )}
+    >
+      {children}
+    </Comp>
+  );
 }
 
 interface ModalCloseProps extends ModalElementProps<"button"> {
   onClose?: (e: React.MouseEvent<Element, MouseEvent>) => void;
+}
+
+function ModalFooter({
+  children,
+  className,
+  asChild = false,
+}: ModalElementProps<"div">) {
+  const Comp = asChild ? Slot : "div";
+
+  return (
+    <Comp className={cn("flex w-full justify-center gap-8", className)}>
+      {children}
+    </Comp>
+  );
 }
 
 function ModalClose({
@@ -231,6 +288,7 @@ const Modal = {
   Content: ModalContent,
   Title: ModalTitle,
   Description: ModalDescription,
+  Footer: ModalFooter,
   Close: ModalClose,
 };
 
