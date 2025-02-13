@@ -290,6 +290,7 @@ function ModalClose({
     <Comp
       className={cn("text-xl font-semibold", className)}
       onClick={handleClick}
+      aria-label="모달 닫기"
     >
       {children}
     </Comp>
