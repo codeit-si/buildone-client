@@ -17,7 +17,7 @@ interface TabInputProps {
 
 // 탭 스타일
 const containerStyle = cva(
-  "flex items-center bg-white rounded px-2 text-[#334155] h-36 w-full",
+  "flex items-center bg-white rounded px-2 text-slate-700 h-9 w-full",
 );
 
 // 인풋 자체 스타일
