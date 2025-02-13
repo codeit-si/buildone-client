@@ -13,6 +13,8 @@ import {
 import { createPortal } from "react-dom";
 
 import { cva, VariantProps } from "class-variance-authority";
+import { AnimatePresence } from "motion/react";
+import * as motion from "motion/react-client";
 
 import IcClose from "@/assets/ic_close.svg";
 import { cn } from "@/lib/cn";
@@ -121,11 +123,25 @@ function ModalPortal({
     setIsClient(true);
   }, []);
 
-  const ChildrenWithCloseButton = <div className={className}>{children}</div>;
+  const ChildrenWithCloseButton = (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className={className}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.1, ease: "easeInOut" }}
+        >
+          {children}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 
   if (!isClient) return null;
 
-  return open && createPortal(ChildrenWithCloseButton, document.body);
+  return createPortal(ChildrenWithCloseButton, document.body);
 }
 
 interface ModalOverlayProps {
@@ -193,7 +209,7 @@ function ModalContent({
         <div className="grow">{title}</div>
         {hasCloseIcon && (
           <button
-            className="flex h-28 w-28 items-center justify-center"
+            className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"
             onClick={() => setOpen(false)}
           >
             <IcClose />
