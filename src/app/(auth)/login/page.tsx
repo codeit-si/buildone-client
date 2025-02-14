@@ -1,5 +1,5 @@
 import LoginForm from "@/containers/login/login-form";
-import RegisterGuide from "@/containers/login/register-guide";
+import SignUpGuide from "@/containers/login/signup-guide";
 
 export const metadata = {
   title: "BuilDone - 로그인",
@@ -11,7 +11,7 @@ export default function LoginPage() {
   return (
     <div className="mt-57">
       <LoginForm />
-      <RegisterGuide />
+      <SignUpGuide />
     </div>
   );
 }

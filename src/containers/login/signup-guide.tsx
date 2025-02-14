@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function RegisterGuide() {
+export default function SignUpGuide() {
   return (
     <p className="mt-40 flex justify-center gap-x-4 text-sm font-medium">
       빌던이 처음이신가요?
