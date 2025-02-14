@@ -25,10 +25,7 @@ const getChipClass = (color: string, size: string) =>
     size === "large" ? "text-base" : "text-sm",
   );
 
-/**
- * 체크박스의 클래스명을 반환하는 함수
- * 체크 상태에 따라 클래스명을 다르게 설정
- */
+// 체크박스 아이콘의 기본 스타일을 반환하는 함수
 const getCheckboxClass = () =>
   "h-full aspect-square flex-shrink-0 object-contain";
 
