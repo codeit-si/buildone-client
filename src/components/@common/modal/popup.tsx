@@ -23,40 +23,40 @@ import splitChildrenByComponents from "@/utils/react-child-utils/split-children-
 
 import Slot from "../slot/slot";
 
-type ModalContextProps = {
+type PopupContextProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-interface ModalCommonProps {
+interface PopupCommonProps {
   className?: string;
 }
 
-type ModalElementProps<T extends ElementType> = ComponentProps<T> & {
+type PopupElementProps<T extends ElementType> = ComponentProps<T> & {
   asChild?: boolean;
 };
 
-const modalContext = createContext<ModalContextProps>({
+const popupContext = createContext<PopupContextProps>({
   open: false,
   setOpen: () => {},
 });
 
-function useModal() {
-  const context = useContext(modalContext);
-  if (!context) throw new Error("useModal must be used within a ModalProvider");
+function usePopup() {
+  const context = useContext(popupContext);
+  if (!context) throw new Error("usePopup must be used within a PopupProvider");
   return context;
 }
 
-interface ModalRootProps {
+interface PopupRootProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
 
-function ModalRoot({
+function PopupRoot({
   children,
   open: openProp = false,
   onOpenChange,
-}: PropsWithChildren<ModalRootProps>) {
+}: PropsWithChildren<PopupRootProps>) {
   const { open, setOpen } = usePortalOpen(openProp, onOpenChange);
 
   usePortalClosesByEscapeKey(open, setOpen);
@@ -70,18 +70,18 @@ function ModalRoot({
   );
 
   return (
-    <modalContext.Provider value={providerValue}>
+    <popupContext.Provider value={providerValue}>
       {children}
-    </modalContext.Provider>
+    </popupContext.Provider>
   );
 }
 
-function ModalTrigger({
+function PopupTrigger({
   children,
   className,
   asChild = false,
-}: ModalElementProps<"button">) {
-  const { setOpen } = useModal();
+}: PopupElementProps<"button">) {
+  const { setOpen } = usePopup();
   const Comp = asChild ? Slot : "button";
 
   return (
@@ -95,11 +95,11 @@ function ModalTrigger({
   );
 }
 
-function ModalPortal({
+function PopupPortal({
   children,
   className = "",
-}: PropsWithChildren<ModalCommonProps>) {
-  const { open } = useModal();
+}: PropsWithChildren<PopupCommonProps>) {
+  const { open } = usePopup();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -127,15 +127,15 @@ function ModalPortal({
   return createPortal(ChildrenWithCloseButton, document.body);
 }
 
-interface ModalOverlayProps {
+interface PopupOverlayProps {
   closeOnOverlayClick?: boolean;
 }
 
-function ModalOverlay({
+function PopupOverlay({
   className,
   closeOnOverlayClick = true,
-}: ModalCommonProps & ModalOverlayProps) {
-  const { setOpen } = useModal();
+}: PopupCommonProps & PopupOverlayProps) {
+  const { setOpen } = usePopup();
 
   return (
     <div
@@ -149,31 +149,29 @@ function ModalOverlay({
   );
 }
 
-function ModalContent({
+function PopupContent({
   children,
   className,
   asChild = false,
   hasCloseIcon = true,
-}: ModalElementProps<"div"> & { hasCloseIcon?: boolean }) {
-  const { setOpen } = useModal();
-  const [[title, description, footer], nonContentChild] =
-    splitChildrenByComponents(
-      [ModalTitle, ModalDescription, ModalFooter],
-      children,
-    );
+}: PopupElementProps<"div"> & { hasCloseIcon?: boolean }) {
+  const { setOpen } = usePopup();
+  const [[description, footer], nonContentChild] = splitChildrenByComponents(
+    [PopupDescription, PopupFooter],
+    children,
+  );
   const Comp = asChild ? Slot : "div";
 
   return (
     <Comp
       className={cn(
-        "fixed left-[50%] top-[50%] z-50 flex h-full w-full translate-x-[-50%] translate-y-[-50%] flex-col gap-24 border bg-white px-16 py-24 shadow-xl duration-200 md:h-auto md:max-w-520 md:overflow-auto md:rounded-xl md:px-24",
+        "fixed left-[50%] top-[50%] z-50 flex w-full max-w-300 translate-x-[-50%] translate-y-[-50%] flex-col gap-24 rounded-lg border bg-white px-16 py-24 pb-26 pt-24 shadow-xl duration-200 md:max-w-450 md:px-24",
         className,
       )}
       role="dialog"
       aria-modal="true"
     >
-      <div className={cn("flex justify-between")}>
-        <div className="grow">{title}</div>
+      <div className={cn("flex w-full justify-end")}>
         {hasCloseIcon && (
           <button
             className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"
@@ -190,23 +188,11 @@ function ModalContent({
   );
 }
 
-function ModalTitle({
+function PopupDescription({
   children,
   className,
   asChild = false,
-}: ModalElementProps<"h2">) {
-  const Comp = asChild ? Slot : "h2";
-
-  return (
-    <Comp className={cn("grow text-lg font-bold", className)}>{children}</Comp>
-  );
-}
-
-function ModalDescription({
-  children,
-  className,
-  asChild = false,
-}: ModalElementProps<"p">) {
+}: PopupElementProps<"p">) {
   const Comp = asChild ? Slot : "p";
 
   return (
@@ -221,15 +207,15 @@ function ModalDescription({
   );
 }
 
-interface ModalCloseProps extends ModalElementProps<"button"> {
+interface PopupCloseProps extends PopupElementProps<"button"> {
   onClose?: (e: React.MouseEvent<Element, MouseEvent>) => void;
 }
 
-function ModalFooter({
+function PopupFooter({
   children,
   className,
   asChild = false,
-}: ModalElementProps<"div">) {
+}: PopupElementProps<"div">) {
   const Comp = asChild ? Slot : "div";
 
   return (
@@ -239,13 +225,13 @@ function ModalFooter({
   );
 }
 
-function ModalClose({
+function PopupClose({
   children,
   className,
   asChild = false,
   onClose = () => {},
-}: ModalCloseProps) {
-  const { setOpen } = useModal();
+}: PopupCloseProps) {
+  const { setOpen } = usePopup();
   const Comp = asChild ? Slot : "button";
 
   const handleClick = (e: React.MouseEvent<Element, MouseEvent>) => {
@@ -264,16 +250,15 @@ function ModalClose({
   );
 }
 
-const Modal = {
-  Root: ModalRoot,
-  Trigger: ModalTrigger,
-  Portal: ModalPortal,
-  Overlay: ModalOverlay,
-  Content: ModalContent,
-  Title: ModalTitle,
-  Description: ModalDescription,
-  Footer: ModalFooter,
-  Close: ModalClose,
+const Popup = {
+  Root: PopupRoot,
+  Trigger: PopupTrigger,
+  Portal: PopupPortal,
+  Overlay: PopupOverlay,
+  Content: PopupContent,
+  Description: PopupDescription,
+  Footer: PopupFooter,
+  Close: PopupClose,
 };
 
-export default Modal;
+export default Popup;

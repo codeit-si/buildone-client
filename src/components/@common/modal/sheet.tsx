@@ -23,40 +23,40 @@ import splitChildrenByComponents from "@/utils/react-child-utils/split-children-
 
 import Slot from "../slot/slot";
 
-type ModalContextProps = {
+type SheetContextProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-interface ModalCommonProps {
+interface SheetCommonProps {
   className?: string;
 }
 
-type ModalElementProps<T extends ElementType> = ComponentProps<T> & {
+type SheetElementProps<T extends ElementType> = ComponentProps<T> & {
   asChild?: boolean;
 };
 
-const modalContext = createContext<ModalContextProps>({
+const sheetContext = createContext<SheetContextProps>({
   open: false,
   setOpen: () => {},
 });
 
-function useModal() {
-  const context = useContext(modalContext);
-  if (!context) throw new Error("useModal must be used within a ModalProvider");
+function useSheet() {
+  const context = useContext(sheetContext);
+  if (!context) throw new Error("useSheet must be used within a SheetProvider");
   return context;
 }
 
-interface ModalRootProps {
+interface SheetRootProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
 
-function ModalRoot({
+function SheetRoot({
   children,
   open: openProp = false,
   onOpenChange,
-}: PropsWithChildren<ModalRootProps>) {
+}: PropsWithChildren<SheetRootProps>) {
   const { open, setOpen } = usePortalOpen(openProp, onOpenChange);
 
   usePortalClosesByEscapeKey(open, setOpen);
@@ -70,18 +70,18 @@ function ModalRoot({
   );
 
   return (
-    <modalContext.Provider value={providerValue}>
+    <sheetContext.Provider value={providerValue}>
       {children}
-    </modalContext.Provider>
+    </sheetContext.Provider>
   );
 }
 
-function ModalTrigger({
+function SheetTrigger({
   children,
   className,
   asChild = false,
-}: ModalElementProps<"button">) {
-  const { setOpen } = useModal();
+}: SheetElementProps<"button">) {
+  const { setOpen } = useSheet();
   const Comp = asChild ? Slot : "button";
 
   return (
@@ -95,11 +95,11 @@ function ModalTrigger({
   );
 }
 
-function ModalPortal({
+function SheetPortal({
   children,
   className = "",
-}: PropsWithChildren<ModalCommonProps>) {
-  const { open } = useModal();
+}: PropsWithChildren<SheetCommonProps>) {
+  const { open } = useSheet();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -127,15 +127,15 @@ function ModalPortal({
   return createPortal(ChildrenWithCloseButton, document.body);
 }
 
-interface ModalOverlayProps {
+interface SheetOverlayProps {
   closeOnOverlayClick?: boolean;
 }
 
-function ModalOverlay({
+function SheetOverlay({
   className,
   closeOnOverlayClick = true,
-}: ModalCommonProps & ModalOverlayProps) {
-  const { setOpen } = useModal();
+}: SheetCommonProps & SheetOverlayProps) {
+  const { setOpen } = useSheet();
 
   return (
     <div
@@ -149,16 +149,16 @@ function ModalOverlay({
   );
 }
 
-function ModalContent({
+function SheetContent({
   children,
   className,
   asChild = false,
   hasCloseIcon = true,
-}: ModalElementProps<"div"> & { hasCloseIcon?: boolean }) {
-  const { setOpen } = useModal();
+}: SheetElementProps<"div"> & { hasCloseIcon?: boolean }) {
+  const { setOpen } = useSheet();
   const [[title, description, footer], nonContentChild] =
     splitChildrenByComponents(
-      [ModalTitle, ModalDescription, ModalFooter],
+      [SheetTitle, SheetDescription, SheetFooter],
       children,
     );
   const Comp = asChild ? Slot : "div";
@@ -166,7 +166,7 @@ function ModalContent({
   return (
     <Comp
       className={cn(
-        "fixed left-[50%] top-[50%] z-50 flex h-full w-full translate-x-[-50%] translate-y-[-50%] flex-col gap-24 border bg-white px-16 py-24 shadow-xl duration-200 md:h-auto md:max-w-520 md:overflow-auto md:rounded-xl md:px-24",
+        "fixed left-[50%] top-[50%] z-50 flex h-full w-full translate-x-[-50%] translate-y-[-50%] flex-col gap-24 border bg-white px-16 py-24 shadow-xl duration-300 md:h-auto md:max-w-520 md:overflow-auto md:rounded-xl md:px-24",
         className,
       )}
       role="dialog"
@@ -190,11 +190,11 @@ function ModalContent({
   );
 }
 
-function ModalTitle({
+function SheetTitle({
   children,
   className,
   asChild = false,
-}: ModalElementProps<"h2">) {
+}: SheetElementProps<"h2">) {
   const Comp = asChild ? Slot : "h2";
 
   return (
@@ -202,11 +202,11 @@ function ModalTitle({
   );
 }
 
-function ModalDescription({
+function SheetDescription({
   children,
   className,
   asChild = false,
-}: ModalElementProps<"p">) {
+}: SheetElementProps<"p">) {
   const Comp = asChild ? Slot : "p";
 
   return (
@@ -221,15 +221,15 @@ function ModalDescription({
   );
 }
 
-interface ModalCloseProps extends ModalElementProps<"button"> {
+interface SheetCloseProps extends SheetElementProps<"button"> {
   onClose?: (e: React.MouseEvent<Element, MouseEvent>) => void;
 }
 
-function ModalFooter({
+function SheetFooter({
   children,
   className,
   asChild = false,
-}: ModalElementProps<"div">) {
+}: SheetElementProps<"div">) {
   const Comp = asChild ? Slot : "div";
 
   return (
@@ -239,13 +239,13 @@ function ModalFooter({
   );
 }
 
-function ModalClose({
+function SheetClose({
   children,
   className,
   asChild = false,
   onClose = () => {},
-}: ModalCloseProps) {
-  const { setOpen } = useModal();
+}: SheetCloseProps) {
+  const { setOpen } = useSheet();
   const Comp = asChild ? Slot : "button";
 
   const handleClick = (e: React.MouseEvent<Element, MouseEvent>) => {
@@ -264,16 +264,16 @@ function ModalClose({
   );
 }
 
-const Modal = {
-  Root: ModalRoot,
-  Trigger: ModalTrigger,
-  Portal: ModalPortal,
-  Overlay: ModalOverlay,
-  Content: ModalContent,
-  Title: ModalTitle,
-  Description: ModalDescription,
-  Footer: ModalFooter,
-  Close: ModalClose,
+const Sheet = {
+  Root: SheetRoot,
+  Trigger: SheetTrigger,
+  Portal: SheetPortal,
+  Overlay: SheetOverlay,
+  Content: SheetContent,
+  Title: SheetTitle,
+  Description: SheetDescription,
+  Footer: SheetFooter,
+  Close: SheetClose,
 };
 
-export default Modal;
+export default Sheet;
