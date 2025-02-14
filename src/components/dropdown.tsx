@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 
 import { cva } from "class-variance-authority";
 
+import KebabIcon from "@/assets/kebab.svg";
+
 interface DropdownItem {
   id: string;
   label: string;
@@ -42,9 +44,6 @@ const itemVariants = cva(
   },
 );
 
-// 점 세개
-const Dot = () => <div className="h-1.5 w-1.5 rounded-full bg-slate-400" />;
-
 function Dropdown({ size = "md", items }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -55,14 +54,15 @@ function Dropdown({ size = "md", items }: DropdownProps) {
   const closeDropdown = () => setIsOpen(false);
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
         closeDropdown();
       }
-    }
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -76,10 +76,8 @@ function Dropdown({ size = "md", items }: DropdownProps) {
         onClick={toggleDropdown}
         className="flex h-24 w-24 items-center justify-center rounded-full bg-white"
       >
-        <div className="flex flex-col items-center gap-1">
-          <Dot />
-          <Dot />
-          <Dot />
+        <div className="flex flex-col items-center">
+          <KebabIcon />
         </div>
       </button>
       {isOpen && (
