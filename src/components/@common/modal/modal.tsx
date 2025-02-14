@@ -73,10 +73,11 @@ function ModalRoot({
         setOpen(false);
       }
     };
-
-    document.addEventListener("keydown", handleEscapeKey);
-    return () => document.removeEventListener("keydown", handleEscapeKey);
-  }, [setOpen]);
+    if (open) {
+      document.addEventListener("keydown", handleEscapeKey);
+      return () => document.removeEventListener("keydown", handleEscapeKey);
+    }
+  }, [open, setOpen]);
 
   const providerValue = useMemo(
     () => ({
