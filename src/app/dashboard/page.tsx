@@ -23,7 +23,7 @@ const DashboardPage = () => {
             </Modal.Close>
           </Modal.Footer>
         </Modal.Content>
-        <Modal.Overlay className="bg-gray-500" closeOnOverlyClick />
+        <Modal.Overlay className="bg-gray-500" closeOnOverlayClick />
       </Modal.Portal>
     </Modal.Root>
   );
