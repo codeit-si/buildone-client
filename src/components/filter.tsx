@@ -1,32 +1,30 @@
 "use client";
 
-// import Filter from "@/components/filter";
-// const [filter, setFilter] = useState("all"); 를 사용한다고 하면
-// <Filter filter={filter} setFilter={setFilter} /> 이렇게 사용하시면 됩니다. (All, To do, Done 세 개가 동시에 뜹니다.)
-
 interface FilterProps {
-  filter: string;
-  setFilter: (value: string) => void;
+  filter: "all" | "todo" | "done";
+  setFilter: (value: "all" | "todo" | "done") => void;
 }
 
-const Filter = ({ filter, setFilter }: FilterProps) => {
-  const filters = [
-    { value: "all", label: "All" },
-    { value: "todo", label: "To do" },
-    { value: "done", label: "Done" },
-  ];
+const filters: Record<FilterProps["filter"], string> = {
+  all: "All",
+  todo: "To do",
+  done: "Done",
+};
 
+const BASE_CLASS = "rounded-3xl border px-12 py-4 text-base transition-colors";
+const ACTIVE_CLASS = "text-white border-purple-500 bg-purple-500 text-slate-50";
+const INACTIVE_CLASS = "bg-white border-slate-300 text-slate-800";
+
+const Filter = ({ filter, setFilter }: FilterProps) => {
   return (
-    <div className="flex gap-2">
-      {filters.map(({ value, label }) => (
+    <div className="flex gap-2" role="group" aria-label="작업 상태 필터">
+      {Object.entries(filters).map(([value, label]) => (
         <button
           key={value}
-          onClick={() => setFilter(value)}
-          className={`rounded-2xl border px-4 py-2 text-base transition-colors ${
-            filter === value
-              ? "bg-blue-500 text-white"
-              : "border-slate-300 bg-white text-slate-800"
-          }`}
+          onClick={() => setFilter(value as FilterProps["filter"])}
+          className={`${BASE_CLASS} ${filter === value ? ACTIVE_CLASS : INACTIVE_CLASS}`}
+          role="tab"
+          aria-selected={filter === value}
         >
           {label}
         </button>
