@@ -53,6 +53,7 @@ export default function Button({
       type={type}
       className={cn(ButtonVariants({ variant, shape, size }), className)}
       aria-disabled={disabled}
+      disabled={disabled}
       {...props}
     >
       {children}
