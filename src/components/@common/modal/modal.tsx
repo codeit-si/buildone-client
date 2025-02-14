@@ -30,10 +30,6 @@ type ModalElementProps<T extends ElementType> = ComponentProps<T> & {
   asChild?: boolean;
 };
 
-interface ModalCommonProps {
-  className?: string;
-}
-
 const modalContext = createContext<ModalContextProps>({
   open: false,
   setOpen: () => {},
@@ -75,7 +71,7 @@ function ModalRoot({
 
     document.addEventListener("keydown", handleEscapeKey);
     return () => document.removeEventListener("keydown", handleEscapeKey);
-  }, []);
+  }, [setOpen]);
 
   const providerValue = useMemo(
     () => ({
@@ -130,12 +126,12 @@ function ModalPortal({
 }
 
 interface ModalOverlayProps {
-  closeOnOverlyClick?: boolean;
+  closeOnOverlayClick?: boolean;
 }
 
 function ModalOverlay({
   className,
-  closeOnOverlyClick = true,
+  closeOnOverlayClick = true,
 }: ModalCommonProps & ModalOverlayProps) {
   const { setOpen } = useModal();
 
@@ -145,7 +141,7 @@ function ModalOverlay({
       aria-hidden
       className={cn("fixed inset-0 bg-black opacity-50", className)}
       onClick={() => {
-        if (closeOnOverlyClick) setOpen(false);
+        if (closeOnOverlayClick) setOpen(false);
       }}
     />
   );
