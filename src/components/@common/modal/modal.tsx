@@ -159,7 +159,7 @@ function ModalOverlay({
     <div
       role="presentation"
       aria-hidden
-      className={cn("fixed inset-0 bg-black opacity-50", className)}
+      className={cn("bg-black fixed inset-0 opacity-50", className)}
       onClick={() => {
         if (closeOnOverlayClick) setOpen(false);
       }}

@@ -5,7 +5,7 @@ import Modal from "@/components/@common/modal/modal";
 const DashboardPage = () => {
   return (
     <Modal.Root>
-      <Modal.Trigger className="rounded-md bg-blue-500 px-4 py-2 text-white">
+      <Modal.Trigger className="bg-blue-500 text-white rounded-md px-4 py-2">
         Open Modal
       </Modal.Trigger>
       <Modal.Portal>
@@ -18,7 +18,7 @@ const DashboardPage = () => {
             <span>작성된 내용이 모두 삭제됩니다.</span>
           </Modal.Description>
           <Modal.Footer className="mt-16">
-            <Modal.Close className="h-48 w-120 border-2 border-black">
+            <Modal.Close className="border-black h-48 w-120 border-2">
               확인
             </Modal.Close>
           </Modal.Footer>
