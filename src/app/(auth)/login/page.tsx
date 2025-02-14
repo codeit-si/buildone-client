@@ -1,5 +1,5 @@
+import AuthSwitch from "@/components/auth-switch";
 import LoginForm from "@/containers/login/login-form";
-import SignUpGuide from "@/containers/login/signup-guide";
 
 export const metadata = {
   title: "BuilDone - 로그인",
@@ -9,9 +9,9 @@ export const metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="mt-57">
+    <div className="mt-57 space-y-40">
       <LoginForm />
-      <SignUpGuide />
+      <AuthSwitch isLoginPage />
     </div>
   );
 }
