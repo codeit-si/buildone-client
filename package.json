@@ -19,7 +19,7 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "prettier --cache --write .",
-      "eslint --cache . --fix --report-unused-disable-directives --max-warnings 0"
+      "eslint --cache --fix --report-unused-disable-directives --max-warnings 0"
     ]
   },
   "dependencies": {

@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 import ListTodo from "@/components/list-todo";
+import TabSidemenu from "@/components/tab-sidemenu";
 
 import PostPage from "../components/post-page";
 import getQueryClient from "../lib/get-query-client";
@@ -27,6 +28,7 @@ export default async function Home() {
       <HydrationBoundary state={dehydrate(queryClient)}>
         {/* Streaming 컴포넌트트 */}
         <Suspense fallback={<h1>Loading...</h1>}>
+          <TabSidemenu />
           <PostPage />
           <ListTodo />
         </Suspense>
