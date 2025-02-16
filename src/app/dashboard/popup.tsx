@@ -1,12 +1,12 @@
 "use client";
 
-import Sheet from "@/components/@common/portal/sheet";
+import Sheet from "@/components/@common/portal/popup";
 
 const DashboardPage = () => {
   return (
     <Sheet.Root>
       <Sheet.Trigger className="rounded-md bg-blue-500 px-4 py-2 text-white">
-        Open Sheet
+        Open Popup
       </Sheet.Trigger>
       <Sheet.Portal>
         <Sheet.Content>

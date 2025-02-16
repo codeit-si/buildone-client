@@ -95,32 +95,14 @@ function ModalTrigger({
   );
 }
 
-function ModalPortal({
-  children,
-  className = "",
-}: PropsWithChildren<ModalCommonProps>) {
-  const { open } = useModal();
+function ModalPortal({ children }: PropsWithChildren) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  const ChildrenWithCloseButton = (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          className={className}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.1, ease: "easeInOut" }}
-        >
-          {children}
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
+  const ChildrenWithCloseButton = children;
 
   if (!isClient) return null;
 
@@ -135,58 +117,68 @@ function ModalOverlay({
   className,
   closeOnOverlayClick = true,
 }: ModalCommonProps & ModalOverlayProps) {
-  const { setOpen } = useModal();
+  const { open, setOpen } = useModal();
 
   return (
-    <div
-      role="presentation"
-      aria-hidden
-      className={cn("fixed inset-0 bg-black opacity-50", className)}
-      onClick={() => {
-        if (closeOnOverlayClick) setOpen(false);
-      }}
-    />
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          role="presentation"
+          aria-hidden
+          className={cn("fixed inset-0 bg-black", className)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.5, transition: { duration: 0.2 } }}
+          exit={{ opacity: 0, transition: { duration: 0.2 } }}
+          onClick={() => {
+            if (closeOnOverlayClick) setOpen(false);
+          }}
+        />
+      )}
+    </AnimatePresence>
   );
 }
 
 function ModalContent({
   children,
   className,
-  asChild = false,
   hasCloseIcon = true,
-}: ModalElementProps<"div"> & { hasCloseIcon?: boolean }) {
-  const { setOpen } = useModal();
-  const [[title, description, footer], nonContentChild] =
-    splitChildrenByComponents(
-      [ModalTitle, ModalDescription, ModalFooter],
-      children,
-    );
-  const Comp = asChild ? Slot : "div";
+}: ComponentProps<"div"> & { hasCloseIcon?: boolean }) {
+  const { open, setOpen } = useModal();
+  const [[description, footer], nonContentChild] = splitChildrenByComponents(
+    [ModalDescription, ModalFooter],
+    children,
+  );
 
   return (
-    <Comp
-      className={cn(
-        "fixed left-[50%] top-[50%] z-50 flex h-full w-full translate-x-[-50%] translate-y-[-50%] flex-col gap-24 border bg-white px-16 py-24 shadow-xl duration-200 md:h-auto md:max-w-520 md:overflow-auto md:rounded-xl md:px-24",
-        className,
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          role="dialog"
+          aria-modal="true"
+          className={cn(
+            "fixed left-[50%] top-[50%] z-50 flex w-full max-w-300 translate-x-[-50%] translate-y-[-50%] flex-col gap-24 rounded-lg border bg-white px-16 py-24 pb-26 pt-24 shadow-xl md:max-w-450 md:px-24",
+            className,
+          )}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { duration: 0.2 } }}
+          exit={{ opacity: 0, transition: { duration: 0.2 } }}
+        >
+          <div className={cn("flex w-full justify-end")}>
+            {hasCloseIcon && (
+              <button
+                className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"
+                onClick={() => setOpen(false)}
+              >
+                <IcClose />
+              </button>
+            )}
+          </div>
+          {description}
+          {nonContentChild}
+          {footer}
+        </motion.div>
       )}
-      role="dialog"
-      aria-modal="true"
-    >
-      <div className={cn("flex justify-between")}>
-        <div className="grow">{title}</div>
-        {hasCloseIcon && (
-          <button
-            className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"
-            onClick={() => setOpen(false)}
-          >
-            <IcClose />
-          </button>
-        )}
-      </div>
-      {description}
-      {nonContentChild}
-      {footer}
-    </Comp>
+    </AnimatePresence>
   );
 }
 

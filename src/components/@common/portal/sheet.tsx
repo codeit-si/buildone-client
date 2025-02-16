@@ -95,32 +95,14 @@ function SheetTrigger({
   );
 }
 
-function SheetPortal({
-  children,
-  className = "",
-}: PropsWithChildren<SheetCommonProps>) {
-  const { open } = useSheet();
+function SheetPortal({ children }: PropsWithChildren) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  const ChildrenWithCloseButton = (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          className={className}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.1, ease: "easeInOut" }}
-        >
-          {children}
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
+  const ChildrenWithCloseButton = children;
 
   if (!isClient) return null;
 
@@ -135,58 +117,71 @@ function SheetOverlay({
   className,
   closeOnOverlayClick = true,
 }: SheetCommonProps & SheetOverlayProps) {
-  const { setOpen } = useSheet();
+  const { open, setOpen } = useSheet();
 
   return (
-    <div
-      role="presentation"
-      aria-hidden
-      className={cn("fixed inset-0 bg-black opacity-50", className)}
-      onClick={() => {
-        if (closeOnOverlayClick) setOpen(false);
-      }}
-    />
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          role="presentation"
+          aria-hidden
+          className={cn("fixed inset-0 bg-black", className)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.5, transition: { duration: 0.2 } }}
+          exit={{ opacity: 0, transition: { delay: 0.4, duration: 0.2 } }}
+          onClick={() => {
+            if (closeOnOverlayClick) setOpen(false);
+          }}
+        />
+      )}
+    </AnimatePresence>
   );
 }
 
 function SheetContent({
   children,
   className,
-  asChild = false,
   hasCloseIcon = true,
-}: SheetElementProps<"div"> & { hasCloseIcon?: boolean }) {
-  const { setOpen } = useSheet();
+}: ComponentProps<"div"> & { hasCloseIcon?: boolean }) {
+  const { open, setOpen } = useSheet();
   const [[title, description, footer], nonContentChild] =
     splitChildrenByComponents(
       [SheetTitle, SheetDescription, SheetFooter],
       children,
     );
-  const Comp = asChild ? Slot : "div";
 
   return (
-    <Comp
-      className={cn(
-        "fixed left-[50%] top-[50%] z-50 flex h-full w-full translate-x-[-50%] translate-y-[-50%] flex-col gap-24 border bg-white px-16 py-24 shadow-xl duration-300 md:h-auto md:max-w-520 md:overflow-auto md:rounded-xl md:px-24",
-        className,
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          role="dialog"
+          aria-modal="true"
+          className={cn(
+            "fixed bottom-0 right-0 top-0 z-50 flex h-full w-full max-w-512 flex-col gap-24 border bg-white px-16 py-24 shadow-xl md:overflow-auto md:px-24",
+            className,
+          )}
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "100%" }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+        >
+          <div className={cn("flex justify-between")}>
+            <div className="grow">{title}</div>
+            {hasCloseIcon && (
+              <button
+                className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"
+                onClick={() => setOpen(false)}
+              >
+                <IcClose />
+              </button>
+            )}
+          </div>
+          {description}
+          {nonContentChild}
+          {footer}
+        </motion.div>
       )}
-      role="dialog"
-      aria-modal="true"
-    >
-      <div className={cn("flex justify-between")}>
-        <div className="grow">{title}</div>
-        {hasCloseIcon && (
-          <button
-            className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"
-            onClick={() => setOpen(false)}
-          >
-            <IcClose />
-          </button>
-        )}
-      </div>
-      {description}
-      {nonContentChild}
-      {footer}
-    </Comp>
+    </AnimatePresence>
   );
 }
 
