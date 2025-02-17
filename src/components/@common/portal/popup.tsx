@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Children,
   ComponentProps,
   createContext,
   ElementType,
@@ -15,7 +16,6 @@ import { createPortal } from "react-dom";
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
-import IcClose from "@/assets/ic_close.svg";
 import usePortalClosesByEscapeKey from "@/hooks/portal/use-portal-closes-by-escape-key";
 import usePortalOpen from "@/hooks/portal/use-portal-open";
 import { cn } from "@/lib/cn";
@@ -125,7 +125,7 @@ function PopupOverlay({
         <motion.div
           role="presentation"
           aria-hidden
-          className={cn("fixed inset-0 bg-black", className)}
+          className={cn("fixed inset-0 bg-gray-500", className)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.5, transition: { duration: 0.2 } }}
           exit={{ opacity: 0, transition: { duration: 0.2 } }}
@@ -138,71 +138,50 @@ function PopupOverlay({
   );
 }
 
-function PopupContent({
-  children,
-  className,
-  hasCloseIcon = true,
-}: ComponentProps<"div"> & { hasCloseIcon?: boolean }) {
-  const { open, setOpen } = usePopup();
-  const [[description, footer], nonContentChild] = splitChildrenByComponents(
-    [PopupDescription, PopupFooter],
+function PopupContent({ children, className }: ComponentProps<"div">) {
+  const { open } = usePopup();
+  const [[footer], nonContentChild] = splitChildrenByComponents(
+    [PopupFooter],
     children,
   );
 
   return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          role="dialog"
-          aria-modal="true"
-          className={cn(
-            "fixed left-[50%] top-[50%] z-50 flex w-full max-w-300 translate-x-[-50%] translate-y-[-50%] flex-col gap-24 rounded-lg border bg-white px-16 py-24 pb-26 pt-24 shadow-xl md:max-w-450 md:px-24",
-            className,
-          )}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.2 } }}
-          exit={{ opacity: 0, transition: { duration: 0.2 } }}
-        >
-          <div className={cn("flex w-full justify-end")}>
-            {hasCloseIcon && (
-              <button
-                className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"
-                onClick={() => setOpen(false)}
-              >
-                <IcClose />
-              </button>
+    <PopupPortal>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            className={cn(
+              "fixed left-[50%] top-[50%] z-50 flex w-full max-w-300 translate-x-[-50%] translate-y-[-50%] flex-col gap-24 rounded-lg border bg-white px-16 py-24 pb-26 pt-24 shadow-xl md:max-w-450 md:px-24",
+              className,
             )}
-          </div>
-          {description}
-          {nonContentChild}
-          {footer}
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
-
-function PopupDescription({
-  children,
-  className,
-  asChild = false,
-}: PopupElementProps<"p">) {
-  const Comp = asChild ? Slot : "p";
-
-  return (
-    <Comp
-      className={cn(
-        "grow justify-center overflow-scroll [&::-webkit-scrollbar]:hidden",
-        className,
-      )}
-    >
-      {children}
-    </Comp>
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.2 } }}
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+          >
+            <div />
+            {Children.count(nonContentChild) > 0 && (
+              <div
+                className={cn(
+                  "grow justify-center overflow-y-scroll",
+                  className,
+                )}
+              >
+                {nonContentChild}
+              </div>
+            )}
+            {footer}
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <PopupOverlay />
+    </PopupPortal>
   );
 }
 
 interface PopupCloseProps extends PopupElementProps<"button"> {
-  onClose?: (e: React.MouseEvent<Element, MouseEvent>) => void;
+  onClick?: (e: React.MouseEvent<Element, MouseEvent>) => void;
 }
 
 function PopupFooter({
@@ -213,7 +192,7 @@ function PopupFooter({
   const Comp = asChild ? Slot : "div";
 
   return (
-    <Comp className={cn("flex w-full justify-center gap-8", className)}>
+    <Comp className={cn("mt-16 flex w-full justify-center gap-8", className)}>
       {children}
     </Comp>
   );
@@ -223,13 +202,13 @@ function PopupClose({
   children,
   className,
   asChild = false,
-  onClose = () => {},
+  onClick = () => {},
 }: PopupCloseProps) {
   const { setOpen } = usePopup();
   const Comp = asChild ? Slot : "button";
 
   const handleClick = (e: React.MouseEvent<Element, MouseEvent>) => {
-    onClose(e);
+    onClick(e);
     setOpen(false);
   };
 
@@ -247,10 +226,7 @@ function PopupClose({
 const Popup = {
   Root: PopupRoot,
   Trigger: PopupTrigger,
-  Portal: PopupPortal,
-  Overlay: PopupOverlay,
   Content: PopupContent,
-  Description: PopupDescription,
   Footer: PopupFooter,
   Close: PopupClose,
 };

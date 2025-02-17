@@ -1,31 +1,38 @@
+/* eslint-disable no-console */
+
 "use client";
 
-import Sheet from "@/components/@common/portal/popup";
+import Popup from "@/components/@common/portal/popup";
 
 const DashboardPage = () => {
   return (
-    <Sheet.Root>
-      <Sheet.Trigger className="rounded-md bg-blue-500 px-4 py-2 text-white">
+    <Popup.Root>
+      <Popup.Trigger className="rounded-md bg-blue-500 px-4 py-2 text-white">
         Open Popup
-      </Sheet.Trigger>
-      <Sheet.Portal>
-        <Sheet.Content>
-          {/* <Sheet.Title asChild>
-            <h3>할 일 생성</h3>
-          </Sheet.Title> */}
-          <Sheet.Description className="flex flex-col items-center justify-center">
-            <span>정말 나가시겠어요?</span>
-            <span>작성된 내용이 모두 삭제됩니다.</span>
-          </Sheet.Description>
-          <Sheet.Footer className="mt-16">
-            <Sheet.Close className="h-48 w-120 border-2 border-black">
-              확인
-            </Sheet.Close>
-          </Sheet.Footer>
-        </Sheet.Content>
-        <Sheet.Overlay className="bg-gray-500" />
-      </Sheet.Portal>
-    </Sheet.Root>
+      </Popup.Trigger>
+      <Popup.Content className="">
+        <div className="flex flex-col items-center justify-center">
+          <span>정말 나가시겠어요?</span>
+          <span>작성된 내용이 모두 삭제됩니다.</span>
+        </div>
+        <Popup.Footer>
+          <Popup.Close asChild>
+            <button
+              onClick={() => console.log("popup 취소")}
+              className="h-48 w-120 border-2 border-black"
+            >
+              취소
+            </button>
+          </Popup.Close>
+          <Popup.Close
+            onClick={() => console.log("popup 확인")}
+            className="h-48 w-120 border-2 border-black"
+          >
+            확인
+          </Popup.Close>
+        </Popup.Footer>
+      </Popup.Content>
+    </Popup.Root>
   );
 };
 

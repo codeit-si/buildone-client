@@ -125,7 +125,7 @@ function ModalOverlay({
         <motion.div
           role="presentation"
           aria-hidden
-          className={cn("fixed inset-0 bg-black", className)}
+          className={cn("fixed inset-0 bg-gray-500", className)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.5, transition: { duration: 0.2 } }}
           exit={{ opacity: 0, transition: { duration: 0.2 } }}
@@ -144,41 +144,44 @@ function ModalContent({
   hasCloseIcon = true,
 }: ComponentProps<"div"> & { hasCloseIcon?: boolean }) {
   const { open, setOpen } = useModal();
-  const [[description, footer], nonContentChild] = splitChildrenByComponents(
-    [ModalDescription, ModalFooter],
+  const [[title, footer], nonContentChild] = splitChildrenByComponents(
+    [ModalTitle, ModalFooter],
     children,
   );
 
   return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          role="dialog"
-          aria-modal="true"
-          className={cn(
-            "fixed left-[50%] top-[50%] z-50 flex w-full max-w-300 translate-x-[-50%] translate-y-[-50%] flex-col gap-24 rounded-lg border bg-white px-16 py-24 pb-26 pt-24 shadow-xl md:max-w-450 md:px-24",
-            className,
-          )}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.2 } }}
-          exit={{ opacity: 0, transition: { duration: 0.2 } }}
-        >
-          <div className={cn("flex w-full justify-end")}>
-            {hasCloseIcon && (
-              <button
-                className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"
-                onClick={() => setOpen(false)}
-              >
-                <IcClose />
-              </button>
+    <ModalPortal>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            className={cn(
+              "fixed left-[50%] top-[50%] z-50 flex h-full w-full translate-x-[-50%] translate-y-[-50%] flex-col gap-24 border bg-white px-16 py-24 pb-26 pt-24 shadow-xl md:h-auto md:max-w-520 md:rounded-lg md:px-24",
+              className,
             )}
-          </div>
-          {description}
-          {nonContentChild}
-          {footer}
-        </motion.div>
-      )}
-    </AnimatePresence>
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.2 } }}
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+          >
+            <div className={cn("flex w-full justify-between")}>
+              {title || <div className="grow" />}
+              {hasCloseIcon && (
+                <button
+                  className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"
+                  onClick={() => setOpen(false)}
+                >
+                  <IcClose />
+                </button>
+              )}
+            </div>
+            {nonContentChild}
+            {footer}
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <ModalOverlay />
+    </ModalPortal>
   );
 }
 
@@ -194,25 +197,6 @@ function ModalTitle({
   );
 }
 
-function ModalDescription({
-  children,
-  className,
-  asChild = false,
-}: ModalElementProps<"p">) {
-  const Comp = asChild ? Slot : "p";
-
-  return (
-    <Comp
-      className={cn(
-        "grow justify-center overflow-scroll [&::-webkit-scrollbar]:hidden",
-        className,
-      )}
-    >
-      {children}
-    </Comp>
-  );
-}
-
 interface ModalCloseProps extends ModalElementProps<"button"> {
   onClose?: (e: React.MouseEvent<Element, MouseEvent>) => void;
 }
@@ -225,7 +209,7 @@ function ModalFooter({
   const Comp = asChild ? Slot : "div";
 
   return (
-    <Comp className={cn("flex w-full justify-center gap-8", className)}>
+    <Comp className={cn("mt-16 flex w-full justify-center gap-8", className)}>
       {children}
     </Comp>
   );
@@ -247,7 +231,7 @@ function ModalClose({
 
   return (
     <Comp
-      className={cn("text-xl font-semibold", className)}
+      className={cn("w-full text-xl font-semibold", className)}
       onClick={handleClick}
       aria-label="모달 닫기"
     >
@@ -259,11 +243,8 @@ function ModalClose({
 const Modal = {
   Root: ModalRoot,
   Trigger: ModalTrigger,
-  Portal: ModalPortal,
-  Overlay: ModalOverlay,
   Content: ModalContent,
   Title: ModalTitle,
-  Description: ModalDescription,
   Footer: ModalFooter,
   Close: ModalClose,
 };
