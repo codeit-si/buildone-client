@@ -90,7 +90,11 @@ function mergeProps(slotProps: UnknownProps, childProps: UnknownProps) {
       }
     }
     // if it's `style`, we merge them
-    else if (propName === "style" && slotPropValue && childPropValue) {
+    else if (
+      propName === "style" &&
+      typeof slotPropValue === "object" &&
+      typeof childPropValue === "object"
+    ) {
       overrideProps[propName] = { ...slotPropValue, ...childPropValue };
     } else if (propName === "className") {
       overrideProps[propName] = [slotPropValue, childPropValue]
