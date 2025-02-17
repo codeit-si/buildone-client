@@ -93,16 +93,16 @@
     "no-use-before-define": [
       "error",
       {
-        "functions": true,
-        "variables": false
+        "functions": false,
+        "variables": true
       }
     ],
     // 위 규칙의 typescript 버전
     "@typescript-eslint/no-use-before-define": [
       "error",
       {
-        "functions": true,
-        "variables": false
+        "functions": false,
+        "variables": true
       }
     ],
     // 변수 이름의 경우 아래 3가지 형태의 이름을 허용
@@ -115,6 +115,7 @@
     ],
     // 아래 규칙들 에러가 왜 뜨는지 찾아봐야겠음
     "@typescript-eslint/lines-between-class-members": "off",
-    "@typescript-eslint/no-throw-literal": "off"
+    "@typescript-eslint/no-throw-literal": "off",
+    "no-nested-ternary": "off"
   }
 }
