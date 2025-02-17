@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 interface AuthState {
   accessToken: string;
+  expiredTime: string;
 
   actions: {
     setAccessToken: (token: string) => void;
@@ -9,11 +10,18 @@ interface AuthState {
   };
 }
 
-export const useAuthStore = create<AuthState>()((set) => ({
+const initialState = {
   accessToken: "",
+  expiredTime: "",
+};
+
+export const useAuthStore = create<AuthState>()((set) => ({
+  ...initialState,
+
   actions: {
     setAccessToken: (token: string) => set({ accessToken: token }),
-    removeAccessToken: () => set({ accessToken: "" }),
+    setExpiredTime: (time: string) => set({ expiredTime: time }),
+    removeAccessToken: () => set(initialState),
   },
 }));
 

@@ -6,7 +6,6 @@ export interface MemberInformation {
 
 interface Credentials {
   accessToken: string;
-  accessTokenExpiredTime: string;
   refreshToken: string;
 }
 

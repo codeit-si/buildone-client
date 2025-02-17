@@ -62,18 +62,20 @@ export default function LoginForm() {
     try {
       const response = await login(data.email, data.password);
 
-      setAccessToken(response.credentials.accessToken);
-      setUserInfo(response.memberInformation);
+      const token = response.headers?.["access-token"];
+
+      setAccessToken(token);
+      setUserInfo(response.data.memberInformation);
 
       router.push("/");
     } catch (error: unknown) {
       if (error instanceof CustomError) {
         if (error.code === "NOT_FOUND_EXIST_MEMBER") {
-          setError("email", { type: "validate", message: error.message });
+          setError("email", { type: "valid", message: error.message });
         }
 
         if (error.code === "INVALID_PASSWORD_FORMAT") {
-          setError("password", { type: "validate", message: error.message });
+          setError("password", { type: "valid", message: error.message });
         }
       }
     }
