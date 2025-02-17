@@ -15,6 +15,10 @@ const DashboardPage = () => {
           <span>정말 나가시겠어요?</span>
           <span>작성된 내용이 모두 삭제됩니다.</span>
         </div>
+        <div className="flex flex-col items-center justify-center">
+          <span>정말 나가시겠어요?</span>
+          <span>작성된 내용이 모두 삭제됩니다.</span>
+        </div>
         <Popup.Footer>
           <Popup.Close asChild>
             <button

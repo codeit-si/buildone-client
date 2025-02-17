@@ -9,6 +9,7 @@ const DashboardPage = () => {
         Open Modal
       </Modal.Trigger>
       <Modal.Content className="">
+        <Modal.Title>Title 입니다!</Modal.Title>
         <div className="flex flex-col items-center justify-center gap-4">
           <span>정말 나가시겠어요?</span>
           <span>작성된 내용이 모두 삭제됩니다.</span>

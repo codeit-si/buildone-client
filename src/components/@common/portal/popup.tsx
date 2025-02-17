@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Children,
   ComponentProps,
   createContext,
   ElementType,
@@ -161,16 +160,7 @@ function PopupContent({ children, className }: ComponentProps<"div">) {
             exit={{ opacity: 0, transition: { duration: 0.2 } }}
           >
             <div />
-            {Children.count(nonContentChild) > 0 && (
-              <div
-                className={cn(
-                  "grow justify-center overflow-y-scroll",
-                  className,
-                )}
-              >
-                {nonContentChild}
-              </div>
-            )}
+            {nonContentChild}
             {footer}
           </motion.div>
         )}

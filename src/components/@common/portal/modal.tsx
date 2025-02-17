@@ -175,7 +175,7 @@ function ModalContent({
                 </button>
               )}
             </div>
-            {nonContentChild}
+            <div className="grow overflow-y-scroll">{nonContentChild}</div>
             {footer}
           </motion.div>
         )}
