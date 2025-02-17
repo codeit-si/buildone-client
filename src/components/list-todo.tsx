@@ -9,19 +9,19 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
+import GoalIcon from "@/assets/Goal.svg";
 import CheckBoxOffIcon from "@/assets/checkbox_off.svg";
 import CheckBoxOnIcon from "@/assets/checkbox_on.svg";
 import FileIcon from "@/assets/file.svg";
 import KebabIcon from "@/assets/kebab.svg";
 import LinkIcon from "@/assets/link.svg";
-import NoteIcon from "@/assets/note.svg";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 
 interface Todo {
   id: string;
   title: string;
   status: "todo" | "done";
-  hasNote: string | null;
+  hasGoal: string | null;
   hasLink: boolean;
   hasFile: boolean;
 }
@@ -45,28 +45,28 @@ interface TodoEditAndDeleteAndIconsProps extends BaseTodoProps {
   activeKebab: number | null;
   handleKebabClick: (index: number) => void;
 }
-interface NoteProps {
+interface GoalProps {
   todo: Todo;
 }
 
-const notes = [
+const Goals = [
   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, quod.",
   "Lorem ipsum dolor sit amet, consectetur adipisicing.",
   "orem ipsum dolor sit amet.",
   "Lorem ipsum dolor sit amet consectetur.",
 ];
-const getRandomNote = () => {
-  const randomIndex = Math.floor(Math.random() * notes.length);
-  return notes[randomIndex];
+const getRandomGoal = () => {
+  const randomIndex = Math.floor(Math.random() * Goals.length);
+  return Goals[randomIndex];
 };
 const mockFetchTodos = async (pageParam = 1) => {
   return new Promise<{ todos: Todo[]; nextPage?: number }>((resolve) => {
     setTimeout(() => {
       const todos: Todo[] = Array.from({ length: 40 }, (_, i) => ({
         id: `todo-${pageParam}-${i}`,
-        title: `${pageParam}-${i + 1} ${getRandomNote()}`,
+        title: `${pageParam}-${i + 1} ${getRandomGoal()}`,
         status: Math.random() > 0.5 ? "todo" : "done",
-        hasNote: Math.random() > 0.5 ? getRandomNote() : null,
+        hasGoal: Math.random() > 0.5 ? getRandomGoal() : null,
         hasLink: Math.random() > 0.5,
         hasFile: Math.random() > 0.5,
       }));
@@ -123,13 +123,13 @@ const TodoEditAndDeleteAndIcons = ({
     </div>
   );
 };
-const Note = ({ todo }: NoteProps) => {
-  if (!todo.hasNote) return;
+const Goal = ({ todo }: GoalProps) => {
+  if (!todo.hasGoal) return;
   return (
     <div className="ml-30 mt-10 flex items-center gap-10 text-slate-700">
-      <NoteIcon />
+      <GoalIcon />
       <p className={`${todo.status === "done" ? "line-through" : ""}`}>
-        {todo.hasNote}
+        {todo.hasGoal}
       </p>
     </div>
   );
@@ -234,7 +234,7 @@ export default function ListTodo({
                 todo={todo}
               />
             </div>
-            <Note todo={todo} />
+            <Goal todo={todo} />
           </li>
         ))}
       </ul>
