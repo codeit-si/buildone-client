@@ -9,10 +9,10 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
-import GoalIcon from "@/assets/Goal.svg";
 import CheckBoxOffIcon from "@/assets/checkbox_off.svg";
 import CheckBoxOnIcon from "@/assets/checkbox_on.svg";
 import FileIcon from "@/assets/file.svg";
+import GoalIcon from "@/assets/goal.svg";
 import KebabIcon from "@/assets/kebab.svg";
 import LinkIcon from "@/assets/link.svg";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
@@ -49,15 +49,15 @@ interface GoalProps {
   todo: Todo;
 }
 
-const Goals = [
+const goals = [
   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, quod.",
   "Lorem ipsum dolor sit amet, consectetur adipisicing.",
   "orem ipsum dolor sit amet.",
   "Lorem ipsum dolor sit amet consectetur.",
 ];
 const getRandomGoal = () => {
-  const randomIndex = Math.floor(Math.random() * Goals.length);
-  return Goals[randomIndex];
+  const randomIndex = Math.floor(Math.random() * goals.length);
+  return goals[randomIndex];
 };
 const mockFetchTodos = async (pageParam = 1) => {
   return new Promise<{ todos: Todo[]; nextPage?: number }>((resolve) => {
