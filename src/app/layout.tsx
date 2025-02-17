@@ -29,7 +29,6 @@ export default function RootLayout({
       <body className={`${pretendard.variable} font-pretendard`}>
         <SentryCheck />
         <TanstackQueryProvider>{children}</TanstackQueryProvider>
-        <div id="modal" />
       </body>
     </html>
   );

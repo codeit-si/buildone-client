@@ -1,3 +1,5 @@
+const PREFIX = `/api/v1`;
+
 export const ENDPOINT = {
   AUTH: {
     LOGIN: "/api/login",
@@ -11,7 +13,10 @@ export const ENDPOINT = {
     DELETE: (id: number) => `/api/goals/${id}`,
   },
   TODO: {
-    GET_ALL: "/api/todos",
+    GET_ALL: `${PREFIX}/todos`,
     GET_BY_ID: (id: number) => `/api/todos/${id}`,
+  },
+  DASHBOARD: {
+    GET: `${PREFIX}/dashboard`,
   },
 } as const;
