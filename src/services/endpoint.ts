@@ -2,8 +2,9 @@ const PREFIX = "/api/v1";
 
 export const ENDPOINT = {
   AUTH: {
-    LOGIN: `${PREFIX}/login`,
-    SIGNUP: `${PREFIX}/signup`,
+    LOGIN: `${PREFIX}/auth/login`,
+    SIGNUP: `${PREFIX}/auth/signup`,
+    TOKEN_VALIDATION: `${PREFIX}/auth/token`,
   },
   // 아래 endpoint들은 예시입니다!
   GOAL: {
