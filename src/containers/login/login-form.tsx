@@ -4,12 +4,17 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 
 import Button from "@/components/button";
 import Input from "@/components/input";
 import LabeledField from "@/components/labeled-field";
 import { useDebounce } from "@/hooks/useDebounce";
+import { CustomError } from "@/lib/axios";
+import { login } from "@/services/auth";
+import { useAuthActions } from "@/store/authStore";
+import { useUserActions } from "@/store/userStore";
 
 const loginSchema = z.object({
   email: z
@@ -20,12 +25,19 @@ const loginSchema = z.object({
 });
 
 type LoginSchema = z.infer<typeof loginSchema>;
+type LoginSchemaKey = keyof LoginSchema;
 
 export default function LoginForm() {
+  const router = useRouter();
+
+  const { setAccessToken } = useAuthActions();
+  const { setUserInfo } = useUserActions();
+
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
+    setError,
     trigger,
     watch,
   } = useForm<LoginSchema>({
@@ -38,7 +50,6 @@ export default function LoginForm() {
   });
 
   const email = watch("email");
-
   const debouncedEmail = useDebounce(email, 1000);
 
   useEffect(() => {
@@ -48,54 +59,71 @@ export default function LoginForm() {
   }, [debouncedEmail, trigger]);
 
   const onSubmit = async (data: LoginSchema) => {
-    // TODO - submit 했을 때 이메일 틀렸거나, 비밀번호가 틀렸을 때 setError로 에러 메시지 설정
-    // https://react-hook-form.com/docs/useform/seterror
+    try {
+      const response = await login(data.email, data.password);
 
-    // eslint-disable-next-line no-console
-    console.log(data);
+      setAccessToken(response.credentials.accessToken);
+      setUserInfo(response.memberInformation);
+
+      router.push("/");
+    } catch (error: unknown) {
+      if (error instanceof CustomError) {
+        if (error.code === "NOT_FOUND_EXIST_MEMBER") {
+          setError("email", { type: "validate", message: error.message });
+        }
+
+        if (error.code === "INVALID_PASSWORD_FORMAT") {
+          setError("password", { type: "validate", message: error.message });
+        }
+      }
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <LabeledField htmlFor="email" label="아이디">
-        <Input
-          id="email"
-          placeholder="이메일을 입력해주세요"
-          {...register("email")}
-          className={
-            errors.email &&
-            "border-red-500 focus-within:border-red-500 hover:border-red-500"
-          }
-        />
-      </LabeledField>
-      {errors.email && (
-        <p className="mt-8 inline-block text-sm font-normal text-red-500">
-          {errors.email.message}
-        </p>
-      )}
-      <LabeledField label="비밀번호" htmlFor="password" className="mt-24">
-        <Input
-          id="password"
-          type="password"
-          placeholder="비밀번호를 입력해주세요"
-          {...register("password")}
-          className={
-            errors.password &&
-            "border-red-500 focus-within:border-red-500 hover:border-red-500"
-          }
-        />
-      </LabeledField>
-      {errors.password && (
-        <p className="mt-8 inline-block text-sm font-normal text-red-500">
-          {errors.password.message}
-        </p>
-      )}
+      {[
+        {
+          key: "email",
+          label: "아이디",
+          type: "text",
+          placeholder: "이메일을 입력해주세요",
+        },
+        {
+          key: "password",
+          label: "비밀번호",
+          type: "password",
+          placeholder: "비밀번호를 입력해주세요",
+        },
+      ].map(({ key, label, type, placeholder }, index) => (
+        <LabeledField
+          key={key}
+          htmlFor={key}
+          label={label}
+          className={index > 0 ? "mt-24" : ""}
+        >
+          <Input
+            id={key}
+            type={type}
+            placeholder={placeholder}
+            {...register(key as LoginSchemaKey)}
+            className={
+              errors[key as LoginSchemaKey] &&
+              "border-red-500 focus-within:border-red-500 hover:border-red-500"
+            }
+          />
+          {errors[key as LoginSchemaKey] && (
+            <p className="mt-8 inline-block text-sm font-normal text-red-500">
+              {errors[key as LoginSchemaKey]?.message}
+            </p>
+          )}
+        </LabeledField>
+      ))}
       <Button
         type="submit"
         className="mt-48 w-full"
         disabled={!isDirty || !isValid}
       >
-        로그인
+        로그인하기
       </Button>
     </form>
   );
