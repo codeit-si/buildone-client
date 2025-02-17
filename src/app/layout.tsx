@@ -1,6 +1,5 @@
 import localFont from "next/font/local";
 
-import SentryCheck from "@/components/SentryCheck";
 import TanstackQueryProvider from "@/lib/tanstack-query-provider";
 
 import type { Metadata } from "next";
@@ -27,7 +26,6 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${pretendard.variable} font-pretendard`}>
-        <SentryCheck />
         <TanstackQueryProvider>{children}</TanstackQueryProvider>
         <div id="modal" />
       </body>
