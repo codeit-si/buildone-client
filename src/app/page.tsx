@@ -4,6 +4,7 @@ import { Suspense } from "react";
 
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
+import ContainerRecentlyTodo from "@/components/container-recently-todo";
 import ListTodo from "@/components/list-todo";
 
 import PostPage from "../components/post-page";
@@ -28,6 +29,7 @@ export default async function Home() {
         {/* Streaming 컴포넌트트 */}
         <Suspense fallback={<h1>Loading...</h1>}>
           <PostPage />
+          <ContainerRecentlyTodo status="todo" />
           <ListTodo />
         </Suspense>
       </HydrationBoundary>
