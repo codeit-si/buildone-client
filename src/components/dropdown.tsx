@@ -2,49 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { cva } from "class-variance-authority";
+import { AnimatePresence } from "motion/react";
+import * as motion from "motion/react-client";
 
 import KebabIcon from "@/assets/kebab.svg";
 
 interface DropdownItem {
-  id: string;
   label: string;
   onClick: () => void;
 }
 
 interface DropdownProps {
-  size?: "sm" | "md";
   items: DropdownItem[];
 }
 
-const dropdownVariants = cva(
-  "absolute z-50 right-0 h-auto overflow-hidden rounded-17 bg-white shadow-lg",
-  {
-    variants: {
-      size: {
-        sm: "w-81",
-        md: "w-106",
-      },
-    },
-    defaultVariants: {
-      size: "md",
-    },
-  },
-);
-
-const itemVariants = cva(
-  "flex w-full items-center justify-center font-slate-700 hover:bg-slate-100",
-  {
-    variants: {
-      size: {
-        sm: "h-34 px-2 text-sm",
-        md: "h-42 px-4 text-lg",
-      },
-    },
-  },
-);
-
-function Dropdown({ size = "md", items }: DropdownProps) {
+function Dropdown({ items }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -80,24 +52,29 @@ function Dropdown({ size = "md", items }: DropdownProps) {
           <KebabIcon />
         </div>
       </button>
-      {isOpen && (
-        <div
-          role="menu"
-          aria-label="옵션 선택 드롭다운"
-          className={dropdownVariants({ size })}
-        >
-          {items.map(({ id, label, onClick }) => (
-            <button
-              key={id}
-              onClick={onClick}
-              role="menuitem"
-              className={itemVariants({ size })}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.1 } }}
+            exit={{ opacity: 0, transition: { duration: 0.1 } }}
+            role="menu"
+            aria-label="옵션 선택 드롭다운"
+            className="absolute right-0 z-50 h-auto w-81 overflow-hidden rounded-17 bg-white shadow-md md:w-106"
+          >
+            {items.map(({ label, onClick }, i) => (
+              <button
+                key={`kebab-dropdown-${i + 1}`}
+                onClick={onClick}
+                role="menuitem"
+                className="font-slate-700 flex h-34 w-full items-center justify-center px-2 text-sm hover:bg-slate-100 md:h-42 md:px-4 md:text-lg"
+              >
+                {label}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
