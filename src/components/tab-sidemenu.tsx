@@ -1,56 +1,138 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 import { cva } from "class-variance-authority";
 
-export interface TabItem {
-  id: number;
-  text: string;
-}
+import AddGoalSection from "@/containers/tab-sidemenu/AddGoalSection";
+import GoalsList from "@/containers/tab-sidemenu/GoalsList";
+import GoalsMenu from "@/containers/tab-sidemenu/GoalsMenu";
+import LogoComponent from "@/containers/tab-sidemenu/LogoComponent";
+import TabToggleComponent from "@/containers/tab-sidemenu/TabToggleComponent";
+import TodosMenu from "@/containers/tab-sidemenu/TodosMenu";
+import UserProfileComponent from "@/containers/tab-sidemenu/UserProfileComponent";
 
-interface TabInputProps {
-  tab: TabItem;
-  onInputChange: (id: number, newValue: string) => void; // 인풋 값이 변경될 때 호출
-  onInputBlur: (id: number, text: string) => void; // 인풋이 포커스를 잃었을 때 호출
-}
+import { TabItem } from "./tab-input";
 
-// 탭 스타일
-const containerStyle = cva(
-  "flex items-center bg-white rounded px-2 text-slate-700 h-9 w-full",
-);
+const containerStyle = cva("fixed z-30 bg-white", {
+  variants: {
+    open: {
+      true: "h-48 w-full md:h-full md:w-60 lg:h-full lg:w-60",
+      false: "h-full w-full md:w-280 lg:w-280",
+    },
+  },
+  defaultVariants: {
+    open: false,
+  },
+});
+const topSectionStyle = cva("space-y-20 p-0 md:p-20 lg:p-20", {
+  variants: {
+    open: {
+      true: "h-full p-0",
+      false: "p-20",
+    },
+  },
+  defaultVariants: {
+    open: false,
+  },
+});
+const topHeaderStyle = cva("flex items-center justify-between", {
+  variants: {
+    open: {
+      true: "h-full flex-row gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
+      false: "",
+    },
+  },
+  defaultVariants: {
+    open: false,
+  },
+});
 
-// 인풋 자체 스타일
-const inputStyle = cva("flex-1 bg-transparent outline-none");
+export default function TabSidemenu() {
+  const [isTabOpen, setIsTabOpen] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const [goals, setGoals] = useState<TabItem[]>([]);
+  const [newGoal, setNewGoal] = useState("");
+  const profile = false;
 
-export function TabInput({ tab, onInputChange, onInputBlur }: TabInputProps) {
-  // input 요소에 대한 참조 생성
-  const inputRef = useRef<HTMLInputElement>(null);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newGoal.trim() === "") return;
+    const newTab: TabItem = {
+      id: goals.length + 1,
+      text: newGoal,
+    };
+    setGoals([...goals, newTab]);
+    setNewGoal("");
+  };
 
-  // 탭 텍스트가 변경될 때마다 해당 인풋에 자동 포커스를 부여
+  // 목표 텍스트 변경 함수
+  const handleInputChange = (id: number, newValue: string) => {
+    setGoals((prevGoals) =>
+      prevGoals.map((goal) =>
+        goal.id === id ? { ...goal, text: newValue } : goal,
+      ),
+    );
+  };
+
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [tab.text]);
+    const handleResize = () => {
+      if (window.innerWidth >= 1200) {
+        setIsTabOpen(false);
+      } else {
+        setIsTabOpen(true);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsAdding(false);
+        setNewGoal("");
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
-    <div role="group" aria-label="Editable Tab" className={containerStyle()}>
-      {/* 탭 앞에 표시할 기호 */}
-      <span className="mr-2">· </span>
-      {/* 탭 인풋: 사용자가 입력할 수 있음 */}
-      <input
-        ref={inputRef} // input 요소 참조
-        placeholder="목표를 입력해주세요"
-        aria-label="Tab name input" // 접근성용
-        type="text" // 텍스트 입력 타입
-        value={tab.text} // 탭의 현재 텍스트 값
-        // 인풋 내용이 변경
-        onChange={(e) => onInputChange(tab.id, e.target.value)}
-        // 인풋이 포커스를 잃음
-        onBlur={() => onInputBlur(tab.id, tab.text)}
-        className={inputStyle()} // 스타일 적용
-      />
+    <div className={containerStyle({ open: isTabOpen })}>
+      <div className={topSectionStyle({ open: isTabOpen })}>
+        <div className={topHeaderStyle({ open: isTabOpen })}>
+          <LogoComponent isTabOpen={isTabOpen} setIsTabOpen={setIsTabOpen} />
+          <TabToggleComponent
+            isTabOpen={isTabOpen}
+            setIsTabOpen={setIsTabOpen}
+          />
+        </div>
+        <UserProfileComponent isTabOpen={isTabOpen} profile={profile} />
+      </div>
+      {/* 탭 열였을때 나타나는 bottom menus */}
+      {!isTabOpen && (
+        <>
+          <TodosMenu />
+          <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />
+          <div className="px-20">
+            <GoalsList
+              goals={goals}
+              handleInputChange={handleInputChange}
+              setIsAdding={setIsAdding}
+            />
+            <AddGoalSection
+              goals={goals}
+              handleSubmit={handleSubmit}
+              isAdding={isAdding}
+              newGoal={newGoal}
+              setIsAdding={setIsAdding}
+              setNewGoal={setNewGoal}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }
