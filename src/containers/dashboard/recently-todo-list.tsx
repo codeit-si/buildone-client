@@ -6,7 +6,7 @@ import { getDashboardOptions } from "@/services/dashboard";
 
 import Goal from "./goal";
 import RecentlyTodoCheckbox from "./recently-todo-checkbox";
-import TodoDropdown from "./todo-dropdown";
+import TodoIcons from "./todo-icons";
 
 export default function RecentlyTodoList() {
   const { data } = useSuspenseQuery(getDashboardOptions());
@@ -18,7 +18,7 @@ export default function RecentlyTodoList() {
         <li key={todo.id} className="text-sm">
           <div className="flex items-center justify-between">
             <RecentlyTodoCheckbox todo={todo} />
-            <TodoDropdown todo={todo} />
+            <TodoIcons todo={todo} />
           </div>
           {todo.goalInformation && (
             <Goal goal={todo.goalInformation} isDone={todo.isDone} />

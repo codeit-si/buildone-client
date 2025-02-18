@@ -34,6 +34,7 @@ export default function RecentlyTodoCheckbox({
       <label
         htmlFor={`todo-check-${todoProp.id}`}
         className="relative flex cursor-pointer items-center"
+        aria-label={`${todoProp.title} ${isDone ? "완료됨" : "미완료"}`}
       >
         <input
           type="checkbox"
