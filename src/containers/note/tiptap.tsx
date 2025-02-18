@@ -7,13 +7,13 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
 
-import Toolbar from "./Toolbar";
+import Toolbar from "@/containers/note/toolbar";
 
 interface TiptapProps {
   setContents: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Tiptap = ({ setContents }: TiptapProps) => {
+function Tiptap({ setContents }: TiptapProps) {
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -40,6 +40,6 @@ const Tiptap = ({ setContents }: TiptapProps) => {
       <EditorContent editor={editor} />
     </div>
   );
-};
+}
 
 export default Tiptap;

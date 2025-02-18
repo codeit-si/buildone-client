@@ -1,20 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
-import FlagGoalIcon from "@/assets/flag_goal_small.svg";
 import Button from "@/components/button";
 import Counting from "@/components/counting";
-import Tiptap from "@/containers/tiptap";
+import Goal from "@/containers/note/goal";
+import Tiptap from "@/containers/note/tiptap";
+import Todo from "@/containers/note/todo";
+import "@/styles/note.css";
 import { countWithoutSpaces, countWithSpaces } from "@/utils/text-utils";
 
 export default function ComposePage() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
   return (
     <div className="ml-16 mt-24 md:ml-24 lg:ml-80">
-      <div className="w-349 md:w-636 lg:w-792">
+      <div className="container-width">
+        {/* 헤더 */}
         <div className="grid h-44 grid-cols-[162px_auto] items-center">
           <h1 className="truncate text-lg font-semibold text-slate-900">
             노트 작성
@@ -30,29 +37,25 @@ export default function ComposePage() {
         </div>
 
         <div className="mt-16">
-          <div className="mb-12 flex">
-            <FlagGoalIcon className="mr-6 h-24 w-24" />
-            <div className="font-medium">자바스크립트로 웹 서비스 만들기</div>
-          </div>
+          {/* 목표 표시 */}
+          <Goal goalText="자바스크립트로 웹 서비스 만들기" />
 
-          <div className="mb-24 flex">
-            <div className="flex h-20 w-37 items-center justify-center rounded-4 bg-slate-100 text-xs text-slate-700">
-              To do
-            </div>
-            <div className="ml-8 text-sm">자바스크립트 기초 챕터1 듣기</div>
-          </div>
+          {/* To do 항목 */}
+          <Todo todoText="자바스크립트 기초 챕터1 듣기" />
 
-          <div />
+          {/* 노트 제목 입력 */}
           <div className="flex items-center gap-8">
             <input
               type="text"
               className="h-52 w-full border-b border-t border-slate-200 text-lg placeholder:text-lg"
               placeholder="노트의 제목을 입력해주세요"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={handleTitleChange}
             />
             <Counting type="title" count={title.length} total={50} />
           </div>
+
+          {/* 에디터 영역 */}
           <div className="mt-12">
             <Counting
               type="text"
