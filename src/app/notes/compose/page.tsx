@@ -5,8 +5,8 @@ import { useState } from "react";
 import FlagGoalIcon from "@/assets/flag_goal_small.svg";
 import Button from "@/components/button";
 import Counting from "@/components/counting";
-import Tiptap from "@/components/tiptap";
-import { countWithoutSpaces } from "@/utils/text-utils";
+import Tiptap from "@/containers/tiptap";
+import { countWithoutSpaces, countWithSpaces } from "@/utils/text-utils";
 
 export default function ComposePage() {
   const [title, setTitle] = useState<string>("");
@@ -32,7 +32,7 @@ export default function ComposePage() {
         <div className="mt-16">
           <div className="mb-12 flex">
             <FlagGoalIcon className="mr-6 h-24 w-24" />
-            <div>자바스크립트로 웹 서비스 만들기</div>
+            <div className="font-medium">자바스크립트로 웹 서비스 만들기</div>
           </div>
 
           <div className="mb-24 flex">
@@ -57,9 +57,9 @@ export default function ComposePage() {
             <Counting
               type="text"
               count={countWithoutSpaces(content)}
-              total={content.length}
+              total={countWithSpaces(content)}
             />
-            <div className="mt-16 text-slate-700">
+            <div className="mt-16">
               <Tiptap setContents={setContent} />
             </div>
           </div>
