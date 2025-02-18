@@ -78,6 +78,7 @@
     "tailwindcss-preset-px-to-rem": "^1.2.1",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "@tanstack/react-query-devtools": "^5.66.0"
   }
 }
