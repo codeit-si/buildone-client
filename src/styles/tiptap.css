@@ -9,6 +9,6 @@
 
 /* 이중으로 엔터가 되는 것을 방지하는 코드 */
 .custom-editor .ProseMirror p {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
+  margin-top: 0;
+  margin-bottom: 0;
 }
