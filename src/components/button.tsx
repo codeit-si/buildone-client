@@ -32,7 +32,7 @@ const ButtonVariants = cva(
   },
 );
 
-interface ButtonProps
+export interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof ButtonVariants> {
   children: ReactNode;
@@ -53,6 +53,7 @@ export default function Button({
       type={type}
       className={cn(ButtonVariants({ variant, shape, size }), className)}
       aria-disabled={disabled}
+      disabled={disabled}
       {...props}
     >
       {children}

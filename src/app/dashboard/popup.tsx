@@ -20,18 +20,13 @@ const DashboardPage = () => {
           <span>작성된 내용이 모두 삭제됩니다.</span>
         </div>
         <Popup.Footer>
-          <Popup.Close asChild>
-            <button
-              onClick={() => console.log("popup 취소")}
-              className="h-48 w-120 border-2 border-black"
-            >
-              취소
-            </button>
-          </Popup.Close>
           <Popup.Close
-            onClick={() => console.log("popup 확인")}
-            className="h-48 w-120 border-2 border-black"
+            variant="outlined"
+            onClick={() => console.log("popup 취소")}
           >
+            취소
+          </Popup.Close>
+          <Popup.Close onClick={() => console.log("popup 확인")}>
             확인
           </Popup.Close>
         </Popup.Footer>

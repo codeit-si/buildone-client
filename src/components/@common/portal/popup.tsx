@@ -15,6 +15,7 @@ import { createPortal } from "react-dom";
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
+import Button, { ButtonProps } from "@/components/button";
 import usePortalClosesByEscapeKey from "@/hooks/portal/use-portal-closes-by-escape-key";
 import usePortalOpen from "@/hooks/portal/use-portal-open";
 import { cn } from "@/lib/cn";
@@ -170,10 +171,6 @@ function PopupContent({ children, className }: ComponentProps<"div">) {
   );
 }
 
-interface PopupCloseProps extends PopupElementProps<"button"> {
-  onClick?: (e: React.MouseEvent<Element, MouseEvent>) => void;
-}
-
 function PopupFooter({
   children,
   className,
@@ -188,14 +185,17 @@ function PopupFooter({
   );
 }
 
+interface PopupCloseProps extends ButtonProps {
+  onClick?: (e: React.MouseEvent<Element, MouseEvent>) => void;
+}
+
 function PopupClose({
   children,
   className,
-  asChild = false,
   onClick = () => {},
+  ...props
 }: PopupCloseProps) {
   const { setOpen } = usePopup();
-  const Comp = asChild ? Slot : "button";
 
   const handleClick = (e: React.MouseEvent<Element, MouseEvent>) => {
     onClick(e);
@@ -203,13 +203,14 @@ function PopupClose({
   };
 
   return (
-    <Comp
-      className={cn("text-xl font-semibold", className)}
+    <Button
+      className={className}
       onClick={handleClick}
-      aria-label="모달 닫기"
+      aria-label="팝업 닫기"
+      {...props}
     >
       {children}
-    </Comp>
+    </Button>
   );
 }
 

@@ -14,7 +14,9 @@ const DashboardPage = () => {
           <span>작성된 내용이 모두 삭제됩니다.</span>
         </div>
         <Modal.Footer className="">
-          <Modal.Close className="h-48 border-2 border-black">확인</Modal.Close>
+          <Modal.Close variant="solid" disabled>
+            확인
+          </Modal.Close>
         </Modal.Footer>
         <Modal.Title>Title 입니다!</Modal.Title>
       </Modal.Content>

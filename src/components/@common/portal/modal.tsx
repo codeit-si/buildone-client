@@ -16,6 +16,7 @@ import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
 import IcClose from "@/assets/ic_close.svg";
+import Button, { ButtonProps } from "@/components/button";
 import usePortalClosesByEscapeKey from "@/hooks/portal/use-portal-closes-by-escape-key";
 import usePortalOpen from "@/hooks/portal/use-portal-open";
 import { cn } from "@/lib/cn";
@@ -177,7 +178,7 @@ function ModalContent({
                 </button>
               )}
             </div>
-            <div className="grow overflow-y-scroll">{nonContentChild}</div>
+            <div className="grow overflow-y-auto">{nonContentChild}</div>
             {footer}
           </motion.div>
         )}
@@ -199,10 +200,6 @@ function ModalTitle({
   );
 }
 
-interface ModalCloseProps extends ModalElementProps<"button"> {
-  onClose?: (e: React.MouseEvent<Element, MouseEvent>) => void;
-}
-
 function ModalFooter({
   children,
   className,
@@ -217,28 +214,32 @@ function ModalFooter({
   );
 }
 
+interface ModalCloseProps extends ButtonProps {
+  onClick?: (e: React.MouseEvent<Element, MouseEvent>) => void;
+}
+
 function ModalClose({
   children,
   className,
-  asChild = false,
-  onClose = () => {},
+  onClick = () => {},
+  ...props
 }: ModalCloseProps) {
   const { setOpen } = useModal();
-  const Comp = asChild ? Slot : "button";
 
   const handleClick = (e: React.MouseEvent<Element, MouseEvent>) => {
-    onClose(e);
+    onClick(e);
     setOpen(false);
   };
 
   return (
-    <Comp
-      className={cn("w-full text-xl font-semibold", className)}
+    <Button
+      className={cn("w-full", className)}
       onClick={handleClick}
       aria-label="모달 닫기"
+      {...props}
     >
       {children}
-    </Comp>
+    </Button>
   );
 }
 
