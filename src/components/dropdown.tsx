@@ -1,29 +1,42 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
 
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
 import KebabIcon from "@/assets/kebab.svg";
 
-interface DropdownItem {
-  label: string;
-  onClick: () => void;
-}
+import DropdownItem from "./dropdown-item";
 
+interface DropdownItemType {
+  label: string;
+  onClick: (e: React.MouseEvent | React.KeyboardEvent) => void;
+}
 interface DropdownProps {
-  items: DropdownItem[];
+  items: DropdownItemType[];
 }
 
 function Dropdown({ items }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [focusIndex, setFocusIndex] = useState(-1);
 
   const toggleDropdown = () => setIsOpen((prev) => !prev); // 닫고 열고
 
   // 드롭다운 외부 클릭 시 닫힘
   const closeDropdown = () => setIsOpen(false);
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Escape") closeDropdown();
+    else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setFocusIndex((prev) => (prev + 1) % items.length);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setFocusIndex((prev) => (prev - 1 + items.length) % items.length);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -40,7 +53,13 @@ function Dropdown({ items }: DropdownProps) {
   }, []);
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div
+      tabIndex={-1}
+      role="menu"
+      className="relative"
+      ref={dropdownRef}
+      onKeyDown={handleKeyDown}
+    >
       <button
         aria-haspopup="true"
         aria-expanded={isOpen}
@@ -63,14 +82,12 @@ function Dropdown({ items }: DropdownProps) {
             className="absolute right-0 z-50 h-auto w-81 overflow-hidden rounded-17 bg-white shadow-md md:w-106"
           >
             {items.map(({ label, onClick }, i) => (
-              <button
-                key={`kebab-dropdown-${i + 1}`}
+              <DropdownItem
+                key={`kebab-dropdown-${label}`}
+                label={label}
                 onClick={onClick}
-                role="menuitem"
-                className="font-slate-700 flex h-34 w-full items-center justify-center px-2 text-sm hover:bg-slate-100 md:h-42 md:px-4 md:text-lg"
-              >
-                {label}
-              </button>
+                isFocus={focusIndex === i}
+              />
             ))}
           </motion.div>
         )}
