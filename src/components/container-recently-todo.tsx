@@ -4,21 +4,11 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { cva } from "class-variance-authority";
 import Link from "next/link";
 
-import CheckBoxOffIcon from "@/assets/checkbox_off.svg";
-import CheckBoxOnIcon from "@/assets/checkbox_on.svg";
-import GoalIcon from "@/assets/goal.svg";
 import IcArrowDown from "@/assets/ic_arrow_down.svg";
 import RecentlyIcon from "@/assets/recently.svg";
+import GoalsListComponent from "@/containers/container-recently-todo/GoalsListComponent";
+import { Todo } from "@/types/container-recently-todo";
 
-interface Todo {
-  id: string;
-  title: string;
-  status: "todo" | "done";
-  hasGoal: string | null;
-  hasLink: boolean;
-  hasFile: boolean;
-  createdAt: number; // 타임스탬프 추가
-}
 interface TodosResponse {
   todos: Todo[];
   nextCursor?: string;
@@ -26,20 +16,6 @@ interface TodosResponse {
 interface ListTodoProps {
   fetchTodos?: () => Promise<{ todos: Todo[] }>;
   status: "todo" | "done";
-}
-interface BaseTodoProps {
-  index: number;
-  todo: Todo;
-}
-interface TodoTitleAndCheckBoxProps extends BaseTodoProps {
-  toggleStatus: (id: string) => void;
-}
-interface GoalProps {
-  todo: Todo;
-}
-interface GoalsListComponentProps {
-  recentTodos: Todo[];
-  toggleStatus: (id: string) => void;
 }
 const Goals = [
   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, quod.",
@@ -67,65 +43,6 @@ const mockFetchTodos = async () => {
       resolve({ todos });
     }, 500);
   });
-};
-const TodoTitleAndCheckBox = ({
-  index,
-  todo,
-  toggleStatus,
-}: TodoTitleAndCheckBoxProps) => {
-  const isDone = todo.status === "done";
-  return (
-    <div className="flex items-center gap-10">
-      <label
-        htmlFor={`todo-check-${index}`}
-        className="relative flex cursor-pointer items-center"
-        aria-label={`${todo.title} ${isDone ? "완료됨" : "미완료"}`}
-      >
-        <input
-          type="checkbox"
-          id={`todo-check-${index}`}
-          checked={isDone}
-          aria-checked={isDone}
-          onChange={() => toggleStatus(todo.id)}
-          className="peer absolute hidden"
-        />
-        {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
-      </label>
-      <span className={`${isDone ? "line-through" : ""}`}>{todo.title}</span>
-    </div>
-  );
-};
-
-const Goal = ({ todo }: GoalProps): JSX.Element | null => {
-  if (!todo.hasGoal) return null;
-  return (
-    <div className="ml-27 mt-10 flex items-center gap-10 text-slate-700">
-      <GoalIcon />
-      <p className={`${todo.status === "done" ? "line-through" : ""}`}>
-        {todo.hasGoal}
-      </p>
-    </div>
-  );
-};
-
-const GoalsListComponent = ({
-  recentTodos,
-  toggleStatus,
-}: GoalsListComponentProps) => {
-  return (
-    <ul className="space-y-15 pb-20">
-      {recentTodos.map((todo, index) => (
-        <li key={todo.id} className="flex flex-col">
-          <TodoTitleAndCheckBox
-            index={index}
-            todo={todo}
-            toggleStatus={toggleStatus}
-          />
-          <Goal todo={todo} />
-        </li>
-      ))}
-    </ul>
-  );
 };
 
 const ContainerStyle = cva(
@@ -159,8 +76,8 @@ export default function ContainerRecentlyTodo({
     );
 
   const recentTodos = [...(data?.todos ?? [])]
-    .sort((a, b) => b.createdAt - a.createdAt) // 최신순 정렬
-    .slice(0, 4); // 상위 4개만 선택
+    .sort((a, b) => b.createdAt - a.createdAt)
+    .slice(0, 4);
   const toggleStatus = (id: string) => {
     queryClient.setQueryData<TodosResponse>(["todos", status], (oldData) => {
       if (!oldData) return oldData;
