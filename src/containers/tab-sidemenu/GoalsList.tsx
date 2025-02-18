@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 import { cva } from "class-variance-authority";
 import Link from "next/link";
 
@@ -12,17 +14,27 @@ const GoalsList = ({
   handleInputChange,
   setIsAdding,
 }: GoalsListProps) => {
+  const listRef = useRef<HTMLUListElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (listRef.current && !listRef.current.contains(event.target as Node))
+        setIsAdding(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setIsAdding]);
   return (
-    <ul className={goalsListStyle()}>
+    <ul ref={listRef} className={goalsListStyle()}>
       {goals.map((goal) => (
         <li key={goal.id}>
           <Link href={`/${goal.id}`}>
             <TabInput
-              key={goal.id}
               tab={goal}
               onInputChange={handleInputChange}
               onInputBlur={() => setIsAdding(false)}
-              className="cursor-pointer hover:underline"
+              className="cursor-pointer hover:text-purple-700 hover:underline"
               readOnly
             />
           </Link>

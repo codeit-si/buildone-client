@@ -94,10 +94,7 @@ export default function TabSidemenu() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setIsAdding(false);
-        setNewGoal("");
-      }
+      if (e.key === "Escape") setIsAdding(false);
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);

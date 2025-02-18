@@ -27,9 +27,7 @@ export function TabInput({
 
   // 탭 텍스트가 변경될 때마다 해당 인풋에 자동 포커스를 부여
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+    if (inputRef.current) inputRef.current.focus();
   }, [tab.text]);
 
   return (
