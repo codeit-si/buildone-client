@@ -2,10 +2,10 @@ import Link from "next/link";
 
 import { LinkProps } from "@/types/tab-sidemenu";
 
-const Menus = ({ href, icon, title, cursur }: LinkProps) => {
+const Menus = ({ href, icon, title, cursor }: LinkProps) => {
   return (
     <Link
-      className={`${cursur} flex w-full items-center gap-10 px-20 py-15 font-bold text-slate-800`}
+      className={`${cursor} flex w-full items-center gap-10 px-20 py-15 font-bold text-slate-800`}
       href={href}
     >
       {icon}
