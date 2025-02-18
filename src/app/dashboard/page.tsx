@@ -1,8 +1,6 @@
-import { Suspense } from "react";
-
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-import RecentlyTodo from "@/containers/dashboard/recently-todo";
+import RecentlyTodoContainer from "@/containers/dashboard/recently-todo-container";
 import getQueryClient from "@/lib/get-query-client";
 import { getDashboardOptions } from "@/services/dashboard";
 
@@ -12,13 +10,11 @@ export default async function DashboardPage() {
   queryClient.prefetchQuery(getDashboardOptions());
 
   return (
-    <div>
-      <h1>대시보드</h1>
+    <main className="mx-auto min-h-screen w-full bg-slate-100 px-16">
+      <h1 className="hidden font-semibold md:block">대시보드</h1>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <Suspense fallback={<div>로딩중</div>}>
-          <RecentlyTodo />
-        </Suspense>
+        <RecentlyTodoContainer />
       </HydrationBoundary>
-    </div>
+    </main>
   );
 }
