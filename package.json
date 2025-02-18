@@ -26,6 +26,7 @@
     "@sentry/nextjs": "^8.54.0",
     "@svgr/webpack": "^8.1.0",
     "@tanstack/react-query": "^5.66.0",
+    "@tanstack/react-query-devtools": "^5.66.0",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "motion": "^12.0.6",
@@ -33,7 +34,8 @@
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^3.0.1",
-    "tailwindcss-preset-px-to-rem": "^1.2.1"
+    "tailwindcss-preset-px-to-rem": "^1.2.1",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.7",
@@ -68,10 +70,10 @@
     "postcss": "^8",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
-    "ts-jest": "^29.2.5",
-    "ts-node": "^10.9.2",
     "tailwindcss": "^3.4.1",
     "tailwindcss-preset-px-to-rem": "^1.2.1",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5",
     "@tanstack/react-query-devtools": "^5.66.0"
   }
