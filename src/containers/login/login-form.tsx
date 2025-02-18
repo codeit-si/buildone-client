@@ -10,11 +10,11 @@ import { z } from "zod";
 import Button from "@/components/button";
 import Input from "@/components/input";
 import LabeledField from "@/components/labeled-field";
-import { useDebounce } from "@/hooks/useDebounce";
+import { useDebounce } from "@/hooks/use-debounce";
 import { CustomError } from "@/lib/axios";
 import { login } from "@/services/auth";
-import { useAuthActions } from "@/store/authStore";
-import { useUserActions } from "@/store/userStore";
+import { useAuthActions } from "@/store/auth-store";
+import { useUserActions } from "@/store/user-store";
 
 const loginSchema = z.object({
   email: z
@@ -30,7 +30,7 @@ type LoginSchemaKey = keyof LoginSchema;
 export default function LoginForm() {
   const router = useRouter();
 
-  const { setAccessToken } = useAuthActions();
+  const { setAccessToken, setExpiredTime } = useAuthActions();
   const { setUserInfo } = useUserActions();
 
   const {
@@ -63,8 +63,10 @@ export default function LoginForm() {
       const response = await login(data.email, data.password);
 
       const token = response.headers?.["access-token"];
+      const expiredTime = response.headers?.["access-token-expired-time"];
 
       setAccessToken(token);
+      setExpiredTime(expiredTime);
       setUserInfo(response.data.memberInformation);
 
       router.push("/");

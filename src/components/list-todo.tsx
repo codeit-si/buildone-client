@@ -15,7 +15,7 @@ import FileIcon from "@/assets/file.svg";
 import KebabIcon from "@/assets/kebab.svg";
 import LinkIcon from "@/assets/link.svg";
 import NoteIcon from "@/assets/note.svg";
-import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 
 interface Todo {
   id: string;

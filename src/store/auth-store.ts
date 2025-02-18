@@ -6,6 +6,7 @@ interface AuthState {
 
   actions: {
     setAccessToken: (token: string) => void;
+    setExpiredTime: (time: string) => void;
     removeAccessToken: () => void;
   };
 }
