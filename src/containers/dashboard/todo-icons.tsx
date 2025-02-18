@@ -7,15 +7,15 @@ interface TodoEditAndDeleteAndIconsProps {
   todo: TodoResponse;
 }
 
-export default function TodoDropdown({ todo }: TodoEditAndDeleteAndIconsProps) {
+export default function TodoIcons({ todo }: TodoEditAndDeleteAndIconsProps) {
   return (
     <div className="flex items-center gap-8">
       {todo.linkUrl && <LinkIcon />}
       {todo.fileUrl && <FileIcon />}
       <Dropdown
         items={[
-          { id: "0", label: "수정하기", onClick: () => {} },
-          { id: "1", label: "수정하기", onClick: () => {} },
+          { label: "수정하기", onClick: () => {} },
+          { label: "수정하기", onClick: () => {} },
         ]}
       />
     </div>
