@@ -193,6 +193,8 @@ function PopupClose({
   children,
   className,
   onClick = () => {},
+  shape = "square",
+  size = "sm",
   ...props
 }: PopupCloseProps) {
   const { setOpen } = usePopup();
@@ -204,7 +206,9 @@ function PopupClose({
 
   return (
     <Button
-      className={className}
+      className={cn("h-48 w-full max-w-120", className)}
+      shape={shape}
+      size={size}
       onClick={handleClick}
       aria-label="팝업 닫기"
       {...props}

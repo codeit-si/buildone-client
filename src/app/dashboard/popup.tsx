@@ -26,7 +26,7 @@ const DashboardPage = () => {
           >
             취소
           </Popup.Close>
-          <Popup.Close onClick={() => console.log("popup 확인")}>
+          <Popup.Close size="sm" onClick={() => console.log("popup 확인")}>
             확인
           </Popup.Close>
         </Popup.Footer>
