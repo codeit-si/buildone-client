@@ -126,8 +126,8 @@ function PopupOverlay({
           aria-hidden
           className={cn("fixed inset-0 bg-gray-500", className)}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.5, transition: { duration: 0.2 } }}
-          exit={{ opacity: 0, transition: { duration: 0.2 } }}
+          animate={{ opacity: 0.5, transition: { duration: 0.1 } }}
+          exit={{ opacity: 0, transition: { duration: 0.1 } }}
           onClick={() => {
             if (closeOnOverlayClick) setOpen(false);
           }}
@@ -156,8 +156,8 @@ function PopupContent({ children, className }: ComponentProps<"div">) {
               className,
             )}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: 0.2 } }}
-            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+            animate={{ opacity: 1, transition: { duration: 0.1 } }}
+            exit={{ opacity: 0, transition: { duration: 0.1 } }}
           >
             <div />
             {nonContentChild}

@@ -6,7 +6,7 @@ export default function SentryCheck() {
   return (
     <button
       type="button"
-      className="text-white absolute right-0 m-4 rounded-md border-none bg-red-500 p-4 opacity-40 hover:opacity-100"
+      className="absolute right-0 m-4 rounded-md border-none bg-red-500 p-4 text-white opacity-40 hover:opacity-100"
       onClick={async () => {
         await Sentry.startSpan(
           {

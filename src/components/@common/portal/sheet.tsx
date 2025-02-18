@@ -127,7 +127,7 @@ function SheetOverlay({
           className={cn("fixed inset-0 bg-gray-500", className)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.5, transition: { duration: 0.2 } }}
-          exit={{ opacity: 0, transition: { delay: 0.4, duration: 0.2 } }}
+          exit={{ opacity: 0, transition: { delay: 0.2, duration: 0.2 } }}
           onClick={() => {
             if (closeOnOverlayClick) setOpen(false);
           }}
@@ -158,7 +158,7 @@ function SheetContent({
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
           >
             <div className={cn("flex justify-between")}>
               {hasCloseIcon && (

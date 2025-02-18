@@ -74,7 +74,7 @@ function Dropdown({ size = "md", items }: DropdownProps) {
         aria-expanded={isOpen}
         aria-label="메뉴 열기"
         onClick={toggleDropdown}
-        className="bg-white flex h-24 w-24 items-center justify-center rounded-full"
+        className="flex h-24 w-24 items-center justify-center rounded-full bg-white"
       >
         <div className="flex flex-col items-center">
           <KebabIcon />
