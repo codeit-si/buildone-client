@@ -5,8 +5,11 @@ import Modal from "@/components/@common/portal/modal";
 const DashboardPage = () => {
   return (
     <Modal.Root>
-      <Modal.Trigger className="rounded-md bg-blue-500 px-4 py-2 text-white">
-        Open Modal
+      <Modal.Trigger
+        className="rounded-md bg-blue-500 px-4 py-2 text-white"
+        asChild
+      >
+        <button tabIndex={0}>Open Modal</button>
       </Modal.Trigger>
       <Modal.Content className="">
         <div className="flex flex-col items-center justify-center gap-4">
