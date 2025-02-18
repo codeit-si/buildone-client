@@ -36,7 +36,7 @@ export interface AddGoalSectionProps {
   newGoal: string;
   goals: TabItem[];
 }
-export interface UserInpormations {
+export interface UserInformations {
   name: string;
   email: string;
   profileImage: string;

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import Profile from "@/assets/profile.svg";
 import Button from "@/components/button";
-import { UserInpormations } from "@/types/tab-sidemenu";
+import { UserInformations } from "@/types/tab-sidemenu";
 
 import CustomButton from "./CustomButton";
 
@@ -18,7 +18,7 @@ const UserProfileComponent = ({
   profile,
 }: {
   isTabOpen: boolean;
-  profile: UserInpormations | undefined;
+  profile: UserInformations | undefined;
 }) => {
   if (isTabOpen) return null;
   return (
@@ -30,6 +30,9 @@ const UserProfileComponent = ({
               className="h-full w-full"
               src={profile.profileImage}
               alt={`${profile.name}의 프로필 이미지`}
+              width={64}
+              height={64}
+              layout="responsive"
             />
           ) : (
             <Profile />

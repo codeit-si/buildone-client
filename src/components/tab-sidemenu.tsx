@@ -11,7 +11,7 @@ import LogoComponent from "@/containers/tab-sidemenu/LogoComponent";
 import TabToggleComponent from "@/containers/tab-sidemenu/TabToggleComponent";
 import TodosMenu from "@/containers/tab-sidemenu/TodosMenu";
 import UserProfileComponent from "@/containers/tab-sidemenu/UserProfileComponent";
-import { UserInpormations } from "@/types/tab-sidemenu";
+import { UserInformations } from "@/types/tab-sidemenu";
 
 import { TabItem } from "./tab-input";
 
@@ -57,7 +57,7 @@ export default function TabSidemenu() {
   const [isAdding, setIsAdding] = useState(false);
   const [goals, setGoals] = useState<TabItem[]>([]);
   const [newGoal, setNewGoal] = useState("");
-  const [profile, setProfile] = useState<UserInpormations | undefined>();
+  const [profile, setProfile] = useState<UserInformations | undefined>();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newGoal.trim() === "") return;
