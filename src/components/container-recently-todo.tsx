@@ -54,12 +54,11 @@ export default function ContainerRecentlyTodo({
   status,
 }: ListTodoProps) {
   const queryClient = useQueryClient();
-  const { data, isLoading, isError } = useQuery<TodosResponse>({
+  const { data, isError } = useQuery<TodosResponse>({
     queryKey: ["todos", status],
     queryFn: fetchTodos,
   });
 
-  if (isLoading) return <p>로딩 중...</p>;
   if (isError)
     return (
       <div className="p-4 text-red-500">
