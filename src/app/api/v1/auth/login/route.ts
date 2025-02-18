@@ -6,12 +6,18 @@ let count = 0;
 export async function POST(request: Request) {
   const { email, password } = await request.json();
 
-  // refresh-token 재발급 테스트를 위한 입력값
+  // access-token 재발급 테스트를 위한 입력값
   if (email === "asdf@asdf.com") {
-    if (count < 1) {
+    if (count === 0) {
       count += 1;
 
-      return new Response(JSON.stringify({}), { status: 401 });
+      return new Response(
+        JSON.stringify({
+          code: "INVALID_TOKEN",
+          message: "권한이 없습니다.",
+        }),
+        { status: 401 },
+      );
     }
 
     return new Response(
@@ -30,7 +36,7 @@ export async function POST(request: Request) {
         status: 200,
         headers: {
           "Access-Token": "access_token_abcd_64",
-          "Access-Token-Expired-Time": "2025-02-17T02:24:18.954Z",
+          "Access-Token-Expired-Time": "2025-02-01T02:24:18.954Z",
         },
       },
     );
@@ -58,7 +64,7 @@ export async function POST(request: Request) {
         status: 200,
         headers: {
           "Access-Token": "access_token_abcd_64",
-          "Access-Token-Expired-Time": "2025-02-17T02:24:18.954Z",
+          "Access-Token-Expired-Time": "2025-02-01T02:24:18.954Z",
         },
       },
     );
