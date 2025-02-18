@@ -9,10 +9,10 @@ export interface TabItem {
 
 interface TabInputProps {
   tab: TabItem;
+  readOnly?: boolean;
   onInputChange: (id: number, newValue: string) => void; // 인풋 값이 변경될 때 호출
   onInputBlur: (id: number, text: string) => void; // 인풋이 포커스를 잃었을 때 호출
   className?: string;
-  readOnly?: boolean;
 }
 
 export function TabInput({
