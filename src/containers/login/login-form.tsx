@@ -11,7 +11,7 @@ import Button from "@/components/button";
 import Input from "@/components/input";
 import LabeledField from "@/components/labeled-field";
 import { useDebounce } from "@/hooks/use-debounce";
-import { CustomError } from "@/lib/axios";
+import { ApiError } from "@/lib/error";
 import { login } from "@/services/auth";
 import { useAuthActions } from "@/store/auth-store";
 import { useUserActions } from "@/store/user-store";
@@ -71,7 +71,7 @@ export default function LoginForm() {
 
       router.push("/");
     } catch (error: unknown) {
-      if (error instanceof CustomError) {
+      if (error instanceof ApiError) {
         if (error.code === "NOT_FOUND_EXIST_MEMBER") {
           setError("email", { type: "valid", message: error.message });
         }
