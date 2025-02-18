@@ -1,5 +1,4 @@
 import { TabInput } from "@/components/tab-input";
-import { desktopButtonStyle } from "@/styles/tab-sidemenu";
 import { AddGoalSectionProps } from "@/types/tab-sidemenu";
 
 import CustomButton from "./CustomButton";
@@ -16,7 +15,6 @@ const AddGoalSection = ({
     <div className={`${goals.length !== 0 && "mt-10"}`}>
       {!isAdding ? (
         <CustomButton
-          className={desktopButtonStyle}
           isMobile={false}
           onClick={() => setIsAdding(!isAdding)}
           variant="outlined"

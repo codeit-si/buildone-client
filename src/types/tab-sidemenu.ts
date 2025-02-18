@@ -1,7 +1,6 @@
 import { SetStateAction } from "react";
 
 import { TabItem } from "@/components/tab-input";
-import { desktopButtonStyle, mobileButtonStyle } from "@/styles/tab-sidemenu";
 
 export interface LinkProps {
   href: string;
@@ -11,7 +10,6 @@ export interface LinkProps {
 }
 export interface ButtonProps {
   isMobile: boolean;
-  className: typeof desktopButtonStyle | typeof mobileButtonStyle;
   children: string;
   color: "white" | "blue";
   onClick?: () => void;
@@ -36,5 +34,10 @@ export interface AddGoalSectionProps {
   handleSubmit: (e: React.FormEvent) => void;
   setNewGoal: (value: string) => void;
   newGoal: string;
-  goals: { text: string }[];
+  goals: TabItem[];
+}
+export interface UserInpormations {
+  name: string;
+  email: string;
+  profileImage: string;
 }

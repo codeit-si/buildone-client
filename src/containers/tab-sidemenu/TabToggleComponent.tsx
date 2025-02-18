@@ -8,24 +8,24 @@ import { IsTabOpenProps } from "@/types/tab-sidemenu";
 
 const mobileStatusTitleStyle = cva(
   "ml-5 text-14 font-bold leading-6 text-slate-800 md:hidden",
+  {
+    variants: {
+      open: {
+        true: "hidden",
+        false: "",
+      },
+    },
+    defaultVariants: {
+      open: false,
+    },
+  },
 );
 const tabToggleButtonStyle = cva(
   "ml-20 min-h-0 min-w-0 bg-opacity-0 p-0 hover:bg-opacity-0 active:bg-opacity-0 md:m-0",
 );
-const tabToggleWrapStyle = cva("item-center flex", {
-  variants: {
-    open: {
-      true: "hidden md:flex",
-      false: "",
-    },
-  },
-  defaultVariants: {
-    open: false,
-  },
-});
 const TabToggleComponent = ({ isTabOpen, setIsTabOpen }: IsTabOpenProps) => {
   return (
-    <div className={tabToggleWrapStyle({ open: !isTabOpen })}>
+    <div className="item-center flex">
       <Button
         onClick={() => setIsTabOpen(!isTabOpen)}
         className={tabToggleButtonStyle()}
@@ -43,7 +43,7 @@ const TabToggleComponent = ({ isTabOpen, setIsTabOpen }: IsTabOpenProps) => {
           </>
         )}
       </Button>
-      <h2 className={mobileStatusTitleStyle()}>대시보드</h2>
+      <h2 className={mobileStatusTitleStyle({ open: !isTabOpen })}>대시보드</h2>
     </div>
   );
 };

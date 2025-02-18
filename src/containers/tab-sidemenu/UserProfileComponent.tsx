@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import Profile from "@/assets/profile.svg";
 import Button from "@/components/button";
-import { desktopButtonStyle } from "@/styles/tab-sidemenu";
+import { UserInpormations } from "@/types/tab-sidemenu";
 
 import CustomButton from "./CustomButton";
 
@@ -18,32 +18,36 @@ const UserProfileComponent = ({
   profile,
 }: {
   isTabOpen: boolean;
-  profile: boolean;
+  profile: UserInpormations | undefined;
 }) => {
   if (isTabOpen) return null;
   return (
     <>
-      <div className="flex gap-12">
+      <div className="flex w-full gap-12">
         <div className="min-w-40 md:min-w-64 lg:min-w-64">
           {profile ? (
-            <Image className="h-full w-full" src="" alt="" />
+            <Image
+              className="h-full w-full"
+              src={profile.profileImage}
+              alt={`${profile.name}의 프로필 이미지`}
+            />
           ) : (
             <Profile />
           )}
         </div>
         <div className={profileInfoStyle()}>
           <div>
-            <p className="font-bold text-slate-800">체다치즈</p>
-            <p className="text-slate-600">chedacheese@slid.kr</p>
+            <p className="font-bold text-slate-800">
+              {profile ? profile.name : "체다치즈"}
+            </p>
+            <p className="text-slate-600">
+              {profile ? profile.email : "chedacheese@slid.kr"}
+            </p>
           </div>
           <Button className={logoutButtonStyle()}>로그아웃</Button>
         </div>
       </div>
-      <CustomButton
-        isMobile={false}
-        className={desktopButtonStyle}
-        color="white"
-      >
+      <CustomButton isMobile={false} color="white">
         새할일
       </CustomButton>
     </>

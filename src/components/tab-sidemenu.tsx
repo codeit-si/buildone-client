@@ -11,6 +11,7 @@ import LogoComponent from "@/containers/tab-sidemenu/LogoComponent";
 import TabToggleComponent from "@/containers/tab-sidemenu/TabToggleComponent";
 import TodosMenu from "@/containers/tab-sidemenu/TodosMenu";
 import UserProfileComponent from "@/containers/tab-sidemenu/UserProfileComponent";
+import { UserInpormations } from "@/types/tab-sidemenu";
 
 import { TabItem } from "./tab-input";
 
@@ -25,18 +26,21 @@ const containerStyle = cva("fixed z-30 bg-white", {
     open: false,
   },
 });
-const topSectionStyle = cva("space-y-20 p-0 md:p-20 lg:p-20", {
-  variants: {
-    open: {
-      true: "h-full p-0",
-      false: "p-20",
+const topSectionStyle = cva(
+  "flex flex-col gap-20 md:items-center p-0 md:p-20",
+  {
+    variants: {
+      open: {
+        true: "h-full p-0",
+        false: "p-20",
+      },
+    },
+    defaultVariants: {
+      open: false,
     },
   },
-  defaultVariants: {
-    open: false,
-  },
-});
-const topHeaderStyle = cva("flex items-center justify-between", {
+);
+const topHeaderStyle = cva("flex w-full items-center justify-between", {
   variants: {
     open: {
       true: "h-full flex-row gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
@@ -53,13 +57,12 @@ export default function TabSidemenu() {
   const [isAdding, setIsAdding] = useState(false);
   const [goals, setGoals] = useState<TabItem[]>([]);
   const [newGoal, setNewGoal] = useState("");
-  const profile = false;
-
+  const [profile, setProfile] = useState<UserInpormations | undefined>();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newGoal.trim() === "") return;
     const newTab: TabItem = {
-      id: goals.length + 1,
+      id: Date.now(),
       text: newGoal,
     };
     setGoals([...goals, newTab]);
@@ -76,6 +79,7 @@ export default function TabSidemenu() {
   };
 
   useEffect(() => {
+    setProfile((prev) => prev); // ESLint 규정 때문에 넣음
     const handleResize = () => {
       if (window.innerWidth >= 1200) {
         setIsTabOpen(false);
