@@ -1,17 +1,21 @@
+const PREFIX = "/api/v1";
+
 export const ENDPOINT = {
   AUTH: {
-    LOGIN: "/api/login",
-    SIGNUP: "/api/signup",
+    LOGIN: `${PREFIX}/auth/login`,
+    SIGNUP: `${PREFIX}/auth/signup`,
+    TOKEN_VALIDATION: `${PREFIX}/auth/token`,
   },
+  // 아래 endpoint들은 예시입니다!
   GOAL: {
     GET_ALL: "/api/goals",
-    GET_BY_ID: (id: number) => `/api/goals/${id}`,
+    GET_BY_ID: (id: number) => `${PREFIX}/goals/${id}`,
     CREATE: "/api/goals",
-    UPDATE: (id: number) => `/api/goals/${id}`,
-    DELETE: (id: number) => `/api/goals/${id}`,
+    UPDATE: (id: number) => `${PREFIX}/goals/${id}`,
+    DELETE: (id: number) => `${PREFIX}/goals/${id}`,
   },
   TODO: {
     GET_ALL: "/api/todos",
-    GET_BY_ID: (id: number) => `/api/todos/${id}`,
+    GET_BY_ID: (id: number) => `${PREFIX}/todos/${id}`,
   },
 } as const;

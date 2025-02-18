@@ -9,9 +9,7 @@ export default function splitChildrenByComponents(
 
   Children.forEach(children, (child) => {
     if (!isValidElement(child)) return remaining.push(child);
-    const index = targets.findIndex(
-      (Component) => child.type === (<Component />).type,
-    );
+    const index = targets.findIndex((Component) => child.type === Component);
     if (index !== -1) {
       extracted[index] = child;
     } else {
