@@ -39,7 +39,7 @@ export default function ComposePage() {
       <div className="container-width">
         {/* 헤더 */}
         <div className="grid h-44 grid-cols-[162px_auto] items-center">
-          <h1 className="truncate text-lg font-semibold text-slate-900">
+          <h1 className="truncate font-semibold text-slate-900 md:text-lg">
             노트 작성
           </h1>
           <div className="flex justify-end gap-8">
@@ -71,8 +71,6 @@ export default function ComposePage() {
             <Counting type="title" count={title.length} total={50} />
           </div>
 
-          {showLink && <LinkAttached link={link} onRemove={handleRemoveLink} />}
-
           {/* 에디터 영역 */}
           <div className="mt-12">
             <Counting
@@ -80,6 +78,15 @@ export default function ComposePage() {
               count={countWithoutSpaces(content)}
               total={countWithSpaces(content)}
             />
+
+            {/* 링크 첨부 */}
+            <div className="mt-28">
+              {showLink && (
+                <LinkAttached link={link} onRemove={handleRemoveLink} />
+              )}
+            </div>
+
+            {/* 본문 */}
             <div className="mt-16">
               <Tiptap setContents={setContent} onLinkSubmit={handleAddLink} />
             </div>

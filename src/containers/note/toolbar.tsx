@@ -14,6 +14,7 @@ import ItalicIcon from "@/assets/editor/italic.svg";
 import LinkIcon from "@/assets/editor/link.svg";
 import UnderlineIcon from "@/assets/editor/underline.svg";
 import Modal from "@/components/@common/portal/modal";
+import Button from "@/components/button";
 import { cn } from "@/lib/cn";
 import "@/styles/note.css";
 
@@ -126,6 +127,28 @@ function Toolbar({ editor, onLinkSubmit }: ToolbarProps) {
     },
   ];
 
+  const linkInput = (
+    <input
+      type="text"
+      value={inputLink}
+      onChange={handleInputChange}
+      placeholder="https://"
+      className="h-44 w-full truncate rounded-12 bg-slate-50 p-5 text-sm md:h-48 md:text-base"
+    />
+  );
+
+  const confirmButton = (
+    <Button
+      variant="solid"
+      shape="square"
+      size="lg"
+      className="w-full"
+      onClick={closeLinkModal}
+    >
+      확인
+    </Button>
+  );
+
   return (
     <div
       className="container-width fixed bottom-24 flex h-44 items-center justify-center rounded-22 border-slate-200 bg-white p-2 pl-16 shadow"
@@ -143,7 +166,6 @@ function Toolbar({ editor, onLinkSubmit }: ToolbarProps) {
         ))}
       </div>
       <div style={{ marginRight: "16px" }}>
-        {" "}
         <ToolbarButton
           onClick={buttonConfigs[buttonConfigs.length - 1].onClick}
           IconComponent={buttonConfigs[buttonConfigs.length - 1].IconComponent}
@@ -153,20 +175,11 @@ function Toolbar({ editor, onLinkSubmit }: ToolbarProps) {
       </div>
       {isLinkModalOpen && (
         <Modal.Root open={isLinkModalOpen} onOpenChange={setLinkModalOpen}>
-          <Modal.Content>
-            <Modal.Title>링크 업로드</Modal.Title>
-            <input
-              type="text"
-              value={inputLink}
-              onChange={handleInputChange}
-              placeholder="https://"
-              className="input-styles"
-            />
-            <Modal.Footer>
-              <button onClick={closeLinkModal} className="button-styles">
-                확인
-              </button>
-            </Modal.Footer>
+          <Modal.Content className="h-268 w-311 md:h-272 md:w-520">
+            <Modal.Title className="text-bold text-lg">링크 업로드</Modal.Title>
+            <div className="mb-12 font-semibold">링크</div>
+            {linkInput}
+            <Modal.Footer>{confirmButton}</Modal.Footer>
           </Modal.Content>
         </Modal.Root>
       )}
