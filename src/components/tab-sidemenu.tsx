@@ -15,10 +15,10 @@ import { UserInformations } from "@/types/tab-sidemenu";
 
 import { TabItem } from "./tab-input";
 
-const containerStyle = cva("fixed z-30 bg-white", {
+const containerStyle = cva("fixed z-30 bg-white transition-all", {
   variants: {
     open: {
-      true: "h-48 w-full md:h-full md:w-60 lg:h-full lg:w-60",
+      true: "w-full h-48 max-h-screen overflow-y-auto md:w-60 md:h-full",
       false: "h-full w-full md:w-280 lg:w-280",
     },
   },
@@ -53,7 +53,7 @@ const topHeaderStyle = cva("flex w-full items-center justify-between", {
 });
 
 export default function TabSidemenu() {
-  const [isTabOpen, setIsTabOpen] = useState(false);
+  const [isTabMinimized, setIsTabMinimized] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [goals, setGoals] = useState<TabItem[]>([]);
   const [newGoal, setNewGoal] = useState("");
@@ -82,9 +82,9 @@ export default function TabSidemenu() {
     setProfile((prev) => prev); // ESLint 규정 때문에 넣음
     const handleResize = () => {
       if (window.innerWidth >= 1200) {
-        setIsTabOpen(false);
+        setIsTabMinimized(false);
       } else {
-        setIsTabOpen(true);
+        setIsTabMinimized(true);
       }
     };
     handleResize();
@@ -101,19 +101,22 @@ export default function TabSidemenu() {
   }, []);
 
   return (
-    <div className={containerStyle({ open: isTabOpen })}>
-      <div className={topSectionStyle({ open: isTabOpen })}>
-        <div className={topHeaderStyle({ open: isTabOpen })}>
-          <LogoComponent isTabOpen={isTabOpen} setIsTabOpen={setIsTabOpen} />
+    <div className={containerStyle({ open: isTabMinimized })}>
+      <div className={topSectionStyle({ open: isTabMinimized })}>
+        <div className={topHeaderStyle({ open: isTabMinimized })}>
+          <LogoComponent
+            isTabOpen={isTabMinimized}
+            setIsTabOpen={setIsTabMinimized}
+          />
           <TabToggleComponent
-            isTabOpen={isTabOpen}
-            setIsTabOpen={setIsTabOpen}
+            isTabOpen={isTabMinimized}
+            setIsTabOpen={setIsTabMinimized}
           />
         </div>
-        <UserProfileComponent isTabOpen={isTabOpen} profile={profile} />
+        <UserProfileComponent isTabOpen={isTabMinimized} profile={profile} />
       </div>
       {/* 탭 열였을때 나타나는 bottom menus */}
-      {!isTabOpen && (
+      {!isTabMinimized && (
         <>
           <TodosMenu />
           <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />

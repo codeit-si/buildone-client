@@ -3,18 +3,14 @@ import { useEffect, useRef } from "react";
 import { cva } from "class-variance-authority";
 import Link from "next/link";
 
-import { TabInput } from "@/components/tab-input";
 import { GoalsListProps } from "@/types/tab-sidemenu";
 
 const goalsListStyle = cva(
   "max-h-400 list-disc list-inside space-y-10 overflow-y-auto text-slate-700",
 );
-const GoalsList = ({
-  goals,
-  handleInputChange,
-  setIsAdding,
-}: GoalsListProps) => {
+const GoalsList = ({ goals, setIsAdding }: GoalsListProps) => {
   const listRef = useRef<HTMLUListElement>(null);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (listRef.current && !listRef.current.contains(event.target as Node))
@@ -25,19 +21,16 @@ const GoalsList = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [setIsAdding]);
+
+  useEffect(() => {
+    if (goals.length > 0) setIsAdding(false);
+  }, [goals, setIsAdding]);
+
   return (
     <ul ref={listRef} className={goalsListStyle()}>
       {goals.map((goal) => (
-        <li key={goal.id}>
-          <Link href={`/${goal.id}`}>
-            <TabInput
-              tab={goal}
-              onInputChange={handleInputChange}
-              onInputBlur={() => setIsAdding(false)}
-              className="cursor-pointer hover:text-purple-700 hover:underline"
-              readOnly
-            />
-          </Link>
+        <li key={goal.id} className="hover:text-purple-700 hover:underline">
+          <Link href={`/${goal.id}`}>{goal.text}</Link>
         </li>
       ))}
     </ul>
