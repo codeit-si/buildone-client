@@ -8,7 +8,7 @@ import { cn } from "@/lib/cn";
 import { getDashboardOptions } from "@/services/dashboard";
 
 import Goal from "./goal";
-import RecentlyTodoCheckbox from "./recently-todo-checkbox";
+import RecentlyTodoCheckbox from "./recently-todo-item";
 import TodoIcons from "./todo-icons";
 
 export default function RecentlyTodoList() {
