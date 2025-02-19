@@ -8,8 +8,7 @@ interface CountingProps {
   total: number;
 }
 
-const BASE_CLASS =
-  "absolute flex items-center justify-center rounded-lg text-xs font-medium";
+const BASE_CLASS = "items-center justify-center rounded-lg text-xs font-medium";
 const TITLE_CLASS = "h-5 bg-white/50 px-1 text-slate-800";
 const TEXT_CLASS = "h-4 text-slate-800";
 
@@ -21,7 +20,7 @@ const Counting = ({ type, count, total }: CountingProps) => {
         role="status"
         aria-label={`현재 ${count}자, 최대 ${total}자`}
       >
-        {count}/<span className="text-blue-500">{total}</span>
+        {count}/<span className="text-purple-500">{total}</span>
       </div>
     );
   }
