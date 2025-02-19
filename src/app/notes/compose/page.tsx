@@ -18,7 +18,10 @@ export default function ComposePage() {
   const [showLink, setShowLink] = useState<boolean>(false);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+    const newTitle = e.target.value;
+    if (newTitle.length <= 50) {
+      setTitle(newTitle);
+    }
   };
 
   const handleRemoveLink = () => {
@@ -60,7 +63,7 @@ export default function ComposePage() {
           <div className="flex items-center gap-8">
             <input
               type="text"
-              className="h-52 w-full border-b border-t border-slate-200 text-lg placeholder:text-lg"
+              className="h-52 w-full border-b border-t border-slate-200 text-lg placeholder:text-lg focus:outline-none"
               placeholder="노트의 제목을 입력해주세요"
               value={title}
               onChange={handleTitleChange}

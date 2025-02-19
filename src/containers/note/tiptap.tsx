@@ -18,7 +18,8 @@ function Tiptap({ setContents, onLinkSubmit }: TiptapProps) {
   const editor = useEditor({
     editorProps: {
       attributes: {
-        class: "prose prose-sm sm:prose lg:prose-lg focus:outline-none",
+        class:
+          "prose prose-sm sm:prose lg:prose-lg focus:outline-none min-h-400",
       },
     },
     extensions: [
@@ -31,13 +32,23 @@ function Tiptap({ setContents, onLinkSubmit }: TiptapProps) {
     ],
     content: "",
     onUpdate: ({ editor: updatedEditor }) => {
-      setContents(updatedEditor.storage.markdown.getMarkdown());
+      try {
+        const markdown = updatedEditor.storage.markdown.getMarkdown();
+        setContents(markdown);
+      } catch (error) {
+        setContents("");
+      }
     },
   });
 
   const handleLinkSubmit = (link: string) => {
-    if (onLinkSubmit) {
-      onLinkSubmit(link);
+    const urlRegex =
+      /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\w .-]*)*\/?$/;
+
+    if (urlRegex.test(link)) {
+      if (onLinkSubmit) {
+        onLinkSubmit(link);
+      }
     }
   };
 

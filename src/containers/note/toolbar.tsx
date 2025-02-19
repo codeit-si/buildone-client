@@ -55,8 +55,12 @@ function Toolbar({ editor, onLinkSubmit }: ToolbarProps) {
   const openLinkModal = () => setLinkModalOpen(true);
   const closeLinkModal = () => {
     setLinkModalOpen(false);
-    if (inputLink.trim()) {
-      onLinkSubmit(inputLink);
+    const urlPattern =
+      /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\w .-]*)*\/?$/;
+    const trimmedInput = inputLink.trim();
+
+    if (trimmedInput && urlPattern.test(trimmedInput)) {
+      onLinkSubmit(trimmedInput);
     }
   };
 
