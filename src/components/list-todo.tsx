@@ -3,62 +3,37 @@
 import { useState } from "react";
 
 import {
-  useInfiniteQuery,
-  InfiniteQueryObserverResult,
   InfiniteData,
+  InfiniteQueryObserverResult,
+  useInfiniteQuery,
   useQueryClient,
 } from "@tanstack/react-query";
 
-import CheckBoxOffIcon from "@/assets/checkbox_off.svg";
-import CheckBoxOnIcon from "@/assets/checkbox_on.svg";
 import FileIcon from "@/assets/file.svg";
-import GoalIcon from "@/assets/goal.svg";
-import KebabIcon from "@/assets/kebab.svg";
 import LinkIcon from "@/assets/link.svg";
+import NoteIcon from "@/assets/note.svg";
+import Goal from "@/containers/container-recently-todo/Goal";
+import TodoTitleAndCheckBox from "@/containers/container-recently-todo/TodoTitleAndCheckBox";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
+import {
+  DropdownItem,
+  ListTodoProps,
+  Todo,
+  TodosResponse,
+} from "@/types/container-recently-todo";
 
-interface Todo {
-  id: string;
-  title: string;
-  status: "todo" | "done";
-  hasGoal: string | null;
-  hasLink: boolean;
-  hasFile: boolean;
-}
-interface TodosResponse {
-  todos: Todo[];
-  nextCursor?: string;
-}
-interface ListTodoProps {
-  fetchTodos?: (
-    pageParam?: number,
-  ) => Promise<{ todos: Todo[]; nextPage?: number }>;
-}
-interface BaseTodoProps {
-  index: number;
-  todo: Todo;
-}
-interface TodoTitleAndCheckBoxProps extends BaseTodoProps {
-  toggleStatus: (id: string) => void;
-}
-interface TodoEditAndDeleteAndIconsProps extends BaseTodoProps {
-  activeKebab: number | null;
-  handleKebabClick: (index: number) => void;
-}
-interface GoalProps {
-  todo: Todo;
-}
+import Dropdown from "./dropdown";
+import Filter from "./filter";
 
 const goals = [
-  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, quod.",
-  "Lorem ipsum dolor sit amet, consectetur adipisicing.",
-  "orem ipsum dolor sit amet.",
-  "Lorem ipsum dolor sit amet consectetur.",
+  "Complete the project report.",
+  "Review the latest code changes.",
+  "Update documentation.",
+  "Plan for the next sprint.",
 ];
-const getRandomGoal = () => {
-  const randomIndex = Math.floor(Math.random() * goals.length);
-  return goals[randomIndex];
-};
+
+const getRandomGoal = () => goals[Math.floor(Math.random() * goals.length)];
+
 const mockFetchTodos = async (pageParam = 1) => {
   return new Promise<{ todos: Todo[]; nextPage?: number }>((resolve) => {
     setTimeout(() => {
@@ -69,84 +44,25 @@ const mockFetchTodos = async (pageParam = 1) => {
         hasGoal: Math.random() > 0.5 ? getRandomGoal() : null,
         hasLink: Math.random() > 0.5,
         hasFile: Math.random() > 0.5,
+        hasNote: Math.random() > 0.5,
+        createdAt: Date.now() - Math.floor(Math.random() * 10000000),
       }));
       resolve({ todos, nextPage: pageParam < 3 ? pageParam + 1 : undefined });
     }, 500);
   });
 };
-const TodoTitleAndCheckBox = ({
-  index,
-  todo,
-  toggleStatus,
-}: TodoTitleAndCheckBoxProps) => {
-  const isDone = todo.status === "done";
-  return (
-    <div className="flex items-center gap-10">
-      <label
-        htmlFor={`todo-check-${index}`}
-        className="relative flex cursor-pointer items-center"
-      >
-        <input
-          type="checkbox"
-          id={`todo-check-${index}`}
-          checked={isDone}
-          onChange={() => toggleStatus(todo.id)}
-          className="peer absolute hidden"
-        />
-        {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
-      </label>
-      <span className={`${isDone ? "line-through" : ""}`}>{todo.title}</span>
-    </div>
-  );
-};
-const TodoEditAndDeleteAndIcons = ({
-  todo,
-  index,
-  activeKebab,
-  handleKebabClick,
-}: TodoEditAndDeleteAndIconsProps) => {
-  return (
-    <div className="flex items-center gap-15">
-      {todo.hasLink && <LinkIcon />}
-      {todo.hasFile && <FileIcon />}
-      <div className="relative h-24">
-        <button onClick={() => handleKebabClick(index)}>
-          <KebabIcon />
-        </button>
-        <div
-          className={`${activeKebab !== index ? "hidden" : "flex"} absolute -left-60 z-10 w-80 flex-col items-center gap-10 rounded-lg bg-[#fff] p-10 shadow-md`}
-        >
-          <button>수정하기</button>
-          <button>삭제하기</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-const Goal = ({ todo }: GoalProps) => {
-  if (!todo.hasGoal) return;
-  return (
-    <div className="ml-30 mt-10 flex items-center gap-10 text-slate-700">
-      <GoalIcon />
-      <p className={`${todo.status === "done" ? "line-through" : ""}`}>
-        {todo.hasGoal}
-      </p>
-    </div>
-  );
-};
+
 export default function ListTodo({
   fetchTodos = mockFetchTodos,
 }: ListTodoProps) {
   const queryClient = useQueryClient();
   const [filter, setFilter] = useState<"all" | "todo" | "done">("all");
-  const [activeKebab, setActiveKebab] = useState<null | number>(null);
   const {
     data,
     fetchNextPage,
     hasNextPage,
     isPending,
     isError,
-    error,
   }: InfiniteQueryObserverResult<
     InfiniteData<{ todos: Todo[]; nextPage?: number }>
   > = useInfiniteQuery({
@@ -161,11 +77,8 @@ export default function ListTodo({
     hasNextPage,
   });
 
-  // 로딩 상태 처리
   if (isPending) return <div>Loading...</div>;
-
-  // 에러 상태 처리
-  if (isError) return <div>Error: {error.message}</div>;
+  if (isError) return <div>Error...</div>;
 
   const toggleStatus = (id: string) => {
     queryClient.setQueryData<InfiniteData<TodosResponse>>(
@@ -185,41 +98,59 @@ export default function ListTodo({
       },
     );
   };
+  const getDropdownItems = (todo: Todo): DropdownItem[] => {
+    const baseItems: DropdownItem[] = [
+      { id: "edit", label: "수정하기", onClick: () => {} },
+      { id: "delete", label: "삭제하기", onClick: () => {} },
+    ];
+    // hasNote가 true이면 "노트보기"를 맨 앞에 추가
+    if (todo.hasNote) {
+      return [
+        { id: "note", label: "노트보기", onClick: () => {} },
+        ...baseItems,
+      ];
+    }
+    return baseItems;
+  };
 
+  // 필터링된 todos 리스트
   const filteredTodos = data.pages
     .flatMap((page) => page.todos)
     .filter((todo) => filter === "all" || todo.status === filter);
 
-  const statusLabels = {
-    all: "All",
-    todo: "To do",
-    done: "Done",
-  } as const;
+  // 각 todo에 맞는 dropdownItems 생성
+  const todosWithDropdown = filteredTodos.map((todo) => ({
+    ...todo,
+    dropdownItems: getDropdownItems(todo),
+  }));
 
-  const statusMap = (["all", "todo", "done"] as const).map((status) => (
-    <li
-      key={status}
-      className={`${
-        status === filter ? "border-purple-500 bg-purple-500 text-slate-50" : ""
-      } cursor-pointer rounded-3xl border`}
-    >
-      <button
-        className="h-full w-full px-10 py-2"
-        onClick={() => setFilter(status)}
-      >
-        {statusLabels[status]}
-      </button>
-    </li>
-  ));
-
-  const handleKebabClick = (index: number) =>
-    setActiveKebab((prev) => (prev === index ? null : index));
+  const iconSpread = (todo: Todo) => {
+    const keys = ["file", "link", "note"] as const;
+    return keys
+      .filter(
+        (key) =>
+          todo[
+            `has${key.charAt(0).toUpperCase() + key.slice(1)}` as keyof Todo
+          ],
+      )
+      .map((key) => (
+        <a key={key} href={`/${key}s/${todo.id}`}>
+          {key === "file" ? (
+            <FileIcon />
+          ) : key === "link" ? (
+            <LinkIcon />
+          ) : (
+            <NoteIcon />
+          )}
+        </a>
+      ));
+  };
 
   return (
     <div className="mx-auto min-h-[2080px] w-full max-w-2xl rounded-xl rounded-b-none border-slate-300 bg-[#fff] p-20 text-sm text-slate-800">
-      <ul className="mb-20 flex gap-10">{statusMap}</ul>
-      <ul className="space-y-15">
-        {filteredTodos.map((todo, index) => (
+      <Filter filter={filter} setFilter={setFilter} />
+      <ul className="mt-20 flex flex-col gap-15">
+        {todosWithDropdown.map((todo, index) => (
           <li key={todo.id}>
             <div className="flex items-center justify-between">
               <TodoTitleAndCheckBox
@@ -227,18 +158,16 @@ export default function ListTodo({
                 todo={todo}
                 toggleStatus={toggleStatus}
               />
-              <TodoEditAndDeleteAndIcons
-                activeKebab={activeKebab}
-                handleKebabClick={handleKebabClick}
-                index={index}
-                todo={todo}
-              />
+              <div className="flex gap-5">
+                {iconSpread(todo)}
+                <Dropdown items={todo.dropdownItems} />
+              </div>
             </div>
             <Goal todo={todo} />
           </li>
         ))}
       </ul>
-      <div ref={ref} className="h-[.5px]" />
+      <div ref={ref} className="h-1" />
     </div>
   );
 }

@@ -38,6 +38,7 @@ const mockFetchTodos = async () => {
         hasGoal: Math.random() > 0.5 ? getRandomGoal() : null,
         hasLink: Math.random() > 0.5,
         hasFile: Math.random() > 0.5,
+        hasNote: Math.random() > 0.5,
         createdAt: Date.now() - Math.floor(Math.random() * 10000000),
       }));
       resolve({ todos });
