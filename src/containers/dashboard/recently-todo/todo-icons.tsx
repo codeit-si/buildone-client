@@ -1,7 +1,7 @@
 import FileIcon from "@/assets/file.svg";
 import LinkIcon from "@/assets/link.svg";
 import Dropdown from "@/components/dropdown";
-import { TodoResponse } from "@/types/services";
+import { TodoResponse } from "@/types/dashboard";
 
 interface TodoEditAndDeleteAndIconsProps {
   todo: TodoResponse;
