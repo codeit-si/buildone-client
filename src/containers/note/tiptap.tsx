@@ -17,7 +17,8 @@ function Tiptap({ setContents }: TiptapProps) {
   const editor = useEditor({
     editorProps: {
       attributes: {
-        class: "prose prose-sm sm:prose lg:prose-lg focus:outline-none",
+        class:
+          "prose prose-sm sm:prose lg:prose-lg focus:outline-none min-h-400",
       },
     },
     extensions: [
