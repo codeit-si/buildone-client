@@ -5,6 +5,7 @@ import { ChangeEvent, useState } from "react";
 import Button from "@/components/button";
 import Counting from "@/components/counting";
 import Goal from "@/containers/note/goal";
+import LinkAttached from "@/containers/note/link-attached";
 import Tiptap from "@/containers/note/tiptap";
 import Todo from "@/containers/note/todo";
 import "@/styles/note.css";
@@ -13,9 +14,21 @@ import { countWithoutSpaces, countWithSpaces } from "@/utils/text-utils";
 export default function ComposePage() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  const [link, setLink] = useState<string>("");
+  const [showLink, setShowLink] = useState<boolean>(false);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
+  };
+
+  const handleRemoveLink = () => {
+    setShowLink(false);
+    setLink("");
+  };
+
+  const handleAddLink = (newLink: string) => {
+    setLink(newLink);
+    setShowLink(true);
   };
 
   return (
@@ -55,6 +68,8 @@ export default function ComposePage() {
             <Counting type="title" count={title.length} total={50} />
           </div>
 
+          {showLink && <LinkAttached link={link} onRemove={handleRemoveLink} />}
+
           {/* 에디터 영역 */}
           <div className="mt-12">
             <Counting
@@ -63,7 +78,7 @@ export default function ComposePage() {
               total={countWithSpaces(content)}
             />
             <div className="mt-16">
-              <Tiptap setContents={setContent} />
+              <Tiptap setContents={setContent} onLinkSubmit={handleAddLink} />
             </div>
           </div>
         </div>

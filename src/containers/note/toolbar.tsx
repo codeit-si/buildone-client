@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import { Editor } from "@tiptap/react";
 
 import BoldIcon from "@/assets/editor/bold.svg";
@@ -9,12 +11,15 @@ import H3Icon from "@/assets/editor/h3.svg";
 import H4Icon from "@/assets/editor/h4.svg";
 import H5Icon from "@/assets/editor/h5.svg";
 import ItalicIcon from "@/assets/editor/italic.svg";
+import LinkIcon from "@/assets/editor/link.svg";
 import UnderlineIcon from "@/assets/editor/underline.svg";
+import Modal from "@/components/@common/portal/modal";
 import { cn } from "@/lib/cn";
 import "@/styles/note.css";
 
 interface ToolbarProps {
   editor: Editor | null;
+  onLinkSubmit: (link: string) => void;
 }
 
 interface ToolbarButtonProps {
@@ -34,14 +39,30 @@ function ToolbarButton({
     <button
       onClick={onClick}
       className={cn("rounded p-2", { "bg-slate-400": isActive })}
+      style={{ width: "25px", height: "25px", marginRight: "4px" }}
     >
       <IconComponent className="h-25 w-25" aria-label={ariaLabel} />
     </button>
   );
 }
 
-function Toolbar({ editor }: ToolbarProps) {
+function Toolbar({ editor, onLinkSubmit }: ToolbarProps) {
+  const [isLinkModalOpen, setLinkModalOpen] = useState(false);
+  const [inputLink, setInputLink] = useState("");
+
   if (!editor) return null;
+
+  const openLinkModal = () => setLinkModalOpen(true);
+  const closeLinkModal = () => {
+    setLinkModalOpen(false);
+    if (inputLink.trim()) {
+      onLinkSubmit(inputLink);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setInputLink(e.target.value);
+  };
 
   const buttonConfigs = [
     {
@@ -92,19 +113,59 @@ function Toolbar({ editor }: ToolbarProps) {
       ariaLabel: "H5",
       isActive: editor.isActive("heading", { level: 5 }),
     },
+    // 링크 버튼
+    {
+      onClick: openLinkModal,
+      IconComponent: LinkIcon,
+      ariaLabel: "Link",
+      isActive: false,
+    },
   ];
 
   return (
-    <div className="container-width fixed bottom-24 flex h-44 rounded-22 border-slate-200 bg-white p-2 pl-16 shadow">
-      {buttonConfigs.map((btn) => (
+    <div
+      className="container-width fixed bottom-24 flex h-44 items-center justify-center rounded-22 border-slate-200 bg-white p-2 pl-16 shadow"
+      style={{ justifyContent: "space-between" }}
+    >
+      <div style={{ display: "flex" }}>
+        {buttonConfigs.slice(0, -1).map((btn) => (
+          <ToolbarButton
+            key={btn.ariaLabel}
+            onClick={btn.onClick}
+            IconComponent={btn.IconComponent}
+            ariaLabel={btn.ariaLabel}
+            isActive={btn.isActive}
+          />
+        ))}
+      </div>
+      <div style={{ marginRight: "16px" }}>
+        {" "}
         <ToolbarButton
-          key={btn.ariaLabel}
-          onClick={btn.onClick}
-          IconComponent={btn.IconComponent}
-          ariaLabel={btn.ariaLabel}
-          isActive={btn.isActive}
+          onClick={buttonConfigs[buttonConfigs.length - 1].onClick}
+          IconComponent={buttonConfigs[buttonConfigs.length - 1].IconComponent}
+          ariaLabel={buttonConfigs[buttonConfigs.length - 1].ariaLabel}
+          isActive={buttonConfigs[buttonConfigs.length - 1].isActive}
         />
-      ))}
+      </div>
+      {isLinkModalOpen && (
+        <Modal.Root open={isLinkModalOpen} onOpenChange={setLinkModalOpen}>
+          <Modal.Content>
+            <Modal.Title>링크 업로드</Modal.Title>
+            <input
+              type="text"
+              value={inputLink}
+              onChange={handleInputChange}
+              placeholder="https://"
+              className="input-styles"
+            />
+            <Modal.Footer>
+              <button onClick={closeLinkModal} className="button-styles">
+                확인
+              </button>
+            </Modal.Footer>
+          </Modal.Content>
+        </Modal.Root>
+      )}
     </div>
   );
 }

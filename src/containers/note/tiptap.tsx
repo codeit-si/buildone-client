@@ -11,9 +11,10 @@ import Toolbar from "@/containers/note/toolbar";
 
 interface TiptapProps {
   setContents: React.Dispatch<React.SetStateAction<string>>;
+  onLinkSubmit?: (link: string) => void;
 }
 
-function Tiptap({ setContents }: TiptapProps) {
+function Tiptap({ setContents, onLinkSubmit }: TiptapProps) {
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -34,9 +35,15 @@ function Tiptap({ setContents }: TiptapProps) {
     },
   });
 
+  const handleLinkSubmit = (link: string) => {
+    if (onLinkSubmit) {
+      onLinkSubmit(link);
+    }
+  };
+
   return (
     <div className="custom-editor relative">
-      <Toolbar editor={editor} />
+      {editor && <Toolbar editor={editor} onLinkSubmit={handleLinkSubmit} />}
       <EditorContent editor={editor} />
     </div>
   );
