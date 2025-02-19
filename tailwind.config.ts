@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+import typography from "@tailwindcss/typography";
+
 import type { Config } from "tailwindcss";
 
 const pxToRem = require("tailwindcss-preset-px-to-rem");
@@ -55,7 +57,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [typography],
 };
 
 export default config;
