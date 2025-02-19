@@ -4,7 +4,7 @@ import CheckBoxOffIcon from "@/assets/checkbox_off.svg";
 import CheckBoxOnIcon from "@/assets/checkbox_on.svg";
 import { cn } from "@/lib/cn";
 import getQueryClient from "@/lib/get-query-client";
-import { DashboardResponse, TodoResponse } from "@/types/services";
+import { DashboardResponse, TodoResponse } from "@/types/dashboard";
 
 interface RecentlyTodoCheckboxProps {
   todo: TodoResponse;

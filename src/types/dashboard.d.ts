@@ -27,3 +27,26 @@ export interface DashboardResponse {
   progress: number;
   todos: TodoResponse[];
 }
+
+export interface CommonPaginationInformationResponse {
+  nextCursor: number;
+  totalCount: number;
+  hasNext: boolean;
+}
+
+export interface GoalResponse {
+  id: number;
+  title: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface GoalListParams {
+  size?: number;
+  sortOrder?: "newest" | "oldest";
+}
+
+export interface GoalListResponse {
+  paginationInformation: CommonPaginationInformationResponse;
+  goals: GoalResponse[];
+}

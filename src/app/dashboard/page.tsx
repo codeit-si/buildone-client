@@ -4,12 +4,16 @@ import MyProgressContainer from "@/containers/dashboard/my-progress/my-progress-
 import RecentlyTodoContainer from "@/containers/dashboard/recently-todo/recently-todo-container";
 import TodosByGoalContainer from "@/containers/dashboard/todos-by-goal/todos-by-goal-container";
 import getQueryClient from "@/lib/get-query-client";
-import { getDashboardOptions } from "@/services/dashboard";
+import {
+  getDashboardOptions,
+  getInfiniteGoalsOptions,
+} from "@/services/dashboard";
 
 export default async function DashboardPage() {
   const queryClient = getQueryClient();
 
   queryClient.prefetchQuery(getDashboardOptions());
+  queryClient.prefetchInfiniteQuery(getInfiniteGoalsOptions({}));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

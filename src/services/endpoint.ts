@@ -8,7 +8,7 @@ export const ENDPOINT = {
   },
   // 아래 endpoint들은 예시입니다!
   GOAL: {
-    GET_ALL: "/api/goals",
+    GET_ALL: `${PREFIX}/goals`,
     GET_BY_ID: (id: number) => `${PREFIX}/goals/${id}`,
     CREATE: "/api/goals",
     UPDATE: (id: number) => `${PREFIX}/goals/${id}`,
