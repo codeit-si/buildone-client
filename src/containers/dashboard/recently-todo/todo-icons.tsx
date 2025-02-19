@@ -1,7 +1,10 @@
+import React from "react";
+
 import FileIcon from "@/assets/file.svg";
 import LinkIcon from "@/assets/link.svg";
-import Dropdown from "@/components/dropdown";
 import { TodoResponse } from "@/types/services";
+
+import Dropdown from "./recently-todo-dropdown";
 
 interface TodoEditAndDeleteAndIconsProps {
   todo: TodoResponse;
@@ -14,7 +17,7 @@ export default function TodoIcons({ todo }: TodoEditAndDeleteAndIconsProps) {
       {todo.fileUrl && <FileIcon />}
       <Dropdown
         items={[
-          { label: "수정하기", onClick: () => {} },
+          { label: "삭제하기", onClick: () => {} },
           { label: "수정하기", onClick: () => {} },
         ]}
       />

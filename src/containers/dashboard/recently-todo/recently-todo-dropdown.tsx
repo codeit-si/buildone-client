@@ -6,8 +6,7 @@ import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
 import KebabIcon from "@/assets/kebab.svg";
-
-import DropdownItem from "./dropdown-item";
+import DropdownItem from "@/components/dropdown-item";
 
 interface DropdownItemType {
   label: string;
@@ -18,9 +17,11 @@ interface DropdownProps {
 }
 
 function Dropdown({ items }: DropdownProps) {
-  const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const kebabRef = useRef<HTMLDivElement>(null);
   const [focusIndex, setFocusIndex] = useState(-1);
+  const [isOpen, setIsOpen] = useState(false);
+  const [position, setPosition] = useState({ top: 0, left: 0 });
 
   const toggleDropdown = () => setIsOpen((prev) => !prev); // 닫고 열고
 
@@ -39,6 +40,16 @@ function Dropdown({ items }: DropdownProps) {
   };
 
   useEffect(() => {
+    if (isOpen && kebabRef.current) {
+      const buttonRect = kebabRef.current.getBoundingClientRect();
+      setPosition({
+        top: buttonRect.y + buttonRect.height, // 스크롤 위치를 고려한 Y 좌표
+        left: buttonRect.x + 24 - 81,
+      });
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
@@ -53,13 +64,7 @@ function Dropdown({ items }: DropdownProps) {
   }, []);
 
   return (
-    <div
-      tabIndex={-1}
-      role="menu"
-      className="relative"
-      ref={dropdownRef}
-      onKeyDown={handleKeyDown}
-    >
+    <div tabIndex={-1} role="menu" ref={dropdownRef} onKeyDown={handleKeyDown}>
       <button
         aria-haspopup="true"
         aria-expanded={isOpen}
@@ -67,7 +72,7 @@ function Dropdown({ items }: DropdownProps) {
         onClick={toggleDropdown}
         className="flex h-24 w-24 items-center justify-center rounded-full bg-white"
       >
-        <div className="flex flex-col items-center">
+        <div ref={kebabRef} className="flex flex-col items-center">
           <KebabIcon />
         </div>
       </button>
@@ -79,7 +84,8 @@ function Dropdown({ items }: DropdownProps) {
             exit={{ opacity: 0, transition: { duration: 0.1 } }}
             role="menu"
             aria-label="옵션 선택 드롭다운"
-            className="absolute right-0 z-50 h-auto w-81 transform overflow-hidden rounded-17 bg-white shadow-md"
+            className="fixed z-50 h-auto w-81 overflow-hidden rounded-17 bg-white shadow-md"
+            style={{ top: position.top, left: position.left }}
           >
             {items.map(({ label, onClick }, i) => (
               <DropdownItem

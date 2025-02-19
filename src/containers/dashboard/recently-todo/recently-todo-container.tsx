@@ -7,7 +7,7 @@ import RecentlyTodoList from "./recently-todo-list";
 
 export default function RecentlyTodoContainer() {
   return (
-    <section className="flex h-258 w-full flex-col gap-16 rounded-2xl bg-white p-16 md:h-250">
+    <section className="relative flex h-258 w-full flex-col gap-16 rounded-2xl bg-white p-16 md:h-250">
       <div className="flex items-center justify-between pr-4">
         <div className="flex items-center gap-8 text-base font-semibold">
           <RecentlyTodoIcon />

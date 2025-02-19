@@ -13,8 +13,9 @@ import TodoIcons from "./todo-icons";
 
 export default function RecentlyTodoList() {
   const { data } = useSuspenseQuery(getDashboardOptions());
-  const listRef = useRef<HTMLUListElement | null>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
+  const listRef = useRef<HTMLDivElement>(null);
+
   const { todos } = data;
 
   useEffect(() => {
@@ -24,11 +25,11 @@ export default function RecentlyTodoList() {
   }, [todos]);
 
   return (
-    <div className="scrollbar relative h-full overflow-y-auto">
-      <ul ref={listRef} className="flex flex-col gap-8 pr-8">
+    <div ref={listRef} className="scrollbar h-full overflow-y-auto">
+      <ul className="flex flex-col gap-8 pr-8">
         {todos.map((todo) => (
           <li key={todo.id} className="text-sm">
-            <div className="z-50 flex items-center justify-between">
+            <div className="flex items-center justify-between">
               <RecentlyTodoCheckbox todo={todo} />
               <TodoIcons todo={todo} />
             </div>
