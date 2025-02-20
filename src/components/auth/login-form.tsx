@@ -10,6 +10,7 @@ import { z } from "zod";
 import Button from "@/components/@common/button";
 import Input from "@/components/@common/input";
 import LabeledField from "@/components/@common/labeled-field";
+import { LOGIN_ERROR_CODE } from "@/constants/error";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ApiError } from "@/lib/error";
 import { login } from "@/services/auth";
@@ -72,11 +73,14 @@ export default function LoginForm() {
       router.push("/");
     } catch (error: unknown) {
       if (error instanceof ApiError) {
-        if (error.code === "NOT_FOUND_EXIST_MEMBER") {
+        if (
+          error.code === LOGIN_ERROR_CODE.INVALID_EMAIL_FORMAT ||
+          error.code === LOGIN_ERROR_CODE.NOT_FOUND_EXIST_MEMBER
+        ) {
           setError("email", { type: "valid", message: error.message });
         }
 
-        if (error.code === "INVALID_PASSWORD_FORMAT") {
+        if (error.code === LOGIN_ERROR_CODE.INVALID_PASSWORD_FORMAT) {
           setError("password", { type: "valid", message: error.message });
         }
       }
