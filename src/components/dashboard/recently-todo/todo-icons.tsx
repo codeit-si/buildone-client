@@ -2,7 +2,7 @@ import React from "react";
 
 import FileIcon from "@/assets/file.svg";
 import LinkIcon from "@/assets/link.svg";
-import { TodoResponse } from "@/types/services";
+import { TodoResponse } from "@/types/dashboard";
 
 import Dropdown from "./recently-todo-dropdown";
 

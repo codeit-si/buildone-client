@@ -1,15 +1,9 @@
-import { queryOptions } from "@tanstack/react-query";
-
-import apiClient from "@/lib/axios";
-import { DashboardResponse } from "@/types/services";
+import api from "@/lib/axios";
+import { DashboardResponse } from "@/types/dashboard";
 
 import { ENDPOINT } from "../endpoint";
 
-export const getDashboardOptions = () =>
-  queryOptions({
-    queryKey: ["dashboard"],
-    queryFn: async () => {
-      const { data } = await apiClient.get(ENDPOINT.DASHBOARD.GET);
-      return data as DashboardResponse;
-    },
-  });
+export const getDashboard = async () => {
+  const { data } = await api.get<DashboardResponse>(ENDPOINT.DASHBOARD.GET);
+  return data;
+};

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { cn } from "@/lib/cn";
-import { getDashboardOptions } from "@/services/dashboard";
+import { getDashboardOptions } from "@/services/dashboard/query";
 
 import Goal from "./goal";
 import RecentlyTodoCheckbox from "./recently-todo-item";

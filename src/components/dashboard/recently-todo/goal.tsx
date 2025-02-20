@@ -1,6 +1,6 @@
 import GoalIcon from "@/assets/goal.svg";
 import { cn } from "@/lib/cn";
-import { GoalSimpleResponse } from "@/types/services";
+import { GoalSimpleResponse } from "@/types/dashboard";
 
 interface GoalProps {
   goal: GoalSimpleResponse;

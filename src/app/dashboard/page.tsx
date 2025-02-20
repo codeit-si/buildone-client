@@ -4,7 +4,7 @@ import MyProgressContainer from "@/components/dashboard/my-progress/my-progress-
 import RecentlyTodoContainer from "@/components/dashboard/recently-todo/recently-todo-container";
 import TodosByGoalContainer from "@/components/dashboard/todos-by-goal/todos-by-goal-container";
 import getQueryClient from "@/lib/get-query-client";
-import { getDashboardOptions } from "@/services/dashboard";
+import { getDashboardOptions } from "@/services/dashboard/query";
 
 export default async function DashboardPage() {
   const queryClient = getQueryClient();
