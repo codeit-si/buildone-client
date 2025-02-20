@@ -1,8 +1,8 @@
 "use client";
 
 import NoteListIcon from "@/assets/notelist.svg";
-import Dropdown from "@/components/dropdown";
-import Todo from "@/containers/note/todo";
+import Dropdown from "@/components/@common/dropdown";
+import Todo from "@/components/note/todo";
 
 function NoteCard() {
   return (
