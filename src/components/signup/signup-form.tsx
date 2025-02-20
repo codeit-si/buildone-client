@@ -7,12 +7,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 
-import Button from "@/components/button";
-import Input from "@/components/input";
-import LabeledField from "@/components/labeled-field";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ApiError } from "@/lib/error";
 import { signup } from "@/services/auth";
+
+import Button from "../@common/button";
+import Input from "../@common/input";
+import LabeledField from "../@common/labeled-field";
 
 const signupSchema = z
   .object({

@@ -1,0 +1,15 @@
+.container-width {
+  width: 349px;
+}
+
+@media (min-width: 744px) {
+  .container-width {
+    width: 636px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container-width {
+    width: 792px;
+  }
+}
