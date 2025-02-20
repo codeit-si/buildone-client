@@ -1,6 +1,6 @@
 import { Todo } from "@/types/container-recently-todo";
 
-import Goal from "./Goal";
+import Goal from "./goal";
 import TodoTitleAndCheckBox from "./todo-title-checkbox";
 
 interface GoalsListComponentProps {
