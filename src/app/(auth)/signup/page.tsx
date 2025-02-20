@@ -1,5 +1,5 @@
-import AuthSwitch from "@/components/@common/auth-switch";
-import SignUpForm from "@/components/signup/signup-form";
+import AuthSwitch from "@/components/auth/auth-switch";
+import SignUpForm from "@/components/auth/signup-form";
 
 export const metadata = {
   title: "BuilDone - 회원가입",
