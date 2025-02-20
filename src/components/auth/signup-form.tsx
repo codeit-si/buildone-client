@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 
+import { SIGNUP_ERROR_CODE } from "@/constants/error";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ApiError } from "@/lib/error";
 import { signup } from "@/services/auth";
@@ -99,11 +100,12 @@ export default function SignUpForm() {
     } catch (error: unknown) {
       if (error instanceof ApiError) {
         const codeTypeMap = {
-          INVALID_EMAIL_FORMAT: "email",
-          NOT_ALLOW_EMPTY_EMAIL: "email",
-          ALREADY_EXIST_MEMBER_WITH_DUPLICATED_EMAIL: "email",
-          NOT_ALLOW_EMPTY_NAME: "name",
-          INVALID_PASSWORD_FORMAT: "password",
+          [SIGNUP_ERROR_CODE.INVALID_EMAIL_FORMAT]: "email",
+          [SIGNUP_ERROR_CODE.NOT_ALLOW_EMPTY_EMAIL]: "email",
+          [SIGNUP_ERROR_CODE.ALREADY_EXIST_MEMBER_WITH_DUPLICATED_EMAIL]:
+            "email",
+          [SIGNUP_ERROR_CODE.NOT_ALLOW_EMPTY_NAME]: "name",
+          [SIGNUP_ERROR_CODE.INVALID_PASSWORD_FORMAT]: "password",
         } as const;
 
         setError(codeTypeMap[error.code as keyof typeof codeTypeMap], {
@@ -120,28 +122,24 @@ export default function SignUpForm() {
         {
           key: "name",
           label: "이름",
-          type: "text",
           placeholder: "이름을 입력해주세요.",
         },
         {
           key: "email",
           label: "아이디",
-          type: "text",
           placeholder: "이메일을 입력해주세요.",
         },
         {
           key: "password",
           label: "비밀번호",
-          type: "password",
           placeholder: "비밀번호를 입력해주세요.",
         },
         {
           key: "passwordCheck",
           label: "비밀번호 확인",
-          type: "password",
           placeholder: "비밀번호를 다시 한 번 입력해주세요.",
         },
-      ].map(({ key, label, type, placeholder }, index) => (
+      ].map(({ key, label, placeholder }, index) => (
         <LabeledField
           key={key}
           htmlFor={key}
@@ -150,7 +148,7 @@ export default function SignUpForm() {
         >
           <Input
             id={key}
-            type={type}
+            type={key.includes("password") ? "password" : "text"}
             placeholder={placeholder}
             {...register(key as SignupSchemaKey)}
             className={
