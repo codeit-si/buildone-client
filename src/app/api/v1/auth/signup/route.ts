@@ -1,5 +1,7 @@
+import { users } from "../mock";
+
 export async function POST(request: Request) {
-  const { email } = await request.json();
+  const { name, email, password } = await request.json();
 
   if (email === "test@test.com") {
     return new Response(
@@ -13,11 +15,18 @@ export async function POST(request: Request) {
     );
   }
 
+  users.push({
+    id: users.length + 1,
+    email,
+    name,
+    password,
+  });
+
   return new Response(
     JSON.stringify({
-      id: 1,
-      email: "test@test.com",
-      name: "김경식",
+      id: users.length + 1,
+      email,
+      name,
     }),
     {
       status: 200,

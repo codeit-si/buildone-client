@@ -1,5 +1,7 @@
 import { cookies } from "next/headers";
 
+import { users } from "../mock";
+
 // refresh-token 재발급 테스트를 위한 변수
 let count = 0;
 
@@ -54,6 +56,31 @@ export async function POST(request: Request) {
           id: 1,
           email: "test@test.com",
           name: "김경식",
+        },
+        credentials: {
+          accessToken: "ACCESS_TOKEN_IN_HEADER",
+          refreshToken: "REFRESH_TOKEN_IN_COOKIE",
+        },
+      }),
+      {
+        status: 200,
+        headers: {
+          "Access-Token": "access_token_abcd_64",
+          "Access-Token-Expired-Time": "2025-02-01T02:24:18.954Z",
+        },
+      },
+    );
+  }
+
+  const user = users.find((u) => u.email === email && u.password === password);
+
+  if (user) {
+    return new Response(
+      JSON.stringify({
+        memberInformation: {
+          id: user.id,
+          email,
+          name: user.name,
         },
         credentials: {
           accessToken: "ACCESS_TOKEN_IN_HEADER",
