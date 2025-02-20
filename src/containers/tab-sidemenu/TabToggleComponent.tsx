@@ -31,7 +31,9 @@ const TabToggleComponent = ({ isTabOpen, setIsTabOpen }: IsTabOpenProps) => {
         className={tabToggleButtonStyle()}
       >
         {!isTabOpen ? (
-          <TabOff />
+          <div className="rotate-90 md:rotate-0">
+            <TabOff />
+          </div>
         ) : (
           <>
             <div className="hidden md:block lg:block">

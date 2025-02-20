@@ -6,7 +6,7 @@ import Link from "next/link";
 import { GoalsListProps } from "@/types/tab-sidemenu";
 
 const goalsListStyle = cva(
-  "max-h-400 list-disc list-inside space-y-10 overflow-y-auto text-slate-700",
+  "max-h-[calc(100vh-450px)] list-disc list-inside space-y-10 overflow-y-auto text-slate-700",
 );
 const GoalsList = ({ goals, setIsAdding }: GoalsListProps) => {
   const listRef = useRef<HTMLUListElement>(null);
