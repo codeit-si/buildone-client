@@ -7,7 +7,7 @@ import Link from "next/link";
 import IcArrowDown from "@/assets/ic_arrow_down.svg";
 import RecentlyIcon from "@/assets/recently.svg";
 import GoalsListComponent from "@/containers/container-recently-todo/GoalsListComponent";
-import { Todo } from "@/types/container-recently-todo";
+import { Todo } from "@/types/todo";
 
 interface TodosResponse {
   todos: Todo[];
@@ -38,6 +38,7 @@ const mockFetchTodos = async () => {
         hasGoal: Math.random() > 0.5 ? getRandomGoal() : null,
         hasLink: Math.random() > 0.5,
         hasFile: Math.random() > 0.5,
+        hasNote: Math.random() > 0.5,
         createdAt: Date.now() - Math.floor(Math.random() * 10000000),
       }));
       resolve({ todos });

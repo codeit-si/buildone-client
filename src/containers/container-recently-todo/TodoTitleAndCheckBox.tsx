@@ -1,6 +1,6 @@
 import CheckBoxOffIcon from "@/assets/checkbox_off.svg";
 import CheckBoxOnIcon from "@/assets/checkbox_on.svg";
-import { Todo } from "@/types/container-recently-todo";
+import { Todo } from "@/types/todo";
 
 interface TodoTitleAndCheckBoxProps {
   index: number;

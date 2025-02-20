@@ -1,4 +1,4 @@
-import { Todo } from "@/types/container-recently-todo";
+import { Todo } from "@/types/todo";
 
 import Goal from "./Goal";
 import TodoTitleAndCheckBox from "./TodoTitleAndCheckBox";
