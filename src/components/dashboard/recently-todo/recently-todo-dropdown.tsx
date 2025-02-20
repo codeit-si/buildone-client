@@ -6,7 +6,7 @@ import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
 import KebabIcon from "@/assets/kebab.svg";
-import DropdownItem from "@/components/dropdown-item";
+import DropdownItem from "@/components/@common/dropdown-item";
 
 interface DropdownItemType {
   label: string;

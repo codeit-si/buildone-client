@@ -1,8 +1,8 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-import MyProgressContainer from "@/containers/dashboard/my-progress/my-progress-container";
-import RecentlyTodoContainer from "@/containers/dashboard/recently-todo/recently-todo-container";
-import TodosByGoalContainer from "@/containers/dashboard/todos-by-goal/todos-by-goal-container";
+import MyProgressContainer from "@/components/dashboard/my-progress/my-progress-container";
+import RecentlyTodoContainer from "@/components/dashboard/recently-todo/recently-todo-container";
+import TodosByGoalContainer from "@/components/dashboard/todos-by-goal/todos-by-goal-container";
 import getQueryClient from "@/lib/get-query-client";
 import { getDashboardOptions } from "@/services/dashboard";
 
