@@ -1,12 +1,17 @@
-export interface Todo {
-  id: string;
+export interface GoalInformation {
+  id: number;
   title: string;
-  status: "todo" | "done";
-  hasGoal: string | null;
-  hasLink: boolean;
-  hasFile: boolean;
-  hasNote: boolean;
-  createdAt: number;
+}
+export interface Todo {
+  id: number;
+  noteId?: number | null;
+  title: string;
+  goalInformation: GoalInformation | null;
+  linkUrl?: string | null;
+  fileUrl?: string | null;
+  isDone: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 export interface TodosResponse {
   todos: Todo[];

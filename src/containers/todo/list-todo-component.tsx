@@ -5,7 +5,7 @@ import Goal from "@/containers/todo/Goal";
 import TodoTitleAndCheckBox from "@/containers/todo/TodoTitleAndCheckBox";
 import { DropdownItem, Todo } from "@/types/todo";
 
-import Dropdown from "./dropdown";
+import Dropdown from "../../components/dropdown";
 
 interface Props {
   todo: Todo;

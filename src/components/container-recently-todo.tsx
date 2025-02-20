@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import IcArrowDown from "@/assets/ic_arrow_down.svg";
 import RecentlyIcon from "@/assets/recently.svg";
-import GoalsListComponent from "@/containers/container-recently-todo/GoalsListComponent";
+import GoalsListComponent from "@/containers/todo/GoalsListComponent";
 import { Todo } from "@/types/todo";
 
 interface TodosResponse {
@@ -28,20 +28,34 @@ const getRandomGoal = () => {
   return Goals[randomIndex];
 };
 
-const mockFetchTodos = async () => {
-  return new Promise<{ todos: Todo[] }>((resolve) => {
+const mockFetchTodos = async (
+  pageParam = 1,
+): Promise<{ todos: Todo[]; nextPage?: number }> => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      const todos: Todo[] = Array.from({ length: 10 }, (_, i) => ({
-        id: `todo-${i}`,
-        title: `${i + 1} ${getRandomGoal()}`,
-        status: Math.random() > 0.5 ? "todo" : "done",
-        hasGoal: Math.random() > 0.5 ? getRandomGoal() : null,
-        hasLink: Math.random() > 0.5,
-        hasFile: Math.random() > 0.5,
-        hasNote: Math.random() > 0.5,
-        createdAt: Date.now() - Math.floor(Math.random() * 10000000),
+      const todos: Todo[] = Array.from({ length: 40 }, (_, i) => ({
+        id: pageParam * 100 + i,
+        noteId: Math.random() > 0.5 ? Math.floor(Math.random() * 10) : null, // 50% 확률로 null
+        title: `${pageParam}-${i + 1} ${getRandomGoal()}`,
+        goalInformation: {
+          id: Math.floor(Math.random() * 100),
+          title: getRandomGoal(),
+        },
+        linkUrl:
+          Math.random() > 0.5
+            ? `https://example.com/link-${pageParam}-${i}`
+            : null, // 50% 확률로 null
+        fileUrl:
+          Math.random() > 0.5
+            ? `https://example.com/file-${pageParam}-${i}`
+            : null, // 50% 확률로 null
+        isDone: Math.random() > 0.5,
+        createdAt: new Date(
+          Date.now() - Math.floor(Math.random() * 10000000),
+        ).toISOString(),
+        updatedAt: new Date().toISOString(),
       }));
-      resolve({ todos });
+      resolve({ todos, nextPage: pageParam < 3 ? pageParam + 1 : undefined });
     }, 500);
   });
 };
@@ -76,16 +90,20 @@ export default function ContainerRecentlyTodo({
     );
 
   const recentTodos = [...(data?.todos ?? [])]
-    .sort((a, b) => b.createdAt - a.createdAt)
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    ) // 날짜 비교 수정
     .slice(0, 4);
-  const toggleStatus = (id: string) => {
+
+  const toggleStatus = (id: number) => {
     queryClient.setQueryData<TodosResponse>(["todos", status], (oldData) => {
       if (!oldData) return oldData;
       return {
         ...oldData,
         todos: oldData.todos.map((todo) =>
           todo.id === id
-            ? { ...todo, status: todo.status === "todo" ? "done" : "todo" }
+            ? { ...todo, isDone: !todo.isDone } // isDone 값을 반전시킴
             : todo,
         ),
       };

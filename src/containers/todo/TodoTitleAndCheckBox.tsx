@@ -5,14 +5,16 @@ import { Todo } from "@/types/todo";
 interface TodoTitleAndCheckBoxProps {
   index: number;
   todo: Todo;
-  toggleStatus: (id: string) => void;
+  toggleStatus: (id: number) => void;
 }
+
 const TodoTitleAndCheckBox = ({
   index,
   todo,
   toggleStatus,
 }: TodoTitleAndCheckBoxProps) => {
-  const isDone = todo.status === "done";
+  const { isDone } = todo; // "isDone" 상태로 변경
+
   return (
     <div className="flex items-center gap-10">
       <label
@@ -25,7 +27,7 @@ const TodoTitleAndCheckBox = ({
           id={`todo-check-${index}`}
           checked={isDone}
           aria-checked={isDone}
-          onChange={() => toggleStatus(todo.id)}
+          onChange={() => toggleStatus(todo.id)} // 상태 변경 시 id 전달
           className="peer absolute hidden"
         />
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
@@ -34,4 +36,5 @@ const TodoTitleAndCheckBox = ({
     </div>
   );
 };
+
 export default TodoTitleAndCheckBox;
