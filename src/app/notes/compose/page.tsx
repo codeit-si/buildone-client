@@ -5,6 +5,7 @@ import { ChangeEvent, useState } from "react";
 import Button from "@/components/button";
 import Counting from "@/components/counting";
 import Goal from "@/containers/note/goal";
+import LinkAttached from "@/containers/note/link-attached";
 import Tiptap from "@/containers/note/tiptap";
 import Todo from "@/containers/note/todo";
 import "@/styles/note.css";
@@ -13,9 +14,24 @@ import { countWithoutSpaces, countWithSpaces } from "@/utils/text-utils";
 export default function ComposePage() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  const [link, setLink] = useState<string>("");
+  const [showLink, setShowLink] = useState<boolean>(false);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+    const newTitle = e.target.value;
+    if (newTitle.length <= 50) {
+      setTitle(newTitle);
+    }
+  };
+
+  const handleRemoveLink = () => {
+    setShowLink(false);
+    setLink("");
+  };
+
+  const handleAddLink = (newLink: string) => {
+    setLink(newLink);
+    setShowLink(true);
   };
 
   return (
@@ -23,7 +39,7 @@ export default function ComposePage() {
       <div className="container-width">
         {/* 헤더 */}
         <div className="grid h-44 grid-cols-[162px_auto] items-center">
-          <h1 className="truncate text-lg font-semibold text-slate-900">
+          <h1 className="truncate font-semibold text-slate-900 md:text-lg">
             노트 작성
           </h1>
           <div className="flex justify-end gap-8">
@@ -44,10 +60,10 @@ export default function ComposePage() {
           <Todo todoText="자바스크립트 기초 챕터1 듣기" />
 
           {/* 노트 제목 입력 */}
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-8 border-b border-t border-slate-200">
             <input
               type="text"
-              className="h-52 w-full border-b border-t border-slate-200 text-lg placeholder:text-lg focus:outline-none"
+              className="h-52 w-full text-lg placeholder:text-lg focus:outline-none"
               placeholder="노트의 제목을 입력해주세요"
               value={title}
               onChange={handleTitleChange}
@@ -62,8 +78,17 @@ export default function ComposePage() {
               count={countWithoutSpaces(content)}
               total={countWithSpaces(content)}
             />
+
+            {/* 링크 첨부 */}
+            <div className="mt-28">
+              {showLink && (
+                <LinkAttached link={link} onRemove={handleRemoveLink} />
+              )}
+            </div>
+
+            {/* 본문 */}
             <div className="mt-16">
-              <Tiptap setContents={setContent} />
+              <Tiptap setContents={setContent} onLinkSubmit={handleAddLink} />
             </div>
           </div>
         </div>
