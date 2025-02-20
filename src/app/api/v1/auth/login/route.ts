@@ -47,7 +47,6 @@ export async function POST(request: Request) {
   // 로그인이 성공한 경우
   if (email === "test@test.com" && password === "1234") {
     const cookieStore = cookies();
-
     cookieStore.set("refresh-token", "refresh-token");
 
     return new Response(
@@ -75,6 +74,9 @@ export async function POST(request: Request) {
   const user = users.find((u) => u.email === email && u.password === password);
 
   if (user) {
+    const cookieStore = cookies();
+    cookieStore.set("refresh-token", "refresh-token");
+
     return new Response(
       JSON.stringify({
         memberInformation: {

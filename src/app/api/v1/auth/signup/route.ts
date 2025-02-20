@@ -15,8 +15,10 @@ export async function POST(request: Request) {
     );
   }
 
+  const newUserId = users.length + 1;
+
   users.push({
-    id: users.length + 1,
+    id: newUserId,
     email,
     name,
     password,
@@ -24,7 +26,7 @@ export async function POST(request: Request) {
 
   return new Response(
     JSON.stringify({
-      id: users.length + 1,
+      id: newUserId,
       email,
       name,
     }),
