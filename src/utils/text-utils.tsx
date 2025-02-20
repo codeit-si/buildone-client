@@ -25,12 +25,14 @@ export const stripMarkdown = (str: string): string => {
 
 // HTML 및 Markdown 구문 제거 후, 공백 제거하여 글자 수 계산
 export const countWithoutSpaces = (str: string): number => {
+  if (!str) return 0;
   const plainText = stripMarkdown(str);
   return plainText.replace(/\s/g, "").length;
 };
 
 // HTML 및 Markdown 구문 제거 후, 공백 포함한 글자 수 계산
 export const countWithSpaces = (str: string): number => {
+  if (!str) return 0;
   const plainText = stripMarkdown(str);
   return plainText.length;
 };
