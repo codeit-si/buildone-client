@@ -2,12 +2,12 @@
 
 import { ChangeEvent, useState } from "react";
 
-import Button from "@/components/button";
-import Counting from "@/components/counting";
-import Goal from "@/containers/note/goal";
-import LinkAttached from "@/containers/note/link-attached";
-import Tiptap from "@/containers/note/tiptap";
-import Todo from "@/containers/note/todo";
+import Button from "@/components/@common/button";
+import Counting from "@/components/@common/counting";
+import Goal from "@/components/note/goal";
+import LinkAttached from "@/components/note/link-attached";
+import Tiptap from "@/components/note/tiptap";
+import Todo from "@/components/note/todo";
 import "@/styles/note.css";
 import { countWithoutSpaces, countWithSpaces } from "@/utils/text-utils";
 
