@@ -133,7 +133,7 @@ function Toolbar({ editor, onLinkSubmit }: ToolbarProps) {
       value={inputLink}
       onChange={handleInputChange}
       placeholder="https://"
-      className="h-44 w-full truncate rounded-12 bg-slate-50 p-5 text-sm md:h-48 md:text-base"
+      className="h-44 w-full truncate rounded-12 bg-slate-50 px-24 py-12 text-sm outline-none md:h-48 md:text-base"
     />
   );
 
@@ -175,7 +175,7 @@ function Toolbar({ editor, onLinkSubmit }: ToolbarProps) {
       </div>
       {isLinkModalOpen && (
         <Modal.Root open={isLinkModalOpen} onOpenChange={setLinkModalOpen}>
-          <Modal.Content className="h-268 w-311 md:h-272 md:w-520">
+          <Modal.Content className="w-311 md:w-520">
             <Modal.Title className="text-bold text-lg">링크 업로드</Modal.Title>
             <div className="mb-12 font-semibold">링크</div>
             {linkInput}

@@ -60,10 +60,10 @@ export default function ComposePage() {
           <Todo todoText="자바스크립트 기초 챕터1 듣기" />
 
           {/* 노트 제목 입력 */}
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-8 border-b border-t border-slate-200">
             <input
               type="text"
-              className="h-52 w-full border-b border-t border-slate-200 text-lg placeholder:text-lg focus:outline-none"
+              className="h-52 w-full text-lg placeholder:text-lg focus:outline-none"
               placeholder="노트의 제목을 입력해주세요"
               value={title}
               onChange={handleTitleChange}
