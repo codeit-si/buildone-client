@@ -1,7 +1,7 @@
 "use client";
 
 import FlagGoalSmall from "@/assets/flag_goal_small.svg";
-import Card from "@/containers/note/card";
+import Card from "@/components/note/card";
 import "@/styles/note.css";
 
 function NoteCollection() {
