@@ -3,7 +3,7 @@ import React from "react";
 import * as Sentry from "@sentry/nextjs";
 import { render, screen, fireEvent } from "@testing-library/react";
 
-import SentryCheck from "./SentryCheck";
+import SentryCheck from "./sentry-check";
 
 // Sentry 모듈 모킹
 jest.mock("@sentry/nextjs", () => ({

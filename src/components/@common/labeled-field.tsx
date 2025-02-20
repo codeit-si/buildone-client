@@ -18,8 +18,10 @@ export default function LabeledField({
   ...props
 }: LabeledFieldProps) {
   return (
-    <div className={cn("flex flex-col gap-y-12", className)} {...props}>
-      <Label htmlFor={htmlFor}>{label}</Label>
+    <div className={cn("flex flex-col", className)} {...props}>
+      <Label htmlFor={htmlFor} className="mb-12">
+        {label}
+      </Label>
       {children}
     </div>
   );

@@ -16,7 +16,7 @@ import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
 import IcClose from "@/assets/ic_close.svg";
-import Button, { ButtonProps } from "@/components/button";
+import Button, { ButtonProps } from "@/components/@common/button";
 import usePortalClosesByEscapeKey from "@/hooks/portal/use-portal-closes-by-escape-key";
 import usePortalOpen from "@/hooks/portal/use-portal-open";
 import { cn } from "@/lib/cn";
