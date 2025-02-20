@@ -1,6 +1,6 @@
 "use client";
 
-import Dropdown from "@/components/dropdown";
+import Dropdown from "@/components/@common/dropdown";
 
 import Test2 from "./modal";
 import Test3 from "./popup";

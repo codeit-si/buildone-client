@@ -7,7 +7,7 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
 
-import Toolbar from "@/containers/note/toolbar";
+import Toolbar from "@/components/note/toolbar";
 
 interface TiptapProps {
   setContents: React.Dispatch<React.SetStateAction<string>>;

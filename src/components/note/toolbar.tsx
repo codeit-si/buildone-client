@@ -13,8 +13,8 @@ import H5Icon from "@/assets/editor/h5.svg";
 import ItalicIcon from "@/assets/editor/italic.svg";
 import LinkIcon from "@/assets/editor/link.svg";
 import UnderlineIcon from "@/assets/editor/underline.svg";
+import Button from "@/components/@common/button";
 import Modal from "@/components/@common/portal/modal";
-import Button from "@/components/button";
 import { cn } from "@/lib/cn";
 import "@/styles/note.css";
 
