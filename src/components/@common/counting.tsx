@@ -20,7 +20,7 @@ const Counting = ({ type, count, total }: CountingProps) => {
         role="status"
         aria-label={`현재 ${count}자, 최대 ${total}자`}
       >
-        {count}/<span className="text-purple-500">{total}</span>
+        {count}/<span className="text-dark-blue-500">{total}</span>
       </div>
     );
   }
