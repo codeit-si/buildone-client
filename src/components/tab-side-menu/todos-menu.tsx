@@ -3,19 +3,18 @@ import DashBoard from "@/assets/dashboard.svg";
 import CustomButton from "./custom-button";
 import Menus from "./menus";
 
-const TodosMenu = () => {
+export default function TodosMenu() {
   return (
     <div className="flex items-center justify-between border-t">
       <Menus
-        href="/home"
+        href="/dashboard"
         title="대시보드"
         icon={<DashBoard />}
         cursor="cursor-pointer"
       />
       <CustomButton isMobile color="white">
-        새할일
+        새 할 일
       </CustomButton>
     </div>
   );
-};
-export default TodosMenu;
+}

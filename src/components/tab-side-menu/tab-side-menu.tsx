@@ -4,30 +4,34 @@ import { useEffect, useState } from "react";
 
 import { cva } from "class-variance-authority";
 
-import AddGoalSection from "@/containers/tab-sidemenu/add-goal-section";
-import GoalsList from "@/containers/tab-sidemenu/goals-list";
-import GoalsMenu from "@/containers/tab-sidemenu/goals-menu";
-import LogoComponent from "@/containers/tab-sidemenu/logo-component";
-import TabToggleComponent from "@/containers/tab-sidemenu/tab-toggle-component";
-import TodosMenu from "@/containers/tab-sidemenu/todos-menu";
-import UserProfileComponent from "@/containers/tab-sidemenu/user-profile-component";
-import { UserInformations } from "@/types/tab-sidemenu";
+import GoalsMenu from "@/components/tab-side-menu/goals-menu";
+import { TabItem } from "@/components/tab-side-menu/tab-input";
+import { UserInformations } from "@/types/tab-side-menu";
 
-import { TabItem } from "../tab-input";
+import AddGoalSection from "./add-goal-section";
+import GoalsList from "./goals-list";
+import LogoComponent from "./logo";
+import TabToggle from "./tab-toggle";
+import TodosMenu from "./todos-menu";
+import UserProfile from "./user-profile";
 
-const containerStyle = cva("fixed z-30 bg-white transition-all", {
-  variants: {
-    open: {
-      true: "w-full h-48 max-h-screen overflow-y-auto md:w-60 md:h-full",
-      false: "h-full w-full md:w-280 lg:w-280",
+const containerStyle = cva(
+  "fixed md:static z-999 md:z-0 bg-white transition-all border-b border-slate-100 md:border-r md:border-slate-200",
+  {
+    variants: {
+      open: {
+        true: "w-full h-48 max-h-screen overflow-y-auto md:w-60 md:h-full",
+        false: "h-full w-full md:w-280 lg:w-280",
+      },
+    },
+    defaultVariants: {
+      open: false,
     },
   },
-  defaultVariants: {
-    open: false,
-  },
-});
+);
+
 const topSectionStyle = cva(
-  "flex flex-col gap-20 md:items-center p-0 md:p-20",
+  "flex flex-col gap-20 md:items-center p-0 md:p-24 md:pt-18",
   {
     variants: {
       open: {
@@ -40,6 +44,7 @@ const topSectionStyle = cva(
     },
   },
 );
+
 const topHeaderStyle = cva("flex w-full items-center justify-between", {
   variants: {
     open: {
@@ -52,12 +57,13 @@ const topHeaderStyle = cva("flex w-full items-center justify-between", {
   },
 });
 
-export default function TabSidemenu() {
+export default function TabSideMenu() {
   const [isTabMinimized, setIsTabMinimized] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [goals, setGoals] = useState<TabItem[]>([]);
   const [newGoal, setNewGoal] = useState("");
   const [profile, setProfile] = useState<UserInformations | undefined>();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newGoal.trim() === "") return;
@@ -96,6 +102,7 @@ export default function TabSidemenu() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsAdding(false);
     };
+
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
@@ -105,22 +112,22 @@ export default function TabSidemenu() {
       <div className={topSectionStyle({ open: isTabMinimized })}>
         <div className={topHeaderStyle({ open: isTabMinimized })}>
           <LogoComponent
-            isTabOpen={isTabMinimized}
-            setIsTabOpen={setIsTabMinimized}
+            isTabMinimized={isTabMinimized}
+            setIsTabMinimized={setIsTabMinimized}
           />
-          <TabToggleComponent
-            isTabOpen={isTabMinimized}
-            setIsTabOpen={setIsTabMinimized}
+          <TabToggle
+            isTabMinimized={isTabMinimized}
+            setIsTabMinimized={setIsTabMinimized}
           />
         </div>
-        <UserProfileComponent isTabOpen={isTabMinimized} profile={profile} />
+        <UserProfile isTabOpen={isTabMinimized} profile={profile} />
       </div>
       {/* 탭 열였을때 나타나는 bottom menus */}
       {!isTabMinimized && (
         <>
           <TodosMenu />
           <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />
-          <div className="px-20">
+          <div className="px-32 md:px-24">
             <GoalsList
               goals={goals}
               handleInputChange={handleInputChange}

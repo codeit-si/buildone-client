@@ -11,7 +11,7 @@ import Todo from "@/components/note/todo";
 import "@/styles/note.css";
 import { countWithoutSpaces, countWithSpaces } from "@/utils/text-utils";
 
-export default function ComposePage() {
+export default function NotesPage() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [link, setLink] = useState<string>("");

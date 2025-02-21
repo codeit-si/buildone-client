@@ -15,7 +15,7 @@ interface TabInputProps {
   className?: string;
 }
 
-export function TabInput({
+export default function TabInput({
   tab,
   onInputChange,
   onInputBlur,
@@ -33,7 +33,6 @@ export function TabInput({
   return (
     <input
       ref={inputRef} // input 요소 참조
-      placeholder="목표를 입력해주세요"
       aria-label="Tab name input" // 접근성용
       type="text" // 텍스트 입력 타입
       value={tab.text} // 탭의 현재 텍스트 값
