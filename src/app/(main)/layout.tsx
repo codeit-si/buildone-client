@@ -20,7 +20,7 @@ export default function RootLayout({
             <TabSideMenu />
           </Suspense>
         </nav>
-        <main className="w-full bg-slate-100 pt-48 md:pt-0">
+        <main className="w-full bg-slate-100 pt-48 md:pl-84 md:pt-0 lg:pl-357">
           <Suspense fallback={<h1>Loading...</h1>}>{children}</Suspense>
         </main>
       </div>
