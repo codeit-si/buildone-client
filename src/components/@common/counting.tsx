@@ -12,7 +12,11 @@ const BASE_CLASS = "items-center justify-center rounded-lg text-xs font-medium";
 const TITLE_CLASS = "h-5 bg-white/50 px-1 text-slate-800";
 const TEXT_CLASS = "h-4 text-slate-800";
 
-const Counting = ({ type, count, total }: CountingProps) => {
+export default function Counting({
+  type,
+  count,
+  total,
+}: CountingProps): JSX.Element {
   if (type === "title") {
     return (
       <div
@@ -34,6 +38,4 @@ const Counting = ({ type, count, total }: CountingProps) => {
       공백포함 : 총 {total}자 | 공백제외 : 총 {count}자
     </div>
   );
-};
-
-export default Counting;
+}

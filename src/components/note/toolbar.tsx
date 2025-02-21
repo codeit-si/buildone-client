@@ -30,12 +30,12 @@ interface ToolbarButtonProps {
   isActive: boolean;
 }
 
-function ToolbarButton({
+const ToolbarButton = ({
   onClick,
   IconComponent,
   ariaLabel,
   isActive,
-}: ToolbarButtonProps) {
+}: ToolbarButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -45,9 +45,12 @@ function ToolbarButton({
       <IconComponent className="h-25 w-25" aria-label={ariaLabel} />
     </button>
   );
-}
+};
 
-function Toolbar({ editor, onLinkSubmit }: ToolbarProps) {
+export default function Toolbar({
+  editor,
+  onLinkSubmit,
+}: ToolbarProps): JSX.Element | null {
   const [isLinkModalOpen, setLinkModalOpen] = useState(false);
   const [inputLink, setInputLink] = useState("");
 
@@ -186,5 +189,3 @@ function Toolbar({ editor, onLinkSubmit }: ToolbarProps) {
     </div>
   );
 }
-
-export default Toolbar;
