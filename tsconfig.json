@@ -22,7 +22,6 @@
       "@/components/*": ["./src/components/*"],
       "@/constants/*": ["./src/constants/*"],
       "@/hooks/*": ["./src/hooks/*"],
-      "@/containers/*": ["./src/containers/*"],
       "@/lib/*": ["./src/lib/*"],
       "@/services/*": ["./src/services/*"],
       "@/styles/*": ["./src/styles/*"],

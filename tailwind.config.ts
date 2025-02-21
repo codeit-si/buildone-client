@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+import typography from "@tailwindcss/typography";
+
 import type { Config } from "tailwindcss";
 
 const pxToRem = require("tailwindcss-preset-px-to-rem");
@@ -9,7 +11,6 @@ const config: Config = {
   content: [
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/containers/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     fontFamily: {
@@ -55,7 +56,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [typography],
 };
 
 export default config;
