@@ -17,7 +17,7 @@ interface DropdownProps {
   items: DropdownItemType[];
 }
 
-function Dropdown({ items }: DropdownProps) {
+export default function Dropdown({ items }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [focusIndex, setFocusIndex] = useState(-1);
@@ -95,5 +95,3 @@ function Dropdown({ items }: DropdownProps) {
     </div>
   );
 }
-
-export default Dropdown;
