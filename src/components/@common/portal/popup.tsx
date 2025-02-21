@@ -19,7 +19,7 @@ import Button, { ButtonProps } from "@/components/@common/button";
 import usePortalClosesByEscapeKey from "@/hooks/portal/use-portal-closes-by-escape-key";
 import usePortalOpen from "@/hooks/portal/use-portal-open";
 import { cn } from "@/lib/cn";
-import splitChildrenByComponents from "@/utils/react-child-utils/split-children-by-component";
+import splitChildrenByComponents from "@/utils/react-utils/split-children-by-component";
 
 import Slot from "../slot/slot";
 
@@ -41,11 +41,11 @@ const popupContext = createContext<PopupContextProps>({
   setOpen: () => {},
 });
 
-function usePopup() {
+const usePopup = () => {
   const context = useContext(popupContext);
   if (!context) throw new Error("usePopup must be used within a PopupProvider");
   return context;
-}
+};
 
 interface PopupRootProps {
   open?: boolean;
