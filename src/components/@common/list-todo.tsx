@@ -82,16 +82,16 @@ export default function ListTodo({
           className="absolute right-0 top-0 flex gap-5 text-slate-700"
         >
           {iconSpread(todo)}
-          <div
+          <button
+            type="button"
+            aria-label="추가 작업"
+            aria-expanded={showDropdownOnHover}
             className={`${
-              showDropdownOnHover
-                ? "hidden focus-within:block group-hover:block"
-                : ""
+              showDropdownOnHover ? "hidden focus:block group-hover:block" : ""
             }`}
-            tabIndex={index}
           >
             <Dropdown items={getDropdownItems(todo)} />
-          </div>
+          </button>
         </div>
       </div>
       {showGoal && (
