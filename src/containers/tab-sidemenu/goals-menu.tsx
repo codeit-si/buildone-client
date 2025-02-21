@@ -1,8 +1,8 @@
 import Goals from "@/assets/goals.svg";
 import { IsAddingProps } from "@/types/tab-sidemenu";
 
-import Menus from "./Menus";
 import CustomButton from "./custom-button";
+import Menus from "./menus";
 
 const GoalsMenu = ({ isAdding, setIsAdding }: IsAddingProps) => {
   return (
