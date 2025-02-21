@@ -14,7 +14,7 @@ const filters: Record<FilterProps["filter"], string> = {
 };
 
 const BASE_CLASS =
-  "rounded-3xl border px-3 py-2 text-base transition-colors hover:text-white";
+  "rounded-3xl border min-w-60 min-h-10 py-5 text-base transition-colors text-sm hover:text-white";
 const ACTIVE_CLASS =
   "text-white border-dark-blue-500 bg-dark-blue-500 text-slate-50";
 const INACTIVE_CLASS = "bg-white border-slate-300 text-slate-800";
