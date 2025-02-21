@@ -21,7 +21,11 @@ export default function Logo({ isTabMinimized }: IsTabMinimizedProps) {
   return (
     <div className={logoWrapStyle({ open: isTabMinimized })}>
       <Link href="/dashboard">
-        {isTabMinimized ? <CompactLogo /> : <MainLogo />}
+        {isTabMinimized ? (
+          <CompactLogo aria-label="빌드원 로고" />
+        ) : (
+          <MainLogo aria-label="빌드원 로고" />
+        )}
       </Link>
     </div>
   );
