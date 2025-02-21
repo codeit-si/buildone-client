@@ -36,8 +36,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "babel.config.js",
-    "src/components/tab-side-menu/tab-toggletsx"
+    "babel.config.js"
   ],
   "exclude": ["node_modules"]
 }
