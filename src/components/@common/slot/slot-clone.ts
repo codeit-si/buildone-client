@@ -7,7 +7,7 @@ import {
 
 import mergeProps from "@/utils/react-utils/merge-props";
 
-const SlotClone = <T>(props: PropsWithChildren<T>) => {
+export default function SlotClone<T>(props: PropsWithChildren<T>) {
   const { children, ...slotProps } = props;
 
   if (isValidElement(children)) {
@@ -16,6 +16,4 @@ const SlotClone = <T>(props: PropsWithChildren<T>) => {
   }
 
   return Children.count(children) > 1 ? Children.only(null) : null;
-};
-
-export default SlotClone;
+}

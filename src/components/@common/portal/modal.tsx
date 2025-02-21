@@ -20,7 +20,7 @@ import Button, { ButtonProps } from "@/components/@common/button";
 import usePortalClosesByEscapeKey from "@/hooks/portal/use-portal-closes-by-escape-key";
 import usePortalOpen from "@/hooks/portal/use-portal-open";
 import { cn } from "@/lib/cn";
-import splitChildrenByComponents from "@/utils/react-utils/split-children-by-component";
+import splitChildrenByComponents from "@/utils/react-utils/split-children-by-components";
 
 import Slot from "../slot/slot";
 

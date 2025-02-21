@@ -8,7 +8,7 @@ import {
 
 import isSlottable from "@/utils/react-utils/is-slottable";
 
-import SlotClone from "../../../utils/react-utils/slot-clone";
+import SlotClone from "./slot-clone";
 
 interface SlotProps extends HTMLAttributes<HTMLElement> {
   children?: ReactNode;
