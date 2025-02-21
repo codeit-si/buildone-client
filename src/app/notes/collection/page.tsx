@@ -4,7 +4,7 @@ import FlagGoalSmall from "@/assets/flag_goal_small.svg";
 import Card from "@/components/note/card";
 import "@/styles/note.css";
 
-function NoteCollection() {
+export default function NoteCollection() {
   return (
     <div className="container-width ml-80 mt-24">
       <div className="text-lg font-semibold">노트 모아보기</div>
@@ -18,5 +18,3 @@ function NoteCollection() {
     </div>
   );
 }
-
-export default NoteCollection;

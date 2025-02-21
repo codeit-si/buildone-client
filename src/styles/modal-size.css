@@ -1,0 +1,23 @@
+.modal-size {
+  width: 300px;
+  min-height: 216px;
+}
+
+@media (min-width: 744px) {
+  .modal-size {
+    width: 450px;
+    min-height: 200px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .modal-size {
+    width: 450px;
+    min-height: 200px;
+  }
+}
+
+.modal-btn {
+  width: 120px;
+  min-height: 48px;
+}
