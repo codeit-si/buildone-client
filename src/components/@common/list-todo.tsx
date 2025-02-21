@@ -9,10 +9,9 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
+import ListTodoComponent from "@/containers/todo/list-todo-component";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { Todo } from "@/types/todo";
-
-import ListTodoComponent from "../containers/todo/list-todo-component";
 
 import Filter from "./filter";
 

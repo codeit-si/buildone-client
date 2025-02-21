@@ -1,10 +1,9 @@
 import FileIcon from "@/assets/file.svg";
 import LinkIcon from "@/assets/link.svg";
 import NoteIcon from "@/assets/note.svg";
+import Dropdown from "@/components/@common/dropdown";
 import TodoTitleAndCheckBox from "@/containers/todo/todo-title-checkbox";
 import { DropdownItem, Todo } from "@/types/todo";
-
-import Dropdown from "../../components/dropdown";
 
 import Goal from "./goal";
 
