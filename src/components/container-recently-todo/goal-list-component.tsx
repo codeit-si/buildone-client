@@ -1,4 +1,4 @@
-import Goal from "@/containers/todo/goal";
+import Goal from "@/containers/todo/Goal";
 import { Todo } from "@/types/todo";
 
 import TodoTitleAndCheckBox from "./todo-title-and-checkbox";

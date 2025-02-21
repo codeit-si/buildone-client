@@ -1,16 +1,16 @@
 import { Todo } from "@/types/todo";
 
-import Goal from "./goal";
+import Goal from "./Goal";
 import TodoTitleAndCheckBox from "./todo-title-checkbox";
 
 interface GoalsListComponentProps {
   recentTodos: Todo[];
   toggleStatus: (id: number) => void;
 }
-const GoalsListComponent = ({
+export default function GoalsListComponent({
   recentTodos,
   toggleStatus,
-}: GoalsListComponentProps) => {
+}: GoalsListComponentProps) {
   return (
     <ul className="space-y-15 pb-20">
       {recentTodos.map((todo, index) => (
@@ -25,5 +25,4 @@ const GoalsListComponent = ({
       ))}
     </ul>
   );
-};
-export default GoalsListComponent;
+}

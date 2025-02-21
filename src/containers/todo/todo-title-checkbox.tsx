@@ -8,11 +8,11 @@ interface TodoTitleAndCheckBoxProps {
   toggleStatus: (id: number) => void;
 }
 
-const TodoTitleAndCheckBox = ({
+export default function TodoTitleAndCheckBox({
   index,
   todo,
   toggleStatus,
-}: TodoTitleAndCheckBoxProps) => {
+}: TodoTitleAndCheckBoxProps) {
   const { isDone } = todo; // "isDone" 상태로 변경
 
   return (
@@ -37,6 +37,4 @@ const TodoTitleAndCheckBox = ({
       </span>
     </div>
   );
-};
-
-export default TodoTitleAndCheckBox;
+}

@@ -5,7 +5,9 @@ interface GoalProps {
   todo: Todo;
 }
 
-const Goal = ({ todo: currentTodo }: GoalProps): JSX.Element | null => {
+export default function Goal({
+  todo: currentTodo,
+}: GoalProps): JSX.Element | null {
   // goalInformation이 없으면 렌더링하지 않음
   const { goalInformation, isDone } = currentTodo;
 
@@ -18,6 +20,4 @@ const Goal = ({ todo: currentTodo }: GoalProps): JSX.Element | null => {
       <p className={`${isDone && "line-through"}`}>{goalInformation.title}</p>
     </div>
   );
-};
-
-export default Goal;
+}

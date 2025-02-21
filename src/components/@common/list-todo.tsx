@@ -3,7 +3,7 @@ import Link from "next/link";
 import FileIcon from "@/assets/file.svg";
 import LinkIcon from "@/assets/link.svg";
 import NoteIcon from "@/assets/note.svg";
-import Goal from "@/containers/todo/goal";
+import Goal from "@/containers/todo/Goal";
 import TodoTitleAndCheckBox from "@/containers/todo/todo-title-checkbox";
 import { DropdownItem, Todo } from "@/types/todo";
 
@@ -74,7 +74,7 @@ export default function ListTodo({
         <TodoTitleAndCheckBox
           index={index}
           todo={todo}
-          toggleStatus={toggleStatus} // 상위 컴포넌트에서 받은 함수 사용
+          toggleStatus={toggleStatus}
         />
         <div
           role="group"
