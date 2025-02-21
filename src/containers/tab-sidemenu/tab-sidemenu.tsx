@@ -4,16 +4,16 @@ import { useEffect, useState } from "react";
 
 import { cva } from "class-variance-authority";
 
-import AddGoalSection from "@/containers/tab-sidemenu/add-goal-section";
-import GoalsList from "@/containers/tab-sidemenu/goals-list";
-import GoalsMenu from "@/containers/tab-sidemenu/goals-menu";
-import LogoComponent from "@/containers/tab-sidemenu/logo-component";
-import TabToggleComponent from "@/containers/tab-sidemenu/tab-toggle-component";
-import TodosMenu from "@/containers/tab-sidemenu/todos-menu";
-import UserProfileComponent from "@/containers/tab-sidemenu/user-profile-component";
+import { TabItem } from "@/components/tab-input";
 import { UserInformations } from "@/types/tab-sidemenu";
 
-import { TabItem } from "../tab-input";
+import AddGoalSection from "./add-goal-section";
+import GoalsList from "./goals-list";
+import GoalsMenu from "./goals-menu";
+import LogoComponent from "./logo-component";
+import TabToggleComponent from "./tab-toggle-component";
+import TodosMenu from "./todos-menu";
+import UserProfileComponent from "./user-profile-component";
 
 const containerStyle = cva("fixed z-30 bg-white transition-all", {
   variants: {
