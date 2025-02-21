@@ -1,6 +1,6 @@
 import { users } from "../mock";
 
-export async function POST(request: Request) {
+export const POST = async (request: Request) => {
   const { name, email, password } = await request.json();
 
   if (email === "test@test.com") {
@@ -34,4 +34,4 @@ export async function POST(request: Request) {
       status: 200,
     },
   );
-}
+};
