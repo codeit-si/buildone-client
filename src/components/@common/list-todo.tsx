@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import FileIcon from "@/assets/file.svg";
 import LinkIcon from "@/assets/link.svg";
 import NoteIcon from "@/assets/note.svg";
@@ -50,9 +52,15 @@ export default function ListTodo({
     return icons
       .filter(({ url }) => url !== null)
       .map(({ key, url, Icon }) => (
-        <a key={key} href={url as string}>
+        <Link
+          key={key}
+          href={url as string}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${key} 열기`}
+        >
           <Icon />
-        </a>
+        </Link>
       ));
   };
 
@@ -67,7 +75,11 @@ export default function ListTodo({
           todo={todo}
           toggleStatus={toggleStatus} // 상위 컴포넌트에서 받은 함수 사용
         />
-        <div className="absolute right-0 top-0 flex gap-5 text-slate-700">
+        <div
+          role="group"
+          aria-label="할일 관련 작업"
+          className="absolute right-0 top-0 flex gap-5 text-slate-700"
+        >
           {iconSpread(todo)}
           <div
             className={`${showDropdownOnHover && "hidden group-hover:block"}`}

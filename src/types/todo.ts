@@ -18,9 +18,7 @@ export interface TodosResponse {
   nextCursor?: string;
 }
 export interface ListTodoProps {
-  fetchTodos?: (
-    pageParam?: number,
-  ) => Promise<{ todos: Todo[]; nextPage?: number }>;
+  fetchTodos?: (pageParam?: number) => Promise<TodosResponse>;
 }
 export interface BaseTodoProps {
   index: number;
