@@ -11,7 +11,7 @@ const BASE_CLASS =
 
 const RESPONSIVE_CLASS = "h-44 w-343 md:h-48 md:w-612";
 
-function Input(
+export default forwardRef(function Input(
   {
     type = "text",
     value,
@@ -45,6 +45,4 @@ function Input(
       )}
     </div>
   );
-}
-
-export default forwardRef(Input);
+});
