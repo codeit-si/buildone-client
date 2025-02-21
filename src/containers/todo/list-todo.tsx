@@ -13,7 +13,7 @@ import ListTodoComponent from "@/containers/todo/list-todo-component";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { Todo } from "@/types/todo";
 
-import Filter from "./filter";
+import Filter from "../../components/@common/filter";
 
 const getRandomGoal = () =>
   [
