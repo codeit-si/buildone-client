@@ -12,7 +12,8 @@ const filters: Record<FilterProps["filter"], string> = {
 };
 
 const BASE_CLASS = "rounded-3xl border px-12 py-4 text-base transition-colors";
-const ACTIVE_CLASS = "text-white border-purple-500 bg-purple-500 text-slate-50";
+const ACTIVE_CLASS =
+  "text-white border-dark-blue-500 bg-dark-blue-500 text-slate-50";
 const INACTIVE_CLASS = "bg-white border-slate-300 text-slate-800";
 
 const Filter = ({ filter, setFilter }: FilterProps) => {
