@@ -9,7 +9,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
-import ListTodoComponent from "@/containers/todo/list-todo-component";
+import ListTodo from "@/components/@common/list-todo";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { Todo } from "@/types/todo";
 
@@ -65,7 +65,7 @@ interface ListTodoComponentProps {
   maxItems?: number; // 할 일 최대 개수 제한
 }
 
-export default function ListTodo({
+export default function AllListTodo({
   fetchTodos = mockFetchTodos,
   maxItems,
 }: ListTodoComponentProps) {
@@ -121,11 +121,11 @@ export default function ListTodo({
     .slice(0, maxItems);
 
   return (
-    <div className="mx-auto min-h-[2080px] w-full max-w-2xl rounded-xl rounded-b-none border-slate-300 bg-[#fff] p-20 text-sm text-slate-800">
+    <div className="mx-auto min-h-[2080px] w-full max-w-2xl rounded-xl rounded-b-none border-slate-300 bg-white p-20 text-sm text-slate-800">
       <Filter filter={filter} setFilter={setFilter} />
-      <ul className="mt-20 flex flex-col gap-15 bg-white">
+      <ul className="flex flex-col gap-20">
         {todos.map((todo, index) => (
-          <ListTodoComponent
+          <ListTodo
             key={todo.id}
             index={index}
             todo={todo}

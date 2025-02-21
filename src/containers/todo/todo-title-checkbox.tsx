@@ -32,7 +32,9 @@ const TodoTitleAndCheckBox = ({
         />
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
       </label>
-      <span className={`${isDone ? "line-through" : ""}`}>{todo.title}</span>
+      <span className={`font-medium ${isDone && "line-through"}`}>
+        {todo.title}
+      </span>
     </div>
   );
 };

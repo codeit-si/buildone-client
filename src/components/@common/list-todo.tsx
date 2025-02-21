@@ -1,21 +1,21 @@
 import FileIcon from "@/assets/file.svg";
 import LinkIcon from "@/assets/link.svg";
 import NoteIcon from "@/assets/note.svg";
-import Dropdown from "@/components/@common/dropdown";
+import Goal from "@/containers/todo/goal";
 import TodoTitleAndCheckBox from "@/containers/todo/todo-title-checkbox";
 import { DropdownItem, Todo } from "@/types/todo";
 
-import Goal from "./goal";
+import Dropdown from "./dropdown";
 
 interface Props {
   todo: Todo;
-  showDropdownOnHover?: boolean;
   index: number;
-  toggleStatus: (id: number) => void;
   showGoal?: boolean;
+  showDropdownOnHover?: boolean;
+  toggleStatus: (id: number) => void;
 }
 
-export default function ListTodoComponent({
+export default function ListTodo({
   todo,
   showDropdownOnHover,
   index,
@@ -59,7 +59,7 @@ export default function ListTodoComponent({
   return (
     <li
       key={todo.id}
-      className="group relative text-slate-800 hover:text-purple-700"
+      className="group relative flex flex-col gap-8 text-slate-800 hover:text-dark-blue-700"
     >
       <div className="flex items-center justify-between">
         <TodoTitleAndCheckBox
@@ -76,7 +76,11 @@ export default function ListTodoComponent({
           </div>
         </div>
       </div>
-      {showGoal && <Goal todo={todo} />}
+      {showGoal && (
+        <div className="ml-27">
+          <Goal todo={todo} />
+        </div>
+      )}
     </li>
   );
 }

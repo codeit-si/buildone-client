@@ -10,9 +10,9 @@ const ButtonVariants = cva(
     variants: {
       variant: {
         solid:
-          "bg-purple-500 hover:bg-purple-600 active:bg-purple-800 disabled:bg-slate-400 text-white",
+          "bg-dark-blue-500 hover:bg-dark-blue-600 active:bg-dark-blue-800 disabled:bg-slate-400 text-white",
         outlined:
-          "border border-purple-500 text-purple-500 hover:border-purple-600 hover:text-purple-600 active:border-purple-800 active:text-purple-800 disabled:border-slate-400 disabled:text-slate-400",
+          "border border-dark-blue-500 text-dark-blue-500 hover:border-dark-blue-600 hover:text-dark-blue-600 active:border-dark-blue-800 active:text-dark-blue-800 disabled:border-slate-400 disabled:text-slate-400",
       },
       shape: {
         square: "rounded-xl",

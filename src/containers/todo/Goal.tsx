@@ -13,11 +13,9 @@ const Goal = ({ todo: currentTodo }: GoalProps): JSX.Element | null => {
 
   // isDone이 true일 때 취소선 적용
   return (
-    <div className="ml-27 mt-10 flex items-center gap-10 text-slate-700">
+    <div className="flex items-center gap-10">
       <GoalIcon />
-      <p className={`${isDone ? "line-through" : ""}`}>
-        {goalInformation.title}
-      </p>
+      <p className={`${isDone && "line-through"}`}>{goalInformation.title}</p>
     </div>
   );
 };
