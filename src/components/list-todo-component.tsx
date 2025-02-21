@@ -1,18 +1,18 @@
 import FileIcon from "@/assets/file.svg";
 import LinkIcon from "@/assets/link.svg";
 import NoteIcon from "@/assets/note.svg";
-import Goal from "@/containers/todo/Goal";
-import TodoTitleAndCheckBox from "@/containers/todo/TodoTitleAndCheckBox";
+import Goal from "@/containers/todo/goal";
+import TodoTitleAndCheckBox from "@/containers/todo/todo-title-checkbox";
 import { DropdownItem, Todo } from "@/types/todo";
 
 import Dropdown from "./dropdown";
 
 interface Props {
   todo: Todo;
-  showDropdownOnHover?: boolean;
   index: number;
-  toggleStatus: (id: number) => void;
   showGoal?: boolean;
+  showDropdownOnHover?: boolean;
+  toggleStatus: (id: number) => void;
 }
 
 export default function ListTodoComponent({

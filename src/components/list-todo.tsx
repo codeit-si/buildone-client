@@ -14,6 +14,8 @@ import { Todo } from "@/types/todo";
 
 import ListTodoComponent from "../containers/todo/list-todo-component";
 
+import Filter from "./filter";
+
 const getRandomGoal = () =>
   [
     "Complete the project report.",
@@ -69,7 +71,7 @@ export default function ListTodo({
   maxItems,
 }: ListTodoComponentProps) {
   const queryClient = useQueryClient();
-  const [filter] = useState<"all" | "todo" | "done">("all");
+  const [filter, setFilter] = useState<"all" | "todo" | "done">("all");
 
   const {
     data,
@@ -120,7 +122,8 @@ export default function ListTodo({
     .slice(0, maxItems);
 
   return (
-    <>
+    <div className="mx-auto min-h-[2080px] w-full max-w-2xl rounded-xl rounded-b-none border-slate-300 bg-[#fff] p-20 text-sm text-slate-800">
+      <Filter filter={filter} setFilter={setFilter} />
       <ul className="mt-20 flex flex-col gap-15 bg-white">
         {todos.map((todo, index) => (
           <ListTodoComponent
@@ -133,7 +136,7 @@ export default function ListTodo({
           />
         ))}
       </ul>
-      {todos.length >= 40 && <div ref={ref} className="h-1" />}
-    </>
+      <div ref={ref} className="h-1" />
+    </div>
   );
 }

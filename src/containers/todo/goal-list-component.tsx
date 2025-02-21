@@ -1,11 +1,11 @@
 import { Todo } from "@/types/todo";
 
-import Goal from "./Goal";
-import TodoTitleAndCheckBox from "./TodoTitleAndCheckBox";
+import Goal from "./goal";
+import TodoTitleAndCheckBox from "./todo-title-checkbox";
 
 interface GoalsListComponentProps {
   recentTodos: Todo[];
-  toggleStatus: (id: string) => void;
+  toggleStatus: (id: number) => void;
 }
 const GoalsListComponent = ({
   recentTodos,
