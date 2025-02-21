@@ -18,9 +18,9 @@ export default function ToolbarButton({
   return (
     <button
       onClick={onClick}
-      className={cn("mr-4 h-25 w-25 rounded p-2", { "bg-slate-400": isActive })}
+      className={cn("mr-4 h-24 w-24 rounded p-2", { "bg-slate-400": isActive })}
     >
-      <IconComponent className="h-25 w-25" aria-label={ariaLabel} />
+      <IconComponent className="h-24 w-24" aria-label={ariaLabel} />
     </button>
   );
 }
