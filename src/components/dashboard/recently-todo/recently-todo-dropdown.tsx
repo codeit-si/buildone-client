@@ -1,6 +1,6 @@
 "use client";
 
-import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
@@ -19,14 +19,15 @@ interface DropdownProps {
 function Dropdown({ items }: DropdownProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const kebabRef = useRef<HTMLDivElement>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [focusIndex, setFocusIndex] = useState(-1);
-  const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
 
-  const toggleDropdown = () => setIsOpen((prev) => !prev); // 닫고 열고
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
 
-  // 드롭다운 외부 클릭 시 닫힘
-  const closeDropdown = () => setIsOpen(false);
+  const closeDropdown = useCallback(() => setIsDropdownOpen(false), []);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Escape") closeDropdown();
@@ -41,27 +42,36 @@ function Dropdown({ items }: DropdownProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (isOpen) {
+      if (isDropdownOpen) {
         closeDropdown();
       }
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isOpen]);
+    if (isDropdownOpen) {
+      window.addEventListener("scroll", handleScroll, {
+        capture: true,
+      });
+      window.addEventListener("resize", handleScroll);
+    }
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [isDropdownOpen, closeDropdown]);
 
   useEffect(() => {
-    if (isOpen && kebabRef.current) {
+    if (isDropdownOpen && kebabRef.current) {
       const buttonRect = kebabRef.current.getBoundingClientRect();
       setPosition({
-        top: buttonRect.y + buttonRect.height, // 스크롤 위치를 고려한 Y 좌표
+        top: buttonRect.y + buttonRect.height,
         left: buttonRect.x + 24 - 81,
       });
     }
-  }, [isOpen]);
+  }, [isDropdownOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
+        isDropdownOpen &&
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
@@ -71,13 +81,13 @@ function Dropdown({ items }: DropdownProps) {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [isDropdownOpen, closeDropdown]);
 
   return (
     <div tabIndex={-1} role="menu" ref={dropdownRef} onKeyDown={handleKeyDown}>
       <button
         aria-haspopup="true"
-        aria-expanded={isOpen}
+        aria-expanded={isDropdownOpen}
         aria-label="메뉴 열기"
         onClick={toggleDropdown}
         className="flex h-24 w-24 items-center justify-center rounded-full bg-white"
@@ -87,7 +97,7 @@ function Dropdown({ items }: DropdownProps) {
         </div>
       </button>
       <AnimatePresence>
-        {isOpen && (
+        {isDropdownOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 0.1 } }}
@@ -106,8 +116,10 @@ function Dropdown({ items }: DropdownProps) {
                   closeDropdown();
                 }}
                 onKeyDown={(e) => {
-                  onClick(e);
-                  closeDropdown();
+                  if (e.key === "Enter") {
+                    onClick(e);
+                    closeDropdown();
+                  }
                 }}
                 isFocus={focusIndex === i}
               />
