@@ -17,8 +17,8 @@ export default function TodoIcons({ todo }: TodoEditAndDeleteAndIconsProps) {
       {todo.fileUrl && <FileIcon />}
       <Dropdown
         items={[
-          { label: "삭제하기", onClick: () => {} },
           { label: "수정하기", onClick: () => {} },
+          { label: "삭제하기", onClick: () => {} },
         ]}
       />
     </div>

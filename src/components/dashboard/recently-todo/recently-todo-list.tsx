@@ -25,7 +25,11 @@ export default function RecentlyTodoList() {
   }, [todos]);
 
   return (
-    <div ref={listRef} className="scrollbar h-full overflow-y-auto">
+    <div
+      ref={listRef}
+      className="scrollbar h-full overflow-y-auto"
+      role="region"
+    >
       <ul className="flex flex-col gap-8 pr-8">
         {todos.map((todo) => (
           <li key={todo.id} className="text-sm">

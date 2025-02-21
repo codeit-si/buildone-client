@@ -40,6 +40,16 @@ function Dropdown({ items }: DropdownProps) {
   };
 
   useEffect(() => {
+    const handleScroll = () => {
+      if (isOpen) {
+        closeDropdown();
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isOpen]);
+
+  useEffect(() => {
     if (isOpen && kebabRef.current) {
       const buttonRect = kebabRef.current.getBoundingClientRect();
       setPosition({
@@ -91,7 +101,14 @@ function Dropdown({ items }: DropdownProps) {
               <DropdownItem
                 key={`kebab-dropdown-${label}`}
                 label={label}
-                onClick={onClick}
+                onClick={(e) => {
+                  onClick(e);
+                  closeDropdown();
+                }}
+                onKeyDown={(e) => {
+                  onClick(e);
+                  closeDropdown();
+                }}
                 isFocus={focusIndex === i}
               />
             ))}
