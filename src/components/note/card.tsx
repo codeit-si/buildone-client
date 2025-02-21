@@ -4,7 +4,7 @@ import NoteListIcon from "@/assets/notelist.svg";
 import Dropdown from "@/components/@common/dropdown";
 import Todo from "@/components/note/todo";
 
-function NoteCard() {
+export default function NoteCard() {
   return (
     <div className="mt-16 h-164 w-full rounded-12 bg-white p-24">
       <div className="flex h-44 justify-between">
@@ -27,5 +27,3 @@ function NoteCard() {
     </div>
   );
 }
-
-export default NoteCard;

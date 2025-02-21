@@ -4,7 +4,7 @@ interface TodoProps {
   todoText: string;
 }
 
-function Todo({ todoText }: TodoProps) {
+export default function Todo({ todoText }: TodoProps) {
   return (
     <div className="mb-24 flex items-center">
       <div className="flex h-20 w-37 items-center justify-center rounded-4 bg-slate-100 text-xs font-medium text-slate-700">
@@ -14,5 +14,3 @@ function Todo({ todoText }: TodoProps) {
     </div>
   );
 }
-
-export default Todo;
