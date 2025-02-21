@@ -7,7 +7,7 @@ import VisibilityOnIcon from "@/assets/visibility_on.svg";
 import { cn } from "@/lib/cn";
 
 const BASE_CLASS =
-  "flex items-center justify-center space-x-8 rounded-xl border border-slate-50 bg-slate-50 px-24 py-12 text-base font-normal focus-within:border-purple-500 hover:border-purple-300";
+  "flex items-center justify-center space-x-8 rounded-xl border border-slate-50 bg-slate-50 px-24 py-12 text-base font-normal focus-within:border-dark-blue-500 hover:border-dark-blue-300";
 
 const RESPONSIVE_CLASS = "h-44 w-343 md:h-48 md:w-612";
 
