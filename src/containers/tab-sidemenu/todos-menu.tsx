@@ -1,7 +1,7 @@
 import DashBoard from "@/assets/dashboard.svg";
 
-import CustomButton from "./CustomButton";
-import Menus from "./Menus";
+import CustomButton from "./custom-button";
+import Menus from "./menus";
 
 const TodosMenu = () => {
   return (

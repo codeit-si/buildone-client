@@ -2,10 +2,10 @@ import { cva } from "class-variance-authority";
 import Image from "next/image";
 
 import Profile from "@/assets/profile.svg";
-import Button from "@/components/button";
+import Button from "@/components/@common/button";
 import { UserInformations } from "@/types/tab-sidemenu";
 
-import CustomButton from "./CustomButton";
+import CustomButton from "./custom-button";
 
 const logoutButtonStyle = cva(
   "min-h-0 w-fit min-w-0 justify-normal bg-opacity-0 p-0 text-xs font-normal text-slate-400 hover:bg-opacity-0",

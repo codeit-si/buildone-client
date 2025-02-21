@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority";
 import Sandwich from "@/assets/sandwich.svg";
 import TabOff from "@/assets/tab_off.svg";
 import TabOn from "@/assets/tab_on.svg";
-import Button from "@/components/button";
+import Button from "@/components/@common/button";
 import { IsTabOpenProps } from "@/types/tab-sidemenu";
 
 const mobileStatusTitleStyle = cva(

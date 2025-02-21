@@ -1,7 +1,7 @@
 import { TabInput } from "@/components/tab-input";
 import { AddGoalSectionProps } from "@/types/tab-sidemenu";
 
-import CustomButton from "./CustomButton";
+import CustomButton from "./custom-button";
 
 const AddGoalSection = ({
   isAdding,

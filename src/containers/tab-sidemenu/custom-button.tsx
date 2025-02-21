@@ -4,7 +4,7 @@ import PlusBlue from "@/assets/plus/plus_b.svg";
 import PlusBlueSmall from "@/assets/plus/plus_b_sm.svg";
 import PlusWhite from "@/assets/plus/plus_w.svg";
 import PlusWhiteSmall from "@/assets/plus/plus_w_sm.svg";
-import Button from "@/components/button";
+import Button from "@/components/@common/button";
 import { ButtonProps } from "@/types/tab-sidemenu";
 
 const CustomButton = ({
