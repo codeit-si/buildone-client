@@ -10,7 +10,7 @@ export default function AuthSwitch({ isLoginPage }: AuthSwitchProps) {
       {isLoginPage ? "빌던이 처음이신가요?" : "이미 회원이신가요?"}
       <Link
         href={isLoginPage ? "/signup" : "/login"}
-        className="text-purple-500 underline"
+        className="text-dark-blue-500 underline"
       >
         {isLoginPage ? "회원가입" : "로그인"}
       </Link>

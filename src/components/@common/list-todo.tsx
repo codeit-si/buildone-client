@@ -200,7 +200,9 @@ export default function ListTodo({
     <li
       key={status}
       className={`${
-        status === filter ? "border-purple-500 bg-purple-500 text-slate-50" : ""
+        status === filter
+          ? "border-dark-blue-500 bg-dark-blue-500 text-slate-50"
+          : ""
       } cursor-pointer rounded-3xl border`}
     >
       <button
