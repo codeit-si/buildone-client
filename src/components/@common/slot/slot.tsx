@@ -25,7 +25,7 @@ export default function Slot(props: SlotProps) {
 
     const newChildren = childrenArray.map((child) => {
       if (child === slottable) {
-        if (Children.count(newElement) > 1) return null;
+        if (Children.count(newElement) > 1) return Children.only(null);
         return isValidElement(newElement)
           ? (newElement.props.children as ReactNode)
           : null;
