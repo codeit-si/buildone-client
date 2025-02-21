@@ -67,6 +67,7 @@ export default function ListTodo({
   return (
     <li
       key={todo.id}
+      aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
       className="group relative flex flex-col gap-8 text-slate-800 hover:text-dark-blue-700"
     >
       <div className="flex items-center justify-between">
@@ -82,7 +83,12 @@ export default function ListTodo({
         >
           {iconSpread(todo)}
           <div
-            className={`${showDropdownOnHover && "hidden group-hover:block"}`}
+            className={`${
+              showDropdownOnHover
+                ? "hidden focus-within:block group-hover:block"
+                : ""
+            }`}
+            tabIndex={index}
           >
             <Dropdown items={getDropdownItems(todo)} />
           </div>
