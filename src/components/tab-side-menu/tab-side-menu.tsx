@@ -16,12 +16,12 @@ import TodosMenu from "./todos-menu";
 import UserProfile from "./user-profile";
 
 const containerStyle = cva(
-  "fixed md:static z-999 md:z-0 bg-white transition-all border-b border-slate-100 md:border-r md:border-slate-200",
+  "fixed md:static md:z-0 bg-white transition-all border-b border-slate-100 md:border-r md:border-slate-200",
   {
     variants: {
       open: {
-        true: "w-full h-48 max-h-screen overflow-y-auto md:w-60 md:h-full",
-        false: "h-full w-full md:w-280 lg:w-280",
+        true: "h-full w-full md:w-280 lg:w-280",
+        false: "w-full h-48 max-h-screen overflow-y-auto md:w-60 md:h-full",
       },
     },
     defaultVariants: {
@@ -31,12 +31,12 @@ const containerStyle = cva(
 );
 
 const topSectionStyle = cva(
-  "flex flex-col gap-20 md:items-center p-0 md:p-24 md:pt-18",
+  "flex flex-col gap-14 md:gap-16 md:items-center p-0 md:p-24 md:pt-18",
   {
     variants: {
       open: {
-        true: "h-full p-0",
-        false: "p-20",
+        true: "p-24 pt-0 md:p-20",
+        false: "h-full p-0",
       },
     },
     defaultVariants: {
@@ -48,8 +48,9 @@ const topSectionStyle = cva(
 const topHeaderStyle = cva("flex w-full items-center justify-between", {
   variants: {
     open: {
-      true: "h-full flex-row gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
-      false: "",
+      true: "",
+      false:
+        "h-full flex-row gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
     },
   },
   defaultVariants: {
@@ -108,9 +109,9 @@ export default function TabSideMenu() {
   }, []);
 
   return (
-    <div className={containerStyle({ open: isTabMinimized })}>
-      <div className={topSectionStyle({ open: isTabMinimized })}>
-        <div className={topHeaderStyle({ open: isTabMinimized })}>
+    <div className={containerStyle({ open: !isTabMinimized })}>
+      <div className={topSectionStyle({ open: !isTabMinimized })}>
+        <div className={topHeaderStyle({ open: !isTabMinimized })}>
           <LogoComponent
             isTabMinimized={isTabMinimized}
             setIsTabMinimized={setIsTabMinimized}

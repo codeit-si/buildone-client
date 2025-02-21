@@ -28,7 +28,7 @@ export default function CustomButton({
   const buttonVariants = cva("font-semibold p-0", {
     variants: {
       isMobile: {
-        true: "mr-20 flex max-h-36 min-h-36 min-w-84 max-w-84 md:hidden",
+        true: "flex max-h-36 min-h-36 min-w-84 max-w-84 md:hidden",
         false: "hidden w-full md:flex lg:flex",
       },
     },

@@ -7,7 +7,7 @@ import Button from "@/components/@common/button";
 import { IsTabMinimizedProps } from "@/types/tab-side-menu";
 
 const mobileStatusTitleStyle = cva(
-  "ml-5 text-14 font-bold leading-6 text-slate-800 md:hidden",
+  "text-base font-semibold leading-6 text-slate-800 md:hidden",
   {
     variants: {
       open: {
@@ -22,14 +22,14 @@ const mobileStatusTitleStyle = cva(
 );
 
 const tabToggleButtonStyle =
-  "ml-20 min-h-0 min-w-0 bg-opacity-0 p-0 hover:bg-opacity-0 active:bg-opacity-0 md:m-0";
+  "min-h-0 min-w-0 bg-opacity-0 p-0 hover:bg-opacity-0 active:bg-opacity-0 md:m-0";
 
 export default function TabToggle({
   isTabMinimized,
   setIsTabMinimized,
 }: IsTabMinimizedProps) {
   return (
-    <div className="item-center flex">
+    <div className="item-center flex gap-x-16 px-16 py-12 md:p-0">
       <Button
         onClick={() => setIsTabMinimized(!isTabMinimized)}
         className={tabToggleButtonStyle}
