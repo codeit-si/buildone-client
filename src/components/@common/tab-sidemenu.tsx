@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 
 import { cva } from "class-variance-authority";
 
-import AddGoalSection from "@/containers/tab-sidemenu/add-goal-section";
-import GoalsList from "@/containers/tab-sidemenu/goals-list";
-import GoalsMenu from "@/containers/tab-sidemenu/goals-menu";
-import LogoComponent from "@/containers/tab-sidemenu/logo-component";
-import TabToggleComponent from "@/containers/tab-sidemenu/tab-toggle-component";
-import TodosMenu from "@/containers/tab-sidemenu/todos-menu";
-import UserProfileComponent from "@/containers/tab-sidemenu/user-profile-component";
+import AddGoalSection from "@/components/containers/tab-sidemenu/add-goal-section";
+import GoalsList from "@/components/containers/tab-sidemenu/goals-list";
+import GoalsMenu from "@/components/containers/tab-sidemenu/goals-menu";
+import LogoComponent from "@/components/containers/tab-sidemenu/logo-component";
+import TabToggleComponent from "@/components/containers/tab-sidemenu/tab-toggle-component";
+import TodosMenu from "@/components/containers/tab-sidemenu/todos-menu";
+import UserProfileComponent from "@/components/containers/tab-sidemenu/user-profile-component";
 import { UserInformations } from "@/types/tab-sidemenu";
 
 import { TabItem } from "../tab-input";

@@ -3,8 +3,8 @@ import Link from "next/link";
 import FileIcon from "@/assets/file.svg";
 import LinkIcon from "@/assets/link.svg";
 import NoteIcon from "@/assets/note.svg";
-import Goal from "@/containers/todo/Goal";
-import TodoTitleAndCheckBox from "@/containers/todo/todo-title-checkbox";
+import Goal from "@/components/containers/todo/Goal";
+import TodoTitleAndCheckBox from "@/components/containers/todo/todo-title-checkbox";
 import { DropdownItem, Todo } from "@/types/todo";
 
 import Dropdown from "./dropdown";
