@@ -48,9 +48,9 @@ const topSectionStyle = cva(
 const topHeaderStyle = cva("flex w-full items-center justify-between", {
   variants: {
     open: {
-      true: "",
+      true: "mt-20 md:m-0",
       false:
-        "h-full flex-row gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
+        "h-full flex-row px-20 gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
     },
   },
   defaultVariants: {
