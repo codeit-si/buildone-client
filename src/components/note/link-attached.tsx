@@ -1,5 +1,3 @@
-import React from "react";
-
 import DeleteIcon from "@/assets/delete.svg";
 import EmbedIcon from "@/assets/embed.svg";
 import { cn } from "@/lib/cn";
@@ -10,7 +8,10 @@ interface LinkAttachedProps {
   onRemove: () => void;
 }
 
-const LinkAttached: React.FC<LinkAttachedProps> = ({ link, onRemove }) => {
+export default function LinkAttached({
+  link,
+  onRemove,
+}: LinkAttachedProps): JSX.Element {
   return (
     <div
       className={cn(
@@ -27,6 +28,4 @@ const LinkAttached: React.FC<LinkAttachedProps> = ({ link, onRemove }) => {
       </button>
     </div>
   );
-};
-
-export default LinkAttached;
+}

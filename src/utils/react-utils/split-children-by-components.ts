@@ -1,9 +1,9 @@
 import { Children, ComponentType, isValidElement, ReactNode } from "react";
 
-export default function splitChildrenByComponents(
+const splitChildrenByComponents = (
   targets: ComponentType[],
   children: ReactNode,
-) {
+) => {
   const extracted: ReactNode[] = new Array(targets.length).fill(null);
   const remaining: ReactNode[] = [];
 
@@ -18,4 +18,6 @@ export default function splitChildrenByComponents(
   });
 
   return [extracted, remaining];
-}
+};
+
+export default splitChildrenByComponents;

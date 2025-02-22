@@ -42,13 +42,13 @@ const handleCheckboxChange = (
   }
 };
 
-const Chip = ({
+export default function Chip({
   text,
   color = "slate-100",
   size = "large",
   checked = false,
   onChange,
-}: ChipProps) => {
+}: ChipProps): JSX.Element {
   return (
     <div className={getChipClass(color, size)} aria-label={`Chip: ${text}`}>
       <button
@@ -64,6 +64,4 @@ const Chip = ({
       <span className="font-medium">{text}</span>
     </div>
   );
-};
-
-export default Chip;
+}

@@ -14,7 +14,10 @@ interface TiptapProps {
   onLinkSubmit?: (link: string) => void;
 }
 
-function Tiptap({ setContents, onLinkSubmit }: TiptapProps) {
+export default function Tiptap({
+  setContents,
+  onLinkSubmit,
+}: TiptapProps): JSX.Element {
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -59,5 +62,3 @@ function Tiptap({ setContents, onLinkSubmit }: TiptapProps) {
     </div>
   );
 }
-
-export default Tiptap;

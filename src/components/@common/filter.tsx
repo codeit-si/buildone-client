@@ -19,7 +19,10 @@ const ACTIVE_CLASS =
   "text-white border-dark-blue-500 bg-dark-blue-500 text-slate-50";
 const INACTIVE_CLASS = "bg-white border-slate-300 text-slate-800";
 
-const Filter = ({ filter, setFilter }: FilterProps) => {
+export default function Filter({
+  filter,
+  setFilter,
+}: FilterProps): JSX.Element {
   return (
     <div className="mb-25 flex gap-10" role="group" aria-label="작업 상태 필터">
       {Object.entries(filters).map(([value, label]) => (
@@ -37,6 +40,4 @@ const Filter = ({ filter, setFilter }: FilterProps) => {
       ))}
     </div>
   );
-};
-
-export default Filter;
+}

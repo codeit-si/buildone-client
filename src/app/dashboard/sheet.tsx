@@ -2,7 +2,7 @@
 
 import Sheet from "@/components/@common/portal/sheet";
 
-const DashboardPage = () => {
+export default function DashboardPage() {
   return (
     <Sheet.Root>
       <Sheet.Trigger className="rounded-md bg-blue-500 px-4 py-2 text-white">
@@ -66,6 +66,4 @@ const DashboardPage = () => {
       </Sheet.Content>
     </Sheet.Root>
   );
-};
-
-export default DashboardPage;
+}

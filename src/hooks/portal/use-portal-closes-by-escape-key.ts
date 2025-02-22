@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
-export default function usePortalClosesByEscapeKey(
+const usePortalClosesByEscapeKey = (
   open: boolean,
   setOpen: (open: boolean) => void,
-) {
+) => {
   useEffect(() => {
     const handleEscapeKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -15,4 +15,6 @@ export default function usePortalClosesByEscapeKey(
       return () => document.removeEventListener("keydown", handleEscapeKey);
     }
   }, [open, setOpen]);
-}
+};
+
+export default usePortalClosesByEscapeKey;
