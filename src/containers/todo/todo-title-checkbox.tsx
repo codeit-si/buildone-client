@@ -5,7 +5,7 @@ import { Todo } from "@/types/todo";
 interface TodoTitleAndCheckBoxProps {
   index: number;
   todo: Todo;
-  toggleStatus: (id: number) => void;
+  toggleStatus?: (id: number) => void;
 }
 
 export default function TodoTitleAndCheckBox({
@@ -27,7 +27,7 @@ export default function TodoTitleAndCheckBox({
           id={`todo-check-${index}`}
           checked={isDone}
           aria-checked={isDone}
-          onChange={() => toggleStatus(todo.id)} // 상태 변경 시 id 전달
+          onChange={() => toggleStatus && toggleStatus(todo.id)} // 상태 변경 시 id 전달
           className="peer absolute hidden"
         />
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
