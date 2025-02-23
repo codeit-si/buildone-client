@@ -6,7 +6,6 @@ import NoteListIcon from "@/assets/notelist.svg";
 import Dropdown from "@/components/@common/dropdown";
 import Modal from "@/components/@common/portal/modal";
 import Todo from "@/components/note/todo";
-import "@/styles/modal-size.css";
 
 export default function NoteCard(): JSX.Element | null {
   const [isDeleted, setIsDeleted] = useState(false);
@@ -38,17 +37,25 @@ export default function NoteCard(): JSX.Element | null {
           <Todo todoText="자바스크립트 기초 챕터1 듣기" />
         </div>
 
-        <Modal.Content className="modal-size">
-          <div className="mb-16 text-center text-base font-medium text-slate-800">
-            노트를 삭제하시겠어요? 삭제된 노트는 복구할 수 없습니다.
+        <Modal.Content
+          hasCloseIcon={false}
+          className="h-216 w-300 rounded-lg md:w-450"
+        >
+          <div className="text-center text-base font-medium text-slate-800">
+            노트를 삭제하시겠어요?
+            <br />
+            삭제된 노트는 복구할 수 없습니다.
           </div>
           <Modal.Footer>
-            <Modal.Close className="modal-btn" variant="solid">
+            <Modal.Close
+              variant="outlined"
+              style={{ width: "120px", minWidth: "120px" }}
+            >
               취소
             </Modal.Close>
             <Modal.Close
-              className="modal-btn"
               variant="solid"
+              style={{ width: "120px", minWidth: "120px" }}
               onClick={(): void => {
                 setIsDeleted(true);
               }}
