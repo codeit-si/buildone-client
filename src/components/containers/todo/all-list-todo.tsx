@@ -48,10 +48,8 @@ const mockFetchTodos = async (
             ? `https://example.com/file-${pageParam}-${i}`
             : null, // 50% 확률로 null
         isDone: Math.random() > 0.5,
-        createdAt: new Date(
-          Date.now() - Math.floor(Math.random() * 10000000),
-        ).toISOString(),
-        updatedAt: new Date().toISOString(),
+        createdAt: new Date(Date.now() - Math.floor(Math.random() * 10000000)),
+        updatedAt: new Date(),
       }));
       resolve({ todos, nextPage: pageParam < 3 ? pageParam + 1 : undefined });
     }, 500);

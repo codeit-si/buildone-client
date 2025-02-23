@@ -7,7 +7,7 @@ import Goal from "@/components/containers/todo/Goal";
 import TodoTitleAndCheckBox from "@/components/containers/todo/todo-title-checkbox";
 import { DropdownItem, Todo } from "@/types/todo";
 
-import Dropdown from "./dropdown";
+import Dropdown from "../dashboard/recently-todo/recently-todo-dropdown";
 
 interface Props {
   todo: Todo;
