@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 
-import sleep from "@/app/sleep";
 import { GoalListParams, GoalListResponse } from "@/types/dashboard";
+import sleep from "@/utils/sleep";
 
 const generateMockGoals = ({
   cursor = 0,
@@ -33,7 +33,7 @@ const generateMockGoals = ({
   };
 };
 
-export async function GET(request: NextRequest) {
+export const GET = async (request: NextRequest) => {
   const { searchParams } = request.nextUrl;
   const cursor = Number(searchParams.get("cursor")) || 0;
   const size = Number(searchParams.get("size")) || 3;
@@ -42,4 +42,4 @@ export async function GET(request: NextRequest) {
   const data = generateMockGoals({ cursor, size });
 
   return Response.json(data);
-}
+};

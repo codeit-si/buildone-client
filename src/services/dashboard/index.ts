@@ -1,6 +1,4 @@
-import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
-
-import apiClient from "@/lib/axios";
+import api from "@/lib/axios";
 import {
   DashboardResponse,
   GoalListParams,
@@ -9,40 +7,22 @@ import {
 
 import { ENDPOINT } from "../endpoint";
 
-export function getDashboardOptions() {
-  return queryOptions({
-    queryKey: ["dashboard"],
-    queryFn: async (): Promise<DashboardResponse> => {
-      const { data } = await apiClient.get(ENDPOINT.DASHBOARD.GET);
-      return data;
-    },
-  });
-}
+export const getDashboard = async () => {
+  const { data } = await api.get<DashboardResponse>(ENDPOINT.DASHBOARD.GET);
+  return data;
+};
 
-export function getInfiniteGoalsOptions({
-  size = 3,
-  sortOrder = "newest",
-}: GoalListParams) {
-  return infiniteQueryOptions({
-    queryKey: ["goals"],
-    queryFn: async ({ pageParam }): Promise<GoalListResponse> => {
-      const { data } = await apiClient.get(ENDPOINT.GOAL.GET_ALL, {
-        params: {
-          cursor: pageParam,
-          size,
-          sortOrder,
-        },
-      });
-      return data;
+export const getInfiniteGoals = async ({
+  size,
+  sortOrder,
+  pageParam,
+}: GoalListParams & { pageParam: number }) => {
+  const { data } = await api.get<GoalListResponse>(ENDPOINT.GOAL.GET_ALL, {
+    params: {
+      cursor: pageParam,
+      size,
+      sortOrder,
     },
-    getNextPageParam: (lastPage) =>
-      lastPage.paginationInformation.hasNext
-        ? lastPage.paginationInformation.nextCursor
-        : null,
-    initialPageParam: 0,
-    select: (data) => ({
-      pages: data.pages.flatMap((page) => page.goals),
-      pageParams: data.pageParams,
-    }),
   });
-}
+  return data;
+};

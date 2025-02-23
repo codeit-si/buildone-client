@@ -13,3 +13,9 @@ export interface LoginResponse {
   memberInformation: MemberInformation;
   credentials: Credentials;
 }
+
+export interface SignupResponse {
+  id: number;
+  email: string;
+  name: string;
+}

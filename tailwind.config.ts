@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+import typography from "@tailwindcss/typography";
+
 import type { Config } from "tailwindcss";
 
 const pxToRem = require("tailwindcss-preset-px-to-rem");
@@ -9,7 +11,6 @@ const config: Config = {
   content: [
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/containers/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     fontFamily: {
@@ -36,18 +37,18 @@ const config: Config = {
     },
     extend: {
       colors: {
-        purple: {
-          50: "#EEDEFF",
-          100: "#E1C5FE",
-          200: "#D3AAFD",
-          300: "#C084FC",
-          400: "#B773FB",
-          500: "#AB5EF9",
-          600: "#A451F7",
-          700: "#912CF6",
-          800: "#830FF8",
-          900: "#7800F0",
-          950: "#6C00D8",
+        "dark-blue": {
+          50: "#FAF9FF",
+          100: "#F4F4FF",
+          200: "#EBE9FF",
+          300: "#DDDAFF",
+          400: "#7E73FF",
+          500: "#6F63FF",
+          600: "#5A4CFF",
+          700: "#473ADA",
+          800: "#3C30C0",
+          900: "#2E24A1",
+          950: "#281F8B",
         },
         red: {
           500: "#EF4444",
@@ -55,7 +56,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [typography],
 };
 
 export default config;

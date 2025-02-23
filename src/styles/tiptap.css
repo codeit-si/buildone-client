@@ -1,0 +1,14 @@
+/* placeholder 관련. color는 slate-400  */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #94a3b8;
+  pointer-events: none;
+  height: 0;
+}
+
+/* 이중으로 엔터가 되는 것을 방지하는 코드 */
+.custom-editor .ProseMirror p {
+  margin-top: 0;
+  margin-bottom: 0;
+}

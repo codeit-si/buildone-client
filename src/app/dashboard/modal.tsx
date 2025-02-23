@@ -2,7 +2,7 @@
 
 import Modal from "@/components/@common/portal/modal";
 
-const DashboardPage = () => {
+export default function DashboardPage() {
   return (
     <Modal.Root>
       <Modal.Trigger
@@ -25,6 +25,4 @@ const DashboardPage = () => {
       </Modal.Content>
     </Modal.Root>
   );
-};
-
-export default DashboardPage;
+}

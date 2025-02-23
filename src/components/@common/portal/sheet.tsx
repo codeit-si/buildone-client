@@ -40,11 +40,11 @@ const sheetContext = createContext<SheetContextProps>({
   setOpen: () => {},
 });
 
-function useSheet() {
+const useSheet = () => {
   const context = useContext(sheetContext);
   if (!context) throw new Error("useSheet must be used within a SheetProvider");
   return context;
-}
+};
 
 interface SheetRootProps {
   open?: boolean;

@@ -16,11 +16,11 @@ import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
 import IcClose from "@/assets/ic_close.svg";
-import Button, { ButtonProps } from "@/components/button";
+import Button, { ButtonProps } from "@/components/@common/button";
 import usePortalClosesByEscapeKey from "@/hooks/portal/use-portal-closes-by-escape-key";
 import usePortalOpen from "@/hooks/portal/use-portal-open";
 import { cn } from "@/lib/cn";
-import splitChildrenByComponents from "@/utils/react-child-utils/split-children-by-component";
+import splitChildrenByComponents from "@/utils/react-utils/split-children-by-components";
 
 import Slot from "../slot/slot";
 
@@ -42,11 +42,11 @@ const modalContext = createContext<ModalContextProps>({
   setOpen: () => {},
 });
 
-function useModal() {
+const useModal = () => {
   const context = useContext(modalContext);
   if (!context) throw new Error("useModal must be used within a ModalProvider");
   return context;
-}
+};
 
 interface ModalRootProps {
   open?: boolean;
