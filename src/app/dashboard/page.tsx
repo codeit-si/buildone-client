@@ -1,31 +1,26 @@
-"use client";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-import Dropdown from "@/components/@common/dropdown";
+import MyProgressContainer from "@/components/dashboard/my-progress/my-progress-container";
+import RecentlyTodoContainer from "@/components/dashboard/recently-todo/recently-todo-container";
+import TodosByGoalContainer from "@/components/dashboard/todos-by-goal/todos-by-goal-container";
+import getQueryClient from "@/lib/get-query-client";
+import { getDashboardOptions } from "@/services/dashboard/query";
 
-import Test2 from "./modal";
-import Test3 from "./popup";
-import Test from "./sheet";
+export default async function DashboardPage() {
+  const queryClient = getQueryClient();
 
-const DashboardPage = () => {
+  queryClient.prefetchQuery(getDashboardOptions());
+
   return (
-    <>
-      <Dropdown
-        items={[
-          {
-            label: "수정하기",
-            onClick: () => {},
-          },
-          {
-            label: "삭제하기",
-            onClick: () => {},
-          },
-        ]}
-      />
-      <Test />
-      <Test2 />
-      <Test3 />
-    </>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <main className="grid h-full min-h-screen w-full grid-rows-[repeat(2,_258px)_1fr] gap-x-24 gap-y-8 overflow-y-scroll bg-slate-100 px-16 md:grid-cols-2 md:grid-rows-[auto_250px_1fr]">
+        <h1 className="hidden text-base font-semibold md:col-span-2 md:block md:text-lg">
+          대시보드
+        </h1>
+        <RecentlyTodoContainer />
+        <MyProgressContainer />
+        <TodosByGoalContainer />
+      </main>
+    </HydrationBoundary>
   );
-};
-
-export default DashboardPage;
+}
