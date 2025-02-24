@@ -1,18 +1,19 @@
 import CheckBoxOffIcon from "@/assets/checkbox_off.svg";
 import CheckBoxOnIcon from "@/assets/checkbox_on.svg";
-import { Todo } from "@/types/container-recently-todo";
+import { Todo } from "@/types/todo";
 
 interface TodoTitleAndCheckBoxProps {
   index: number;
   todo: Todo;
-  toggleStatus: (id: string) => void;
+  toggleStatus?: (id: number) => void;
 }
-const TodoTitleAndCheckBox = ({
+
+export default function TodoTitleAndCheckBox({
   index,
   todo,
   toggleStatus,
-}: TodoTitleAndCheckBoxProps) => {
-  const isDone = todo.status === "done";
+}: TodoTitleAndCheckBoxProps) {
+  const { isDone } = todo;
   return (
     <div className="flex items-center gap-10">
       <label
@@ -25,13 +26,12 @@ const TodoTitleAndCheckBox = ({
           id={`todo-check-${index}`}
           checked={isDone}
           aria-checked={isDone}
-          onChange={() => toggleStatus(todo.id)}
+          onChange={() => toggleStatus && toggleStatus(todo.id)} // 상태 변경 시 id 전달
           className="peer absolute hidden"
         />
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
       </label>
-      <span className={`${isDone ? "line-through" : ""}`}>{todo.title}</span>
+      <p className={`line-clamp-1 ${isDone && "line-through"}`}>{todo.title}</p>
     </div>
   );
-};
-export default TodoTitleAndCheckBox;
+}

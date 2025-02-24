@@ -1,11 +1,11 @@
 import { AxiosResponse } from "axios";
 
 import apiClient from "@/lib/axios";
+import { LoginResponse, SignupResponse } from "@/types/auth";
 
-import { LoginResponse, SignupResponse } from "../types/auth";
+import { ENDPOINT } from "../endpoint";
 
-import { ENDPOINT } from "./endpoint";
-
+/** 로그인 API */
 export const login = async (
   email: string,
   password: string,
@@ -18,6 +18,7 @@ export const login = async (
   return res;
 };
 
+/** 회원가입 API */
 export const signup = async (
   name: string,
   email: string,
