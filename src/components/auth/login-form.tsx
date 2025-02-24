@@ -9,7 +9,6 @@ import { z } from "zod";
 
 import Button from "@/components/@common/button";
 import Input from "@/components/@common/input";
-import LabeledField from "@/components/@common/labeled-field";
 import { LOGIN_ERROR_CODE } from "@/constants/error";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ApiError } from "@/lib/error";
@@ -93,25 +92,19 @@ export default function LoginForm() {
         {
           key: "email",
           label: "아이디",
-          type: "text",
           placeholder: "이메일을 입력해주세요.",
         },
         {
           key: "password",
           label: "비밀번호",
-          type: "password",
           placeholder: "비밀번호를 입력해주세요.",
         },
-      ].map(({ key, label, type, placeholder }, index) => (
-        <LabeledField
-          key={key}
-          htmlFor={key}
-          label={label}
-          className={index > 0 ? "mt-24" : ""}
-        >
+      ].map(({ key, label, placeholder }, index) => (
+        <div className={index > 0 ? "mt-24" : ""} key={key}>
           <Input
             id={key}
-            type={type}
+            label={label}
+            type={key.includes("password") ? "password" : "text"}
             placeholder={placeholder}
             {...register(key as LoginSchemaKey)}
             className={
@@ -124,7 +117,7 @@ export default function LoginForm() {
               {errors[key as LoginSchemaKey]?.message}
             </p>
           )}
-        </LabeledField>
+        </div>
       ))}
       <Button
         type="submit"
