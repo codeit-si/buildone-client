@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export function GET() {
+export const GET = async () => {
   try {
     throw new Error("Sentry Example API Route Error");
   } catch (error: unknown) {
@@ -11,4 +11,4 @@ export function GET() {
       { status: 500 },
     );
   }
-}
+};
