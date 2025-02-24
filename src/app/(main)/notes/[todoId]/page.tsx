@@ -6,6 +6,9 @@ import Button from "@/components/@common/button";
 import Counting from "@/components/@common/counting";
 import Goal from "@/components/note/goal";
 import LinkAttached from "@/components/note/link-attached";
+import LoadNoteToastManager, {
+  NoteData,
+} from "@/components/note/load-note-toast-manager";
 import TempSaveManager from "@/components/note/temp-save-manager";
 import Tiptap from "@/components/note/tiptap";
 import Todo from "@/components/note/todo";
@@ -35,6 +38,18 @@ export default function NotesPage() {
     setShowLink(true);
   };
 
+  const handleLoadNote = (data: NoteData) => {
+    setTitle(data.title);
+    setContent(data.content);
+    if (data.link && data.link.trim() !== "") {
+      setLink(data.link);
+      setShowLink(true);
+    } else {
+      setLink("");
+      setShowLink(false);
+    }
+  };
+
   return (
     <div className="ml-16 mt-24 md:ml-24 lg:ml-80">
       <div className="container-width">
@@ -54,6 +69,9 @@ export default function NotesPage() {
         </div>
 
         <div className="mt-16">
+          {/* 임시 저장 노트 로드 토스트 */}
+          <LoadNoteToastManager onLoadNote={handleLoadNote} />
+
           {/* 목표 표시 */}
           <Goal goalText="자바스크립트로 웹 서비스 만들기" />
 
@@ -89,7 +107,11 @@ export default function NotesPage() {
 
             {/* 본문 */}
             <div className="mt-16">
-              <Tiptap setContents={setContent} onLinkSubmit={handleAddLink} />
+              <Tiptap
+                content={content}
+                setContents={setContent}
+                onLinkSubmit={handleAddLink}
+              />
             </div>
           </div>
           <TempSaveManager />
