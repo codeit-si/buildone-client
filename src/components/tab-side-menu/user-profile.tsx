@@ -1,26 +1,26 @@
-import { cva } from "class-variance-authority";
 import Image from "next/image";
 
 import Profile from "@/assets/profile.svg";
 import Button from "@/components/@common/button";
-import { UserInformations } from "@/types/tab-sidemenu";
+import { UserInformations } from "@/types/tab-side-menu";
 
 import CustomButton from "./custom-button";
 
-const logoutButtonStyle = cva(
-  "min-h-0 w-fit min-w-0 justify-normal bg-opacity-0 p-0 text-xs font-normal text-slate-400 hover:bg-opacity-0",
-);
-const profileInfoStyle = cva(
-  "flex w-full items-end justify-between text-sm md:flex-col md:items-baseline lg:flex-col lg:items-baseline",
-);
-const UserProfileComponent = ({
+const logoutButtonStyle =
+  "min-h-0 w-fit min-w-0 justify-normal bg-opacity-0 p-0 text-xs font-normal text-slate-400 hover:bg-opacity-0";
+
+const profileInfoStyle =
+  "flex w-full items-end justify-between text-sm md:flex-col md:items-baseline lg:flex-col lg:items-baseline";
+
+export default function UserProfile({
   isTabOpen,
   profile,
 }: {
   isTabOpen: boolean;
   profile: UserInformations | undefined;
-}) => {
+}) {
   if (isTabOpen) return null;
+
   return (
     <>
       <div className="flex w-full gap-12">
@@ -38,22 +38,21 @@ const UserProfileComponent = ({
             <Profile />
           )}
         </div>
-        <div className={profileInfoStyle()}>
+        <div className={profileInfoStyle}>
           <div>
-            <p className="font-bold text-slate-800">
+            <p className="text-sm font-semibold text-slate-800">
               {profile ? profile.name : "체다치즈"}
             </p>
-            <p className="text-slate-600">
+            <p className="text-sm font-medium text-slate-600">
               {profile ? profile.email : "chedacheese@slid.kr"}
             </p>
           </div>
-          <Button className={logoutButtonStyle()}>로그아웃</Button>
+          <Button className={logoutButtonStyle}>로그아웃</Button>
         </div>
       </div>
       <CustomButton isMobile={false} color="white">
-        새할일
+        새 할 일
       </CustomButton>
     </>
   );
-};
-export default UserProfileComponent;
+}

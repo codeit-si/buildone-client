@@ -1,14 +1,13 @@
 import { useEffect, useRef } from "react";
 
-import { cva } from "class-variance-authority";
 import Link from "next/link";
 
-import { GoalsListProps } from "@/types/tab-sidemenu";
+import { GoalsListProps } from "@/types/tab-side-menu";
 
-const goalsListStyle = cva(
-  "max-h-[calc(100vh-450px)] list-disc list-inside space-y-10 overflow-y-auto text-slate-700",
-);
-const GoalsList = ({ goals, setIsAdding }: GoalsListProps) => {
+const goalsListStyle =
+  "max-h-[calc(100vh-450px)] list-disc list-inside space-y-10 overflow-y-auto text-slate-700";
+
+export default function GoalsList({ goals, setIsAdding }: GoalsListProps) {
   const listRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
@@ -16,7 +15,9 @@ const GoalsList = ({ goals, setIsAdding }: GoalsListProps) => {
       if (listRef.current && !listRef.current.contains(event.target as Node))
         setIsAdding(false);
     };
+
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -27,13 +28,12 @@ const GoalsList = ({ goals, setIsAdding }: GoalsListProps) => {
   }, [goals, setIsAdding]);
 
   return (
-    <ul ref={listRef} className={goalsListStyle()}>
+    <ul ref={listRef} className={goalsListStyle}>
       {goals.map((goal) => (
-        <li key={goal.id} className="hover:text-purple-700 hover:underline">
-          <Link href={`/${goal.id}`}>{goal.text}</Link>
+        <li key={goal.id} className="hover:text-dark-blue-700 hover:underline">
+          <Link href={`goals/${goal.id}`}>{goal.text}</Link>
         </li>
       ))}
     </ul>
   );
-};
-export default GoalsList;
+}

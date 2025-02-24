@@ -13,6 +13,11 @@ const BASE_CLASS =
 
 const RESPONSIVE_CLASS = "h-44 w-343 md:h-48 md:w-612";
 
+interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "id"> {
+  id: string;
+  label?: string;
+}
+
 export default forwardRef(function Input(
   {
     id,

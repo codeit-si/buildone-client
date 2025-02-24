@@ -13,16 +13,19 @@ interface TodosResponse {
   todos: Todo[];
   nextCursor?: string;
 }
+
 interface ListTodoProps {
   fetchTodos?: () => Promise<{ todos: Todo[] }>;
   status: "todo" | "done";
 }
+
 const Goals = [
   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, quod.",
   "Lorem ipsum dolor sit amet, consectetur adipisicing.",
   "orem ipsum dolor sit amet.",
   "Lorem ipsum dolor sit amet consectetur.",
 ];
+
 const getRandomGoal = () => {
   const randomIndex = Math.floor(Math.random() * Goals.length);
   return Goals[randomIndex];
