@@ -1,5 +1,7 @@
 import CheckBoxOffIcon from "@/assets/checkbox_off.svg";
 import CheckBoxOnIcon from "@/assets/checkbox_on.svg";
+import { cn } from "@/lib/cn";
+import { titleLengthBreakpoints } from "@/styles/todo";
 import { Todo } from "@/types/todo";
 
 interface TodoTitleAndCheckBoxProps {
@@ -13,8 +15,19 @@ export default function TodoTitleAndCheckBox({
   todo,
   toggleStatus,
 }: TodoTitleAndCheckBoxProps) {
-  const { isDone } = todo; // "isDone" 상태로 변경
-
+  const { isDone } = todo;
+  const todoTitle = (
+    <span className={cn(isDone && "line-through")}>
+      {titleLengthBreakpoints.map(({ maxLength, className }) => (
+        <span
+          key={todo.title + todo.createdAt}
+          className={cn("font-medium", className)}
+        >
+          {maxLength ? `${todo.title.slice(0, maxLength)}...` : todo.title}
+        </span>
+      ))}
+    </span>
+  );
   return (
     <div className="flex items-center gap-10 overflow-hidden text-nowrap">
       <label
@@ -32,17 +45,7 @@ export default function TodoTitleAndCheckBox({
         />
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
       </label>
-      <span className={`${isDone && "line-through"}`}>
-        <span className="inline font-medium md:hidden lg:hidden">
-          {`${todo.title.slice(0, 5)}...`}
-        </span>
-        <span className="hidden overflow-hidden font-medium md:inline lg:hidden">
-          {`${todo.title.slice(0, 10)}...`}
-        </span>
-        <span className="hidden font-medium md:hidden lg:inline">
-          {todo.title}
-        </span>
-      </span>
+      {todoTitle}
     </div>
   );
 }
