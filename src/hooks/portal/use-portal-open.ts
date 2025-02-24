@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-export default function usePortalOpen(
+const usePortalOpen = (
   defaultOpen: boolean,
   onOpenChange?: (open: boolean) => void,
-) {
+) => {
   const [open, setOpen] = useState<boolean>(defaultOpen);
 
   useEffect(() => {
@@ -16,4 +16,6 @@ export default function usePortalOpen(
   }, [open, onOpenChange]);
 
   return { open, setOpen };
-}
+};
+
+export default usePortalOpen;

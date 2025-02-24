@@ -6,7 +6,7 @@ interface GoalProps {
   goalText: string;
 }
 
-function Goal({ goalText }: GoalProps) {
+export default function Goal({ goalText }: GoalProps) {
   return (
     <div className="mb-12 flex items-center">
       <FlagGoalIcon className="mr-6 h-24 w-24" />
@@ -14,5 +14,3 @@ function Goal({ goalText }: GoalProps) {
     </div>
   );
 }
-
-export default Goal;

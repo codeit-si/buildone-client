@@ -5,7 +5,7 @@ import { users } from "../mock";
 // refresh-token 재발급 테스트를 위한 변수
 let count = 0;
 
-export async function POST(request: Request) {
+export const POST = async (request: Request) => {
   const { email, password } = await request.json();
 
   // access-token 재발급 테스트를 위한 입력값
@@ -122,4 +122,4 @@ export async function POST(request: Request) {
       status: 404,
     },
   );
-}
+};
