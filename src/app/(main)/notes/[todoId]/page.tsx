@@ -6,6 +6,7 @@ import Button from "@/components/@common/button";
 import Counting from "@/components/@common/counting";
 import Goal from "@/components/note/goal";
 import LinkAttached from "@/components/note/link-attached";
+import TempSaveManager from "@/components/note/temp-save-manager";
 import Tiptap from "@/components/note/tiptap";
 import Todo from "@/components/note/todo";
 import "@/styles/note.css";
@@ -91,6 +92,7 @@ export default function NotesPage() {
               <Tiptap setContents={setContent} onLinkSubmit={handleAddLink} />
             </div>
           </div>
+          <TempSaveManager />
         </div>
       </div>
     </div>
