@@ -1,4 +1,4 @@
-import ListTodo from "@/components/@common/list-todo";
+import ListTodo from "@/components/@common/todo";
 
 export default async function Home() {
   return <ListTodo />;
