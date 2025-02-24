@@ -16,7 +16,7 @@ export default function TodoTitleAndCheckBox({
   const { isDone } = todo; // "isDone" 상태로 변경
 
   return (
-    <div className="flex w-3/5 items-center gap-10 overflow-hidden text-nowrap">
+    <div className="flex items-center gap-10 overflow-hidden text-nowrap">
       <label
         htmlFor={`todo-check-${index}`}
         className="relative flex cursor-pointer items-center"

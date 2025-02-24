@@ -51,6 +51,7 @@ export default function RecentlyTodoList() {
             index={index}
             toggleStatus={toggleStatus}
             showGoal
+            showDropdownOnHover
           />
         ))}
       </ul>

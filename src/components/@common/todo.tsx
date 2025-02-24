@@ -7,12 +7,13 @@ import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
 import { DropdownItem, Todo } from "@/types/todo";
 
 import Dropdown from "../dashboard/recently-todo/recently-todo-dropdown";
-import Goal from "../todo/Goal";
+import Goal from "../todo/goal";
 
 interface Props {
   todo: Todo;
   index: number;
   showGoal?: boolean;
+  showIcons?: boolean;
   showDropdownOnHover?: boolean;
   toggleStatus?: (id: number) => void;
 }
@@ -23,6 +24,7 @@ export default function ListTodo({
   index,
   toggleStatus,
   showGoal,
+  showIcons,
 }: Props) {
   const getDropdownItems = (selectedTodo: Todo): DropdownItem[] => {
     const baseItems: DropdownItem[] = [
@@ -81,7 +83,7 @@ export default function ListTodo({
           aria-label="할일 관련 작업"
           className="absolute right-0 top-0 flex gap-5 text-slate-700"
         >
-          {iconSpread(todo)}
+          {showIcons && iconSpread(todo)}
           <button
             type="button"
             aria-label="추가 작업"
