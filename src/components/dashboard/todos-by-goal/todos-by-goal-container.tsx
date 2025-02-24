@@ -3,7 +3,7 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 import FlagIcon from "@/assets/flag.svg";
-import Button from "@/components/@common/button";
+import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { getInfiniteGoalsOptions } from "@/services/dashboard/query";
 
 import SectionContainer from "../section-container";
@@ -15,6 +15,7 @@ export default function TodosByGoalContainer() {
   const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery(
     getInfiniteGoalsOptions({}),
   );
+  const { ref } = useInfiniteScroll({ hasNextPage, fetchNextPage });
 
   return (
     <SectionContainer className="md:col-span-2">
@@ -25,9 +26,7 @@ export default function TodosByGoalContainer() {
         <h2>최근 등록한 할 일</h2>
       </SectionTitle>
       {data?.pages && <GoalList goals={data.pages} />}
-      <Button disabled={!hasNextPage} onClick={() => fetchNextPage({})}>
-        Load More
-      </Button>
+      {hasNextPage && <div ref={ref}>목표 로딩 중...</div>}
     </SectionContainer>
   );
 }

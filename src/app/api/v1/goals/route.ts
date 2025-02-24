@@ -7,7 +7,7 @@ const generateMockGoals = ({
   cursor = 0,
   size = 10,
 }: GoalListParams & { cursor?: number }): GoalListResponse => {
-  const totalGoals = 5; // 전체 데이터 개수
+  const totalGoals = 7;
   const hasNext = cursor + size < totalGoals;
 
   const goals = Array.from(

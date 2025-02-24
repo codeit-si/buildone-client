@@ -18,6 +18,7 @@ export const ENDPOINT = {
     GET_ALL: `${PREFIX}/todos`,
     GET_BY_ID: (id: number) => `/api/todos/${id}`,
     UPDATE: (id: number) => `${PREFIX}/todos/${id}`,
+    GET_PROGRESS: `${PREFIX}/todos/progress`,
   },
   DASHBOARD: {
     GET: `${PREFIX}/dashboard`,

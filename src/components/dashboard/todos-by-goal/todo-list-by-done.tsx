@@ -2,49 +2,53 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
+import ListTodo from "@/components/@common/todo";
 import { getInfiniteTodosByGoalIdOptions } from "@/services/dashboard/query";
-import { GoalResponse } from "@/types/dashboard";
-
-import RecentlyTodoCheckbox from "../recently-todo/recently-todo-item";
 
 export interface SetNextType {
   fetchNextPage: () => void;
   hasNextPage: boolean;
+  isFetching: boolean;
 }
 
 interface TodoListByDoneProps {
-  goal: GoalResponse;
+  goalId: number;
   isDone: boolean;
   setNext?: Dispatch<SetStateAction<SetNextType | undefined>>;
 }
 
 export default function TodoListByDone({
   isDone,
-  goal,
+  goalId,
   setNext,
 }: TodoListByDoneProps) {
-  const { data, hasNextPage, fetchNextPage } = useSuspenseInfiniteQuery(
-    getInfiniteTodosByGoalIdOptions({ goalId: goal.id, done: isDone }),
-  );
+  const { data, hasNextPage, fetchNextPage, isFetching } =
+    useSuspenseInfiniteQuery(
+      getInfiniteTodosByGoalIdOptions({ goalId, done: isDone }),
+    );
 
   useEffect(() => {
     if (setNext) {
       setNext(() => ({
-        fetchNextPage,
+        fetchNextPage: () => fetchNextPage({}),
         hasNextPage,
+        isFetching,
       }));
     }
-  }, [hasNextPage, fetchNextPage, setNext]);
+  }, [hasNextPage, fetchNextPage, setNext, isFetching]);
 
   return (
     <div className="flex flex-col gap-12">
       <h4 className="text-sm font-semibold">{isDone ? "Done" : "To do"}</h4>
       {data.todos.length > 0 && (
-        <ul>
+        <ul className="flex flex-col gap-8">
           {data.todos.map((todo) => (
-            <RecentlyTodoCheckbox
+            <ListTodo
               key={`todo-list-by-goal-${todo.id}`}
+              index={todo.id}
               todo={todo}
+              showGoal
+              showDropdownOnHover
             />
           ))}
         </ul>
