@@ -1,8 +1,8 @@
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
-import { GoalListParams } from "@/types/dashboard";
+import { GoalListParams, TodosByGoalParams } from "@/types/dashboard";
 
-import { getDashboard, getInfiniteGoals } from ".";
+import { getDashboard, getInfiniteGoals, getInfiniteTodosByGoalId } from ".";
 
 export const getDashboardOptions = () =>
   queryOptions({
@@ -17,7 +17,7 @@ export const getInfiniteGoalsOptions = ({
   return infiniteQueryOptions({
     queryKey: ["goals"],
     queryFn: ({ pageParam }) =>
-      getInfiniteGoals({ size, sortOrder, pageParam }),
+      getInfiniteGoals({ size, sortOrder, cursor: pageParam }),
     getNextPageParam: (lastPage) =>
       lastPage.paginationInformation.hasNext
         ? lastPage.paginationInformation.nextCursor
@@ -25,6 +25,29 @@ export const getInfiniteGoalsOptions = ({
     initialPageParam: 0,
     select: (data) => ({
       pages: data.pages.flatMap((page) => page.goals),
+      pageParams: data.pageParams,
+    }),
+  });
+};
+
+export const getInfiniteTodosByGoalIdOptions = ({
+  goalId,
+  size = 5,
+  done,
+}: TodosByGoalParams) => {
+  return infiniteQueryOptions({
+    queryKey: ["todos", goalId, done],
+    queryFn: ({ pageParam }) =>
+      getInfiniteTodosByGoalId({ goalId, done, size, cursor: pageParam }),
+    getNextPageParam: (lastPage) =>
+      lastPage.paginationInformation.hasNext
+        ? lastPage.paginationInformation.nextCursor
+        : null,
+    initialPageParam: 0,
+    select: (data) => ({
+      pages: data.pages.map((page) => page.todos),
+      todos: data.pages.flatMap((page) => page.todos),
+      totalCount: data.pages[0].paginationInformation.totalCount,
       pageParams: data.pageParams,
     }),
   });

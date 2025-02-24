@@ -1,8 +1,22 @@
 import { PropsWithChildren } from "react";
 
-export default function SectionContainer({ children }: PropsWithChildren) {
+import { cn } from "@/lib/cn";
+
+interface SectionContainerProps {
+  className?: string;
+}
+
+export default function SectionContainer({
+  children,
+  className = "",
+}: PropsWithChildren<SectionContainerProps>) {
   return (
-    <section className="flex h-258 w-full flex-col gap-16 rounded-2xl bg-white p-16 md:h-250">
+    <section
+      className={cn(
+        "flex w-full flex-col gap-16 rounded-2xl bg-white p-16",
+        className,
+      )}
+    >
       {children}
     </section>
   );

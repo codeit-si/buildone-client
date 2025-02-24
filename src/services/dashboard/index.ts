@@ -3,6 +3,8 @@ import {
   DashboardResponse,
   GoalListParams,
   GoalListResponse,
+  TodoListResponse,
+  TodosByGoalParams,
 } from "@/types/dashboard";
 
 import { ENDPOINT } from "../endpoint";
@@ -15,13 +17,30 @@ export const getDashboard = async () => {
 export const getInfiniteGoals = async ({
   size,
   sortOrder,
-  pageParam,
-}: GoalListParams & { pageParam: number }) => {
+  cursor,
+}: GoalListParams) => {
   const { data } = await api.get<GoalListResponse>(ENDPOINT.GOAL.GET_ALL, {
     params: {
-      cursor: pageParam,
+      cursor,
       size,
       sortOrder,
+    },
+  });
+  return data;
+};
+
+export const getInfiniteTodosByGoalId = async ({
+  size,
+  cursor,
+  goalId,
+  done,
+}: TodosByGoalParams) => {
+  const { data } = await api.get<TodoListResponse>(ENDPOINT.TODO.GET_ALL, {
+    params: {
+      goalId,
+      cursor,
+      size,
+      done,
     },
   });
   return data;

@@ -16,7 +16,8 @@ export default function ProgressBar({ current, total }: ProgressBarProps) {
 
   return (
     <div
-      className="flex h-20 w-full items-center gap-x-8 rounded-13 bg-white px-9 py-2"
+      // border 추가 (주석은 리뷰 후 지우겠습니다.)
+      className="flex h-20 w-full items-center gap-x-8 rounded-13 border border-slate-100 bg-white px-9 py-2"
       role="progressbar"
       aria-valuenow={progressPercentage}
       aria-valuemin={0}
