@@ -15,13 +15,23 @@ export const getConfigWithAuthorizationHeaders = (
 
 /** accessToken 재발급 요청 */
 export const reissueAccessToken = async (): Promise<string | undefined> => {
-  const response = await axios.post(
-    ENDPOINT.AUTH.TOKEN_VALIDATION,
-    {},
-    { withCredentials: true },
-  );
+  try {
+    const response = await axios.post(
+      ENDPOINT.AUTH.TOKEN_VALIDATION,
+      {},
+      { withCredentials: true },
+    );
 
-  return response.headers?.["access-token"];
+    const token = response.headers?.["access-token"];
+
+    if (!token) {
+      throw new Error("토큰이 응답에 포함되지 않았습니다.");
+    }
+
+    return token;
+  } catch (error) {
+    return undefined;
+  }
 };
 
 /** 새 토큰으로 요청 재시도 */
