@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import IcArrowDown from "@/assets/ic_arrow_down.svg";
 import RecentlyIcon from "@/assets/recently.svg";
-import GoalsListComponent from "@/components/containers/todo/goal-list-component";
+import GoalsListComponent from "@/components/todo/goal-list-component";
 import { Todo } from "@/types/todo";
 
 interface TodosResponse {

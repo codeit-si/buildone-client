@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-import AllListTodo from "@/components/containers/todo/all-list-todo";
+import AllListTodo from "@/components/todo/all-list-todo";
 
 import getQueryClient from "../lib/get-query-client";
 
