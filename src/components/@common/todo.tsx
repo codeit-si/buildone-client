@@ -3,11 +3,11 @@ import Link from "next/link";
 import FileIcon from "@/assets/file.svg";
 import LinkIcon from "@/assets/link.svg";
 import NoteIcon from "@/assets/note.svg";
-import Goal from "@/components/todo/Goal";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
 import { DropdownItem, Todo } from "@/types/todo";
 
 import Dropdown from "../dashboard/recently-todo/recently-todo-dropdown";
+import Goal from "../todo/Goal";
 
 interface Props {
   todo: Todo;

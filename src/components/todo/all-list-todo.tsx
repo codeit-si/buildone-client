@@ -9,7 +9,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
-import ListTodo from "@/components/@common/list-todo";
+import ListTodo from "@/components/@common/todo";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { Todo } from "@/types/todo";
 
@@ -119,7 +119,7 @@ export default function AllListTodo({
     .slice(0, maxItems);
 
   return (
-    <div className="mx-auto min-h-[2080px] w-full max-w-2xl rounded-xl rounded-b-none border-slate-300 bg-white p-20 text-sm text-slate-800">
+    <div className="mx-auto min-h-[2080] w-full max-w-2xl rounded-xl rounded-b-none border-slate-300 bg-white p-20 text-sm text-slate-800">
       <Filter filter={filter} setFilter={setFilter} />
       <ul className="flex flex-col gap-20">
         {todos.map((todo, index) => (

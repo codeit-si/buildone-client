@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import ListTodo from "@/components/@common/list-todo";
+import ListTodo from "@/components/@common/todo";
 import { cn } from "@/lib/cn";
 import getQueryClient from "@/lib/get-query-client";
 import { getDashboardOptions } from "@/services/dashboard/query";
