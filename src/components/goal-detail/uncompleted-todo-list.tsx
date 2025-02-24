@@ -17,6 +17,7 @@ export default function UncompletedTodoList({
         <button
           type="button"
           className="z-10 flex cursor-pointer items-center gap-x-4 text-sm font-semibold text-dark-blue-500"
+          aria-label="할일 추가하기"
         >
           <PlusIcon />
           <p>할일 추가</p>
