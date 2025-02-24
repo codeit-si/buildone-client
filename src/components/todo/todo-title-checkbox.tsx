@@ -31,7 +31,7 @@ export default function TodoTitleAndCheckBox({
         />
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
       </label>
-      <p className="line-clamp-1">{todo.title}</p>
+      <p className={`line-clamp-1 ${isDone && "line-through"}`}>{todo.title}</p>
     </div>
   );
 }
