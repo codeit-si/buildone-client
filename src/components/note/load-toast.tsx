@@ -45,7 +45,7 @@ export default function LoadNoteToast({ onClose, onLoad }: LoadNoteToastProps) {
           variant="outlined"
           shape="round"
           size="sm"
-          className="whitespace-nowrap"
+          className="whitespace-nowrap bg-white"
           onClick={onLoad}
         >
           불러오기

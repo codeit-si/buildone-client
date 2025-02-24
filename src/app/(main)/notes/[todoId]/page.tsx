@@ -4,6 +4,7 @@ import { ChangeEvent, useState } from "react";
 
 import Button from "@/components/@common/button";
 import Counting from "@/components/@common/counting";
+import LoadNoteModal from "@/components/@common/load-modal";
 import Goal from "@/components/note/goal";
 import LinkAttached from "@/components/note/link-attached";
 import LoadNoteToastManager, {
@@ -20,10 +21,12 @@ export default function NotesPage() {
   const [content, setContent] = useState<string>("");
   const [link, setLink] = useState<string>("");
   const [showLink, setShowLink] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [loadedNote, setLoadedNote] = useState<NoteData | null>(null);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
-    if (newTitle.length <= 50) {
+    if (newTitle.length <= 30) {
       setTitle(newTitle);
     }
   };
@@ -38,6 +41,13 @@ export default function NotesPage() {
     setShowLink(true);
   };
 
+  // 기존 로컬 스토리지에서 불러온 데이터를 toast에서 받은 경우, 모달을 연다.
+  const handleOpenLoadModal = (data: NoteData) => {
+    setLoadedNote(data);
+    setModalOpen(true);
+  };
+
+  // 모달에서 "불러오기" 버튼 클릭 시 실행
   const handleLoadNote = (data: NoteData) => {
     setTitle(data.title);
     setContent(data.content);
@@ -48,6 +58,7 @@ export default function NotesPage() {
       setLink("");
       setShowLink(false);
     }
+    setModalOpen(false);
   };
 
   return (
@@ -70,7 +81,7 @@ export default function NotesPage() {
 
         <div className="mt-16">
           {/* 임시 저장 노트 로드 토스트 */}
-          <LoadNoteToastManager onLoadNote={handleLoadNote} />
+          <LoadNoteToastManager onLoadNote={handleOpenLoadModal} />
 
           {/* 목표 표시 */}
           <Goal goalText="자바스크립트로 웹 서비스 만들기" />
@@ -117,6 +128,20 @@ export default function NotesPage() {
           <TempSaveManager />
         </div>
       </div>
+
+      {/* 모달 */}
+      {loadedNote && (
+        <LoadNoteModal
+          open={modalOpen}
+          setOpen={setModalOpen}
+          storedTitle={
+            loadedNote.title && loadedNote.title.trim() !== ""
+              ? loadedNote.title
+              : "제목 없음"
+          }
+          onLoad={() => handleLoadNote(loadedNote)}
+        />
+      )}
     </div>
   );
 }
