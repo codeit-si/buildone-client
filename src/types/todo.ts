@@ -2,7 +2,6 @@ export interface GoalInformation {
   id: number;
   title: string;
 }
-
 export interface Todo {
   id: number;
   noteId?: number | null;
@@ -11,10 +10,9 @@ export interface Todo {
   linkUrl?: string | null;
   fileUrl?: string | null;
   isDone: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
-
 export interface TodosResponse {
   todos: Todo[];
   nextCursor?: string;

@@ -14,6 +14,7 @@ export default function TodoTitleAndCheckBox({
   toggleStatus,
 }: TodoTitleAndCheckBoxProps) {
   const { isDone } = todo;
+
   return (
     <div className="flex w-3/5 items-center gap-10 overflow-hidden text-nowrap">
       <label
