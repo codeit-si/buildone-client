@@ -65,12 +65,12 @@ export default function TempSaveManager() {
     };
   }, [saveTempNote]);
 
-  // 토스트 메시지 2초 후 자동 사라짐
+  // 토스트 메시지 1.9초 후 자동 사라짐
   useEffect(() => {
     if (showToast) {
       const timer = setTimeout(() => {
         setShowToast(false);
-      }, 2000);
+      }, 1999);
       return () => clearTimeout(timer);
     }
   }, [showToast]);
