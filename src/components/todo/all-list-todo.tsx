@@ -130,7 +130,6 @@ export default function AllListTodo({
             toggleStatus={toggleStatus}
             showDropdownOnHover // 드롭다운 호버 여부
             showGoal // 목표 보여주기 여부
-            showIcons // 아이콘 보여주기 여부
           />
         ))}
       </ul>

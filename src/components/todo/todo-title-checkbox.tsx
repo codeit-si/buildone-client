@@ -32,8 +32,16 @@ export default function TodoTitleAndCheckBox({
         />
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
       </label>
-      <span className={`font-medium ${isDone && "line-through"}`}>
-        {todo.title}
+      <span className={`${isDone && "line-through"}`}>
+        <span className="inline font-medium md:hidden lg:hidden">
+          {`${todo.title.slice(0, 5)}...`}
+        </span>
+        <span className="hidden overflow-hidden font-medium md:inline lg:hidden">
+          {`${todo.title.slice(0, 10)}...`}
+        </span>
+        <span className="hidden font-medium md:hidden lg:inline">
+          {todo.title}
+        </span>
       </span>
     </div>
   );

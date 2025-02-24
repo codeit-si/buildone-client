@@ -6,14 +6,14 @@ import NoteIcon from "@/assets/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
 import { DropdownItem, Todo } from "@/types/todo";
 
-import Dropdown from "../dashboard/recently-todo/recently-todo-dropdown";
 import Goal from "../todo/goal";
+
+import Dropdown from "./dropdown";
 
 interface Props {
   todo: Todo;
   index: number;
   showGoal?: boolean;
-  showIcons?: boolean;
   showDropdownOnHover?: boolean;
   toggleStatus?: (id: number) => void;
 }
@@ -24,7 +24,6 @@ export default function ListTodo({
   index,
   toggleStatus,
   showGoal,
-  showIcons,
 }: Props) {
   const getDropdownItems = (selectedTodo: Todo): DropdownItem[] => {
     const baseItems: DropdownItem[] = [
@@ -70,7 +69,7 @@ export default function ListTodo({
     <li
       key={todo.id}
       aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
-      className="group relative flex flex-col gap-8 text-slate-800 hover:text-dark-blue-700"
+      className="group flex flex-col gap-8 text-slate-800 hover:text-dark-blue-700"
     >
       <div className="flex items-center justify-between">
         <TodoTitleAndCheckBox
@@ -81,9 +80,9 @@ export default function ListTodo({
         <div
           role="group"
           aria-label="할일 관련 작업"
-          className="absolute right-0 top-0 flex gap-5 text-slate-700"
+          className="flex gap-5 text-slate-700"
         >
-          {showIcons && iconSpread(todo)}
+          {iconSpread(todo)}
           <button
             type="button"
             aria-label="추가 작업"

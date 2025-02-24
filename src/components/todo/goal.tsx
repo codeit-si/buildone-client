@@ -17,7 +17,17 @@ export default function Goal({
   return (
     <div className="flex items-center gap-10">
       <GoalIcon />
-      <p className={`${isDone && "line-through"}`}>{goalInformation.title}</p>
+      <span className={`${isDone && "line-through"}`}>
+        <span className="inline font-medium md:hidden lg:hidden">
+          {`${goalInformation.title.slice(0, 5)}...`}
+        </span>
+        <span className="hidden overflow-hidden font-medium md:inline lg:hidden">
+          {`${goalInformation.title.slice(0, 10)}...`}
+        </span>
+        <span className="hidden font-medium md:hidden lg:inline">
+          {goalInformation.title}
+        </span>
+      </span>
     </div>
   );
 }
