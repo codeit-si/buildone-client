@@ -6,23 +6,23 @@ import { LoginResponse, SignupResponse } from "../types/auth";
 
 import { ENDPOINT } from "./endpoint";
 
-export async function login(
+export const login = async (
   email: string,
   password: string,
-): Promise<AxiosResponse<LoginResponse>> {
+): Promise<AxiosResponse<LoginResponse>> => {
   const res = await apiClient.post<LoginResponse>(ENDPOINT.AUTH.LOGIN, {
     email,
     password,
   });
 
   return res;
-}
+};
 
-export async function signup(
+export const signup = async (
   name: string,
   email: string,
   password: string,
-): Promise<AxiosResponse<SignupResponse>> {
+): Promise<AxiosResponse<SignupResponse>> => {
   const res = await apiClient.post<SignupResponse>(ENDPOINT.AUTH.SIGNUP, {
     name,
     email,
@@ -30,4 +30,4 @@ export async function signup(
   });
 
   return res;
-}
+};
