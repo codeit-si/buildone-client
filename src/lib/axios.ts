@@ -1,11 +1,7 @@
 import axios, { AxiosError } from "axios";
 
 import { useAuthStore } from "@/store/auth-store";
-import {
-  getConfigWithAuthorizationHeaders,
-  isAccessTokenExpired,
-  refreshToken,
-} from "@/utils/auth";
+import { getConfigWithAuthorizationHeaders, refreshToken } from "@/utils/auth";
 
 import { ApiError } from "./error";
 
@@ -16,12 +12,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   async (config) => {
-    const { accessToken, expiredTime } = useAuthStore.getState();
-
-    if (isAccessTokenExpired(expiredTime)) {
-      const newToken = await refreshToken();
-      return getConfigWithAuthorizationHeaders(config, newToken);
-    }
+    const { accessToken } = useAuthStore.getState();
 
     if (accessToken) {
       return getConfigWithAuthorizationHeaders(config, accessToken);

@@ -8,10 +8,6 @@ import { ApiError } from "@/lib/error";
 import { ENDPOINT } from "@/services/endpoint";
 import { useAuthStore } from "@/store/auth-store";
 
-export const isAccessTokenExpired = (expiredTime: string) => {
-  return Date.now() >= new Date(expiredTime).getTime();
-};
-
 /** 기존 config에 Authorization 헤더 추가 */
 export const getConfigWithAuthorizationHeaders = (
   config: InternalAxiosRequestConfig,
@@ -40,8 +36,7 @@ const addRefreshSubscriber = (callback: (token: string) => void) => {
 
 /** accessToken 재발급 함수 */
 export const refreshToken = async (api?: AxiosInstance, error?: AxiosError) => {
-  const { setAccessToken, setExpiredTime, removeAccessToken } =
-    useAuthStore.getState().actions;
+  const { setAccessToken, removeAccessToken } = useAuthStore.getState().actions;
 
   // 이미 토큰 갱신 중이면 대기 후 처리
   if (isRefreshing) {
@@ -75,10 +70,8 @@ export const refreshToken = async (api?: AxiosInstance, error?: AxiosError) => {
     );
 
     const token = response.headers?.["access-token"];
-    const expiredTime = response.headers?.["access-token-expired-time"];
 
     setAccessToken(token);
-    setExpiredTime(expiredTime);
 
     // 대기 중인 요청들 처리
     onTokenRefreshed(token);
