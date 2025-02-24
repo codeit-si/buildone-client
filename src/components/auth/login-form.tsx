@@ -30,7 +30,7 @@ type LoginSchemaKey = keyof LoginSchema;
 export default function LoginForm() {
   const router = useRouter();
 
-  const { setAccessToken, setExpiredTime } = useAuthActions();
+  const { setAccessToken } = useAuthActions();
   const { setUserInfo } = useUserActions();
 
   const {
@@ -63,10 +63,8 @@ export default function LoginForm() {
       const response = await login(data.email, data.password);
 
       const token = response.headers?.["access-token"];
-      const expiredTime = response.headers?.["access-token-expired-time"];
 
       setAccessToken(token);
-      setExpiredTime(expiredTime);
       setUserInfo(response.data.memberInformation);
 
       router.push("/");
