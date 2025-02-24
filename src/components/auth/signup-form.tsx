@@ -14,7 +14,6 @@ import { signup } from "@/services/auth";
 
 import Button from "../@common/button";
 import Input from "../@common/input";
-import LabeledField from "../@common/labeled-field";
 
 const signupSchema = z
   .object({
@@ -140,14 +139,10 @@ export default function SignUpForm() {
           placeholder: "비밀번호를 다시 한 번 입력해주세요.",
         },
       ].map(({ key, label, placeholder }, index) => (
-        <LabeledField
-          key={key}
-          htmlFor={key}
-          label={label}
-          className={index > 0 ? "mt-24" : ""}
-        >
+        <div className={index > 0 ? "mt-24" : ""} key={key}>
           <Input
             id={key}
+            label={label}
             type={key.includes("password") ? "password" : "text"}
             placeholder={placeholder}
             {...register(key as SignupSchemaKey)}
@@ -161,7 +156,7 @@ export default function SignUpForm() {
               {errors[key as SignupSchemaKey]?.message}
             </p>
           )}
-        </LabeledField>
+        </div>
       ))}
       <Button
         type="submit"

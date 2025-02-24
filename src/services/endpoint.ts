@@ -15,7 +15,10 @@ export const ENDPOINT = {
     DELETE: (id: number) => `${PREFIX}/goals/${id}`,
   },
   TODO: {
-    GET_ALL: "/api/todos",
-    GET_BY_ID: (id: number) => `${PREFIX}/todos/${id}`,
+    GET_ALL: `${PREFIX}/todos`,
+    GET_BY_ID: (id: number) => `/api/todos/${id}`,
+  },
+  DASHBOARD: {
+    GET: `${PREFIX}/dashboard`,
   },
 } as const;
