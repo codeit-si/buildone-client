@@ -3,7 +3,7 @@ import Link from "next/link";
 import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
-import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
+import TodoTitleAndCheckBox from "@/components/@common/todo-title-and-checkbox";
 import { Todo } from "@/types/todo";
 
 import Goal from "../todo/goal";
