@@ -8,20 +8,20 @@ import { ApiError } from "@/lib/error";
 import { ENDPOINT } from "@/services/endpoint";
 import { useAuthStore } from "@/store/auth-store";
 
-export function isAccessTokenExpired(expiredTime: string) {
+export const isAccessTokenExpired = (expiredTime: string) => {
   return Date.now() >= new Date(expiredTime).getTime();
-}
+};
 
 /** 기존 config에 Authorization 헤더 추가 */
-export function getConfigWithAuthorizationHeaders(
+export const getConfigWithAuthorizationHeaders = (
   config: InternalAxiosRequestConfig,
   token: string,
-) {
+) => {
   const newConfig = { ...config };
   newConfig.headers.set("Authorization", `Bearer ${token}`);
 
   return newConfig;
-}
+};
 
 // Refresh Token 관리 변수
 let isRefreshing = false;
@@ -39,7 +39,7 @@ const addRefreshSubscriber = (callback: (token: string) => void) => {
 };
 
 /** accessToken 재발급 함수 */
-export async function refreshToken(api?: AxiosInstance, error?: AxiosError) {
+export const refreshToken = async (api?: AxiosInstance, error?: AxiosError) => {
   const { setAccessToken, setExpiredTime, removeAccessToken } =
     useAuthStore.getState().actions;
 
@@ -103,4 +103,4 @@ export async function refreshToken(api?: AxiosInstance, error?: AxiosError) {
     isRefreshing = false;
     refreshSubscribers = [];
   }
-}
+};
