@@ -42,6 +42,8 @@ export default function TodoCreateModal({ onClose }: TodoCreateModalProps) {
       // 기존 데이터 새로고침
       onClose();
       // 모달 닫기
+    } catch (err) {
+      setError(`할 일 추가에 실패했습니다. 다시 시도해 주세요. ${err}`);
     } finally {
       setIsLoading(false);
     }
@@ -67,8 +69,7 @@ export default function TodoCreateModal({ onClose }: TodoCreateModalProps) {
               required
             />
           </div>
-
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p className="text-red-600">{error}</p>}
           <button type="submit" disabled={isLoading}>
             {isLoading ? "Adding..." : "Add Todo"}
           </button>

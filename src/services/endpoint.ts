@@ -16,7 +16,7 @@ export const ENDPOINT = {
   },
   TODO: {
     GET_ALL: `${PREFIX}/todos`,
-    GET_BY_ID: (id: number) => `/api/todos/${id}`,
+    GET_BY_ID: (id: number) => `${PREFIX}/todos/${id}`,
     CREATE: `${PREFIX}/todos`,
     UPDATE: (id: number) => `${PREFIX}/todos/${id}`,
     DELETE: (id: number) => `${PREFIX}/todos/${id}`,
