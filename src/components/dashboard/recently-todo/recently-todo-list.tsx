@@ -44,7 +44,7 @@ export default function RecentlyTodoList() {
       role="region"
     >
       <ul className="flex flex-col gap-8 pr-8">
-        {todos.map((todo, index) => (
+        {todos?.map((todo, index) => (
           <ListTodo
             key={todo.id}
             todo={todo}

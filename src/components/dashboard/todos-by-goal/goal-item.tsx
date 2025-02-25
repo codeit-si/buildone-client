@@ -3,6 +3,7 @@ import { Suspense, useState } from "react";
 import * as motion from "motion/react-client";
 
 import ArrowDown from "@/assets/arrow_down.svg";
+import CreateTodoModal from "@/components/@common/create-todo-modal";
 import PlusIcon from "@/components/@svgr/plus-icon";
 import { GoalResponse } from "@/types/dashboard";
 
@@ -34,10 +35,12 @@ export default function GoalItem({ goal }: GoalItemProps) {
     <GoalContainer className="relative min-h-384 pb-72 md:min-h-304">
       <div className="flex justify-between">
         <GoalTitle>{goal.title}</GoalTitle>
-        <button className="flex items-center gap-5 text-sm font-semibold text-dark-blue-500">
-          <PlusIcon stroke="dark-blue" />
-          할일 추가
-        </button>
+        <CreateTodoModal goalId={goal.id}>
+          <button className="flex items-center gap-5 text-sm font-semibold text-dark-blue-500">
+            <PlusIcon stroke="dark-blue" />
+            할일 추가
+          </button>
+        </CreateTodoModal>
       </div>
       <GoalItemProgressBar goalId={goal.id} />
       <div className="grid grid-rows-[repeat(2,_minmax(112px,_auto))] gap-24 md:grid-cols-2 md:grid-rows-[minmax(164px,_auto)]">
