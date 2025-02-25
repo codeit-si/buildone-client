@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 
 import Button from "@/components/@common/button";
 import Counting from "@/components/@common/counting";
@@ -10,7 +10,9 @@ import LinkAttached from "@/components/note/link-attached";
 import LoadNoteToastManager, {
   NoteData,
 } from "@/components/note/load-note-toast-manager";
-import TempSaveManager from "@/components/note/temp-save-manager";
+import TempSaveManager, {
+  TempSaveManagerRef,
+} from "@/components/note/temp-save-manager";
 import Tiptap from "@/components/note/tiptap";
 import Todo from "@/components/note/todo";
 import "@/styles/note.css";
@@ -23,6 +25,8 @@ export default function NotesPage() {
   const [showLink, setShowLink] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [loadedNote, setLoadedNote] = useState<NoteData | null>(null);
+
+  const tempSaveManagerRef = useRef<TempSaveManagerRef>(null);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
@@ -41,7 +45,7 @@ export default function NotesPage() {
     setShowLink(true);
   };
 
-  // 기존 로컬 스토리지에서 불러온 데이터를 toast에서 받은 경우, 모달을 연다.
+  // 로컬 스토리지에서 불러온 데이터를 toast에서 받은 경우, 모달을 연다.
   const handleOpenLoadModal = (data: NoteData) => {
     setLoadedNote(data);
     setModalOpen(true);
@@ -61,6 +65,11 @@ export default function NotesPage() {
     setModalOpen(false);
   };
 
+  // "임시저장" 버튼 클릭 시 TempSaveManager의 저장 함수 호출
+  const handleTempSave = () => {
+    tempSaveManagerRef.current?.saveTempNote();
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <div className="ml-16 pt-24 md:ml-24 lg:ml-80">
@@ -76,6 +85,7 @@ export default function NotesPage() {
                 size="sm"
                 shape="square"
                 className="border-0"
+                onClick={handleTempSave}
               >
                 임시저장
               </Button>
@@ -104,7 +114,7 @@ export default function NotesPage() {
                 value={title}
                 onChange={handleTitleChange}
               />
-              <Counting type="title" count={title.length} total={50} />
+              <Counting type="title" count={title.length} total={30} />
             </div>
 
             {/* 에디터 영역 */}
@@ -131,7 +141,12 @@ export default function NotesPage() {
                 />
               </div>
             </div>
-            <TempSaveManager />
+            <TempSaveManager
+              ref={tempSaveManagerRef}
+              title={title}
+              content={content}
+              link={showLink ? link : ""}
+            />
           </div>
         </div>
 
