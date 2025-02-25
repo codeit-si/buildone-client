@@ -30,7 +30,7 @@ export interface BaseTodoProps {
 }
 
 export interface TodoTitleAndCheckBoxProps extends BaseTodoProps {
-  toggleStatus: (id: string) => void;
+  toggleStatus: (id: number) => void;
 }
 
 export interface TodoEditAndDeleteAndIconsProps extends BaseTodoProps {
