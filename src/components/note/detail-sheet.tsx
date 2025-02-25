@@ -15,7 +15,7 @@ export default function DetailSheet(): JSX.Element {
       <div className="h-52 border-b border-t border-slate-200 pb-12 pt-12 text-lg font-medium text-slate-800">
         프로그래밍과 데이터 in JavaScript
       </div>
-      <div className="mt-16 text-base font-normal text-slate-700">
+      <div className="scrollbar mt-16 overflow-y-auto text-base font-normal text-slate-700">
         자바언어의 과거-현재-그리고 미래 자바는 어떤 배경에서 처음 만들어
         졌는지, 또한 시대의 흐름에 따라 어떻게 변화해 왔는지, 어떤 요구사항들로
         인해 새로운 기술들이 개발되었는지 살펴보는 것은 자바를 보다 잘
