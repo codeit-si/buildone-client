@@ -1,4 +1,4 @@
-import { TodoListResponse } from "@/types/todo";
+import { Todo, TodoListResponse } from "@/types/todo";
 
 import { ENDPOINT } from "../endpoint";
 
@@ -11,7 +11,7 @@ export const getTodos = async (
   return response.json();
 };
 
-export const createTodo = async (title: string) => {
+export const createTodo = async (newTodo: Todo) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_ADDRESS}${ENDPOINT.TODO.CREATE}`,
     {
@@ -19,12 +19,7 @@ export const createTodo = async (title: string) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        title,
-        isDone: false,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      }),
+      body: JSON.stringify(newTodo),
     },
   );
   if (!response.ok) throw new Error("Failed to create todo");

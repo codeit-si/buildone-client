@@ -6,63 +6,23 @@ import {
   InfiniteData,
   InfiniteQueryObserverResult,
   useInfiniteQuery,
-  useQueryClient,
 } from "@tanstack/react-query";
 
 import PlusIcon from "@/assets/plus/plus_db_sm.svg";
 import ListTodo from "@/components/@common/todo";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
+import getQueryClient from "@/lib/get-query-client";
 import { getTodos } from "@/services/todos";
 import { Todo, TodoListResponse } from "@/types/todo";
 
 import Filter from "../@common/filter";
 
-/* const getRandomGoal = () =>
-  [
-    "Complete the project report.",
-    "Review the latest code changes.",
-    "Update documentation.",
-    "Plan for the next sprint.",
-  ][Math.floor(Math.random() * 4)];
-
-const mockFetchTodos = async (
-  pageParam = 1,
-): Promise<{ todos: Todo[]; nextPage?: number }> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const todos: Todo[] = Array.from({ length: 40 }, (_, i) => ({
-        id: pageParam * 100 + i,
-        noteId: Math.random() > 0.5 ? Math.floor(Math.random() * 10) : null, // 50% 확률로 null
-        title: `${pageParam}-${i + 1} ${getRandomGoal()}`,
-        goalInformation:
-          Math.random() > 0.5
-            ? {
-                id: Math.floor(Math.random() * 100),
-                title: getRandomGoal(),
-              }
-            : null,
-        linkUrl:
-          Math.random() > 0.5
-            ? `https://example.com/link-${pageParam}-${i}`
-            : null, // 50% 확률로 null
-        fileUrl:
-          Math.random() > 0.5
-            ? `https://example.com/file-${pageParam}-${i}`
-            : null, // 50% 확률로 null
-        isDone: Math.random() > 0.5,
-        createdAt: new Date(
-          Date.now() - Math.floor(Math.random() * 10000000),
-        ).toISOString(),
-        updatedAt: new Date().toISOString(),
-      }));
-      resolve({ todos, nextPage: pageParam < 3 ? pageParam + 1 : undefined });
-    }, 500);
-  });
-}; */
+import TodoCreateModal from "./todo-create-modal";
 
 export default function AllListTodo() {
-  const queryClient = useQueryClient();
+  const queryClient = getQueryClient();
   const [filter, setFilter] = useState<"all" | "todo" | "done">("all");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     data,
@@ -119,7 +79,10 @@ export default function AllListTodo() {
     <>
       <div className="mb-16 mt-24 flex items-center justify-between">
         <h2 className="text-18 font-semibold text-slate-600">{`모든 할 일 (${todos.length})`}</h2>
-        <button className="flex items-center gap-3 font-semibold text-dark-blue-600">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center gap-3 font-semibold text-dark-blue-600"
+        >
           <PlusIcon />
           <span className="text-14/3">할일 추가</span>
         </button>
@@ -140,6 +103,7 @@ export default function AllListTodo() {
         </ul>
         <div ref={ref} className="h-1" />
       </div>
+      {isModalOpen && <TodoCreateModal onClose={() => setIsModalOpen(false)} />}
     </>
   );
 }
