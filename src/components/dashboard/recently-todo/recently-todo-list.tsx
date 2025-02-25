@@ -57,7 +57,7 @@ export default function RecentlyTodoList() {
       </ul>
       <div
         className={cn(
-          "pointer-events-none bottom-0 -mt-10 h-30 w-full bg-gradient-to-t from-white from-30% to-white/0",
+          "pointer-events-none bottom-0 -mt-10 h-30 w-full bg-gradient-to-t from-white from-10% to-white/0 to-70%",
           isOverflowing ? "sticky" : "hidden",
         )}
       />

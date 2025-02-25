@@ -1,3 +1,7 @@
+export interface WithClassName {
+  className?: string;
+}
+
 export interface GoalSimpleResponse {
   id: number;
   title: string;
@@ -19,6 +23,7 @@ export interface TodoListResponse {
   paginationInformation: {
     nextCursor: number;
     totalCount: number;
+    hasNext: boolean;
   };
   todos: TodoResponse[];
 }
@@ -26,4 +31,35 @@ export interface TodoListResponse {
 export interface DashboardResponse {
   progress: number;
   todos: TodoResponse[];
+}
+
+export interface CommonPaginationInformationResponse {
+  nextCursor: number;
+  totalCount: number;
+  hasNext: boolean;
+}
+
+export interface GoalResponse {
+  id: number;
+  title: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface GoalListParams {
+  cursor?: number;
+  size?: number;
+  sortOrder?: "newest" | "oldest";
+}
+
+export interface GoalListResponse {
+  paginationInformation: CommonPaginationInformationResponse;
+  goals: GoalResponse[];
+}
+
+export interface TodosByGoalParams {
+  goalId: number;
+  cursor?: number;
+  size?: number;
+  done?: boolean;
 }
