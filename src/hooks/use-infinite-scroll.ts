@@ -18,8 +18,6 @@ export const useInfiniteScroll = ({
   const observerCallback: IntersectionObserverCallback = useCallback(
     (entries) => {
       entries.forEach((entry) => {
-        // eslint-disable-next-line no-console
-        console.log(111);
         if (entry.isIntersecting && hasNextPage) fetchNextPage();
       });
     },
