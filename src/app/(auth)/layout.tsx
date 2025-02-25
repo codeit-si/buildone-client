@@ -1,4 +1,4 @@
-import MainLogo from "@/assets/main_logo.svg";
+import MainLogo from "@/assets/logo/main_logo.svg";
 
 export default function Layout({
   children,
