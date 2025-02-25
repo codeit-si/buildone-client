@@ -1,4 +1,4 @@
-import sleep from "@/app/sleep";
+import sleep from "@/utils/sleep";
 
 import mockData from "./mock";
 

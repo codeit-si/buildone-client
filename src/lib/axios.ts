@@ -1,11 +1,11 @@
 import axios, { AxiosError } from "axios";
 
-import { useAuthStore } from "@/store/auth-store";
 import {
   getConfigWithAuthorizationHeaders,
-  isAccessTokenExpired,
-  refreshToken,
-} from "@/utils/auth";
+  reissueAccessToken,
+  retryRequestWithNewToken,
+} from "@/services/auth/token";
+import { useAuthStore } from "@/store/auth-store";
 
 import { ApiError } from "./error";
 
@@ -16,12 +16,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   async (config) => {
-    const { accessToken, expiredTime } = useAuthStore.getState();
-
-    if (isAccessTokenExpired(expiredTime)) {
-      const newToken = await refreshToken();
-      return getConfigWithAuthorizationHeaders(config, newToken);
-    }
+    const { accessToken } = useAuthStore.getState();
 
     if (accessToken) {
       return getConfigWithAuthorizationHeaders(config, accessToken);
@@ -38,10 +33,23 @@ api.interceptors.response.use(
   (response) => response,
   async (error: unknown) => {
     if (error instanceof AxiosError && error.response?.status === 401) {
-      return refreshToken(api, error);
-    }
+      try {
+        const newToken = await reissueAccessToken();
 
-    return Promise.reject(new ApiError(error));
+        if (newToken) {
+          return await retryRequestWithNewToken(error.config!, newToken, api);
+        }
+
+        throw new Error("토큰 갱신에 실패했습니다.");
+      } catch (reissueError) {
+        const { removeAccessToken } = useAuthStore.getState().actions;
+        removeAccessToken();
+
+        return Promise.reject(new ApiError("로그인이 필요합니다."));
+      }
+    } else {
+      return Promise.reject(new ApiError(error));
+    }
   },
 );
 
