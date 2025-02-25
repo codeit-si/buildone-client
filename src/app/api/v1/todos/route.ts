@@ -2,8 +2,19 @@ import { NextRequest } from "next/server";
 
 import sleep from "@/utils/sleep";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const mockTodoData = (goalId: any, cursor = 0, size = 10, done = false) => {
+interface TodoParams {
+  goalId: number;
+  cursor?: number;
+  size?: number;
+  done?: boolean;
+}
+
+const mockTodoData = ({
+  goalId,
+  cursor = 0,
+  size = 10,
+  done = false,
+}: TodoParams) => {
   const totalCount = 12;
 
   return {
@@ -43,7 +54,7 @@ export const GET = async (request: NextRequest) => {
   const done = searchParams.get("done") === "true";
   await sleep(1);
 
-  const data = mockTodoData(goalId, cursor, size, done);
+  const data = mockTodoData({ goalId, cursor, size, done });
 
   if (!data) {
     return Response.json({

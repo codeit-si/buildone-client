@@ -47,7 +47,6 @@ export default function TodoListByDone({
               key={`todo-list-by-goal-${todo.id}`}
               index={todo.id}
               todo={todo}
-              showGoal
               showDropdownOnHover
             />
           ))}

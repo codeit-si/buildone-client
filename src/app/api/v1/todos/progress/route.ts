@@ -6,8 +6,8 @@ export const GET = async (request: NextRequest) => {
   if (!goalId) {
     return Response.json(
       {
-        code: "INVALID_TODO_PK",
-        message: "Todo ID가 올바르지 않습니다.",
+        code: "INVALID_GOAL_PK",
+        message: "Goal ID가 올바르지 않습니다.",
       },
       {
         status: 400,
