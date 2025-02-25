@@ -4,7 +4,7 @@ import FileIcon from "@/assets/file.svg";
 import LinkIcon from "@/assets/link.svg";
 import NoteIcon from "@/assets/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
-import { DropdownItem, Todo } from "@/types/todo";
+import { Todo } from "@/types/todo";
 
 import Goal from "../todo/goal";
 
@@ -16,6 +16,11 @@ interface Props {
   showGoal?: boolean;
   showDropdownOnHover?: boolean;
   toggleStatus?: (id: number) => void;
+}
+interface DropdownItem {
+  id: string;
+  label: string;
+  onClick: () => void;
 }
 
 export default function ListTodo({
@@ -55,7 +60,7 @@ export default function ListTodo({
       .map(({ key, url, Icon }) => (
         <Link
           key={key}
-          href={url as string}
+          href={url || "#"}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${key} 열기`}
@@ -87,9 +92,7 @@ export default function ListTodo({
             type="button"
             aria-label="추가 작업"
             aria-expanded={showDropdownOnHover}
-            className={`${
-              showDropdownOnHover ? "hidden focus:block group-hover:block" : ""
-            }`}
+            className={`${showDropdownOnHover && "hidden focus:block group-hover:block"}`}
           >
             <Dropdown items={getDropdownItems(todo)} />
           </button>
