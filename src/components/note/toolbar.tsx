@@ -15,7 +15,7 @@ import LinkIcon from "@/assets/editor/link.svg";
 import UnderlineIcon from "@/assets/editor/underline.svg";
 import Button from "@/components/@common/button";
 import Modal from "@/components/@common/portal/modal";
-import { cn } from "@/lib/cn";
+import ToolbarButton from "@/components/note/toolbar-btn";
 import "@/styles/note.css";
 
 interface ToolbarProps {
@@ -23,31 +23,10 @@ interface ToolbarProps {
   onLinkSubmit: (link: string) => void;
 }
 
-interface ToolbarButtonProps {
-  onClick: () => void;
-  IconComponent: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  ariaLabel: string;
-  isActive: boolean;
-}
-
-function ToolbarButton({
-  onClick,
-  IconComponent,
-  ariaLabel,
-  isActive,
-}: ToolbarButtonProps) {
-  return (
-    <button
-      onClick={onClick}
-      className={cn("rounded p-2", { "bg-slate-400": isActive })}
-      style={{ width: "25px", height: "25px", marginRight: "4px" }}
-    >
-      <IconComponent className="h-25 w-25" aria-label={ariaLabel} />
-    </button>
-  );
-}
-
-function Toolbar({ editor, onLinkSubmit }: ToolbarProps) {
+export default function Toolbar({
+  editor,
+  onLinkSubmit,
+}: ToolbarProps): JSX.Element | null {
   const [isLinkModalOpen, setLinkModalOpen] = useState(false);
   const [inputLink, setInputLink] = useState("");
 
@@ -186,5 +165,3 @@ function Toolbar({ editor, onLinkSubmit }: ToolbarProps) {
     </div>
   );
 }
-
-export default Toolbar;

@@ -5,11 +5,14 @@ import { useState } from "react";
 import NoteListIcon from "@/assets/notelist.svg";
 import Dropdown from "@/components/@common/dropdown";
 import Modal from "@/components/@common/portal/modal";
+import Sheet from "@/components/@common/portal/sheet";
+import DetailSheet from "@/components/note/detail-sheet";
 import Todo from "@/components/note/todo";
 
 export default function NoteCard(): JSX.Element | null {
   const [isDeleted, setIsDeleted] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   if (isDeleted) return null;
 
@@ -29,9 +32,12 @@ export default function NoteCard(): JSX.Element | null {
           />
         </div>
 
-        <div className="h-40 border-b border-b-slate-200 font-medium">
-          자바스크립트를 배우기 전 알아두어야 할 것
-        </div>
+        <Sheet.Root open={sheetOpen} onOpenChange={setSheetOpen}>
+          <DetailSheet />
+          <Sheet.Trigger className="h-40 w-full border-b border-b-slate-200 text-left font-medium">
+            자바스크립트를 배우기 전 알아두어야 할 것
+          </Sheet.Trigger>
+        </Sheet.Root>
 
         <div className="h-32 pt-11">
           <Todo todoText="자바스크립트 기초 챕터1 듣기" />
@@ -56,9 +62,7 @@ export default function NoteCard(): JSX.Element | null {
             <Modal.Close
               variant="solid"
               style={{ width: "120px", minWidth: "120px" }}
-              onClick={(): void => {
-                setIsDeleted(true);
-              }}
+              onClick={(): void => setIsDeleted(true)}
             >
               삭제
             </Modal.Close>

@@ -13,11 +13,12 @@ interface DropdownItemType {
   label: string;
   onClick: (e: React.MouseEvent | React.KeyboardEvent) => void;
 }
+
 interface DropdownProps {
   items: DropdownItemType[];
 }
 
-function Dropdown({ items }: DropdownProps) {
+export default function Dropdown({ items }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [focusIndex, setFocusIndex] = useState(-1);
@@ -79,7 +80,7 @@ function Dropdown({ items }: DropdownProps) {
             exit={{ opacity: 0, transition: { duration: 0.1 } }}
             role="menu"
             aria-label="옵션 선택 드롭다운"
-            className="absolute right-0 z-50 h-auto w-81 overflow-hidden rounded-17 bg-white shadow-md md:w-106"
+            className="absolute right-0 z-50 h-auto w-81 transform overflow-hidden rounded-17 bg-white shadow-md"
           >
             {items.map(({ label, onClick }, i) => (
               <DropdownItem
@@ -95,5 +96,3 @@ function Dropdown({ items }: DropdownProps) {
     </div>
   );
 }
-
-export default Dropdown;
