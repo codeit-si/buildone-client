@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
+import CheckboxOff from "@/assets/icons-small/checkbox/checkbox_off.svg";
+import CheckboxOn from "@/assets/icons-small/checkbox/checkbox_on_reverse.svg";
 import { cn } from "@/lib/cn";
 import { GoalResponse } from "@/types/dashboard";
 
@@ -97,7 +99,7 @@ export default function CreateTodoModal({
               placeholder="할일 제목을 적어주세요."
               {...register("title")}
               className={cn(
-                "md:w-full",
+                "w-full md:w-full",
                 errors.title &&
                   "border-red-500 focus-within:border-red-500 hover:border-red-500",
               )}
@@ -111,15 +113,29 @@ export default function CreateTodoModal({
           <div className="space-y-12">
             <h4 className="text-lg font-semibold">자료</h4>
             <ul className="flex gap-8">
-              <li data-type="file">
-                <Button onClick={() => handleChangeOption("file")}>
+              <li>
+                <button
+                  onClick={() => handleChangeOption("file")}
+                  className={cn(
+                    "flex h-40 items-center justify-center gap-3 rounded-8 bg-slate-100 px-12 font-medium text-slate-800",
+                    selectOption === "file" && "bg-slate-900 text-white",
+                  )}
+                >
+                  {selectOption === "file" ? <CheckboxOn /> : <CheckboxOff />}
                   파일 업로드
-                </Button>
+                </button>
               </li>
-              <li data-type="attach-link">
-                <Button onClick={() => handleChangeOption("link")}>
+              <li>
+                <button
+                  onClick={() => handleChangeOption("link")}
+                  className={cn(
+                    "flex h-40 items-center justify-center gap-3 rounded-8 bg-slate-100 px-12 font-medium text-slate-800",
+                    selectOption === "link" && "bg-slate-900 text-white",
+                  )}
+                >
+                  {selectOption === "link" ? <CheckboxOn /> : <CheckboxOff />}
                   링크 첨부
-                </Button>
+                </button>
               </li>
             </ul>
             {selectOption === "file" && (
@@ -141,10 +157,16 @@ export default function CreateTodoModal({
             )}
           </div>
           <GoalDropdown goalId={goalId} />
-          <Button className="w-full" disabled={!isValid} type="submit">
+        </form>
+        <Modal.Footer>
+          <Button
+            className="w-full"
+            disabled={!isValid}
+            onClick={handleSubmit(onSubmit)}
+          >
             확인
           </Button>
-        </form>
+        </Modal.Footer>
       </Modal.Content>
     </Modal.Root>
   );
