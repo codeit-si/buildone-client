@@ -3,7 +3,7 @@ import { Suspense, useState } from "react";
 import * as motion from "motion/react-client";
 
 import ArrowDown from "@/assets/arrow_down.svg";
-import CreateTodoModal from "@/components/@common/create-todo-modal";
+import CreateTodoModal from "@/components/@common//todo-modal/create-todo-modal";
 import PlusIcon from "@/components/@svgr/plus-icon";
 import { GoalResponse } from "@/types/dashboard";
 

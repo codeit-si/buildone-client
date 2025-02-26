@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { InfiniteQueryObserverResult } from "@tanstack/react-query";
 
@@ -13,13 +13,17 @@ export const useInfiniteScroll = ({
   hasNextPage,
   fetchNextPage,
 }: useIntersectionObserverProps) => {
+  const [rerender, setRerender] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  // 첫 화면 렌더링 때 포함되지 않는 태그를 감지하기 위해 사용
+  const refTrigger = useCallback(() => {
+    setRerender((prev) => !prev);
+  }, []);
 
   const observerCallback: IntersectionObserverCallback = useCallback(
     (entries) => {
       entries.forEach((entry) => {
-        // eslint-disable-next-line no-console
-        console.log(111);
         if (entry.isIntersecting && hasNextPage) fetchNextPage();
       });
     },
@@ -33,7 +37,7 @@ export const useInfiniteScroll = ({
     });
     observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [observerCallback, threshold]);
+  }, [observerCallback, threshold, rerender]);
 
-  return { ref };
+  return { ref, refTrigger };
 };

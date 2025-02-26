@@ -7,7 +7,7 @@ const generateMockGoals = ({
   cursor = 0,
   size = 10,
 }: GoalListParams & { cursor?: number }): GoalListResponse => {
-  const totalGoals = 7;
+  const totalGoals = 21;
   const hasNext = cursor + size < totalGoals;
 
   const goals = Array.from(
