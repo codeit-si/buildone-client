@@ -4,6 +4,8 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
+import { handleMutationError } from "@/utils/handle-mutation-error";
+
 let browserQueryClient: QueryClient | undefined;
 
 export function makeQueryClient() {
@@ -17,6 +19,10 @@ export function makeQueryClient() {
         shouldDehydrateQuery: (query) =>
           defaultShouldDehydrateQuery(query) ||
           query.state.status === "pending",
+      },
+      mutations: {
+        retry: 1,
+        onError: handleMutationError,
       },
     },
   });
