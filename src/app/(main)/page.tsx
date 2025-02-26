@@ -1,5 +1,3 @@
-import ListTodo from "@/components/@common/todo";
-
 export default async function Home() {
-  return <ListTodo />;
+  return <h2>홈</h2>;
 }
