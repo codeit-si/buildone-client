@@ -26,15 +26,12 @@ export default function LoadNoteModal({
             노트를 불러오시겠어요?
           </div>
           <Modal.Footer>
-            <Modal.Close
-              variant="outlined"
-              style={{ width: "120px", minWidth: "120px" }}
-            >
+            <Modal.Close variant="outlined" className="w-120 min-w-120">
               취소
             </Modal.Close>
             <Modal.Close
               variant="solid"
-              style={{ width: "120px", minWidth: "120px" }}
+              className="w-120 min-w-120"
               onClick={onLoad}
             >
               불러오기
