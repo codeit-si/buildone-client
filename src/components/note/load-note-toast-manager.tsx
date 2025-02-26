@@ -3,8 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import LoadNoteToast from "@/components/note/load-toast";
-
-const TEMP_NOTE_KEY = "tempNote";
+import { TEMP_NOTE_KEY } from "@/constants/toast";
 
 function checkHasContent(data: { title?: string; content?: string }) {
   const hasTitle = data.title && data.title.trim() !== "";

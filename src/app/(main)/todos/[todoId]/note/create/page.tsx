@@ -89,7 +89,12 @@ export default function NotesPage() {
               >
                 임시저장
               </Button>
-              <Button variant="solid" size="sm" shape="square">
+              <Button
+                variant="solid"
+                size="sm"
+                shape="square"
+                disabled={!title.trim() || !content.trim()}
+              >
                 작성 완료
               </Button>
             </div>

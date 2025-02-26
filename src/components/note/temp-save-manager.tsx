@@ -10,6 +10,7 @@ import {
 } from "react";
 
 import TempSaveToast from "@/components/note/save-toast";
+import { TEMP_NOTE_KEY } from "@/constants/toast";
 
 interface TempNoteData {
   title: string;
@@ -17,8 +18,6 @@ interface TempNoteData {
   link: string;
   savedAt: number;
 }
-
-const TEMP_NOTE_KEY = "tempNote";
 
 export interface TempSaveManagerRef {
   saveTempNote: () => void;

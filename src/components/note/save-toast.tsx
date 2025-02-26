@@ -7,7 +7,7 @@ export default function TempSaveToast() {
       className={cn(
         "container-width",
         "h-44",
-        "bg-blue-50",
+        "bg-dark-blue-50",
         "rounded-28",
         "py-10",
         "px-24",
@@ -19,7 +19,7 @@ export default function TempSaveToast() {
       aria-label="노트 임시 저장 토스트"
     >
       <CheckIcon className="h-24 w-24" aria-label="check icon" />
-      <span className="ml-8 text-blue-500">
+      <span className="ml-8 text-dark-blue-500">
         <span className="text-sm font-semibold">
           임시 저장이 완료되었습니다
         </span>
