@@ -1,5 +1,6 @@
 import localFont from "next/font/local";
 
+import ResponsiveToaster from "@/lib/responsive-toaster";
 import TanstackQueryProvider from "@/lib/tanstack-query-provider";
 
 import type { Metadata } from "next";
@@ -29,7 +30,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${pretendard.variable} font-pretendard`}>
-        <TanstackQueryProvider>{children}</TanstackQueryProvider>
+        <TanstackQueryProvider>
+          <ResponsiveToaster />
+          {children}
+        </TanstackQueryProvider>
       </body>
     </html>
   );
