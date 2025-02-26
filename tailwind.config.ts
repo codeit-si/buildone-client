@@ -6,6 +6,11 @@ import type { Config } from "tailwindcss";
 
 const pxToRem = require("tailwindcss-preset-px-to-rem");
 
+export const screens = {
+  md: "744px",
+  lg: "1200px",
+};
+
 const config: Config = {
   presets: [pxToRem],
   content: [
@@ -31,10 +36,7 @@ const config: Config = {
         "sans-serif",
       ],
     },
-    screens: {
-      md: "744px",
-      lg: "1200px",
-    },
+    screens,
     extend: {
       colors: {
         "dark-blue": {
