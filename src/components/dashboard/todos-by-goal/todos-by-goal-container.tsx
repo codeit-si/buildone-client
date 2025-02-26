@@ -23,7 +23,7 @@ export default function TodosByGoalContainer() {
         <div className="flex h-40 w-40 items-center justify-center rounded-15 bg-blue-500">
           <FlagIcon />
         </div>
-        <h2>최근 등록한 할 일</h2>
+        <h2 className="line-clamp-1">목표 별 할일</h2>
       </SectionTitle>
       {data?.pages && <GoalList goals={data.pages} />}
       {hasNextPage && <div ref={ref}>목표 로딩 중...</div>}

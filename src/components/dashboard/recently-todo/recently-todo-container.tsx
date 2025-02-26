@@ -16,7 +16,7 @@ export default function RecentlyTodoContainer() {
       <div className="flex items-center justify-between pr-4">
         <SectionTitle>
           <RecentlyTodoIcon />
-          <h2>최근 등록한 할 일</h2>
+          <h2 className="line-clamp-1">최근 등록한 할 일</h2>
         </SectionTitle>
         <Link
           href="/todos"
