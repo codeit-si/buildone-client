@@ -14,7 +14,7 @@ export default function RootLayout({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="flex h-screen">
+      <div className="flex min-h-screen">
         <nav>
           <Suspense fallback={<h1>Loading...</h1>}>
             <TabSideMenu />
