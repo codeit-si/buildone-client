@@ -2,7 +2,7 @@ import { MouseEvent, useEffect, useState } from "react";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import ArrowDropdownIcon from "@/assets/arrow_dropdown.svg";
+import ArrowDropdownIcon from "@/assets/icons-small/arrow/arrow_dropdown.svg";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import useSelector from "@/hooks/use-selector";
 import { cn } from "@/lib/cn";
@@ -23,6 +23,7 @@ export default function GoalDropdown({ goalId }: GoalDropdownProps) {
     hasNextPage,
     fetchNextPage,
   });
+
   const { isOpen, ref, toggleHandler } = useSelector();
   const [selectedGoalId, setSelectedGoalId] = useState<number>(goalId ?? -1);
 

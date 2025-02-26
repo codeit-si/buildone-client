@@ -1,6 +1,6 @@
 import { FieldValues, Path, useForm } from "react-hook-form";
 
-import PlusGrayIcon from "@/assets/plus/plus_g.svg";
+import PlusGrayIcon from "@/assets/icons-small/plus/plus_g.svg";
 import { cn } from "@/lib/cn";
 
 import { BASE_CLASS } from "../input";

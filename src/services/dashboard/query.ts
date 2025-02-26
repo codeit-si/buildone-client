@@ -20,7 +20,7 @@ export const getInfiniteGoalsOptions = ({
   sortOrder = "newest",
 }: GoalListParams) => {
   return infiniteQueryOptions({
-    queryKey: ["goals", size],
+    queryKey: ["goals"],
     queryFn: ({ pageParam }) =>
       getInfiniteGoals({ size, sortOrder, cursor: pageParam }),
     getNextPageParam: (lastPage) =>
