@@ -17,8 +17,8 @@ const generateMockGoals = ({
       return {
         id,
         title: `Goal ${id}`,
-        createdAt: new Date(Date.now() - id * 1000000),
-        updatedAt: new Date(Date.now() - id * 500000),
+        createdAt: String(new Date(Date.now() - id * 1000000)),
+        updatedAt: String(new Date(Date.now() - id * 500000)),
       };
     },
   );
