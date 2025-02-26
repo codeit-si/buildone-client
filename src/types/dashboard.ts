@@ -15,8 +15,8 @@ export interface TodoResponse {
   linkUrl?: string;
   fileUrl?: string;
   isDone: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface TodoListResponse {
@@ -42,8 +42,8 @@ export interface CommonPaginationInformationResponse {
 export interface GoalResponse {
   id: number;
   title: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface GoalListParams {
