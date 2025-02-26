@@ -29,10 +29,6 @@ export interface BaseTodoProps {
   todo: Todo;
 }
 
-export interface TodoTitleAndCheckBoxProps extends BaseTodoProps {
-  toggleStatus: (id: number) => void;
-}
-
 export interface TodoEditAndDeleteAndIconsProps extends BaseTodoProps {
   activeKebab: number | null;
   handleKebabClick: (index: number) => void;
