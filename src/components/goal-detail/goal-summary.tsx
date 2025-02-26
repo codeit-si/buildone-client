@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import FlagGoalIcon from "@/assets/flag-goal.svg";
+import FlagGoalIcon from "@/assets/icons-big/flag_goal.svg";
 import { getGoalOptions } from "@/services/goal/query";
 
 import ProgressBar from "../@common/progress-bar";
@@ -23,7 +23,7 @@ export default function GoalSummary({ goalId }: GoalSummaryProps) {
           <FlagGoalIcon />
           <h2 className="text-base font-semibold md:text-lg">{data?.title}</h2>
         </div>
-        <GoalSummaryDropdown />
+        <GoalSummaryDropdown goalId={goalId} />
       </div>
       <div className="mt-24">
         <p className="mb-8 text-xs font-semibold">Progress</p>

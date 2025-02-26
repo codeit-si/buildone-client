@@ -8,3 +8,9 @@ export const getGoal = async (id: number) => {
 
   return data;
 };
+
+export const deleteGoal = async (goalId: number) => {
+  const res = await api.delete(ENDPOINT.GOAL.DELETE(goalId));
+
+  return res;
+};

@@ -1,4 +1,4 @@
-function getMockTodos() {
+const getMockTodos = () => {
   return Array.from({ length: 5 }, (_, i) => ({
     id: i + 100,
     noteId: i + 1000,
@@ -16,7 +16,7 @@ function getMockTodos() {
     createdAt: `2025-02-${String(i).padStart(2, "0")}T04:58:42.712Z`,
     updatedAt: `2025-02-${String(i).padStart(2, "0")}T04:58:42.712Z`,
   }));
-}
+};
 
 const mockData = () => ({
   progress: 49,
