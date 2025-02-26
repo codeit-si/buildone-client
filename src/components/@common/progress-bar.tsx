@@ -4,20 +4,29 @@ import { useState } from "react";
 
 import { motion } from "motion/react";
 
+import { cn } from "@/lib/cn";
+
 interface ProgressBarProps {
   current: number;
   total: number;
+  border?: boolean;
 }
 
-export default function ProgressBar({ current, total }: ProgressBarProps) {
+export default function ProgressBar({
+  current,
+  total,
+  border = true,
+}: ProgressBarProps) {
   const progressPercentage = Math.floor((current / total) * 100);
   const [displayedProgressPercentage, setDisplayedProgressPercentage] =
     useState(0);
 
   return (
     <div
-      // border 추가 (주석은 리뷰 후 지우겠습니다.)
-      className="flex h-20 w-full items-center gap-x-8 rounded-13 border border-slate-100 bg-white px-9 py-2"
+      className={cn(
+        "flex h-20 w-full items-center gap-x-8 rounded-13 bg-white",
+        border && "px-9 py-2",
+      )}
       role="progressbar"
       aria-valuenow={progressPercentage}
       aria-valuemin={0}

@@ -2,8 +2,8 @@
 
 import { forwardRef, InputHTMLAttributes, Ref, useState } from "react";
 
-import VisibilityOffIcon from "@/assets/visibility_off.svg";
-import VisibilityOnIcon from "@/assets/visibility_on.svg";
+import VisibilityOffIcon from "@/assets/icons-small/visibility_off.svg";
+import VisibilityOnIcon from "@/assets/icons-small/visibility_on.svg";
 import { cn } from "@/lib/cn";
 
 import Label from "./label";

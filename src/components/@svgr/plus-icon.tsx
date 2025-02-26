@@ -1,5 +1,3 @@
-import React from "react";
-
 const STROKE = {
   "dark-blue": "#6F63FF",
 } as const;
