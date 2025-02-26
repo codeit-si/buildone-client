@@ -1,4 +1,4 @@
-import PlusIcon from "@/assets/plus/plus_db_sm.svg";
+import PlusIcon from "@/assets/icons-small/plus/plus_db_sm.svg";
 
 interface UncompletedTodoListProps {
   goalId: string;

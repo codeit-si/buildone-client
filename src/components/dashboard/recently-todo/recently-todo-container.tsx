@@ -2,8 +2,8 @@ import { Suspense } from "react";
 
 import Link from "next/link";
 
-import RightArrow from "@/assets/arrow_right.svg";
-import RecentlyTodoIcon from "@/assets/recently_todo.svg";
+import RecentlyTodoIcon from "@/assets/icons-big/recently_todo.svg";
+import RightArrow from "@/assets/icons-small/arrow/arrow_right.svg";
 
 import RecentlyTodoList from "./recently-todo-list";
 

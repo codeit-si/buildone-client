@@ -1,5 +1,5 @@
-import CheckBoxOffIcon from "@/assets/checkbox_off.svg";
-import CheckBoxOnIcon from "@/assets/checkbox_on.svg";
+import CheckBoxOffIcon from "@/assets/icons-small/checkbox/checkbox_off.svg";
+import CheckBoxOnIcon from "@/assets/icons-small/checkbox/checkbox_on.svg";
 import { Todo } from "@/types/todo";
 
 interface TodoTitleAndCheckBoxProps {

@@ -1,4 +1,4 @@
-import Goals from "@/assets/goals.svg";
+import Goals from "@/assets/icons-small/goals.svg";
 import { IsAddingProps } from "@/types/tab-side-menu";
 
 import CustomButton from "./custom-button";
