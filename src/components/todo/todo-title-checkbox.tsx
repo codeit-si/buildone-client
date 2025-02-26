@@ -14,8 +14,9 @@ export default function TodoTitleAndCheckBox({
   toggleStatus,
 }: TodoTitleAndCheckBoxProps) {
   const { isDone } = todo;
+
   return (
-    <div className="flex items-center gap-10">
+    <div className="flex items-center gap-10 overflow-hidden">
       <label
         htmlFor={`todo-check-${index}`}
         className="relative flex cursor-pointer items-center"
