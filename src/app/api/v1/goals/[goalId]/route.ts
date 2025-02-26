@@ -1,47 +1,30 @@
-import { NextRequest } from "next/server";
+export const GET = async (
+  request: Request,
+  { params }: { params: { goalId: string } },
+) => {
+  if (params.goalId === "2") {
+    return new Response(
+      JSON.stringify({
+        code: "NOT_FOUND_GOAL",
+        message: "목표를 찾을 수 없습니다.",
+      }),
+      {
+        status: 404,
+      },
+    );
+  }
 
-import { GoalListParams, GoalListResponse } from "@/types/dashboard";
-import sleep from "@/utils/sleep";
-
-const generateMockGoals = ({
-  cursor = 0,
-  size = 10,
-}: GoalListParams & { cursor?: number }): GoalListResponse => {
-  const totalGoals = 7;
-  const hasNext = cursor + size < totalGoals;
-
-  const goals = Array.from(
-    { length: Math.min(size, totalGoals - cursor) },
-    (_, index) => {
-      const id = cursor + index + 1;
-      return {
-        id,
-        title: `Goal ${id}`,
-        createdAt: new Date(Date.now() - id * 1000000).toString(),
-        updatedAt: new Date(Date.now() - id * 500000).toString(),
-      };
+  return new Response(
+    JSON.stringify({
+      id: 1,
+      title: "자바스크립트로 웹 만들기",
+      createdAt: "2025-02-25T08:56:04.367Z",
+      updatedAt: "2025-02-25T08:56:04.367Z",
+    }),
+    {
+      status: 200,
     },
   );
-
-  return {
-    paginationInformation: {
-      nextCursor: hasNext ? cursor + size : cursor,
-      totalCount: totalGoals,
-      hasNext,
-    },
-    goals,
-  };
-};
-
-export const GET = async (request: NextRequest) => {
-  const { searchParams } = request.nextUrl;
-  const cursor = Number(searchParams.get("cursor")) || 0;
-  const size = Number(searchParams.get("size")) || 3;
-  await sleep(1);
-
-  const data = generateMockGoals({ cursor, size });
-
-  return Response.json(data);
 };
 
 export const DELETE = async (
