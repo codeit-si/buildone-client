@@ -18,7 +18,7 @@ export default function TodosByGoalContainer() {
   const { ref } = useInfiniteScroll({ hasNextPage, fetchNextPage });
 
   return (
-    <SectionContainer className="md:col-span-2">
+    <SectionContainer className="mt-16 md:col-span-2">
       <SectionTitle>
         <div className="flex h-40 w-40 items-center justify-center rounded-15 bg-blue-500">
           <FlagIcon />
