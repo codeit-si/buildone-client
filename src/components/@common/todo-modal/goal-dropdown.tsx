@@ -23,6 +23,7 @@ export default function GoalDropdown({ goalId }: GoalDropdownProps) {
     hasNextPage,
     fetchNextPage,
   });
+
   const { isOpen, ref, toggleHandler } = useSelector();
   const [selectedGoalId, setSelectedGoalId] = useState<number>(goalId ?? -1);
 
