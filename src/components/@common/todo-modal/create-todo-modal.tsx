@@ -171,7 +171,6 @@ export default function CreateTodoModal({
             </div>
             <GoalDropdown goalId={goalId} />
           </div>
-
           <Button
             className="w-full"
             disabled={!isValid}
