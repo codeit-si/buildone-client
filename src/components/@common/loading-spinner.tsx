@@ -1,9 +1,15 @@
-export default function LoadingSpinner() {
+interface LoadingSpinnerProps {
+  size?: number;
+}
+
+export default function LoadingSpinner({ size = 36 }: LoadingSpinnerProps) {
   return (
     <div role="status">
       <svg
         aria-hidden="true"
-        className="size-36 animate-spin fill-dark-blue-600 text-gray-200 dark:text-gray-600"
+        className="animate-spin fill-dark-blue-600 text-gray-200 dark:text-gray-600"
+        width={size}
+        height={size}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
