@@ -25,7 +25,7 @@ interface CreateTodoModalProps {
 
 type SelectOptionType = "file" | "link";
 
-const FILE_SIZE_LIMIT = 2 * 1024 * 1024; // 2MB
+const FILE_SIZE_LIMIT = 10 * 1024 * 1024; // 2MB
 const ACCEPTED_FILE_TYPES = ["image/jpeg", "image/png", "application/pdf"];
 
 const createTodoModalSchema = z
@@ -42,7 +42,7 @@ const createTodoModalSchema = z
     if (file[0]?.size && file[0]?.size > FILE_SIZE_LIMIT)
       return ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "파일 크기는 2MB를 초과할 수 없습니다.",
+        message: "파일 크기는 10MB를 초과할 수 없습니다.",
         path: ["file"],
       });
     if (!ACCEPTED_FILE_TYPES.includes(file[0]?.type || ""))
@@ -62,6 +62,7 @@ export default function CreateTodoModal({
   const {
     register,
     handleSubmit,
+    watch,
     setValue,
     formState: { errors, isValid },
   } = useForm<CreateTodoModalSchema>({
@@ -142,6 +143,7 @@ export default function CreateTodoModal({
               <FileInput
                 id={selectOption}
                 register={register}
+                value={watch("file")}
                 error={errors.file}
               />
             )}
