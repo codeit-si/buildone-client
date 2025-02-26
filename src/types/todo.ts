@@ -10,8 +10,8 @@ export interface Todo {
   linkUrl?: string | null;
   fileUrl?: string | null;
   isDone: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 export interface TodosResponse {
   todos: Todo[];
