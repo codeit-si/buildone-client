@@ -86,7 +86,10 @@ export default function Dropdown({ items }: DropdownProps) {
               <DropdownItem
                 key={`kebab-dropdown-${label}`}
                 label={label}
-                onClick={onClick}
+                onClick={(e) => {
+                  closeDropdown();
+                  onClick(e);
+                }}
                 isFocus={focusIndex === i}
               />
             ))}
