@@ -1,4 +1,4 @@
-import FlagGoalIcon from "@/assets/flag-goal.svg";
+import FlagGoalIcon from "@/assets/icons-big/flag_goal.svg";
 
 import ProgressBar from "../@common/progress-bar";
 

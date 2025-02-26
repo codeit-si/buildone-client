@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import NoteListIcon from "@/assets/notelist.svg";
+import NoteListIcon from "@/assets/icons-big/notelist.svg";
 import Dropdown from "@/components/@common/dropdown";
 import Modal from "@/components/@common/portal/modal";
 import Sheet from "@/components/@common/portal/sheet";
