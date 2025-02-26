@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import NoteIcon from "@/assets/note-compose.svg";
+import NoteIcon from "@/assets/icons-small/note_compose.svg";
 
 interface RouteButtonToNotesProps {
   goalId: string;

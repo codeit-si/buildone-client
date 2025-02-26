@@ -1,5 +1,5 @@
-import DeleteIcon from "@/assets/delete.svg";
-import EmbedIcon from "@/assets/embed.svg";
+import DeleteIcon from "@/assets/icons-small/delete.svg";
+import EmbedIcon from "@/assets/icons-small/embed.svg";
 import { cn } from "@/lib/cn";
 import "@/styles/note.css";
 

@@ -1,8 +1,8 @@
 import { cva } from "class-variance-authority";
 
-import Sandwich from "@/assets/sandwich.svg";
-import TabOff from "@/assets/tab_off.svg";
-import TabOn from "@/assets/tab_on.svg";
+import Sandwich from "@/assets/icons-small/sandwich.svg";
+import TabOff from "@/assets/icons-small/tab_off.svg";
+import TabOn from "@/assets/icons-small/tab_on.svg";
 import Button from "@/components/@common/button";
 import { IsTabMinimizedProps } from "@/types/tab-side-menu";
 
