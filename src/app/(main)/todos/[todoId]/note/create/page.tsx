@@ -6,6 +6,7 @@ import Button from "@/components/@common/button";
 import Counting from "@/components/@common/counting";
 import Goal from "@/components/note/goal";
 import LinkAttached from "@/components/note/link-attached";
+import TagInput from "@/components/note/tag";
 import Tiptap from "@/components/note/tiptap";
 import Todo from "@/components/note/todo";
 import "@/styles/note.css";
@@ -70,6 +71,9 @@ export default function NotesPage() {
             />
             <Counting type="title" count={title.length} total={50} />
           </div>
+
+          {/* 태그 입력 영역 */}
+          <TagInput />
 
           {/* 에디터 영역 */}
           <div className="mt-12">
