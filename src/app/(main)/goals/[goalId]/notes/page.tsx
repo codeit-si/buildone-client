@@ -1,7 +1,8 @@
 "use client";
 
-import FlagGoalSmall from "@/assets/flag_goal_small.svg";
+import FlagGoalSmall from "@/assets/icons-big/flag_goal_small.svg";
 import Card from "@/components/note/card";
+
 import "@/styles/note.css";
 
 export default function NoteCollection() {
