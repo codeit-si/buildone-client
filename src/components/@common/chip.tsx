@@ -1,7 +1,7 @@
 "use client";
 
-import InactiveIcon from "@/assets/checkbox_off.svg";
-import ActiveIcon from "@/assets/checkbox_on_reverse.svg";
+import InactiveIcon from "@/assets/icons-small/checkbox/checkbox_off.svg";
+import ActiveIcon from "@/assets/icons-small/checkbox/checkbox_on_reverse.svg";
 import { cn } from "@/lib/cn";
 
 interface ChipProps {

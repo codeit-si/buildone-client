@@ -1,4 +1,4 @@
-import FlagGoalIcon from "@/assets/flag-goal.svg";
+import FlagGoalIcon from "@/assets/icons-big/flag_goal.svg";
 
 import ProgressBar from "../@common/progress-bar";
 
@@ -20,7 +20,7 @@ export default function GoalSummary({ goalId }: GoalSummaryProps) {
             목표 이름 ({goalId})
           </h2>
         </div>
-        <GoalSummaryDropdown />
+        <GoalSummaryDropdown goalId={goalId} />
       </div>
       <div className="mt-24">
         <p className="mb-8 text-xs font-semibold">Progress</p>

@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-import FileIcon from "@/assets/file.svg";
-import LinkIcon from "@/assets/link.svg";
-import NoteIcon from "@/assets/note.svg";
+import FileIcon from "@/assets/icons-small/file.svg";
+import LinkIcon from "@/assets/icons-small/link.svg";
+import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
 import { Todo } from "@/types/todo";
 
@@ -72,7 +72,6 @@ export default function ListTodo({
 
   return (
     <li
-      key={todo.id}
       aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
       className="group flex flex-col gap-8 text-slate-800 hover:text-dark-blue-700"
     >
@@ -88,14 +87,13 @@ export default function ListTodo({
           className="flex gap-5 text-slate-700"
         >
           {iconSpread(todo)}
-          <button
-            type="button"
+          <div
             aria-label="추가 작업"
             aria-expanded={showDropdownOnHover}
             className={`${showDropdownOnHover && "hidden focus:block group-hover:block"}`}
           >
             <Dropdown items={getDropdownItems(todo)} />
-          </button>
+          </div>
         </div>
       </div>
       {showGoal && (

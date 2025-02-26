@@ -1,4 +1,4 @@
-import DashBoard from "@/assets/dashboard.svg";
+import DashBoard from "@/assets/icons-small/dashboard.svg";
 
 import CustomButton from "./custom-button";
 import Menus from "./menus";

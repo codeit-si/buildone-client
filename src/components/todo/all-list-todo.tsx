@@ -8,12 +8,12 @@ import {
   useInfiniteQuery,
 } from "@tanstack/react-query";
 
-import PlusIcon from "@/assets/plus/plus_db_sm.svg";
+import PlusIcon from "@/assets/icons-small/plus/plus_db_sm.svg";
 import ListTodo from "@/components/@common/todo";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import getQueryClient from "@/lib/get-query-client";
 import { getTodos } from "@/services/todos";
-import { Todo, TodoListResponse } from "@/types/todo";
+import { TodoListResponse } from "@/types/todo";
 
 import Filter from "../@common/filter";
 
@@ -35,7 +35,7 @@ export default function AllListTodo() {
       queryKey: ["todos"],
       queryFn: ({ pageParam = 1 }) => getTodos(pageParam),
       getNextPageParam: (lastPage) => {
-        return lastPage.paginationInformation.hasNext
+        return lastPage.paginationInformation?.hasNext
           ? lastPage.paginationInformation.nextCursor
           : undefined;
       },
@@ -48,21 +48,22 @@ export default function AllListTodo() {
   if (isError) return <div>Error...</div>;
 
   const toggleStatus = (id: number) => {
-    queryClient.setQueryData<
-      InfiniteData<{ todos: Todo[]; nextPage?: number }>
-    >(["todos"], (oldData) => {
-      if (!oldData) return oldData;
+    queryClient.setQueryData<InfiniteData<TodoListResponse>>(
+      ["todos"],
+      (oldData) => {
+        if (!oldData) return oldData;
 
-      const clonedData = structuredClone(oldData);
-      clonedData.pages = clonedData.pages.map((page) => ({
-        ...page,
-        todos: page.todos.map((todo) =>
-          todo.id === id ? { ...todo, isDone: !todo.isDone } : todo,
-        ),
-      }));
-
-      return clonedData;
-    });
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page) => ({
+            ...page,
+            todos: page.todos.map((todo) =>
+              todo.id === id ? { ...todo, isDone: !todo.isDone } : todo,
+            ),
+          })),
+        };
+      },
+    );
   };
 
   const todos = data.pages
@@ -72,8 +73,7 @@ export default function AllListTodo() {
       if (filter === "done") return todo.isDone === true;
       if (filter === "todo") return todo.isDone === false;
       return true;
-    })
-    .slice(0, 40);
+    });
 
   return (
     <>

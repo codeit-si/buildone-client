@@ -1,6 +1,6 @@
 "use client";
 
-import FlagGoalIcon from "@/assets/flag_goal_small.svg";
+import FlagGoalIcon from "@/assets/icons-big/flag_goal_small.svg";
 
 interface GoalProps {
   goalText: string;
