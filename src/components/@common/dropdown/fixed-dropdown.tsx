@@ -6,7 +6,7 @@ import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
 import KebabIcon from "@/assets/icons-small/kebab.svg";
-import DropdownItem from "@/components/@common/dropdown-item";
+import DropdownItem from "@/components/@common/dropdown/dropdown-item";
 
 interface DropdownItemType {
   label: string;
@@ -16,18 +16,18 @@ interface DropdownProps {
   items: DropdownItemType[];
 }
 
-function Dropdown({ items }: DropdownProps) {
+export default function FixedDropdown({ items }: DropdownProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const kebabRef = useRef<HTMLDivElement>(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [focusIndex, setFocusIndex] = useState(-1);
   const [position, setPosition] = useState({ top: 0, left: 0 });
 
   const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
+    setIsOpen((prev) => !prev);
   };
 
-  const closeDropdown = useCallback(() => setIsDropdownOpen(false), []);
+  const closeDropdown = useCallback(() => setIsOpen(false), []);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Escape") closeDropdown();
@@ -42,11 +42,11 @@ function Dropdown({ items }: DropdownProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (isDropdownOpen) {
+      if (isOpen) {
         closeDropdown();
       }
     };
-    if (isDropdownOpen) {
+    if (isOpen) {
       window.addEventListener("scroll", handleScroll, {
         capture: true,
       });
@@ -56,22 +56,22 @@ function Dropdown({ items }: DropdownProps) {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
     };
-  }, [isDropdownOpen, closeDropdown]);
+  }, [isOpen, closeDropdown]);
 
   useEffect(() => {
-    if (isDropdownOpen && kebabRef.current) {
+    if (isOpen && kebabRef.current) {
       const buttonRect = kebabRef.current.getBoundingClientRect();
       setPosition({
         top: buttonRect.y + buttonRect.height,
         left: buttonRect.x + 24 - 81,
       });
     }
-  }, [isDropdownOpen]);
+  }, [isOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        isDropdownOpen &&
+        isOpen &&
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
@@ -81,23 +81,29 @@ function Dropdown({ items }: DropdownProps) {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isDropdownOpen, closeDropdown]);
+  }, [isOpen, closeDropdown]);
 
   return (
-    <div tabIndex={-1} role="menu" ref={dropdownRef} onKeyDown={handleKeyDown}>
+    <div
+      className="group-focus-within:pr-5 group-hover:pr-5"
+      tabIndex={-1}
+      role="menu"
+      ref={dropdownRef}
+      onKeyDown={handleKeyDown}
+    >
       <button
         aria-haspopup="true"
-        aria-expanded={isDropdownOpen}
+        aria-expanded={isOpen}
         aria-label="메뉴 열기"
         onClick={toggleDropdown}
-        className="flex h-24 w-24 items-center justify-center rounded-full bg-white"
+        className="hidden h-24 w-24 items-center justify-center rounded-full bg-white group-focus-within:flex group-hover:flex"
       >
-        <div ref={kebabRef} className="flex flex-col items-center">
+        <div ref={kebabRef} className="flex w-full flex-col items-center">
           <KebabIcon />
         </div>
       </button>
       <AnimatePresence>
-        {isDropdownOpen && (
+        {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 0.1 } }}
@@ -130,5 +136,3 @@ function Dropdown({ items }: DropdownProps) {
     </div>
   );
 }
-
-export default Dropdown;
