@@ -4,11 +4,11 @@ import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
-import { DropdownItem, Todo } from "@/types/todo";
+import { Todo } from "@/types/todo";
 
 import Goal from "../todo/goal";
 
-import Dropdown from "./dropdown";
+import Dropdown, { DropdownItemType } from "./dropdown";
 
 interface Props {
   todo: Todo;
@@ -25,16 +25,13 @@ export default function ListTodo({
   toggleStatus,
   showGoal,
 }: Props) {
-  const getDropdownItems = (selectedTodo: Todo): DropdownItem[] => {
-    const baseItems: DropdownItem[] = [
-      { id: "edit", label: "수정하기", onClick: () => {} },
-      { id: "delete", label: "삭제하기", onClick: () => {} },
+  const getDropdownItems = (selectedTodo: Todo): DropdownItemType[] => {
+    const baseItems: DropdownItemType[] = [
+      { label: "수정하기", onClick: () => {} },
+      { label: "삭제하기", onClick: () => {} },
     ];
     if (selectedTodo.noteId !== null) {
-      return [
-        { id: "note", label: "노트보기", onClick: () => {} },
-        ...baseItems,
-      ];
+      return [{ label: "노트보기", onClick: () => {} }, ...baseItems];
     }
     return baseItems;
   };
@@ -67,7 +64,6 @@ export default function ListTodo({
 
   return (
     <li
-      key={todo.id}
       aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
       className="group flex flex-col gap-8 text-slate-800 hover:text-dark-blue-700"
     >
@@ -83,8 +79,7 @@ export default function ListTodo({
           className="flex gap-5 text-slate-700"
         >
           {iconSpread(todo)}
-          <button
-            type="button"
+          <div
             aria-label="추가 작업"
             aria-expanded={showDropdownOnHover}
             className={`${
@@ -92,7 +87,7 @@ export default function ListTodo({
             }`}
           >
             <Dropdown items={getDropdownItems(todo)} />
-          </button>
+          </div>
         </div>
       </div>
       {showGoal && (

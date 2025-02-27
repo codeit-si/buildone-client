@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import FlagGoalIcon from "@/assets/icons-big/flag_goal.svg";
+import { getProgressByGoalIdOptions } from "@/services/dashboard/query";
+import { getGoalOptions } from "@/services/goal/query";
 
 import ProgressBar from "../@common/progress-bar";
 
@@ -60,7 +62,7 @@ export default function GoalSummary({ goalId }: GoalSummaryProps) {
         <p className="mb-8 text-xs font-semibold">Progress</p>
         <ProgressBar
           current={progressData?.progress ?? 0}
-          total={30}
+          total={100}
           border={false}
         />
       </div>
