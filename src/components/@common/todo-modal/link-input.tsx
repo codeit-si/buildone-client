@@ -1,8 +1,6 @@
 import { FieldValues, Path, useForm } from "react-hook-form";
 
-import { cn } from "@/lib/cn";
-
-import { BASE_CLASS } from "../input";
+import Input from "../input";
 
 interface LinkInputProps<T extends FieldValues> {
   id: Path<T>;
@@ -14,9 +12,9 @@ export default function LinkInput<T extends FieldValues>({
   register,
 }: LinkInputProps<T>) {
   return (
-    <input
+    <Input
       id={id}
-      className={cn(BASE_CLASS, "w-full")}
+      className="w-full md:w-full"
       placeholder="링크를 적어주세요."
       {...register(id)}
     />

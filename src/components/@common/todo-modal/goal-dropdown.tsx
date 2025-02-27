@@ -2,7 +2,7 @@ import { MouseEvent, useEffect, useState } from "react";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import ArrowDropdownIcon from "@/assets/icons-small/arrow/arrow_dropdown.svg";
+import ArrowDropdownIcon from "@/components/@svgr/arrow-dropdown-icon";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import useSelector from "@/hooks/use-selector";
 import { cn } from "@/lib/cn";
@@ -17,7 +17,7 @@ interface GoalDropdownProps {
 
 export default function GoalDropdown({ goalId }: GoalDropdownProps) {
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    getInfiniteGoalsOptions({ size: 20 }),
+    getInfiniteGoalsOptions({ size: 20, moreKeys: ["goal-dropdown"] }),
   );
   const { ref: scrollRef, refTrigger } = useInfiniteScroll({
     hasNextPage,
@@ -62,7 +62,8 @@ export default function GoalDropdown({ goalId }: GoalDropdownProps) {
     >
       <Label label="목표" />
       <span className={cn(BASE_CLASS, "cursor-pointer justify-between")}>
-        {goalTitle ?? "목표를 선택해주세요."} <ArrowDropdownIcon />
+        {goalTitle ?? "목표를 선택해주세요."}{" "}
+        <ArrowDropdownIcon reversal={isOpen} />
       </span>
       {isOpen && (
         <ul

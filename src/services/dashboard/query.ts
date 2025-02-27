@@ -17,10 +17,11 @@ export const getDashboardOptions = () =>
 
 export const getInfiniteGoalsOptions = ({
   size = 3,
+  moreKeys = [],
   sortOrder = "newest",
 }: GoalListParams) => {
   return infiniteQueryOptions({
-    queryKey: ["goals", size],
+    queryKey: ["goals", ...moreKeys],
     queryFn: ({ pageParam }) =>
       getInfiniteGoals({ size, sortOrder, cursor: pageParam }),
     getNextPageParam: (lastPage) =>
