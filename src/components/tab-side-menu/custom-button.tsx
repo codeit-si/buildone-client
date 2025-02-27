@@ -1,9 +1,9 @@
 import { cva } from "class-variance-authority";
 
-import PlusDarkBlue from "@/assets/plus/plus_db.svg";
-import PlusDarkBlueSmall from "@/assets/plus/plus_db_sm.svg";
-import PlusWhite from "@/assets/plus/plus_w.svg";
-import PlusWhiteSmall from "@/assets/plus/plus_w_sm.svg";
+import PlusDarkBlue from "@/assets/icons-small/plus/plus_db.svg";
+import PlusDarkBlueSmall from "@/assets/icons-small/plus/plus_db_sm.svg";
+import PlusWhite from "@/assets/icons-small/plus/plus_w.svg";
+import PlusWhiteSmall from "@/assets/icons-small/plus/plus_w_sm.svg";
 import Button from "@/components/@common/button";
 import { cn } from "@/lib/cn";
 import { ButtonProps } from "@/types/tab-side-menu";

@@ -5,11 +5,11 @@ import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
-import KebabIcon from "@/assets/kebab.svg";
+import KebabIcon from "@/assets/icons-small/kebab.svg";
 
 import DropdownItem from "./dropdown-item";
 
-interface DropdownItemType {
+export interface DropdownItemType {
   label: string;
   onClick: (e: React.MouseEvent | React.KeyboardEvent) => void;
 }
@@ -86,7 +86,10 @@ export default function Dropdown({ items }: DropdownProps) {
               <DropdownItem
                 key={`kebab-dropdown-${label}`}
                 label={label}
-                onClick={onClick}
+                onClick={(e) => {
+                  closeDropdown();
+                  onClick(e);
+                }}
                 isFocus={focusIndex === i}
               />
             ))}

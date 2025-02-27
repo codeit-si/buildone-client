@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import Profile from "@/assets/profile.svg";
+import Profile from "@/assets/icons-big/profile.svg";
 import Button from "@/components/@common/button";
 import { UserInformations } from "@/types/tab-side-menu";
 

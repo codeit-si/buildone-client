@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import NoteListIcon from "@/assets/notelist.svg";
+import NoteListIcon from "@/assets/icons-big/notelist.svg";
 import Dropdown from "@/components/@common/dropdown";
 import Modal from "@/components/@common/portal/modal";
 import Sheet from "@/components/@common/portal/sheet";
@@ -53,15 +53,12 @@ export default function NoteCard(): JSX.Element | null {
             삭제된 노트는 복구할 수 없습니다.
           </div>
           <Modal.Footer>
-            <Modal.Close
-              variant="outlined"
-              style={{ width: "120px", minWidth: "120px" }}
-            >
+            <Modal.Close variant="outlined" className="w-120 min-w-120">
               취소
             </Modal.Close>
             <Modal.Close
               variant="solid"
-              style={{ width: "120px", minWidth: "120px" }}
+              className="w-120 min-w-120"
               onClick={(): void => setIsDeleted(true)}
             >
               삭제

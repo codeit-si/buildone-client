@@ -44,20 +44,24 @@ export default function RecentlyTodoList() {
       role="region"
     >
       <ul className="flex flex-col gap-8 pr-8">
-        {todos.map((todo, index) => (
-          <ListTodo
-            key={todo.id}
-            todo={todo}
-            index={index}
-            toggleStatus={toggleStatus}
-            showGoal
-            showDropdownOnHover
-          />
-        ))}
+        {todos && todos.length > 0 ? (
+          todos.map((todo, index) => (
+            <ListTodo
+              key={todo.id}
+              todo={todo}
+              index={index}
+              toggleStatus={toggleStatus}
+              showGoal
+              showDropdownOnHover
+            />
+          ))
+        ) : (
+          <p>할 일이 없습니다.</p> // 오류떠서 임시로 해놨습니다..
+        )}
       </ul>
       <div
         className={cn(
-          "pointer-events-none bottom-0 -mt-10 h-30 w-full bg-gradient-to-t from-white from-30% to-white/0",
+          "pointer-events-none bottom-0 -mt-10 h-30 w-full bg-gradient-to-t from-white from-10% to-white/0 to-70%",
           isOverflowing ? "sticky" : "hidden",
         )}
       />
