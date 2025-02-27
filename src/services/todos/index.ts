@@ -9,10 +9,34 @@ export const getTodos = async (
   const { data } = await api.get<TodoListResponse>(ENDPOINT.TODO.GET_ALL, {
     params: { page: pageParam },
   });
-  return data;
+
+  const hasNext = pageParam * 40 < data.paginationInformation.totalCount;
+
+  return {
+    ...data,
+    paginationInformation: {
+      ...data.paginationInformation,
+      hasNext,
+      nextCursor: hasNext ? pageParam + 1 : null,
+    },
+  };
 };
 
 export const createTodo = async (newTodo: Todo) => {
   const { data } = await api.post<Todo>(ENDPOINT.TODO.CREATE, newTodo);
+  return data;
+};
+
+export const updateTodo = async (updatedTodo: Todo) => {
+  const url = ENDPOINT.TODO.UPDATE(updatedTodo.id);
+  const { data } = await api.put<Todo>(url, updatedTodo);
+  return data;
+};
+
+export const deleteTodo = async (deletedTodo: Todo) => {
+  const url = ENDPOINT.TODO.DELETE(deletedTodo.id);
+  const { data } = await api.delete<Todo>(url, {
+    data: { id: deletedTodo.id },
+  });
   return data;
 };
