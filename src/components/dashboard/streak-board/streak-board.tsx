@@ -3,17 +3,20 @@
 import ProgressIcon from "@/assets/progress.svg";
 
 export default function StreakBoard(): JSX.Element {
-  const pastDays = 365;
+  // 지난 52주(364일)
+  const pastDays = 364;
   const boxesPerColumn = 7;
-  const totalColumns = Math.ceil(pastDays / boxesPerColumn);
+  const pastColumns = 52;
 
-  // 오늘을 마지막 날로, 시작일은 오늘 - (365 - 1)일
   const today = new Date();
-  const startDate = new Date();
-  startDate.setDate(today.getDate() - (pastDays - 1));
+  // 오늘 요일에 따라 이번 주의 박스 개수: 일요일이면 1, 월요일이면 2, ..., 토요일이면 7
+  const currentWeekBoxes = today.getDay() === 0 ? 1 : today.getDay() + 1;
 
-  // 임시 데이터: 지난 365일에 대한 완료한 할 일 개수 (실제 데이터로 대체 가능)
-  const dailyCounts = Array.from({ length: pastDays }, () =>
+  // 백엔드에서 전달받은 데이터(임시 데이터로 대체)
+  const pastDailyCounts = Array.from({ length: pastDays }, () =>
+    Math.floor(Math.random() * 12),
+  );
+  const currentWeekDailyCounts = Array.from({ length: currentWeekBoxes }, () =>
     Math.floor(Math.random() * 12),
   );
 
@@ -27,18 +30,14 @@ export default function StreakBoard(): JSX.Element {
     return "bg-slate-300";
   };
 
-  const renderStreakBoard = () => {
-    return Array.from({ length: totalColumns }, (_col, colIndex) => {
+  const renderPastBoard = () => {
+    return Array.from({ length: pastColumns }, (_col, colIndex) => {
       const columnBoxes = Array.from(
         { length: boxesPerColumn },
         (_row, rowIndex) => {
           const boxIndex = colIndex * boxesPerColumn + rowIndex;
-          // 365일을 초과하는 경우는 렌더링 x
-          if (boxIndex >= pastDays) return null;
-
-          const count = dailyCounts[boxIndex];
+          const count = pastDailyCounts[boxIndex];
           const boxColor = getBoxColor(count);
-
           return (
             <div
               key={boxIndex}
@@ -46,14 +45,30 @@ export default function StreakBoard(): JSX.Element {
             />
           );
         },
-      ).filter(Boolean);
-
+      );
       return (
         <div key={colIndex} className="mr-5 flex flex-col">
           {columnBoxes}
         </div>
       );
     });
+  };
+
+  const renderCurrentWeek = () => {
+    const columnBoxes = Array.from(
+      { length: currentWeekBoxes },
+      (_row, rowIndex) => {
+        const count = currentWeekDailyCounts[rowIndex];
+        const boxColor = getBoxColor(count);
+        return (
+          <div
+            key={rowIndex}
+            className={`mb-5 h-18 w-18 rounded-4 ${boxColor}`}
+          />
+        );
+      },
+    );
+    return <div className="flex flex-col">{columnBoxes}</div>;
   };
 
   return (
@@ -71,7 +86,8 @@ export default function StreakBoard(): JSX.Element {
 
       {/* 스트릭 보드 */}
       <div className="scrollbar-horizontality flex overflow-x-auto">
-        {renderStreakBoard()}
+        {renderPastBoard()}
+        {renderCurrentWeek()}
       </div>
     </div>
   );
