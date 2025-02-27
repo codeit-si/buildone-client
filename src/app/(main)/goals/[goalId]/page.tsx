@@ -15,25 +15,24 @@ export default async function GoalDetailPage({
 }) {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(getGoalOptions(Number(params.goalId)));
-
-  await queryClient.prefetchQuery(
-    getProgressByGoalIdOptions(Number(params.goalId)),
-  );
-
-  await queryClient.prefetchInfiniteQuery(
-    getInfiniteTodosByGoalIdOptions({
-      goalId: Number(params.goalId),
-      done: true,
-    }),
-  );
-
-  await queryClient.prefetchInfiniteQuery(
-    getInfiniteTodosByGoalIdOptions({
-      goalId: Number(params.goalId),
-      done: false,
-    }),
-  );
+  await Promise.all([
+    queryClient.prefetchQuery(getGoalOptions(Number(params.goalId))),
+    queryClient.prefetchQuery(
+      getProgressByGoalIdOptions(Number(params.goalId)),
+    ),
+    queryClient.prefetchInfiniteQuery(
+      getInfiniteTodosByGoalIdOptions({
+        goalId: Number(params.goalId),
+        done: true,
+      }),
+    ),
+    queryClient.prefetchInfiniteQuery(
+      getInfiniteTodosByGoalIdOptions({
+        goalId: Number(params.goalId),
+        done: false,
+      }),
+    ),
+  ]);
 
   const dehydratedState = dehydrate(queryClient);
 
