@@ -19,7 +19,10 @@ export const reissueAccessToken = async (): Promise<string | undefined> => {
     const response = await axios.post(
       ENDPOINT.AUTH.TOKEN_VALIDATION,
       {},
-      { withCredentials: true },
+      {
+        baseURL: process.env.NEXT_PUBLIC_SERVER_ADDRESS,
+        withCredentials: true,
+      },
     );
 
     const token = response.headers?.["access-token"];
