@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 import ListTodo from "@/components/@common/todo";
-import { getInfiniteTodosByGoalIdOptions } from "@/services/dashboard/query";
+import { getDashboardInfiniteTodosByGoalIdOptions } from "@/services/dashboard/query";
 
 export interface SetNextType {
   fetchNextPage: () => void;
@@ -24,7 +24,7 @@ export default function TodoListByDone({
 }: TodoListByDoneProps) {
   const { data, hasNextPage, fetchNextPage, isFetching } =
     useSuspenseInfiniteQuery(
-      getInfiniteTodosByGoalIdOptions({ goalId, done: isDone }),
+      getDashboardInfiniteTodosByGoalIdOptions({ goalId, done: isDone }),
     );
 
   useEffect(() => {
