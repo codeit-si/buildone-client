@@ -13,7 +13,7 @@ import Goal from "../todo/goal";
 
 import { DropdownItemType } from "./dropdown/dropdown";
 import FixedDropdown from "./dropdown/fixed-dropdown";
-import EditTodoModal from "./todo-modal/edit-todo-modal";
+import TodoModal from "./todo-modal/todo-modal";
 
 interface Props {
   todo: TodoResponse;
@@ -96,7 +96,7 @@ export default function ListTodo({
         </div>
       )}
       {isEditModalOpen && (
-        <EditTodoModal
+        <TodoModal
           goalId={todo.goalInformation?.id}
           todo={todo}
           open={isEditModalOpen}

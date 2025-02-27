@@ -65,7 +65,7 @@ const createTodoModalSchema = z
 
 type CreateTodoModalSchema = z.infer<typeof createTodoModalSchema>;
 
-export default function EditTodoModal({
+export default function TodoModal({
   children,
   goalId,
   todo,
@@ -79,6 +79,7 @@ export default function EditTodoModal({
     setValue,
     trigger,
     formState: { errors, isValid },
+    trigger,
   } = useForm<CreateTodoModalSchema>({
     resolver: zodResolver(createTodoModalSchema),
     mode: "onBlur",
