@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren, useState } from "react";
+import { Dispatch, PropsWithChildren, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,6 +21,8 @@ import LinkInput from "./link-input";
 
 interface CreateTodoModalProps {
   goalId?: GoalResponse["id"];
+  open?: boolean;
+  setOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 type SelectOptionType = "file" | "link";
@@ -58,6 +60,8 @@ type CreateTodoModalSchema = z.infer<typeof createTodoModalSchema>;
 export default function CreateTodoModal({
   children,
   goalId,
+  open,
+  setOpen,
 }: PropsWithChildren<CreateTodoModalProps>) {
   const {
     register,
@@ -86,10 +90,10 @@ export default function CreateTodoModal({
   };
 
   return (
-    <Modal.Root>
+    <Modal.Root open={open} onOpenChange={setOpen}>
       <Modal.Trigger asChild>{children}</Modal.Trigger>
       {/* 모달 상단의 X버튼을 누르면 팝업이 나오는데 이 부분은 따로 구현하겠습니다. (지금은은 바로 닫힙니다.) */}
-      <Modal.Content className="h-full">
+      <Modal.Content className="h-full" closeOnOverlayClick={false}>
         <Modal.Title>할일 생성</Modal.Title>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-24">
           <div>

@@ -19,6 +19,7 @@ interface GoalItemProps {
 export default function GoalItem({ goal }: GoalItemProps) {
   const [todoNext, setTodoNext] = useState<SetNextType>();
   const [doneNext, setDoneNext] = useState<SetNextType>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const hasNext = !!todoNext?.hasNextPage || !!doneNext?.hasNextPage;
 
@@ -35,12 +36,13 @@ export default function GoalItem({ goal }: GoalItemProps) {
     <GoalContainer className="relative min-h-384 pb-72 md:min-h-304">
       <div className="flex justify-between">
         <GoalTitle>{goal.title}</GoalTitle>
-        <CreateTodoModal goalId={goal.id}>
-          <button className="flex items-center gap-5 text-sm font-semibold text-dark-blue-500">
-            <PlusIcon stroke="dark-blue" />
-            할일 추가
-          </button>
-        </CreateTodoModal>
+        <button
+          className="flex items-center gap-5 text-sm font-semibold text-dark-blue-500"
+          onClick={() => setIsModalOpen(true)}
+        >
+          <PlusIcon stroke="dark-blue" />
+          할일 추가
+        </button>
       </div>
       <GoalItemProgressBar goalId={goal.id} />
       <div className="grid grid-rows-[repeat(2,_minmax(112px,_auto))] gap-24 md:grid-cols-2 md:grid-rows-[minmax(164px,_auto)]">
@@ -88,6 +90,13 @@ export default function GoalItem({ goal }: GoalItemProps) {
             )}
           </button>
         </motion.div>
+      )}
+      {isModalOpen && (
+        <CreateTodoModal
+          goalId={goal.id}
+          open={isModalOpen}
+          setOpen={setIsModalOpen}
+        />
       )}
     </GoalContainer>
   );
