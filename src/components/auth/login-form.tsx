@@ -67,12 +67,12 @@ export default function LoginForm() {
       setAccessToken(token);
       setUserInfo(response.data.memberInformation);
 
-      router.push("/");
+      router.push("/dashboard");
     } catch (error: unknown) {
       if (error instanceof ApiError) {
         if (
           error.code === LOGIN_ERROR_CODE.INVALID_EMAIL_FORMAT ||
-          error.code === LOGIN_ERROR_CODE.NOT_FOUND_EXIST_MEMBER
+          error.code === LOGIN_ERROR_CODE.NOT_FOUND_MEMBER_WITH_EMAIL
         ) {
           setError("email", { type: "valid", message: error.message });
         }
