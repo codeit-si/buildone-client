@@ -70,6 +70,7 @@ export default function CreateTodoModal({
     watch,
     setValue,
     formState: { errors, isValid },
+    trigger,
   } = useForm<CreateTodoModalSchema>({
     resolver: zodResolver(createTodoModalSchema),
     mode: "onChange",
@@ -156,6 +157,7 @@ export default function CreateTodoModal({
                   register={register}
                   value={watch("file")}
                   error={errors.file}
+                  trigger={trigger}
                 />
               )}
               {selectOption === "link" && (

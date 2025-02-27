@@ -1,18 +1,22 @@
+import { useState } from "react";
+
 import Link from "next/link";
 
 import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
+import { TodoResponse } from "@/types/dashboard";
 import { Todo } from "@/types/todo";
 
 import Goal from "../todo/goal";
 
 import { DropdownItemType } from "./dropdown/dropdown";
 import FixedDropdown from "./dropdown/fixed-dropdown";
+import EditTodoModal from "./todo-modal/edit-todo-modal";
 
 interface Props {
-  todo: Todo;
+  todo: TodoResponse;
   index: number;
   showGoal?: boolean;
   showDropdownOnHover?: boolean;
@@ -26,6 +30,7 @@ export default function ListTodo({
   toggleStatus,
   showGoal,
 }: Props) {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const getDropdownItems = (selectedTodo: Todo): DropdownItemType[] => {
     const baseItems: DropdownItemType[] = [
       { label: "수정하기", onClick: () => {} },
@@ -89,6 +94,14 @@ export default function ListTodo({
         <div className="ml-27">
           <Goal todo={todo} />
         </div>
+      )}
+      {isEditModalOpen && (
+        <EditTodoModal
+          goalId={todo.goalInformation?.id}
+          todo={todo}
+          open={isEditModalOpen}
+          onOpenChange={setIsEditModalOpen}
+        />
       )}
     </li>
   );

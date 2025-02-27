@@ -17,7 +17,7 @@ export const getConfigWithAuthorizationHeaders = (
 export const reissueAccessToken = async (): Promise<string | undefined> => {
   try {
     const response = await axios.post(
-      ENDPOINT.AUTH.TOKEN_VALIDATION,
+      `${process.env.NEXT_PUBLIC_SERVER_ADDRESS}${ENDPOINT.AUTH.TOKEN_VALIDATION}`,
       {},
       { withCredentials: true },
     );

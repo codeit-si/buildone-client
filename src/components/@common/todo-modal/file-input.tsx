@@ -11,6 +11,7 @@ interface FileInputProps<T extends FieldValues> {
   register: ReturnType<typeof useForm<T>>["register"];
   value: FileList | null | undefined;
   error?: ReturnType<typeof useForm<T>>["formState"]["errors"];
+  trigger: ReturnType<typeof useForm<T>>["trigger"];
 }
 
 export default function FileInput<T extends FieldValues>({
@@ -18,6 +19,7 @@ export default function FileInput<T extends FieldValues>({
   register,
   value,
   error,
+  trigger,
 }: FileInputProps<T>) {
   const isUploadedFile = value && value[0] && value[0].name;
 
@@ -31,7 +33,16 @@ export default function FileInput<T extends FieldValues>({
     >
       {isUploadedFile ? <UploadedIcon /> : <PlusGrayIcon />}
       {isUploadedFile ? value[0].name : "파일을 업로드해주세요"}
-      <input id={id} className="hidden" type="file" {...register(id)} />
+      <input
+        id={id}
+        className="hidden"
+        type="file"
+        {...register(id, {
+          onChange: () => {
+            trigger(id);
+          },
+        })}
+      />
       {error && (
         <p className="mt-8 inline-block text-sm font-normal text-red-500">
           {error.type?.message?.toString() ?? error.message?.toString()}
