@@ -27,3 +27,10 @@ export interface DashboardResponse {
   progress: number;
   todos: TodoResponse[];
 }
+
+export interface GoalResponse {
+  id: number;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+}

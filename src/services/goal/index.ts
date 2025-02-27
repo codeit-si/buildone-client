@@ -7,3 +7,11 @@ export const deleteGoal = async (goalId: number) => {
 
   return res;
 };
+
+export const updateGoal = async (goalId: number, title: string) => {
+  const res = await api.put(ENDPOINT.GOAL.UPDATE(goalId), {
+    title,
+  });
+
+  return res;
+};

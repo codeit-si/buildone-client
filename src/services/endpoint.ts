@@ -6,7 +6,6 @@ export const ENDPOINT = {
     SIGNUP: `${PREFIX}/auth/signup`,
     TOKEN_VALIDATION: `${PREFIX}/auth/token`,
   },
-  // 아래 endpoint들은 예시입니다!
   GOAL: {
     GET_ALL: "/api/goals",
     GET_BY_ID: (id: number) => `${PREFIX}/goals/${id}`,
