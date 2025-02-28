@@ -19,3 +19,8 @@ export interface SignupResponse {
   email: string;
   name: string;
 }
+
+export interface ReissueAccessTokenResponse {
+  accessToken: string;
+  refreshToken: string;
+}

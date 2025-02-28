@@ -13,8 +13,6 @@ import { LOGIN_ERROR_CODE } from "@/constants/error";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ApiError } from "@/lib/error";
 import { login } from "@/services/auth";
-import { useAuthActions } from "@/store/auth-store";
-import { useUserActions } from "@/store/user-store";
 
 const loginSchema = z.object({
   email: z
@@ -29,9 +27,6 @@ type LoginSchemaKey = keyof LoginSchema;
 
 export default function LoginForm() {
   const router = useRouter();
-
-  const { setAccessToken } = useAuthActions();
-  const { setUserInfo } = useUserActions();
 
   const {
     register,
@@ -60,12 +55,7 @@ export default function LoginForm() {
 
   const onSubmit = async (data: LoginSchema) => {
     try {
-      const response = await login(data.email, data.password);
-
-      const token = response.headers?.["access-token"];
-
-      setAccessToken(token);
-      setUserInfo(response.data.memberInformation);
+      await login(data.email, data.password);
 
       router.push("/dashboard");
     } catch (error: unknown) {
