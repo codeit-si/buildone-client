@@ -1,5 +1,6 @@
-import GoalIcon from "@/assets/goal.svg";
 import { Todo } from "@/types/todo";
+
+import GoalIcon from "@/assets/goal.svg";
 
 interface GoalProps {
   todo: Todo;
