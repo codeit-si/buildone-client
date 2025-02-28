@@ -22,7 +22,7 @@ export const ENDPOINT = {
     POST: `${PREFIX}/todos`,
   },
   DASHBOARD: {
-    GET: `${PREFIX}/dashboard`,
+    GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
   },
   FILE: {
     GET: (prefix: string, fileName: string) =>

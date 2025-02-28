@@ -8,7 +8,7 @@ import ListTodo from "@/components/@common/todo";
 import { cn } from "@/lib/cn";
 import getQueryClient from "@/lib/get-query-client";
 import { getDashboardOptions } from "@/services/dashboard/query";
-import { DashboardResponse } from "@/types/dashboard";
+import { DashboardRecentTodoListResponse } from "@/types/dashboard";
 
 export default function RecentlyTodoList() {
   const { data } = useSuspenseQuery(getDashboardOptions());
@@ -25,16 +25,19 @@ export default function RecentlyTodoList() {
   }, [todos]);
 
   const toggleStatus = (id: number) => {
-    queryClient.setQueryData<DashboardResponse>(["dashboard"], (oldData) => {
-      if (!oldData) return oldData;
-      const clonedData = {
-        ...oldData,
-        todos: oldData.todos.map((todo) =>
-          todo.id === id ? { ...todo, isDone: !todo.isDone } : todo,
-        ),
-      };
-      return clonedData;
-    });
+    queryClient.setQueryData<DashboardRecentTodoListResponse>(
+      ["dashboard", "todos", "recent"],
+      (oldData) => {
+        if (!oldData) return oldData;
+        const clonedData = {
+          ...oldData,
+          todos: oldData.todos.map((todo) =>
+            todo.id === id ? { ...todo, isDone: !todo.isDone } : todo,
+          ),
+        };
+        return clonedData;
+      },
+    );
   };
 
   return (

@@ -11,7 +11,7 @@ import {
 
 export const getDashboardOptions = () =>
   queryOptions({
-    queryKey: ["dashboard"],
+    queryKey: ["dashboard", "todos", "recent"],
     queryFn: () => getDashboard(),
   });
 
