@@ -20,7 +20,9 @@ export const PUT = async (request: NextRequest) => {
 
 export const DELETE = async (request: NextRequest) => {
   const { id } = await request.json();
+  if (!id) return NextResponse.json({ status: 400 });
   const todoIndex = todos.findIndex((todo) => todo.id === Number(id));
+  if (todoIndex === -1) return NextResponse.json({ status: 404 });
   todos.splice(todoIndex, 1);
   return NextResponse.json({ status: 200 });
 };

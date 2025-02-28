@@ -6,8 +6,8 @@ import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
-import getQueryClient from "@/lib/get-query-client";
 import { deleteTodo } from "@/services/todos";
+import { refetchTodo } from "@/services/todos/query";
 import { Todo } from "@/types/todo";
 
 import Goal from "../todo/goal";
@@ -35,18 +35,13 @@ export default function ListTodo({
   toggleStatus,
   showGoal,
 }: Props) {
-  const queryClient = getQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
 
   const handleDelete = async (selectedTodoForDelete: Todo) => {
-    if (selectedTodo) {
-      await deleteTodo(selectedTodoForDelete);
-      queryClient.invalidateQueries({
-        queryKey: ["todos"],
-        refetchActive: true,
-      });
-    }
+    if (!selectedTodoForDelete.id) return;
+    await deleteTodo(selectedTodoForDelete);
+    refetchTodo();
   };
 
   const getDropdownItems = (selectedTodoItem: Todo): DropdownItem[] => {

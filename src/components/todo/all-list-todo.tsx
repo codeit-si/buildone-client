@@ -5,14 +5,12 @@ import { useState } from "react";
 import {
   InfiniteData,
   InfiniteQueryObserverResult,
-  useInfiniteQuery,
 } from "@tanstack/react-query";
 
 import PlusIcon from "@/assets/icons-small/plus/plus_db_sm.svg";
 import ListTodo from "@/components/@common/todo";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
-import getQueryClient from "@/lib/get-query-client";
-import { getTodos, updateTodo } from "@/services/todos";
+import { toggleStatus, useAllTodosInfiniteQuery } from "@/services/todos/query";
 import { TodoListResponse } from "@/types/todo";
 
 import Filter from "../@common/filter";
@@ -20,7 +18,6 @@ import Filter from "../@common/filter";
 import TodoModal from "./todo-modal";
 
 export default function AllListTodo() {
-  const queryClient = getQueryClient();
   const [filter, setFilter] = useState<"all" | "todo" | "done">("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -31,16 +28,7 @@ export default function AllListTodo() {
     isPending,
     isError,
   }: InfiniteQueryObserverResult<InfiniteData<TodoListResponse>> =
-    useInfiniteQuery({
-      queryKey: ["todos"],
-      queryFn: ({ pageParam = 1 }) => getTodos(pageParam),
-      getNextPageParam: (lastPage) => {
-        return lastPage.paginationInformation?.hasNext
-          ? lastPage.paginationInformation.nextCursor
-          : undefined;
-      },
-      initialPageParam: 1,
-    });
+    useAllTodosInfiniteQuery();
 
   const { ref } = useInfiniteScroll({
     fetchNextPage,
@@ -50,43 +38,8 @@ export default function AllListTodo() {
   if (isPending) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
 
-  const toggleStatus = async (id: number) => {
-    const todoToUpdate = queryClient
-      .getQueryData<InfiniteData<TodoListResponse>>(["todos"])
-      ?.pages.flatMap((page) => page.todos)
-      .find((todo) => todo.id === id);
-
-    if (!todoToUpdate) return;
-
-    queryClient.setQueryData<InfiniteData<TodoListResponse>>(
-      ["todos"],
-      (oldData) => {
-        if (!oldData) return oldData;
-
-        const updatedData = {
-          ...oldData,
-          pages: oldData.pages.map((page) => ({
-            ...page,
-            todos: page.todos.map((todo) =>
-              todo.id === id ? { ...todo, isDone: !todo.isDone } : todo,
-            ),
-          })),
-        };
-
-        return updatedData;
-      },
-    );
-
-    await updateTodo({
-      ...todoToUpdate, // 해당 Todo의 모든 상태 가져옴
-      isDone: !todoToUpdate.isDone, // isDone만 반전시킴
-    });
-
-    // 쿼리 데이터를 새로 고침
-    queryClient.invalidateQueries({
-      queryKey: ["todos"],
-      refetchActive: true,
-    });
+  const handleToggleStatus = async (id: number) => {
+    await toggleStatus(id);
   };
 
   const todos = data.pages
@@ -125,7 +78,7 @@ export default function AllListTodo() {
                 key={todo.id}
                 index={index}
                 todo={todo}
-                toggleStatus={toggleStatus}
+                toggleStatus={handleToggleStatus}
                 showDropdownOnHover // 드롭다운 호버 여부
                 showGoal // 목표 보여주기 여부
               />

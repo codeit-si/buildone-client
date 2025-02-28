@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { InfiniteData } from "@tanstack/react-query";
-
-import getQueryClient from "@/lib/get-query-client";
 import { createTodo, updateTodo } from "@/services/todos";
-import { Todo, TodoListResponse } from "@/types/todo";
+import { refetchTodo, updateTodoInQuery } from "@/services/todos/query";
+import { Todo } from "@/types/todo";
 
 export default function TodoModal({
   onClose,
@@ -13,7 +11,6 @@ export default function TodoModal({
   onClose: () => void;
   selectedTodo?: Todo | null;
 }) {
-  const queryClient = getQueryClient();
   const [title, setTitle] = useState<string>("");
   const [isDone, setIsDone] = useState<boolean>(false);
 
@@ -49,38 +46,10 @@ export default function TodoModal({
       : await createTodo(newTodo);
 
     // 수정 후 쿼리 데이터 업데이트
-    queryClient.setQueryData(
-      ["todos"],
-      (oldData: InfiniteData<TodoListResponse> | undefined) => {
-        if (!oldData) return;
-
-        const updatedPages = oldData.pages.map((page) => {
-          const updatedTodos = page.todos.some(
-            (todo) => todo.id === updatedTodo.id,
-          )
-            ? page.todos.map((todo) =>
-                todo.id === updatedTodo.id ? updatedTodo : todo,
-              )
-            : [...page.todos, updatedTodo];
-
-          return {
-            ...page,
-            todos: updatedTodos,
-          };
-        });
-
-        return {
-          ...oldData,
-          pages: updatedPages,
-        };
-      },
-    );
+    updateTodoInQuery(updatedTodo);
 
     // 쿼리 무효화 후 데이터 새로 가져오기
-    queryClient.invalidateQueries({
-      queryKey: ["todos"],
-      refetchActive: true,
-    });
+    refetchTodo();
 
     onClose();
   };
