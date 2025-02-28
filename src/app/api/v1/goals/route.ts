@@ -7,7 +7,7 @@ const generateMockGoals = ({
   cursor = 0,
   size = 10,
 }: GoalListParams & { cursor?: number }): GoalListResponse => {
-  const totalGoals = 7;
+  const totalGoals = 21;
   const hasNext = cursor + size < totalGoals;
 
   const goals = Array.from(
@@ -36,7 +36,7 @@ const generateMockGoals = ({
 export const GET = async (request: NextRequest) => {
   const { searchParams } = request.nextUrl;
   const cursor = Number(searchParams.get("cursor")) || 0;
-  const size = Number(searchParams.get("size")) || 3;
+  const size = Number(searchParams.get("size")) || 10;
   await sleep(1);
 
   const data = generateMockGoals({ cursor, size });
