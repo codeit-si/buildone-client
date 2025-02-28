@@ -12,8 +12,8 @@ export interface TodoResponse {
   noteId: number | null;
   title: string;
   goalInformation: GoalSimpleResponse;
-  linkUrl?: string;
-  fileUrl?: string;
+  linkUrl: string | null;
+  fileUrl: string | null;
   isDone: boolean;
   createdAt: string;
   updatedAt: string;
@@ -50,6 +50,7 @@ export interface GoalListParams {
   cursor?: number;
   size?: number;
   sortOrder?: "newest" | "oldest";
+  moreKeys?: string[];
 }
 
 export interface GoalListResponse {
