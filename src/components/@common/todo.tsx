@@ -6,6 +6,7 @@ import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
+import { cn } from "@/lib/cn";
 import { deleteTodo } from "@/services/todos";
 import { refetchTodo } from "@/services/todos/query";
 import { Todo } from "@/types/todo";
@@ -118,7 +119,9 @@ export default function ListTodo({
             <div
               aria-label="추가 작업"
               aria-expanded={showDropdownOnHover}
-              className={`${showDropdownOnHover && "hidden focus:block group-hover:block"}`}
+              className={cn(
+                showDropdownOnHover && "hidden focus:block group-hover:block",
+              )}
             >
               <Dropdown items={getDropdownItems(todo)} />
             </div>
