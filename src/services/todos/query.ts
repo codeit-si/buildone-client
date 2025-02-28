@@ -1,4 +1,8 @@
-import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useMutation,
+  useSuspenseInfiniteQuery,
+} from "@tanstack/react-query";
 
 import getQueryClient from "@/lib/get-query-client";
 import { Todo, TodoListResponse } from "@/types/todo";
@@ -43,43 +47,46 @@ export const refetchTodo = () => {
   });
 };
 
-export const toggleStatus = async (id: number) => {
-  const todoToUpdate = queryClient
-    .getQueryData<InfiniteData<TodoListResponse>>(["todos"])
-    ?.pages.flatMap((page) => page.todos)
-    .find((todo) => todo.id === id);
+export const useToggleStatus = () => {
+  return useMutation({
+    mutationFn: async (id: number) => {
+      const todoToUpdate = queryClient
+        .getQueryData<InfiniteData<TodoListResponse>>(["todos"])
+        ?.pages.flatMap((page) => page.todos)
+        .find((todo) => todo.id === id);
 
-  if (!todoToUpdate) return;
+      if (!todoToUpdate) return;
 
-  queryClient.setQueryData<InfiniteData<TodoListResponse>>(
-    ["todos"],
-    (oldData) => {
-      if (!oldData) return oldData;
+      queryClient.setQueryData<InfiniteData<TodoListResponse>>(
+        ["todos"],
+        (oldData) => {
+          if (!oldData) return oldData;
 
-      return {
-        ...oldData,
-        pages: oldData.pages.map((page) => ({
-          ...page,
-          todos: page.todos.map((todo) =>
-            todo.id === todoToUpdate.id
-              ? { ...todo, isDone: !todo.isDone }
-              : todo,
-          ),
-        })),
-      };
+          return {
+            ...oldData,
+            pages: oldData.pages.map((page) => ({
+              ...page,
+              todos: page.todos.map((todo) =>
+                todo.id === todoToUpdate.id
+                  ? { ...todo, isDone: !todo.isDone }
+                  : todo,
+              ),
+            })),
+          };
+        },
+      );
+
+      await updateTodo({
+        ...todoToUpdate,
+        isDone: !todoToUpdate.isDone,
+      });
     },
-  );
-
-  await updateTodo({
-    ...todoToUpdate,
-    isDone: !todoToUpdate.isDone,
+    onSuccess: () => refetchTodo(),
   });
-
-  refetchTodo();
 };
 
 export const useAllTodosInfiniteQuery = () => {
-  return useInfiniteQuery({
+  return useSuspenseInfiniteQuery({
     queryKey: ["todos"],
     queryFn: ({ pageParam = 1 }) => getTodos(pageParam),
     getNextPageParam: (lastPage) => {

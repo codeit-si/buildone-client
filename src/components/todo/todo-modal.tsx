@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 
+import { useMutation } from "@tanstack/react-query";
+
 import { createTodo, updateTodo } from "@/services/todos";
 import { refetchTodo, updateTodoInQuery } from "@/services/todos/query";
 import { Todo } from "@/types/todo";
+
+import LoadingSpinner from "../@common/loading-spinner";
 
 export default function TodoModal({
   onClose,
@@ -22,13 +26,20 @@ export default function TodoModal({
     }
   }, [selectedTodo]);
 
-  const handleSubmit = async () => {
-    if (!title) {
-      return;
-    }
+  const mutation = useMutation({
+    mutationFn: (newTodo: Todo) =>
+      newTodo.id ? updateTodo(newTodo) : createTodo(newTodo),
+    onSuccess: (updatedTodo) => {
+      updateTodoInQuery(updatedTodo);
+      refetchTodo();
+      onClose();
+    },
+  });
 
+  const handleSubmit = async () => {
+    if (!title) return;
     const newTodo: Todo = {
-      id: selectedTodo ? selectedTodo.id : 0, // 수정할 때는 기존 ID를 사용
+      id: selectedTodo ? selectedTodo.id : 0,
       noteId: selectedTodo?.noteId ?? null,
       title,
       goalInformation: selectedTodo?.goalInformation ?? null,
@@ -40,58 +51,51 @@ export default function TodoModal({
         : new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-
-    const updatedTodo = selectedTodo
-      ? await updateTodo(newTodo)
-      : await createTodo(newTodo);
-
-    // 수정 후 쿼리 데이터 업데이트
-    updateTodoInQuery(updatedTodo);
-
-    // 쿼리 무효화 후 데이터 새로 가져오기
-    refetchTodo();
-
-    onClose();
+    mutation.mutate(newTodo);
   };
 
   return (
     <div className="modal fixed left-0 top-0 z-40 flex h-screen w-screen items-center justify-center bg-black bg-opacity-50">
-      <div className="modal-content h-2/3 max-h-540 w-2/3 max-w-520 rounded-10 bg-white p-15 text-slate-600">
-        <div className="mb-10 flex justify-between">
-          <h2>{selectedTodo ? "수정하기" : "추가하기"}</h2>
-          <button onClick={onClose}>X</button>
-        </div>
-        <form
-          className="flex flex-col gap-5"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
-          <div>
-            <label htmlFor="title">내용:</label>
-            <input
-              id="title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
+      {mutation.isPending ? (
+        <LoadingSpinner />
+      ) : (
+        <div className="modal-content h-2/3 max-h-540 w-2/3 max-w-520 rounded-10 bg-white p-15 text-slate-600">
+          <div className="mb-10 flex justify-between">
+            <h2>{selectedTodo ? "수정하기" : "추가하기"}</h2>
+            <button onClick={onClose}>X</button>
           </div>
-          {selectedTodo && (
+          <form
+            className="flex flex-col gap-5"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+          >
             <div>
-              <label htmlFor="isDone">완료 여부:</label>
+              <label htmlFor="title">내용:</label>
               <input
-                id="isDone"
-                type="checkbox"
-                checked={isDone}
-                onChange={() => setIsDone((prev) => !prev)}
+                id="title"
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
               />
             </div>
-          )}
-          <button type="submit">확인</button>
-        </form>
-      </div>
+            {selectedTodo && (
+              <div>
+                <label htmlFor="isDone">완료 여부:</label>
+                <input
+                  id="isDone"
+                  type="checkbox"
+                  checked={isDone}
+                  onChange={() => setIsDone((prev) => !prev)}
+                />
+              </div>
+            )}
+            <button type="submit">확인</button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

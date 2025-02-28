@@ -21,7 +21,6 @@ interface Props {
   index: number;
   showGoal?: boolean;
   showDropdownOnHover?: boolean;
-  toggleStatus?: (id: number) => void;
 }
 interface DropdownItem {
   id: string;
@@ -33,7 +32,6 @@ export default function ListTodo({
   todo,
   showDropdownOnHover,
   index,
-  toggleStatus,
   showGoal,
 }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -102,14 +100,10 @@ export default function ListTodo({
     <>
       <li
         aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
-        className="group flex flex-col gap-8 text-slate-800 hover:text-dark-blue-700"
+        className="group flex flex-col text-slate-800 hover:text-dark-blue-700"
       >
         <div className="flex items-center justify-between">
-          <TodoTitleAndCheckBox
-            index={index}
-            todo={todo}
-            toggleStatus={toggleStatus}
-          />
+          <TodoTitleAndCheckBox index={index} todo={todo} />
           <div
             role="group"
             aria-label="할일 관련 작업"
@@ -128,7 +122,7 @@ export default function ListTodo({
           </div>
         </div>
         {showGoal && (
-          <div className="ml-27">
+          <div>
             <Goal todo={todo} />
           </div>
         )}

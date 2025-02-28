@@ -2,16 +2,10 @@
 
 import { useState } from "react";
 
-import {
-  InfiniteData,
-  InfiniteQueryObserverResult,
-} from "@tanstack/react-query";
-
 import PlusIcon from "@/assets/icons-small/plus/plus_db_sm.svg";
 import ListTodo from "@/components/@common/todo";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
-import { toggleStatus, useAllTodosInfiniteQuery } from "@/services/todos/query";
-import { TodoListResponse } from "@/types/todo";
+import { useAllTodosInfiniteQuery } from "@/services/todos/query";
 
 import Filter from "../@common/filter";
 
@@ -21,26 +15,12 @@ export default function AllListTodo() {
   const [filter, setFilter] = useState<"all" | "todo" | "done">("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isPending,
-    isError,
-  }: InfiniteQueryObserverResult<InfiniteData<TodoListResponse>> =
-    useAllTodosInfiniteQuery();
+  const { data, fetchNextPage, hasNextPage } = useAllTodosInfiniteQuery();
 
   const { ref } = useInfiniteScroll({
     fetchNextPage,
     hasNextPage,
   });
-
-  if (isPending) return <div>Loading...</div>;
-  if (isError) return <div>Error...</div>;
-
-  const handleToggleStatus = async (id: number) => {
-    await toggleStatus(id);
-  };
 
   const todos = data.pages
     .flatMap((page) => page.todos)
@@ -51,9 +31,6 @@ export default function AllListTodo() {
       return true;
     })
     .sort((a, b) => {
-      const updatedDiff =
-        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
-      if (updatedDiff !== 0) return updatedDiff;
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
 
@@ -71,14 +48,13 @@ export default function AllListTodo() {
       </div>
       <div className="min-h-[2080px] w-full rounded-xl rounded-b-none border-slate-300 bg-white p-20 text-sm text-slate-800">
         <Filter filter={filter} setFilter={setFilter} />
-        <ul className="flex flex-col gap-20">
+        <ul className="flex flex-col gap-8">
           {todos.map((todo, index) =>
             todos.length !== 0 ? (
               <ListTodo
                 key={todo.id}
                 index={index}
                 todo={todo}
-                toggleStatus={handleToggleStatus}
                 showDropdownOnHover // 드롭다운 호버 여부
                 showGoal // 목표 보여주기 여부
               />
