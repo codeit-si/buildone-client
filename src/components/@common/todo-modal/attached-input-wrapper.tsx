@@ -1,15 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 
 import CheckboxOff from "@/assets/icons-small/checkbox/checkbox_off.svg";
-import CheckboxOn from "@/assets/icons-small/checkbox/checkbox_on_reverse.svg";
+import CheckboxOnReverse from "@/assets/icons-small/checkbox/checkbox_on_reverse.svg";
 import { cn } from "@/lib/cn";
 
 import Label from "../label";
 
 import FileInput from "./file-input";
-import { FormContext } from "./form-context";
-import { SelectOptionType } from "./input-type";
 import LinkInput from "./link-input";
+import { SelectOptionType } from "./todo-form-provider";
 
 interface AttachedInputWrapperProps {
   handleToggleInput: (value: SelectOptionType) => void;
@@ -18,12 +17,6 @@ interface AttachedInputWrapperProps {
 export default function AttachedInputWrapper({
   handleToggleInput,
 }: AttachedInputWrapperProps) {
-  const {
-    register,
-    watch,
-    formState: { errors },
-    trigger,
-  } = useContext(FormContext)!;
   const [selectOption, setSelectOption] = useState<SelectOptionType>("file");
 
   const handleChangeOption = (value: SelectOptionType) => {
@@ -44,7 +37,7 @@ export default function AttachedInputWrapper({
             )}
             type="button"
           >
-            {selectOption === "file" ? <CheckboxOn /> : <CheckboxOff />}
+            {selectOption === "file" ? <CheckboxOnReverse /> : <CheckboxOff />}
             파일 업로드
           </button>
         </li>
@@ -57,30 +50,13 @@ export default function AttachedInputWrapper({
             )}
             type="button"
           >
-            {selectOption === "link" ? <CheckboxOn /> : <CheckboxOff />}
+            {selectOption === "link" ? <CheckboxOnReverse /> : <CheckboxOff />}
             링크 첨부
           </button>
         </li>
       </ul>
-      {selectOption === "file" && (
-        <FileInput
-          id={selectOption}
-          register={register}
-          value={watch("file")}
-          error={errors.file}
-          trigger={trigger}
-        />
-      )}
-      {selectOption === "link" && (
-        <>
-          <LinkInput id={selectOption} register={register} />
-          {errors.link && (
-            <p className="mt-8 inline-block text-sm font-normal text-red-500">
-              {errors.link.message}
-            </p>
-          )}
-        </>
-      )}
+      {selectOption === "file" && <FileInput id={selectOption} />}
+      {selectOption === "link" && <LinkInput id={selectOption} />}
     </div>
   );
 }

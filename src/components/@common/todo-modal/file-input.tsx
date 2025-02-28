@@ -1,26 +1,25 @@
-import { FieldValues, Path, useForm } from "react-hook-form";
-
 import PlusGrayIcon from "@/assets/icons-small/plus/plus_g.svg";
 import UploadedIcon from "@/assets/icons-small/uploaded.svg";
 import { cn } from "@/lib/cn";
 
 import { BASE_CLASS } from "../input";
 
-interface FileInputProps<T extends FieldValues> {
-  id: Path<T>;
-  register: ReturnType<typeof useForm<T>>["register"];
-  value: FileList | null | undefined;
-  error?: ReturnType<typeof useForm<T>>["formState"]["errors"];
-  trigger: ReturnType<typeof useForm<T>>["trigger"];
+import { TodoModalSchema, useTodoFormContext } from "./todo-form-provider";
+
+interface FileInputProps {
+  id: keyof TodoModalSchema & "file";
 }
 
-export default function FileInput<T extends FieldValues>({
-  id,
-  register,
-  value,
-  error,
-  trigger,
-}: FileInputProps<T>) {
+export default function FileInput({ id }: FileInputProps) {
+  const formContextValue = useTodoFormContext();
+  const {
+    register,
+    watch,
+    trigger,
+    formState: { errors },
+  } = formContextValue;
+  const value = watch(id);
+  const error = errors[id];
   const isUploadedFile = value && value[0] && value[0].name;
 
   return (
@@ -45,7 +44,7 @@ export default function FileInput<T extends FieldValues>({
       />
       {error && (
         <p className="mt-8 inline-block text-sm font-normal text-red-500">
-          {error.type?.message?.toString() ?? error.message?.toString()}
+          {error.message}
         </p>
       )}
     </label>

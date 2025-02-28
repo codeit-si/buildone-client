@@ -1,7 +1,8 @@
 import { Todo } from "@/types/todo";
 
+import TodoTitleAndCheckBox from "../todo/todo-title-checkbox";
+
 import Goal from "./goal";
-import TodoTitleAndCheckBox from "./todo-title-and-checkbox";
 
 interface GoalsListComponentProps {
   recentTodos: Todo[];
