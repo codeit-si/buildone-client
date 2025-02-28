@@ -36,7 +36,7 @@ export const getInfiniteGoalsOptions = ({
   });
 };
 
-export const getInfiniteTodosByGoalIdOptions = ({
+export const getDashboardInfiniteTodosByGoalIdOptions = ({
   goalId,
   size = 5,
   done,

@@ -111,6 +111,11 @@ export default function Toolbar({
       type="text"
       value={inputLink}
       onChange={handleInputChange}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          closeLinkModal();
+        }
+      }}
       placeholder="https://"
       className="h-44 w-full truncate rounded-12 bg-slate-50 px-24 py-12 text-sm outline-none md:h-48 md:text-base"
     />
@@ -144,7 +149,9 @@ export default function Toolbar({
           />
         ))}
       </div>
-      <div style={{ marginRight: "16px" }}>
+      <div
+        style={{ marginRight: "16px", display: "flex", alignItems: "center" }}
+      >
         <ToolbarButton
           onClick={buttonConfigs[buttonConfigs.length - 1].onClick}
           IconComponent={buttonConfigs[buttonConfigs.length - 1].IconComponent}

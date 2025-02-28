@@ -9,7 +9,7 @@ import KebabIcon from "@/assets/icons-small/kebab.svg";
 
 import DropdownItem from "./dropdown-item";
 
-interface DropdownItemType {
+export interface DropdownItemType {
   label: string;
   onClick: (e: React.MouseEvent | React.KeyboardEvent) => void;
 }

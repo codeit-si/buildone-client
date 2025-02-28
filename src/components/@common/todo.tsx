@@ -4,10 +4,11 @@ import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
-import { DropdownItem, Todo } from "@/types/todo";
+import { Todo } from "@/types/todo";
 
 import Goal from "../todo/goal";
 
+import { DropdownItemType } from "./dropdown/dropdown";
 import FixedDropdown from "./dropdown/fixed-dropdown";
 
 interface Props {
@@ -25,16 +26,13 @@ export default function ListTodo({
   toggleStatus,
   showGoal,
 }: Props) {
-  const getDropdownItems = (selectedTodo: Todo): DropdownItem[] => {
-    const baseItems: DropdownItem[] = [
-      { id: "edit", label: "수정하기", onClick: () => {} },
-      { id: "delete", label: "삭제하기", onClick: () => {} },
+  const getDropdownItems = (selectedTodo: Todo): DropdownItemType[] => {
+    const baseItems: DropdownItemType[] = [
+      { label: "수정하기", onClick: () => {} },
+      { label: "삭제하기", onClick: () => {} },
     ];
     if (selectedTodo.noteId !== null) {
-      return [
-        { id: "note", label: "노트보기", onClick: () => {} },
-        ...baseItems,
-      ];
+      return [{ label: "노트보기", onClick: () => {} }, ...baseItems];
     }
     return baseItems;
   };

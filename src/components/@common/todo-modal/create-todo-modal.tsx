@@ -13,6 +13,7 @@ import { GoalResponse } from "@/types/dashboard";
 
 import Button from "../button";
 import Input from "../input";
+import Label from "../label";
 import Modal from "../portal/modal";
 
 import FileInput from "./file-input";
@@ -116,7 +117,7 @@ export default function CreateTodoModal({
             )}
           </div>
           <div className="space-y-12">
-            <h4 className="text-lg font-semibold">자료</h4>
+            <Label label="자료" />
             <ul className="flex gap-8">
               <li>
                 <button
@@ -125,6 +126,7 @@ export default function CreateTodoModal({
                     "flex h-40 items-center justify-center gap-3 rounded-8 bg-slate-100 px-12 font-medium text-slate-800",
                     selectOption === "file" && "bg-slate-900 text-white",
                   )}
+                  type="button"
                 >
                   {selectOption === "file" ? <CheckboxOn /> : <CheckboxOff />}
                   파일 업로드
@@ -137,6 +139,7 @@ export default function CreateTodoModal({
                     "flex h-40 items-center justify-center gap-3 rounded-8 bg-slate-100 px-12 font-medium text-slate-800",
                     selectOption === "link" && "bg-slate-900 text-white",
                   )}
+                  type="button"
                 >
                   {selectOption === "link" ? <CheckboxOn /> : <CheckboxOff />}
                   링크 첨부
@@ -163,8 +166,6 @@ export default function CreateTodoModal({
             )}
           </div>
           <GoalDropdown goalId={goalId} />
-        </form>
-        <Modal.Footer>
           <Button
             className="w-full"
             disabled={!isValid}
@@ -172,7 +173,7 @@ export default function CreateTodoModal({
           >
             확인
           </Button>
-        </Modal.Footer>
+        </form>
       </Modal.Content>
     </Modal.Root>
   );
