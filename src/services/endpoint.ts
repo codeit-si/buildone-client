@@ -21,6 +21,6 @@ export const ENDPOINT = {
     GET_PROGRESS: `${PREFIX}/todos/progress`,
   },
   DASHBOARD: {
-    GET: `${PREFIX}/dashboard`,
+    GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
   },
 } as const;
