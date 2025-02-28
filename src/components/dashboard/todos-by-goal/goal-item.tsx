@@ -2,7 +2,8 @@ import { Suspense, useState } from "react";
 
 import * as motion from "motion/react-client";
 
-import ArrowDown from "@/assets/arrow_down.svg";
+import ArrowDown from "@/assets/icons-small/arrow/arrow_down.svg";
+import CreateTodoModal from "@/components/@common//todo-modal/create-todo-modal";
 import PlusIcon from "@/components/@svgr/plus-icon";
 import { GoalResponse } from "@/types/dashboard";
 
@@ -18,6 +19,7 @@ interface GoalItemProps {
 export default function GoalItem({ goal }: GoalItemProps) {
   const [todoNext, setTodoNext] = useState<SetNextType>();
   const [doneNext, setDoneNext] = useState<SetNextType>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const hasNext = !!todoNext?.hasNextPage || !!doneNext?.hasNextPage;
 
@@ -34,7 +36,10 @@ export default function GoalItem({ goal }: GoalItemProps) {
     <GoalContainer className="relative min-h-384 pb-72 md:min-h-304">
       <div className="flex justify-between">
         <GoalTitle>{goal.title}</GoalTitle>
-        <button className="flex items-center gap-5 text-sm font-semibold text-dark-blue-500">
+        <button
+          className="flex items-center gap-5 text-sm font-semibold text-dark-blue-500"
+          onClick={() => setIsModalOpen(true)}
+        >
           <PlusIcon stroke="dark-blue" />
           할일 추가
         </button>
@@ -85,6 +90,13 @@ export default function GoalItem({ goal }: GoalItemProps) {
             )}
           </button>
         </motion.div>
+      )}
+      {isModalOpen && (
+        <CreateTodoModal
+          goalId={goal.id}
+          open={isModalOpen}
+          setOpen={setIsModalOpen}
+        />
       )}
     </GoalContainer>
   );
