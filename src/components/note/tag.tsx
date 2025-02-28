@@ -41,7 +41,7 @@ export default function TagInput(): JSX.Element {
   };
 
   return (
-    <div className="container-width mt-8 flex h-32 flex-nowrap overflow-hidden border-b pb-8">
+    <div className="container-width flex flex-nowrap overflow-hidden border-b py-8">
       {tags.map((tag) => (
         <div
           key={tag.id}
@@ -64,7 +64,7 @@ export default function TagInput(): JSX.Element {
         onKeyDown={handleKeyDown}
         placeholder={tags.length > 0 ? "" : "태그를 입력하세요."}
         aria-label="태그 입력"
-        className="container-width h-32 flex-grow border-b text-base font-normal text-slate-700 outline-none"
+        className="container-width h-32 flex-grow text-base font-normal text-slate-700 outline-none"
       />
     </div>
   );
