@@ -143,7 +143,8 @@ function ModalContent({
   children,
   className,
   hasCloseIcon = true,
-}: ComponentProps<"div"> & { hasCloseIcon?: boolean }) {
+  closeOnOverlayClick = true,
+}: ComponentProps<"div"> & ModalOverlayProps & { hasCloseIcon?: boolean }) {
   const { open, setOpen } = useModal();
   const [[title, footer], nonContentChild] = splitChildrenByComponents(
     [ModalTitle, ModalFooter],
@@ -183,7 +184,7 @@ function ModalContent({
           </motion.div>
         )}
       </AnimatePresence>
-      <ModalOverlay />
+      <ModalOverlay closeOnOverlayClick={closeOnOverlayClick} />
     </ModalPortal>
   );
 }

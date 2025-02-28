@@ -50,6 +50,7 @@ export interface GoalListParams {
   cursor?: number;
   size?: number;
   sortOrder?: "newest" | "oldest";
+  moreKeys?: string[];
 }
 
 export interface GoalListResponse {
