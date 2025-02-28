@@ -33,7 +33,12 @@ export default function ListTodo({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const getDropdownItems = (selectedTodo: Todo): DropdownItemType[] => {
     const baseItems: DropdownItemType[] = [
-      { label: "수정하기", onClick: () => {} },
+      {
+        label: "수정하기",
+        onClick: () => {
+          setIsEditModalOpen(true);
+        },
+      },
       { label: "삭제하기", onClick: () => {} },
     ];
     if (selectedTodo.noteId !== null) {

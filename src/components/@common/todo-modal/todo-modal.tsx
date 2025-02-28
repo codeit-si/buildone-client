@@ -77,7 +77,6 @@ export default function TodoModal({
     handleSubmit,
     watch,
     setValue,
-    trigger,
     formState: { errors, isValid },
     trigger,
   } = useForm<CreateTodoModalSchema>({
