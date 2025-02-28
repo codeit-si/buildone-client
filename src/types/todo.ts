@@ -17,7 +17,7 @@ export interface Todo {
 
 export interface TodoListResponse {
   paginationInformation: {
-    nextCursor: number | null;
+    nextCursor: number;
     totalCount: number;
     hasNext: boolean;
   };
