@@ -1,13 +1,19 @@
-export interface GoalInformation {
-  id: number;
-  title: string;
+import { GoalSimpleResponse } from "./goal";
+
+import { CommonPaginationInformationResponse } from ".";
+
+export interface TodosByGoalParams {
+  goalId: number;
+  cursor?: number;
+  size?: number;
+  done?: boolean;
 }
 
-export interface Todo {
+export interface TodoResponse {
   id: number;
   noteId: number | null;
   title: string;
-  goalInformation: GoalInformation | null;
+  goalInformation: GoalSimpleResponse | null;
   linkUrl: string | null;
   fileUrl: string | null;
   isDone: boolean;
@@ -16,8 +22,8 @@ export interface Todo {
 }
 
 export interface TodoListResponse {
-  todos: Todo[];
-  nextCursor?: string;
+  paginationInformation: CommonPaginationInformationResponse;
+  todos: TodoResponse[];
 }
 
 export interface ListTodoProps {
@@ -26,7 +32,7 @@ export interface ListTodoProps {
 
 export interface BaseTodoProps {
   index: number;
-  todo: Todo;
+  todo: TodoResponse;
 }
 
 export interface TodoEditAndDeleteAndIconsProps extends BaseTodoProps {
@@ -35,7 +41,7 @@ export interface TodoEditAndDeleteAndIconsProps extends BaseTodoProps {
 }
 
 export interface NoteProps {
-  todo: Todo;
+  todo: TodoResponse;
 }
 
 export interface DropdownItem {

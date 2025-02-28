@@ -3,8 +3,10 @@
 import {
   ComponentProps,
   createContext,
+  Dispatch,
   ElementType,
   PropsWithChildren,
+  SetStateAction,
   useContext,
   useEffect,
   useMemo,
@@ -144,12 +146,24 @@ function ModalContent({
   className,
   hasCloseIcon = true,
   closeOnOverlayClick = true,
-}: ComponentProps<"div"> & ModalOverlayProps & { hasCloseIcon?: boolean }) {
+  setHandler,
+}: ComponentProps<"div"> &
+  ModalOverlayProps & {
+    hasCloseIcon?: boolean;
+    setHandler?: Dispatch<SetStateAction<boolean>>;
+  }) {
   const { open, setOpen } = useModal();
   const [[title, footer], nonContentChild] = splitChildrenByComponents(
     [ModalTitle, ModalFooter],
     children,
   );
+
+  const handleClose = () => {
+    if (!setHandler) setOpen(false);
+    else {
+      setHandler(true);
+    }
+  };
 
   return (
     <ModalPortal>
@@ -173,7 +187,7 @@ function ModalContent({
               {hasCloseIcon && (
                 <button
                   className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"
-                  onClick={() => setOpen(false)}
+                  onClick={handleClose}
                 >
                   <IcClose />
                 </button>
@@ -184,7 +198,10 @@ function ModalContent({
           </motion.div>
         )}
       </AnimatePresence>
-      <ModalOverlay closeOnOverlayClick={closeOnOverlayClick} />
+      <ModalOverlay
+        className="z-20"
+        closeOnOverlayClick={closeOnOverlayClick}
+      />
     </ModalPortal>
   );
 }

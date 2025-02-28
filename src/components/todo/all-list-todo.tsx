@@ -11,7 +11,7 @@ import {
 
 import ListTodo from "@/components/@common/todo";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
-import { Todo } from "@/types/todo";
+import { TodoResponse } from "@/types/todo";
 
 import Filter from "../@common/filter";
 
@@ -25,10 +25,10 @@ const getRandomGoal = () =>
 
 const mockFetchTodos = async (
   pageParam = 1,
-): Promise<{ todos: Todo[]; nextPage?: number }> => {
+): Promise<{ todos: TodoResponse[]; nextPage?: number }> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const todos: Todo[] = Array.from({ length: 40 }, (_, i) => ({
+      const todos: TodoResponse[] = Array.from({ length: 40 }, (_, i) => ({
         id: pageParam * 100 + i,
         noteId: Math.random() > 0.5 ? Math.floor(Math.random() * 10) : null, // 50% 확률로 null
         title: `${pageParam}-${i + 1} ${getRandomGoal()}`,
@@ -48,8 +48,10 @@ const mockFetchTodos = async (
             ? `https://example.com/file-${pageParam}-${i}`
             : null, // 50% 확률로 null
         isDone: Math.random() > 0.5,
-        createdAt: new Date(Date.now() - Math.floor(Math.random() * 10000000)),
-        updatedAt: new Date(),
+        createdAt: new Date(
+          Date.now() - Math.floor(Math.random() * 10000000),
+        ).toISOString(),
+        updatedAt: new Date().toISOString(),
       }));
       resolve({ todos, nextPage: pageParam < 3 ? pageParam + 1 : undefined });
     }, 500);
@@ -59,7 +61,7 @@ const mockFetchTodos = async (
 interface ListTodoComponentProps {
   fetchTodos?: (
     pageParam: number,
-  ) => Promise<{ todos: Todo[]; nextPage?: number }>;
+  ) => Promise<{ todos: TodoResponse[]; nextPage?: number }>;
   maxItems?: number; // 할 일 최대 개수 제한
 }
 
@@ -77,7 +79,7 @@ export default function AllListTodo({
     isPending,
     isError,
   }: InfiniteQueryObserverResult<
-    InfiniteData<{ todos: Todo[]; nextPage?: number }>
+    InfiniteData<{ todos: TodoResponse[]; nextPage?: number }>
   > = useInfiniteQuery({
     queryKey: ["todos"],
     queryFn: ({ pageParam = 1 }) => fetchTodos(pageParam),
@@ -92,7 +94,7 @@ export default function AllListTodo({
 
   const toggleStatus = (id: number) => {
     queryClient.setQueryData<
-      InfiniteData<{ todos: Todo[]; nextPage?: number }>
+      InfiniteData<{ todos: TodoResponse[]; nextPage?: number }>
     >(["todos"], (oldData) => {
       if (!oldData) return oldData;
 
