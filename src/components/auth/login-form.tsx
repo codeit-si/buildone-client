@@ -67,7 +67,7 @@ export default function LoginForm() {
       setAccessToken(token);
       setUserInfo(response.data.memberInformation);
 
-      router.push("/");
+      router.push("/dashboard");
     } catch (error: unknown) {
       if (error instanceof ApiError) {
         if (
