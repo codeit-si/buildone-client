@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 
 import { createTodo, updateTodo } from "@/services/todos";
-import { refetchTodo, updateTodoInQuery } from "@/services/todos/query";
+import { refetchTodo } from "@/services/todos/query";
 import { Todo } from "@/types/todo";
 
 import LoadingSpinner from "../@common/loading-spinner";
@@ -29,8 +29,7 @@ export default function TodoModal({
   const mutation = useMutation({
     mutationFn: (newTodo: Todo) =>
       newTodo.id ? updateTodo(newTodo) : createTodo(newTodo),
-    onSuccess: (updatedTodo) => {
-      updateTodoInQuery(updatedTodo);
+    onSuccess: () => {
       refetchTodo();
       onClose();
     },

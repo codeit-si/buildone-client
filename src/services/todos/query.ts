@@ -5,40 +5,11 @@ import {
 } from "@tanstack/react-query";
 
 import getQueryClient from "@/lib/get-query-client";
-import { Todo, TodoListResponse } from "@/types/todo";
+import { TodoListResponse } from "@/types/todo";
 
 import { getTodos, updateTodo } from ".";
 
 const queryClient = getQueryClient();
-
-export const updateTodoInQuery = (updatedTodo: Todo) => {
-  queryClient.setQueryData<InfiniteData<TodoListResponse>>(
-    ["todos"],
-    (oldData) => {
-      if (!oldData) return oldData;
-
-      const updatedPages = oldData.pages.map((page) => {
-        const updatedTodos = page.todos.some(
-          (todo) => todo.id === updatedTodo.id,
-        )
-          ? page.todos.map((todo) =>
-              todo.id === updatedTodo.id ? updatedTodo : todo,
-            )
-          : [...page.todos, updatedTodo];
-
-        return {
-          ...page,
-          todos: updatedTodos,
-        };
-      });
-
-      return {
-        ...oldData,
-        pages: updatedPages,
-      };
-    },
-  );
-};
 
 export const refetchTodo = () => {
   queryClient.invalidateQueries({
