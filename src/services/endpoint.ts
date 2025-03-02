@@ -23,6 +23,6 @@ export const ENDPOINT = {
     DELETE: (id: number) => `${PREFIX}/todos/${id}`,
   },
   DASHBOARD: {
-    GET: `${PREFIX}/dashboard`,
+    GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
   },
 } as const;

@@ -28,9 +28,12 @@ export interface TodoListResponse {
   todos: TodoResponse[];
 }
 
-export interface DashboardResponse {
-  progress: number;
+export interface DashboardRecentTodoListResponse {
   todos: TodoResponse[];
+}
+
+export interface DashboardTodoProgressResponse {
+  progress: number;
 }
 
 export interface CommonPaginationInformationResponse {

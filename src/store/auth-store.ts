@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 interface AuthState {
-  accessToken: string;
+  accessToken: string | null;
 
   actions: {
     setAccessToken: (token: string) => void;
@@ -10,7 +10,7 @@ interface AuthState {
 }
 
 const initialState = {
-  accessToken: "",
+  accessToken: null,
 };
 
 export const useAuthStore = create<AuthState>()((set) => ({
