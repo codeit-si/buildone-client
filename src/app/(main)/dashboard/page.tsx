@@ -14,8 +14,8 @@ import {
 export default async function DashboardPage() {
   const queryClient = getQueryClient();
 
-  queryClient.prefetchQuery(getDashboardOptions());
-  queryClient.prefetchInfiniteQuery(getInfiniteGoalsOptions({}));
+  await queryClient.prefetchQuery(getDashboardOptions());
+  await queryClient.prefetchInfiniteQuery(getInfiniteGoalsOptions({}));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
