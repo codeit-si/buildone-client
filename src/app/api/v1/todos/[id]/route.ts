@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { todos } from "../route";
+import { todos } from "../generate-random-todos";
 
 export const PUT = async (request: NextRequest) => {
   const { id, title, isDone, goalInformation, linkUrl, fileUrl } =
