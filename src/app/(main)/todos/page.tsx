@@ -4,6 +4,8 @@ import AllListTodo from "@/components/todo/all-list-todo";
 import getQueryClient from "@/lib/get-query-client";
 import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
 
+export const dynamic = "force-dynamic";
+
 export default async function TodosPage() {
   const queryClient = getQueryClient();
 
