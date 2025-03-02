@@ -7,13 +7,12 @@ import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
 import { useDeleteTodo } from "@/hooks/query/useTodo";
-import { cn } from "@/lib/cn";
 import { Todo } from "@/types/todo";
 
 import Goal from "../todo/goal";
 import TodoCreateModal from "../todo/todo-modal";
 
-import Dropdown from "./dropdown";
+import FixedDropdown from "./dropdown/fixed-dropdown";
 
 interface Props {
   todo: Todo;
@@ -111,15 +110,9 @@ export default function ListTodo({
             className="flex gap-5 text-slate-700"
           >
             {iconSpread(todo)}
-            <div
-              aria-label="추가 작업"
-              aria-expanded={showDropdownOnHover}
-              className={cn(
-                showDropdownOnHover && "hidden focus:block group-hover:block",
-              )}
-            >
-              <Dropdown items={getDropdownItems(todo)} />
-            </div>
+            {showDropdownOnHover && (
+              <FixedDropdown items={getDropdownItems(todo)} />
+            )}
           </div>
         </div>
         {showGoal && (

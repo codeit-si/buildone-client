@@ -96,76 +96,82 @@ export default function CreateTodoModal({
       {/* 모달 상단의 X버튼을 누르면 팝업이 나오는데 이 부분은 따로 구현하겠습니다. (지금은은 바로 닫힙니다.) */}
       <Modal.Content className="h-full" closeOnOverlayClick={false}>
         <Modal.Title>할일 생성</Modal.Title>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-24">
-          <div>
-            <Input
-              id="create-todo-title"
-              type="text"
-              label="제목"
-              placeholder="할일 제목을 적어주세요."
-              {...register("title")}
-              className={cn(
-                "w-full md:w-full",
-                errors.title &&
-                  "border-red-500 focus-within:border-red-500 hover:border-red-500",
-              )}
-            />
-            {errors.title && (
-              <p className="mt-8 inline-block text-sm font-normal text-red-500">
-                {errors.title.message}
-              </p>
-            )}
-          </div>
-          <div className="space-y-12">
-            <Label label="자료" />
-            <ul className="flex gap-8">
-              <li>
-                <button
-                  onClick={() => handleChangeOption("file")}
-                  className={cn(
-                    "flex h-40 items-center justify-center gap-3 rounded-8 bg-slate-100 px-12 font-medium text-slate-800",
-                    selectOption === "file" && "bg-slate-900 text-white",
-                  )}
-                  type="button"
-                >
-                  {selectOption === "file" ? <CheckboxOn /> : <CheckboxOff />}
-                  파일 업로드
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => handleChangeOption("link")}
-                  className={cn(
-                    "flex h-40 items-center justify-center gap-3 rounded-8 bg-slate-100 px-12 font-medium text-slate-800",
-                    selectOption === "link" && "bg-slate-900 text-white",
-                  )}
-                  type="button"
-                >
-                  {selectOption === "link" ? <CheckboxOn /> : <CheckboxOff />}
-                  링크 첨부
-                </button>
-              </li>
-            </ul>
-            {selectOption === "file" && (
-              <FileInput
-                id={selectOption}
-                register={register}
-                value={watch("file")}
-                error={errors.file}
-              />
-            )}
-            {selectOption === "link" && (
-              <>
-                <LinkInput id={selectOption} register={register} />
-                {errors.link && (
-                  <p className="mt-8 inline-block text-sm font-normal text-red-500">
-                    {errors.link.message}
-                  </p>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex h-full flex-col justify-between"
+        >
+          <div className="flex flex-col gap-24">
+            <div>
+              <Input
+                id="create-todo-title"
+                type="text"
+                label="제목"
+                placeholder="할일 제목을 적어주세요."
+                {...register("title")}
+                className={cn(
+                  "w-full md:w-full",
+                  errors.title &&
+                    "border-red-500 focus-within:border-red-500 hover:border-red-500",
                 )}
-              </>
-            )}
+              />
+              {errors.title && (
+                <p className="mt-8 inline-block text-sm font-normal text-red-500">
+                  {errors.title.message}
+                </p>
+              )}
+            </div>
+            <div className="space-y-12">
+              <Label label="자료" />
+              <ul className="flex gap-8">
+                <li>
+                  <button
+                    onClick={() => handleChangeOption("file")}
+                    className={cn(
+                      "flex h-40 items-center justify-center gap-3 rounded-8 bg-slate-100 px-12 font-medium text-slate-800",
+                      selectOption === "file" && "bg-slate-900 text-white",
+                    )}
+                    type="button"
+                  >
+                    {selectOption === "file" ? <CheckboxOn /> : <CheckboxOff />}
+                    파일 업로드
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => handleChangeOption("link")}
+                    className={cn(
+                      "flex h-40 items-center justify-center gap-3 rounded-8 bg-slate-100 px-12 font-medium text-slate-800",
+                      selectOption === "link" && "bg-slate-900 text-white",
+                    )}
+                    type="button"
+                  >
+                    {selectOption === "link" ? <CheckboxOn /> : <CheckboxOff />}
+                    링크 첨부
+                  </button>
+                </li>
+              </ul>
+              {selectOption === "file" && (
+                <FileInput
+                  id={selectOption}
+                  register={register}
+                  value={watch("file")}
+                  error={errors.file}
+                />
+              )}
+              {selectOption === "link" && (
+                <>
+                  <LinkInput id={selectOption} register={register} />
+                  {errors.link && (
+                    <p className="mt-8 inline-block text-sm font-normal text-red-500">
+                      {errors.link.message}
+                    </p>
+                  )}
+                </>
+              )}
+            </div>
+            <GoalDropdown goalId={goalId} />
           </div>
-          <GoalDropdown goalId={goalId} />
+
           <Button
             className="w-full"
             disabled={!isValid}
