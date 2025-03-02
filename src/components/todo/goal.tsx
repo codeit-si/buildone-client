@@ -11,7 +11,10 @@ export default function Goal({
   const { goalInformation, isDone } = currentTodo;
   if (!goalInformation) return null;
   return (
-    <div key={goalInformation.id} className="flex items-center gap-10">
+    <div
+      key={goalInformation.id}
+      className="ml-27 mt-8 flex items-center gap-10"
+    >
       <div className="relative">
         <GoalIcon />
       </div>

@@ -62,7 +62,7 @@ export interface GoalListResponse {
 }
 
 export interface TodosByGoalParams {
-  goalId: number;
+  goalId?: number;
   cursor?: number;
   size?: number;
   done?: boolean;

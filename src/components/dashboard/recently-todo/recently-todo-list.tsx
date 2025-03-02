@@ -6,15 +6,12 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 import ListTodo from "@/components/@common/todo";
 import { cn } from "@/lib/cn";
-import getQueryClient from "@/lib/get-query-client";
 import { getDashboardOptions } from "@/services/dashboard/query";
-import { DashboardRecentTodoListResponse } from "@/types/dashboard";
 
 export default function RecentlyTodoList() {
   const { data } = useSuspenseQuery(getDashboardOptions());
   const [isOverflowing, setIsOverflowing] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
-  const queryClient = getQueryClient();
 
   const { todos } = data;
 
@@ -23,23 +20,7 @@ export default function RecentlyTodoList() {
       setIsOverflowing(listRef.current.scrollHeight > 170);
     }
   }, [todos]);
-
-  const toggleStatus = (id: number) => {
-    queryClient.setQueryData<DashboardRecentTodoListResponse>(
-      ["dashboard", "todos", "recent"],
-      (oldData) => {
-        if (!oldData) return oldData;
-        const clonedData = {
-          ...oldData,
-          todos: oldData.todos.map((todo) =>
-            todo.id === id ? { ...todo, isDone: !todo.isDone } : todo,
-          ),
-        };
-        return clonedData;
-      },
-    );
-  };
-
+  
   return (
     <div
       ref={listRef}
@@ -53,7 +34,6 @@ export default function RecentlyTodoList() {
               key={todo.id}
               todo={todo}
               index={index}
-              toggleStatus={toggleStatus}
               showGoal
               showDropdownOnHover
             />

@@ -16,6 +16,10 @@ export interface Todo {
 }
 
 export interface TodoListResponse {
+  paginationInformation: {
+    nextCursor: number | null;
+    totalCount: number;
+    hasNext: boolean;
+  };
   todos: Todo[];
-  nextCursor?: string;
 }
