@@ -1,8 +1,8 @@
-import Image from "next/image";
+// import Image from "next/image";
 
 import Profile from "@/assets/icons-big/profile.svg";
 import Button from "@/components/@common/button";
-import { UserInformations } from "@/types/tab-side-menu";
+import { useUserStore } from "@/store/user-store";
 
 import CustomButton from "./custom-button";
 
@@ -12,39 +12,33 @@ const logoutButtonStyle =
 const profileInfoStyle =
   "flex w-full items-end justify-between text-sm md:flex-col md:items-baseline lg:flex-col lg:items-baseline";
 
-export default function UserProfile({
-  isTabOpen,
-  profile,
-}: {
-  isTabOpen: boolean;
-  profile: UserInformations | undefined;
-}) {
+export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
+  const { name, email } = useUserStore();
   if (isTabOpen) return null;
-
   return (
     <>
       <div className="flex w-full gap-12">
         <div className="min-w-40 md:min-w-64 lg:min-w-64">
-          {profile ? (
+          {/* {profile ? (
             <Image
               className="h-full w-full"
               src={profile.profileImage}
-              alt={`${profile.name}의 프로필 이미지`}
+              alt={`${name||"체다치즈"}의 프로필 이미지`}
               width={64}
               height={64}
               layout="responsive"
             />
-          ) : (
-            <Profile />
-          )}
+          ) : ( */}
+          <Profile />
+          {/* )} */}
         </div>
         <div className={profileInfoStyle}>
           <div>
             <p className="text-sm font-semibold text-slate-800">
-              {profile ? profile.name : "체다치즈"}
+              {name || "체다치즈"}
             </p>
             <p className="text-sm font-medium text-slate-600">
-              {profile ? profile.email : "chedacheese@slid.kr"}
+              {email || "chedacheese@slid.kr"}
             </p>
           </div>
           <Button className={logoutButtonStyle}>로그아웃</Button>
