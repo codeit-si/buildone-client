@@ -13,14 +13,16 @@ export const ENDPOINT = {
     CREATE: `${PREFIX}/goals`,
     UPDATE: (id: number) => `${PREFIX}/goals/${id}`,
     DELETE: (id: number) => `${PREFIX}/goals/${id}`,
+    GET_PROGRESS: (id: number) => `${PREFIX}/goals/progress/${id}`,
   },
   TODO: {
     GET_ALL: `${PREFIX}/todos`,
     GET_BY_ID: (id: number) => `${PREFIX}/todos/${id}`,
+    CREATE: `${PREFIX}/todos`,
     UPDATE: (id: number) => `${PREFIX}/todos/${id}`,
-    GET_PROGRESS: `${PREFIX}/todos/progress`,
+    DELETE: (id: number) => `${PREFIX}/todos/${id}`,
   },
   DASHBOARD: {
-    GET: `${PREFIX}/dashboard`,
+    GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
   },
 } as const;

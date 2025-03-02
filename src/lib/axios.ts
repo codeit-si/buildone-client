@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 
+import { storeAccessTokenInCookie } from "@/services/auth/route-handler";
 import {
   getConfigWithAuthorizationHeaders,
   reissueAccessToken,
@@ -20,6 +21,13 @@ api.interceptors.request.use(
 
     if (accessToken) {
       return getConfigWithAuthorizationHeaders(config, accessToken);
+    }
+
+    const newAccessToken = await reissueAccessToken();
+
+    if (newAccessToken) {
+      await storeAccessTokenInCookie(newAccessToken);
+      return getConfigWithAuthorizationHeaders(config, newAccessToken);
     }
 
     return config;
