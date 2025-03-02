@@ -1,7 +1,7 @@
 import CheckBoxOffIcon from "@/assets/icons-small/checkbox/checkbox_off.svg";
 import CheckBoxOnIcon from "@/assets/icons-small/checkbox/checkbox_on.svg";
+import { useUpdateTodo } from "@/hooks/query/useTodo";
 import { cn } from "@/lib/cn";
-import { useToggleStatus } from "@/services/todos/query";
 import { Todo } from "@/types/todo";
 
 interface TodoTitleAndCheckBoxProps {
@@ -14,7 +14,8 @@ export default function TodoTitleAndCheckBox({
   todo,
 }: TodoTitleAndCheckBoxProps) {
   const { isDone } = todo;
-  const { mutate: toggleStatus, isPending } = useToggleStatus();
+  const { mutate: toggleStatus, isPending } = useUpdateTodo();
+
   return (
     <div
       className={cn(
@@ -32,7 +33,7 @@ export default function TodoTitleAndCheckBox({
           id={`todo-check-${index}`}
           checked={isDone}
           aria-checked={isDone}
-          onChange={() => toggleStatus && toggleStatus(todo.id)}
+          onChange={() => toggleStatus({ ...todo, isDone: !todo.isDone })}
           className="peer absolute hidden"
         />
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}

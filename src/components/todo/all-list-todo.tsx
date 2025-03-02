@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+
 import PlusIcon from "@/assets/icons-small/plus/plus_db_sm.svg";
 import ListTodo from "@/components/@common/todo";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
-import { useAllTodosInfiniteQuery } from "@/services/todos/query";
+import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
 
 import Filter from "../@common/filter";
 
@@ -15,15 +17,16 @@ export default function AllListTodo() {
   const [filter, setFilter] = useState<"all" | "todo" | "done">("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data, fetchNextPage, hasNextPage } = useAllTodosInfiniteQuery();
+  const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery(
+    getInfiniteTodosByGoalIdOptions({ size: 40 }),
+  );
 
   const { ref } = useInfiniteScroll({
     fetchNextPage,
     hasNextPage,
   });
 
-  const todos = data.pages
-    .flatMap((page) => page.todos)
+  const todos = data.todos
     .filter((todo) => {
       if (filter === "all") return true;
       if (filter === "done") return todo.isDone === true;

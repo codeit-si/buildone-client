@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useMutation } from "@tanstack/react-query";
-
-import { createTodo, updateTodo } from "@/services/todos";
-import { refetchTodo } from "@/services/todos/query";
+import { useUpdateTodo } from "@/hooks/query/useTodo";
 import { Todo } from "@/types/todo";
 
 import LoadingSpinner from "../@common/loading-spinner";
@@ -26,14 +23,7 @@ export default function TodoModal({
     }
   }, [selectedTodo]);
 
-  const mutation = useMutation({
-    mutationFn: (newTodo: Todo) =>
-      newTodo.id ? updateTodo(newTodo) : createTodo(newTodo),
-    onSuccess: () => {
-      refetchTodo();
-      onClose();
-    },
-  });
+  const { mutate, isPending } = useUpdateTodo();
 
   const handleSubmit = async () => {
     if (!title) return;
@@ -50,12 +40,15 @@ export default function TodoModal({
         : new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    mutation.mutate(newTodo);
+
+    mutate(newTodo);
+
+    onClose();
   };
 
   return (
     <div className="modal fixed left-0 top-0 z-40 flex h-screen w-screen items-center justify-center bg-black bg-opacity-50">
-      {mutation.isPending ? (
+      {isPending ? (
         <LoadingSpinner />
       ) : (
         <div className="modal-content h-2/3 max-h-540 w-2/3 max-w-520 rounded-10 bg-white p-15 text-slate-600">

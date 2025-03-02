@@ -33,10 +33,8 @@ export const updateTodo = async (updatedTodo: Todo) => {
   return data;
 };
 
-export const deleteTodo = async (deletedTodo: Todo) => {
-  const url = ENDPOINT.TODO.DELETE(deletedTodo.id);
-  const { data } = await api.delete<Todo>(url, {
-    data: { id: deletedTodo.id },
-  });
+export const deleteTodo = async (id: number) => {
+  const { data } = await api.delete(ENDPOINT.TODO.DELETE(id));
+
   return data;
 };

@@ -6,9 +6,8 @@ import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
+import { useDeleteTodo } from "@/hooks/query/useTodo";
 import { cn } from "@/lib/cn";
-import { deleteTodo } from "@/services/todos";
-import { refetchTodo } from "@/services/todos/query";
 import { Todo } from "@/types/todo";
 
 import Goal from "../todo/goal";
@@ -37,10 +36,12 @@ export default function ListTodo({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
 
+  const { mutate } = useDeleteTodo();
+
   const handleDelete = async (selectedTodoForDelete: Todo) => {
     if (!selectedTodoForDelete.id) return;
-    await deleteTodo(selectedTodoForDelete);
-    refetchTodo();
+
+    mutate(todo.id);
   };
 
   const getDropdownItems = (selectedTodoItem: Todo): DropdownItem[] => {
