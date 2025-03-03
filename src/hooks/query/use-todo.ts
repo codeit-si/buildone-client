@@ -1,4 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 import {
   createTodo,
@@ -7,15 +11,22 @@ import {
   updateTodo,
 } from "@/services/todo";
 
+const invalidateTodo = (queryClient: QueryClient) => {
+  queryClient.invalidateQueries({
+    queryKey: ["todos"],
+  });
+  queryClient.invalidateQueries({
+    queryKey: ["dashboard", "todos", "recent"],
+  });
+};
+
 export const useCreateTodo = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (newTodo: TodoParams) => createTodo(newTodo),
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["todos"],
-      });
+      invalidateTodo(queryClient);
     },
   });
 };
@@ -32,9 +43,7 @@ export const useUpdateTodo = () => {
       newTodo: TodoParams;
     }) => updateTodo(todoId, newTodo),
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["todos"],
-      });
+      invalidateTodo(queryClient);
     },
   });
 };
@@ -45,9 +54,7 @@ export const useDeleteTodo = () => {
   return useMutation({
     mutationFn: (todoId: number) => deleteTodo(todoId),
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["todos"],
-      });
+      invalidateTodo(queryClient);
     },
   });
 };
