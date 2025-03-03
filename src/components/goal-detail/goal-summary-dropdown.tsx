@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { useDeleteGoal } from "@/hooks/queries/use-goal";
+import { useDeleteGoal } from "@/hooks/query/use-goal";
 
 import Dropdown from "../@common/dropdown/dropdown";
 import Popup from "../@common/portal/popup";

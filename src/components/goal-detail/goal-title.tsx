@@ -2,7 +2,7 @@
 
 import { RefObject } from "react";
 
-import { useUpdateGoal } from "@/hooks/queries/use-goal";
+import { useUpdateGoal } from "@/hooks/query/use-goal";
 
 interface GoalTitleProps {
   goalId: string;

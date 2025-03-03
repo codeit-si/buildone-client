@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useUpdateTodo } from "@/hooks/query/useTodo";
+import { useUpdateTodo } from "@/hooks/query/use-todo";
 import { Todo } from "@/types/todo";
 
 import LoadingSpinner from "../@common/loading-spinner";
