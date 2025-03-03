@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { cva } from "class-variance-authority";
 
 import GoalsMenu from "@/components/tab-side-menu/goals-menu";
-import { createGoal, getGoalList } from "@/services/goal";
+import { useCreateGoal } from "@/hooks/query/use-goal";
+import { getGoalList } from "@/services/goal";
 import { GoalResponse } from "@/types/goal";
 
 import AddGoalSection from "./add-goal-section";
@@ -63,6 +64,7 @@ export default function TabSideMenu() {
   const [isAdding, setIsAdding] = useState(false);
   const [fetchedGoals, setFetchedGoals] = useState<GoalResponse[]>([]);
   const [newGoal, setNewGoal] = useState("");
+  const { mutate, isPending } = useCreateGoal();
 
   const fetchGoals = async (pageParam: number) => {
     const { goals } = await getGoalList(pageParam);
@@ -82,17 +84,14 @@ export default function TabSideMenu() {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    createGoal(newGoalData);
-    setFetchedGoals([...fetchedGoals, newGoalData]);
-    setNewGoal("");
-  };
-
-  // 목표 텍스트 변경 함수
-  const handleInputChange = (id: number, newValue: string) => {
-    setFetchedGoals((prevGoals) =>
-      prevGoals.map((goal) =>
-        goal.id === id ? { ...goal, text: newValue } : goal,
-      ),
+    mutate(
+      { title: newGoal },
+      {
+        onSuccess: () => {
+          setFetchedGoals((prevGoals) => [...prevGoals, newGoalData]);
+          setNewGoal("");
+        },
+      },
     );
   };
 
@@ -141,8 +140,8 @@ export default function TabSideMenu() {
           <div className="px-32 md:px-24">
             <GoalsList
               goals={fetchedGoals}
-              handleInputChange={handleInputChange}
               setIsAdding={setIsAdding}
+              isPending={isPending}
             />
             <AddGoalSection
               goals={fetchedGoals}

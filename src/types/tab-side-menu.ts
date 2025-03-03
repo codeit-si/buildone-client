@@ -30,8 +30,8 @@ export interface IsAddingProps {
 
 export interface GoalsListProps {
   goals: GoalResponse[];
-  handleInputChange: (id: number, newValue: string) => void;
   setIsAdding: (value: boolean) => void;
+  isPending: boolean;
 }
 
 export interface AddGoalSectionProps {

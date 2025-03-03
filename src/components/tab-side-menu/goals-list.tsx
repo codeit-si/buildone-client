@@ -4,10 +4,16 @@ import Link from "next/link";
 
 import { GoalsListProps } from "@/types/tab-side-menu";
 
+import LoadingSpinner from "../@common/loading-spinner";
+
 const goalsListStyle =
   "max-h-[calc(100vh-450px)] list-disc list-inside space-y-10 overflow-y-auto text-slate-700";
 
-export default function GoalsList({ goals, setIsAdding }: GoalsListProps) {
+export default function GoalsList({
+  goals,
+  setIsAdding,
+  isPending,
+}: GoalsListProps) {
   const listRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
@@ -34,6 +40,7 @@ export default function GoalsList({ goals, setIsAdding }: GoalsListProps) {
           <Link href={`goals/${goal.id}`}>{goal.title}</Link>
         </li>
       ))}
+      {isPending && <LoadingSpinner />}
     </ul>
   );
 }
