@@ -1,4 +1,12 @@
-import { createContext, PropsWithChildren, useContext, useMemo } from "react";
+import {
+  createContext,
+  Dispatch,
+  PropsWithChildren,
+  SetStateAction,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import {
   FieldErrors,
   useForm,
@@ -12,7 +20,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { TodoResponse } from "@/types/dashboard";
+import { TodoResponse } from "@/types/todo";
 
 export type SelectOptionType = "file" | "link";
 
@@ -57,6 +65,8 @@ interface TodoModalFormContextProps {
   trigger: UseFormTrigger<TodoModalSchema>;
   handleSubmit: UseFormHandleSubmit<TodoModalSchema>;
   setValue: UseFormSetValue<TodoModalSchema>;
+  selectedGoalId?: number;
+  setSelectedGoalId: Dispatch<SetStateAction<number | undefined>>;
 }
 
 const TodoFormContext = createContext<TodoModalFormContextProps | null>(null);
@@ -71,11 +81,13 @@ export const useTodoFormContext = () => {
 
 interface TodoModalProviderProps {
   todo?: TodoResponse;
+  goalId?: number;
 }
 
 export default function TodoFormProvider({
   children,
   todo,
+  goalId,
 }: PropsWithChildren<TodoModalProviderProps>) {
   const { register, handleSubmit, watch, setValue, formState, trigger } =
     useForm<TodoModalSchema>({
@@ -86,6 +98,9 @@ export default function TodoFormProvider({
         isDone: !!todo?.isDone,
       },
     });
+  const [selectedGoalId, setSelectedGoalId] = useState<number | undefined>(
+    goalId,
+  );
 
   const formContextValue = useMemo(
     () => ({
@@ -95,8 +110,18 @@ export default function TodoFormProvider({
       watch,
       formState,
       trigger,
+      selectedGoalId,
+      setSelectedGoalId,
     }),
-    [register, watch, formState, trigger, handleSubmit, setValue],
+    [
+      register,
+      watch,
+      formState,
+      trigger,
+      handleSubmit,
+      setValue,
+      selectedGoalId,
+    ],
   );
 
   return (

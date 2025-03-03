@@ -33,7 +33,17 @@ export default function TodoTitleAndCheckBox({
           id={`todo-check-${index}`}
           checked={isDone}
           aria-checked={isDone}
-          onChange={() => toggleStatus({ ...todo, isDone: !todo.isDone })}
+          onChange={() =>
+            toggleStatus({
+              todoId: todo.id,
+              newTodo: {
+                fileUrl: todo.fileUrl,
+                isDone: !todo.isDone,
+                title: todo.title,
+                linkUrl: todo.linkUrl,
+              },
+            })
+          }
           className="peer absolute hidden"
         />
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}

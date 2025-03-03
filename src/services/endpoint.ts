@@ -19,8 +19,8 @@ export const ENDPOINT = {
     GET_BY_ID: (id: number) => `${PREFIX}/todos/${id}`,
     CREATE: `${PREFIX}/todos`,
     UPDATE: (id: number) => `${PREFIX}/todos/${id}`,
-    GET_PROGRESS: `${PREFIX}/todos/progress`,
     POST: `${PREFIX}/todos`,
+    DELETE: (id: number) => `${PREFIX}/todos/${id}`,
   },
   DASHBOARD: {
     GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
@@ -28,5 +28,8 @@ export const ENDPOINT = {
   FILE: {
     GET: (prefix: string, fileName: string) =>
       `${PREFIX}/file/presigned-url/${prefix}/${fileName}`,
+    DASHBOARD: {
+      GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
+    },
   },
 } as const;

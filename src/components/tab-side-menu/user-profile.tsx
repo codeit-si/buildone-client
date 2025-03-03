@@ -1,8 +1,12 @@
 // import Image from "next/image";
 
+import { useState } from "react";
+
 import Profile from "@/assets/icons-big/profile.svg";
 import Button from "@/components/@common/button";
 import { useUserStore } from "@/store/user-store";
+
+import TodoModal from "../@common/todo-modal/todo-modal";
 
 import CustomButton from "./custom-button";
 
@@ -14,6 +18,8 @@ const profileInfoStyle =
 
 export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
   const { name, email } = useUserStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   if (isTabOpen) return null;
   return (
     <>
@@ -44,9 +50,16 @@ export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
           <Button className={logoutButtonStyle}>로그아웃</Button>
         </div>
       </div>
-      <CustomButton isMobile={false} color="white">
+      <CustomButton
+        isMobile={false}
+        color="white"
+        onClick={() => setIsModalOpen(true)}
+      >
         새 할 일
       </CustomButton>
+      {isModalOpen && (
+        <TodoModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+      )}
     </>
   );
 }

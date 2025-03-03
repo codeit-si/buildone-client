@@ -33,7 +33,5 @@ export const putFileToPresignedUrl = async ({
       "Content-Type": file.type,
     },
   });
-  // eslint-disable-next-line no-console
-  console.log(data);
   return data;
 };

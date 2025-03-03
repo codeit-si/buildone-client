@@ -25,8 +25,8 @@ export default function AllListTodo() {
     hasNextPage,
   });
 
-  const todos = data.todos
-    .filter((todo) => {
+  const todos = data?.todos
+    ?.filter((todo) => {
       if (filter === "all") return true;
       if (filter === "done") return todo.isDone === true;
       if (filter === "todo") return todo.isDone === false;
@@ -39,7 +39,7 @@ export default function AllListTodo() {
   return (
     <>
       <div className="mb-16 mt-24 flex items-center justify-between">
-        <h2 className="text-18 font-semibold text-slate-600">{`모든 할 일 (${todos.length})`}</h2>
+        <h2 className="text-18 font-semibold text-slate-600">{`모든 할 일 (${todos?.length})`}</h2>
         <button
           onClick={() => setIsModalOpen(true)}
           className="flex items-center gap-3 font-semibold text-dark-blue-600"
@@ -51,8 +51,8 @@ export default function AllListTodo() {
       <div className="min-h-[2080px] w-full rounded-xl rounded-b-none border-slate-300 bg-white p-20 text-sm text-slate-800">
         <Filter filter={filter} setFilter={setFilter} />
         <ul className="flex flex-col gap-8">
-          {todos.map((todo, index) =>
-            todos.length !== 0 ? (
+          {todos?.length !== 0 &&
+            todos?.map((todo, index) => (
               <ListTodo
                 key={todo.id}
                 index={index}
@@ -60,10 +60,8 @@ export default function AllListTodo() {
                 showDropdownOnHover // 드롭다운 호버 여부
                 showGoal // 목표 보여주기 여부
               />
-            ) : (
-              <p key="no-todos">할 일이 없습니다</p>
-            ),
-          )}
+            ))}
+          {todos?.length === 0 && <p key="no-todos">할 일이 없습니다</p>}
         </ul>
         {/* 페이지가 남아 있을 경우에만 추가 데이터 요청 */}
         {hasNextPage && <div ref={ref} className="h-1" />}

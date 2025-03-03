@@ -2,13 +2,14 @@ import React, { Dispatch, SetStateAction } from "react";
 
 import CheckboxOff from "@/assets/icons-small/checkbox/checkbox_off.svg";
 import CheckboxOn from "@/assets/icons-small/checkbox/checkbox_on.svg";
+import { useCreateTodo, useUpdateTodo } from "@/hooks/query/use-todo";
 import { cn } from "@/lib/cn";
 import {
   getPresignedUrl,
   putFileToPresignedUrl,
 } from "@/services/file/upload-file-to-presigned-url";
-import { postTodo, putTodo } from "@/services/todos";
-import { GoalResponse, TodoResponse } from "@/types/dashboard";
+import { GoalResponse } from "@/types/dashboard";
+import { TodoResponse } from "@/types/todo";
 
 import Button from "../button";
 import Input from "../input";
@@ -39,7 +40,10 @@ export default function TodoModalForm({
     watch,
     formState: { errors, isValid },
     setValue,
+    selectedGoalId,
   } = formContextValue;
+  const { mutate: createMutate } = useCreateTodo();
+  const { mutate: updateMutate } = useUpdateTodo();
 
   const isDone = watch("isDone");
 
@@ -48,7 +52,7 @@ export default function TodoModalForm({
   };
 
   const onSubmit = async (data: TodoModalSchema) => {
-    let fileUrl;
+    let fileUrl = todo?.fileUrl;
     if (data.file && data.file[0]) {
       const file = data.file[0];
       const fileName = file.name;
@@ -56,28 +60,29 @@ export default function TodoModalForm({
         prefix: "todo",
         fileName,
       });
-      fileUrl = await putFileToPresignedUrl({ presignedUrl, file });
+      await putFileToPresignedUrl({ presignedUrl, file });
+      [fileUrl] = presignedUrl.split("?");
     }
     const { title, link, isDone: done } = data;
-    if (todo && done) {
-      const newTodo = putTodo(todo?.id, {
-        goalId,
-        title,
-        fileUrl,
-        linkUrl: link,
-        isDone: done,
+    if (todo && done !== undefined) {
+      updateMutate({
+        todoId: todo.id,
+        newTodo: {
+          goalId: selectedGoalId,
+          title,
+          fileUrl,
+          linkUrl: link,
+          isDone: done,
+        },
       });
-      // eslint-disable-next-line no-console
-      console.log(newTodo);
     } else {
-      const newTodo = postTodo({
-        goalId,
+      createMutate({
+        goalId: selectedGoalId,
         title,
         fileUrl,
         linkUrl: link,
+        isDone: false,
       });
-      // eslint-disable-next-line no-console
-      console.log(newTodo);
     }
     onOpenChange(false);
   };
