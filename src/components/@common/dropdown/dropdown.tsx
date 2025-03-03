@@ -9,7 +9,7 @@ import KebabIcon from "@/assets/icons-small/kebab.svg";
 
 import DropdownItem from "./dropdown-item";
 
-interface DropdownItemType {
+export interface DropdownItemType {
   label: string;
   onClick: (e: React.MouseEvent | React.KeyboardEvent) => void;
 }
@@ -42,6 +42,7 @@ export default function Dropdown({ items }: DropdownProps) {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
+        isOpen &&
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
@@ -51,7 +52,7 @@ export default function Dropdown({ items }: DropdownProps) {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [isOpen]);
 
   return (
     <div

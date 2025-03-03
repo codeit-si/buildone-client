@@ -6,7 +6,6 @@ import { cva } from "class-variance-authority";
 
 import GoalsMenu from "@/components/tab-side-menu/goals-menu";
 import { TabItem } from "@/components/tab-side-menu/tab-input";
-import { UserInformations } from "@/types/tab-side-menu";
 
 import AddGoalSection from "./add-goal-section";
 import GoalsList from "./goals-list";
@@ -63,7 +62,6 @@ export default function TabSideMenu() {
   const [isAdding, setIsAdding] = useState(false);
   const [goals, setGoals] = useState<TabItem[]>([]);
   const [newGoal, setNewGoal] = useState("");
-  const [profile, setProfile] = useState<UserInformations | undefined>();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,7 +84,6 @@ export default function TabSideMenu() {
   };
 
   useEffect(() => {
-    setProfile((prev) => prev); // ESLint 규정 때문에 넣음
     const handleResize = () => {
       if (window.innerWidth >= 1200) {
         setIsTabMinimized(false);
@@ -121,7 +118,7 @@ export default function TabSideMenu() {
             setIsTabMinimized={setIsTabMinimized}
           />
         </div>
-        <UserProfile isTabOpen={isTabMinimized} profile={profile} />
+        <UserProfile isTabOpen={isTabMinimized} />
       </div>
       {/* 탭 열였을때 나타나는 bottom menus */}
       {!isTabMinimized && (

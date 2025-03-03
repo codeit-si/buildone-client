@@ -10,6 +10,7 @@ import LinkAttached from "@/components/note/link-attached";
 import LoadNoteToastManager, {
   NoteData,
 } from "@/components/note/load-note-toast-manager";
+import TagInput from "@/components/note/tag";
 import TempSaveManager, {
   TempSaveManagerRef,
 } from "@/components/note/temp-save-manager";
@@ -121,6 +122,9 @@ export default function NotesPage() {
               />
               <Counting type="title" count={title.length} total={30} />
             </div>
+
+            {/* 태그 입력 영역 */}
+            <TagInput />
 
             {/* 에디터 영역 */}
             <div className="mt-12">

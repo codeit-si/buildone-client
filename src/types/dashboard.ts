@@ -12,8 +12,8 @@ export interface TodoResponse {
   noteId: number | null;
   title: string;
   goalInformation: GoalSimpleResponse;
-  linkUrl?: string;
-  fileUrl?: string;
+  linkUrl: string | null;
+  fileUrl: string | null;
   isDone: boolean;
   createdAt: string;
   updatedAt: string;
@@ -28,9 +28,12 @@ export interface TodoListResponse {
   todos: TodoResponse[];
 }
 
-export interface DashboardResponse {
-  progress: number;
+export interface DashboardRecentTodoListResponse {
   todos: TodoResponse[];
+}
+
+export interface DashboardTodoProgressResponse {
+  progress: number;
 }
 
 export interface CommonPaginationInformationResponse {
@@ -50,6 +53,7 @@ export interface GoalListParams {
   cursor?: number;
   size?: number;
   sortOrder?: "newest" | "oldest";
+  moreKeys?: string[];
 }
 
 export interface GoalListResponse {
@@ -58,7 +62,7 @@ export interface GoalListResponse {
 }
 
 export interface TodosByGoalParams {
-  goalId: number;
+  goalId?: number;
   cursor?: number;
   size?: number;
   done?: boolean;
