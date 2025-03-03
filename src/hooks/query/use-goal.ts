@@ -43,7 +43,7 @@ export const useUpdateGoal = () => {
 export const useCreateGoal = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<GoalResponse, Error, GoalResponse>({
+  return useMutation<GoalResponse, Error, { title: string }>({
     mutationFn: createGoal,
     onSuccess: () => {
       queryClient.invalidateQueries({

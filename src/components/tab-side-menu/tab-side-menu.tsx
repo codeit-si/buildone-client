@@ -8,7 +8,6 @@ import { cva } from "class-variance-authority";
 import GoalsMenu from "@/components/tab-side-menu/goals-menu";
 import { useCreateGoal } from "@/hooks/query/use-goal";
 import { getInfiniteGoalsOptions } from "@/services/dashboard/query";
-import { GoalResponse } from "@/types/goal";
 
 import AddGoalSection from "./add-goal-section";
 import GoalsList from "./goals-list";
@@ -65,31 +64,20 @@ export default function TabSideMenu() {
   const [isAdding, setIsAdding] = useState(false);
   const [newGoal, setNewGoal] = useState("");
   const { mutate } = useCreateGoal();
-  const { data } = useSuspenseInfiniteQuery(getInfiniteGoalsOptions({}));
+  const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery(
+    getInfiniteGoalsOptions({ size: 20 }),
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newGoal.trim() === "") return;
-    const newGoalData: GoalResponse = {
-      id: 0,
-      title: newGoal,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-    mutate(newGoalData, {
-      onSuccess: () => {
-        setNewGoal("");
-      },
-    });
+    mutate({ title: newGoal }, { onSuccess: () => setNewGoal("") });
   };
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1200) {
-        setIsTabMinimized(false);
-      } else {
-        setIsTabMinimized(true);
-      }
+      if (window.innerWidth >= 1200) setIsTabMinimized(false);
+      else setIsTabMinimized(true);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -126,7 +114,12 @@ export default function TabSideMenu() {
           <TodosMenu />
           <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />
           <div className="px-32 md:px-24">
-            <GoalsList goals={data?.pages} setIsAdding={setIsAdding} />
+            <GoalsList
+              goals={data?.pages}
+              hasNextPage={hasNextPage}
+              setIsAdding={setIsAdding}
+              fetchNextPage={fetchNextPage}
+            />
             <AddGoalSection
               goals={data?.pages}
               handleSubmit={handleSubmit}
