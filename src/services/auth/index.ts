@@ -1,5 +1,6 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 
+import api from "@/lib/axios";
 import { useAuthStore } from "@/store/auth-store";
 import { useUserStore } from "@/store/user-store";
 import { LoginResponse, SignupResponse } from "@/types/auth";
@@ -8,16 +9,12 @@ import { ENDPOINT } from "../endpoint";
 
 import { storeAccessTokenInCookie } from "./route-handler";
 
-const apiNoAuth = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_ADDRESS,
-});
-
 /** 로그인 API */
 export const login = async (
   email: string,
   password: string,
 ): Promise<AxiosResponse<LoginResponse>> => {
-  const res = await apiNoAuth.post<LoginResponse>(ENDPOINT.AUTH.LOGIN, {
+  const res = await api.post<LoginResponse>(ENDPOINT.AUTH.LOGIN, {
     email,
     password,
   });
@@ -39,7 +36,7 @@ export const signup = async (
   email: string,
   password: string,
 ): Promise<AxiosResponse<SignupResponse>> => {
-  const res = await apiNoAuth.post<SignupResponse>(ENDPOINT.AUTH.SIGNUP, {
+  const res = await api.post<SignupResponse>(ENDPOINT.AUTH.SIGNUP, {
     name,
     email,
     password,
