@@ -6,6 +6,7 @@ import {
   reissueAccessToken,
   retryRequestWithNewToken,
 } from "@/services/auth/token";
+import { ENDPOINT } from "@/services/endpoint";
 import { useAuthStore } from "@/store/auth-store";
 
 import { ApiError } from "./error";
@@ -15,8 +16,14 @@ const api = axios.create({
   withCredentials: true,
 });
 
+const noAuthPaths: string[] = [ENDPOINT.AUTH.LOGIN, ENDPOINT.AUTH.SIGNUP];
+
 api.interceptors.request.use(
   async (config) => {
+    if (config.url && noAuthPaths.includes(config.url)) {
+      return config;
+    }
+
     const { accessToken } = useAuthStore.getState();
 
     if (accessToken) {
