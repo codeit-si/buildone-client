@@ -126,7 +126,7 @@ function ModalOverlay({
         <motion.div
           role="presentation"
           aria-hidden
-          className={cn("fixed inset-0 bg-gray-500", className)}
+          className={cn("fixed inset-0 z-40 bg-gray-500", className)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.5, transition: { duration: 0.1 } }}
           exit={{ opacity: 0, transition: { duration: 0.1 } }}
