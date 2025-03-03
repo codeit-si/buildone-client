@@ -4,7 +4,7 @@ import { ReissueAccessTokenResponse } from "@/types/auth";
 
 import { ENDPOINT } from "../endpoint";
 
-import { storeAccessTokenInCookie } from ".";
+import { storeAccessTokenInCookie } from "./route-handler";
 
 /** 기존 config에 Authorization 헤더 추가 */
 export const getConfigWithAuthorizationHeaders = (

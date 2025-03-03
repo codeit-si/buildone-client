@@ -51,7 +51,7 @@ export const getInfiniteTodosByGoalId = async ({
 
 export const getProgressByGoalId = async (goalId: number) => {
   const { data } = await api.get<{ progress: number }>(
-    ENDPOINT.TODO.GET_PROGRESS,
+    ENDPOINT.GOAL.GET_PROGRESS,
     {
       params: {
         goalId,
