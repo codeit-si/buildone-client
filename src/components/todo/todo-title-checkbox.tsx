@@ -1,6 +1,6 @@
 import CheckBoxOffIcon from "@/assets/icons-small/checkbox/checkbox_off.svg";
 import CheckBoxOnIcon from "@/assets/icons-small/checkbox/checkbox_on.svg";
-import { useUpdateTodo } from "@/hooks/query/useTodo";
+import { useUpdateTodo } from "@/hooks/query/use-todo";
 import { cn } from "@/lib/cn";
 import { Todo } from "@/types/todo";
 
