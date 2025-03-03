@@ -1,18 +1,33 @@
 "use client";
 
-import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 
 import DeleteIcon from "@/assets/icons-small/delete_slate_400.svg";
 
-type Tag = {
+export type Tag = {
   id: string;
   text: string;
 };
 
-export default function TagInput(): JSX.Element {
+interface TagInputProps {
+  initialTags?: Tag[];
+  onTagsChange?: (tags: Tag[]) => void;
+}
+
+export default function TagInput({
+  initialTags = [],
+  onTagsChange,
+}: TagInputProps): JSX.Element {
   const [inputValue, setInputValue] = useState("");
-  const [tags, setTags] = useState<Tag[]>([]);
-  const tagIdCounter = useRef(0);
+  const [tags, setTags] = useState<Tag[]>(initialTags);
+  const tagIdCounter = useRef(initialTags.length);
+
+  // 태그가 업데이트될 때마다 상위 컴포넌트에 전달
+  useEffect(() => {
+    if (onTagsChange) {
+      onTagsChange(tags);
+    }
+  }, [tags, onTagsChange]);
 
   const getNextTagId = (): number => {
     const nextId = tagIdCounter.current + 1;

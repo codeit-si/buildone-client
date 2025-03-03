@@ -1,6 +1,7 @@
 import api from "@/lib/axios";
 import {
   DashboardRecentTodoListResponse,
+  DashboardStreakResponse,
   GoalListParams,
   GoalListResponse,
   TodoListResponse,
@@ -56,6 +57,13 @@ export const getProgressByGoalId = async (goalId: number) => {
         goalId,
       },
     },
+  );
+  return data;
+};
+
+export const getTodoStreak = async (): Promise<DashboardStreakResponse> => {
+  const { data } = await api.get<DashboardStreakResponse>(
+    "/api/v1/dashboard/todos/streak", // 나중에 따로 빼기
   );
   return data;
 };

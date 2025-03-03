@@ -2,10 +2,14 @@
 
 import { useState } from "react";
 
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+
 import Dropdown from "@/components/@common/dropdown";
 import Modal from "@/components/@common/portal/modal";
 import Sheet from "@/components/@common/portal/sheet";
 import DetailSheet from "@/components/note/detail-sheet";
+import { deleteNote, getNote } from "@/services/note";
 import { Note } from "@/types/note";
 
 interface NoteCardProps {
@@ -13,9 +17,24 @@ interface NoteCardProps {
 }
 
 export default function NoteCard({ note }: NoteCardProps): JSX.Element | null {
+  const router = useRouter();
   const [isDeleted, setIsDeleted] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
+
+  const deleteMutation = useMutation({
+    mutationFn: () => deleteNote(note.id),
+    onSuccess: () => {
+      setIsDeleted(true);
+    },
+  });
+
+  // 상세 노트 정보를 별도로 불러와서 tags를 사용합니다.
+  const { data: detailedNote } = useQuery<Note, Error>({
+    queryKey: ["noteDetail", note.id],
+    queryFn: () => getNote(note.id),
+    retry: false,
+  });
 
   if (isDeleted) return null;
 
@@ -28,7 +47,11 @@ export default function NoteCard({ note }: NoteCardProps): JSX.Element | null {
           </div>
           <Dropdown
             items={[
-              { label: "수정하기", onClick: (): void => {} },
+              {
+                label: "수정하기",
+                onClick: (): void =>
+                  router.push(`/todos/9/note/create?noteId=${note.id}`),
+              },
               { label: "삭제하기", onClick: (): void => setModalOpen(true) },
             ]}
           />
@@ -41,10 +64,22 @@ export default function NoteCard({ note }: NoteCardProps): JSX.Element | null {
           </Sheet.Trigger>
         </Sheet.Root>
 
-        <div className="h-32 pt-11 text-xs font-normal">
-          {note.todoInformation.title}
+        {/* 태그와 todo */}
+        <div className="mt-12 flex h-20 text-xs text-slate-700">
+          {(detailedNote?.tags || []).map((tag) => (
+            <span
+              key={tag}
+              className="mr-8 rounded-4 bg-slate-100 px-3 py-2 font-medium"
+            >
+              #{tag}
+            </span>
+          ))}
+          <span className="py-2 pr-3 font-normal">
+            {note.todoInformation.title}
+          </span>
         </div>
 
+        {/* 모달 */}
         <Modal.Content
           hasCloseIcon={false}
           className="h-216 w-300 rounded-lg md:w-450"
@@ -61,7 +96,7 @@ export default function NoteCard({ note }: NoteCardProps): JSX.Element | null {
             <Modal.Close
               variant="solid"
               className="w-120 min-w-120"
-              onClick={(): void => setIsDeleted(true)}
+              onClick={(): void => deleteMutation.mutate()}
             >
               삭제
             </Modal.Close>

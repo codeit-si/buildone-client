@@ -1,6 +1,9 @@
 "use client";
 
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
+
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 
 import Button from "@/components/@common/button";
 import Counting from "@/components/@common/counting";
@@ -10,24 +13,113 @@ import LinkAttached from "@/components/note/link-attached";
 import LoadNoteToastManager, {
   NoteData,
 } from "@/components/note/load-note-toast-manager";
-import TagInput from "@/components/note/tag";
+import TagInput, { Tag } from "@/components/note/tag";
 import TempSaveManager, {
   TempSaveManagerRef,
 } from "@/components/note/temp-save-manager";
 import Tiptap from "@/components/note/tiptap";
 import Todo from "@/components/note/todo";
+import { createNote, getNote, updateNote } from "@/services/note";
 import "@/styles/note.css";
+import { Note } from "@/types/note";
 import { countWithoutSpaces, countWithSpaces } from "@/utils/text-utils";
 
 export default function NotesPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const params = useParams();
+  const noteIdParam = searchParams.get("noteId");
+  // noteId가 있으면 수정모드, 없으면 새로 작성하는 모드
+  const noteId = noteIdParam ? Number(noteIdParam) : null;
+  // [todoId]는 라우트 동적 세그먼트에서 추출
+  const todoId = params?.todoId ? Number(params.todoId) : null;
+  const isEditMode = noteId !== null;
+
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [link, setLink] = useState<string>("");
   const [showLink, setShowLink] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [loadedNote, setLoadedNote] = useState<NoteData | null>(null);
+  const [tags, setTags] = useState<Tag[]>([]);
 
   const tempSaveManagerRef = useRef<TempSaveManagerRef>(null);
+
+  // 수정 모드일 경우에만 기존 노트 데이터를 불러옴
+  const { data: noteData, isLoading } = useQuery<
+    Note,
+    Error,
+    Note,
+    [string, number]
+  >({
+    queryKey: ["noteDetail", noteId!],
+    queryFn: () => getNote(noteId!),
+    enabled: isEditMode,
+    retry: false,
+  });
+
+  useEffect(() => {
+    if (noteData) {
+      setTitle(noteData.title);
+      setContent(noteData.content);
+      if (noteData.linkUrl && noteData.linkUrl.trim() !== "") {
+        setLink(noteData.linkUrl);
+        setShowLink(true);
+      } else {
+        setLink("");
+        setShowLink(false);
+      }
+      if (noteData.tags && noteData.tags.length > 0) {
+        setTags(
+          noteData.tags.map((t: string, index: number) => ({
+            id: `${t}-${index}`,
+            text: t,
+          })),
+        );
+      } else {
+        setTags([]);
+      }
+    }
+  }, [noteData]);
+
+  const memoizedInitialTags = useMemo(() => {
+    return noteData && noteData.tags
+      ? noteData.tags.map((t: string, index: number) => ({
+          id: `${t}-${index}`,
+          text: t,
+        }))
+      : [];
+  }, [noteData]);
+
+  // mutationFn: 수정 모드이면 updateNote, 새 노트 작성이면 createNote 호출
+  const mutation = useMutation<
+    Note,
+    Error,
+    { title: string; content: string; linkUrl: string; tags: string[] }
+  >({
+    mutationFn: (data) => {
+      if (isEditMode) {
+        return updateNote(noteId!, data);
+      }
+      if (!todoId) {
+        return Promise.reject(new Error("Missing todoId for note creation"));
+      }
+      return createNote({
+        todoId,
+        title: data.title,
+        content: data.content,
+        linkUrl: data.linkUrl,
+        tags: data.tags,
+      });
+    },
+    onSuccess: (data: Note) => {
+      // data는 수정된 노트 혹은 새로 생성된 노트 정보를 포함함
+      const goalId = data.goalInformation?.id;
+      if (goalId) {
+        router.push(`/goals/${goalId}/notes`);
+      }
+    },
+  });
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
@@ -71,6 +163,17 @@ export default function NotesPage() {
     tempSaveManagerRef.current?.saveTempNote();
   };
 
+  const handleSubmit = () => {
+    mutation.mutate({
+      title,
+      content,
+      linkUrl: link,
+      tags: tags.map((tag) => tag.text), // 태그 배열에서 텍스트 값만 전송
+    });
+  };
+
+  if (isEditMode && isLoading) return <div>Loading...</div>;
+
   return (
     <div className="min-h-screen bg-white">
       <div className="ml-16 pt-24 md:ml-24 lg:ml-80">
@@ -95,6 +198,7 @@ export default function NotesPage() {
                 size="sm"
                 shape="square"
                 disabled={!title.trim() || !content.trim()}
+                onClick={handleSubmit}
               >
                 작성 완료
               </Button>
@@ -104,12 +208,19 @@ export default function NotesPage() {
           <div className="mt-16">
             {/* 임시 저장 노트 로드 토스트 */}
             <LoadNoteToastManager onLoadNote={handleOpenLoadModal} />
-
             {/* 목표 표시 */}
-            <Goal goalText="자바스크립트로 웹 서비스 만들기" />
+            <Goal
+              goalText={
+                isEditMode ? (noteData?.goalInformation.title ?? "") : ""
+              }
+            />
 
             {/* To do 항목 */}
-            <Todo todoText="자바스크립트 기초 챕터1 듣기" />
+            <Todo
+              todoText={
+                isEditMode ? (noteData?.todoInformation.title ?? "") : ""
+              }
+            />
 
             {/* 노트 제목 입력 */}
             <div className="flex items-center gap-8 border-b border-t border-slate-200">
@@ -122,9 +233,11 @@ export default function NotesPage() {
               />
               <Counting type="title" count={title.length} total={30} />
             </div>
-
             {/* 태그 입력 영역 */}
-            <TagInput />
+            <TagInput
+              initialTags={memoizedInitialTags}
+              onTagsChange={(newTags) => setTags(newTags)}
+            />
 
             {/* 에디터 영역 */}
             <div className="mt-12">

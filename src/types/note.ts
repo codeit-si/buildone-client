@@ -2,6 +2,8 @@ export interface Note {
   id: number;
   title: string;
   content: string;
+  linkUrl: string;
+  tags: string[];
   goalInformation: {
     id: number;
     title: string;

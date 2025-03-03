@@ -1,6 +1,11 @@
 "use client";
 
+import ReactMarkdown from "react-markdown";
+
 import { useQuery } from "@tanstack/react-query";
+import "github-markdown-css";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 
 import Sheet from "@/components/@common/portal/sheet";
 import Goal from "@/components/note/goal";
@@ -38,8 +43,10 @@ export default function DetailSheet({ noteId }: DetailSheetProps): JSX.Element {
       <div className="h-52 border-b border-t border-slate-200 pb-12 pt-12 text-lg font-medium text-slate-800">
         {note.title}
       </div>
-      <div className="scrollbar mt-16 overflow-y-auto text-base font-normal text-slate-700">
-        {note.content}
+      <div className="markdown-body scrollbar overflow-y-auto pt-16 text-base font-normal">
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+          {note.content}
+        </ReactMarkdown>
       </div>
     </Sheet.Content>
   );
