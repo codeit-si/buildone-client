@@ -1,6 +1,10 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
+import { ReissueAccessTokenResponse } from "@/types/auth";
+
 import { ENDPOINT } from "../endpoint";
+
+import { storeAccessTokenInCookie } from "./route-handler";
 
 /** 기존 config에 Authorization 헤더 추가 */
 export const getConfigWithAuthorizationHeaders = (
@@ -14,23 +18,28 @@ export const getConfigWithAuthorizationHeaders = (
 };
 
 /** accessToken 재발급 요청 */
-export const reissueAccessToken = async (): Promise<string | undefined> => {
+export const reissueAccessToken = async (): Promise<string | null> => {
   try {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_SERVER_ADDRESS}${ENDPOINT.AUTH.TOKEN_VALIDATION}`,
-      {},
-      { withCredentials: true },
+    const response = await axios.post<ReissueAccessTokenResponse>(
+      ENDPOINT.AUTH.TOKEN_VALIDATION,
+      null,
+      {
+        baseURL: process.env.NEXT_PUBLIC_SERVER_ADDRESS,
+        withCredentials: true,
+      },
     );
 
-    const token = response.headers?.["access-token"];
+    const token = response.data.accessToken;
 
     if (!token) {
       throw new Error("토큰이 응답에 포함되지 않았습니다.");
     }
 
+    await storeAccessTokenInCookie(token);
+
     return token;
   } catch (error) {
-    return undefined;
+    return null;
   }
 };
 

@@ -1,6 +1,6 @@
 import { GoalSimpleResponse } from "./goal";
 
-export interface TodoResponse {
+interface TodoResponse {
   id: number;
   noteId: number | null;
   title: string;
@@ -24,6 +24,19 @@ export interface DashboardTodoProgressResponse {
   progress: number;
 }
 
+export interface CommonPaginationInformationResponse {
+  nextCursor: number;
+  totalCount: number;
+  hasNext: boolean;
+}
+
+export interface GoalResponse {
+  id: number;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface GoalListParams {
   cursor?: number;
   size?: number;
@@ -32,7 +45,7 @@ export interface GoalListParams {
 }
 
 export interface TodosByGoalParams {
-  goalId: number;
+  goalId?: number;
   cursor?: number;
   size?: number;
   done?: boolean;

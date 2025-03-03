@@ -49,8 +49,13 @@ export default function Tiptap({
   });
 
   useEffect(() => {
-    if (editor && content && content !== editor.getHTML()) {
-      editor.commands.setContent(content);
+    if (
+      editor &&
+      content &&
+      content !== editor.getHTML() &&
+      !editor.isFocused
+    ) {
+      editor.commands.setContent(content, false);
     }
   }, [content, editor]);
 

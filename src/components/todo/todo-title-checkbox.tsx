@@ -1,22 +1,28 @@
 import CheckBoxOffIcon from "@/assets/icons-small/checkbox/checkbox_off.svg";
 import CheckBoxOnIcon from "@/assets/icons-small/checkbox/checkbox_on.svg";
+import { useUpdateTodo } from "@/hooks/query/use-todo";
+import { cn } from "@/lib/cn";
 import { TodoResponse } from "@/types/todo";
 
 interface TodoTitleAndCheckBoxProps {
   index: number;
   todo: TodoResponse;
-  toggleStatus?: (id: number) => void;
 }
 
 export default function TodoTitleAndCheckBox({
   index,
   todo,
-  toggleStatus,
 }: TodoTitleAndCheckBoxProps) {
   const { isDone } = todo;
+  const { mutate: toggleStatus, isPending } = useUpdateTodo();
 
   return (
-    <div className="flex items-center gap-10 overflow-hidden">
+    <div
+      className={cn(
+        "flex h-24 w-full items-center gap-10",
+        isPending && "animate-pulse",
+      )}
+    >
       <label
         htmlFor={`todo-check-${index}`}
         className="relative flex cursor-pointer items-center"
@@ -27,7 +33,7 @@ export default function TodoTitleAndCheckBox({
           id={`todo-check-${index}`}
           checked={isDone}
           aria-checked={isDone}
-          onChange={() => toggleStatus && toggleStatus(todo.id)} // 상태 변경 시 id 전달
+          onChange={() => toggleStatus({ ...todo, isDone: !todo.isDone })}
           className="peer absolute hidden"
         />
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
