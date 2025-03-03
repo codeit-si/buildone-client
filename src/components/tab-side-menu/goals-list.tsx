@@ -2,9 +2,8 @@ import { useEffect, useRef } from "react";
 
 import Link from "next/link";
 
+import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { GoalsListProps } from "@/types/tab-side-menu";
-
-import LoadingSpinner from "../@common/loading-spinner";
 
 const goalsListStyle =
   "max-h-[calc(100vh-450px)] list-disc list-inside space-y-10 overflow-y-auto text-slate-700";
@@ -12,7 +11,8 @@ const goalsListStyle =
 export default function GoalsList({
   goals,
   setIsAdding,
-  isPending,
+  fetchNextPage,
+  hasNextPage,
 }: GoalsListProps) {
   const listRef = useRef<HTMLUListElement>(null);
 
@@ -32,6 +32,7 @@ export default function GoalsList({
   useEffect(() => {
     if (goals.length > 0) setIsAdding(false);
   }, [goals, setIsAdding]);
+  const { ref } = useInfiniteScroll({ hasNextPage, fetchNextPage });
 
   return (
     <ul ref={listRef} className={goalsListStyle}>
@@ -40,7 +41,7 @@ export default function GoalsList({
           <Link href={`goals/${goal.id}`}>{goal.title}</Link>
         </li>
       ))}
-      {isPending && <LoadingSpinner />}
+      {hasNextPage && <div ref={ref} className="h-1" />}
     </ul>
   );
 }

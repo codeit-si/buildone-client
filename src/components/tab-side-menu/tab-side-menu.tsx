@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { cva } from "class-variance-authority";
 
 import GoalsMenu from "@/components/tab-side-menu/goals-menu";
 import { useCreateGoal } from "@/hooks/query/use-goal";
-import { getGoalList } from "@/services/goal";
+import { getInfiniteGoalsOptions } from "@/services/dashboard/query";
 import { GoalResponse } from "@/types/goal";
 
 import AddGoalSection from "./add-goal-section";
@@ -62,18 +63,11 @@ const topHeaderStyle = cva("flex w-full items-center justify-between", {
 export default function TabSideMenu() {
   const [isTabMinimized, setIsTabMinimized] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
-  const [fetchedGoals, setFetchedGoals] = useState<GoalResponse[]>([]);
   const [newGoal, setNewGoal] = useState("");
-  const { mutate, isPending } = useCreateGoal();
-
-  const fetchGoals = async (pageParam: number) => {
-    const { goals } = await getGoalList(pageParam);
-    setFetchedGoals((prevGoals) => [...prevGoals, ...goals]);
-  };
-
-  useEffect(() => {
-    fetchGoals(0);
-  }, []);
+  const { mutate } = useCreateGoal();
+  const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery(
+    getInfiniteGoalsOptions({}),
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,15 +78,11 @@ export default function TabSideMenu() {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    mutate(
-      { title: newGoal },
-      {
-        onSuccess: () => {
-          setFetchedGoals((prevGoals) => [...prevGoals, newGoalData]);
-          setNewGoal("");
-        },
+    mutate(newGoalData, {
+      onSuccess: () => {
+        setNewGoal("");
       },
-    );
+    });
   };
 
   useEffect(() => {
@@ -139,12 +129,13 @@ export default function TabSideMenu() {
           <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />
           <div className="px-32 md:px-24">
             <GoalsList
-              goals={fetchedGoals}
+              goals={data?.pages}
               setIsAdding={setIsAdding}
-              isPending={isPending}
+              hasNextPage={hasNextPage}
+              fetchNextPage={fetchNextPage}
             />
             <AddGoalSection
-              goals={fetchedGoals}
+              goals={data?.pages}
               handleSubmit={handleSubmit}
               isAdding={isAdding}
               newGoal={newGoal}

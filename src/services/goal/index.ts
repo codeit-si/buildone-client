@@ -1,18 +1,11 @@
 import api from "@/lib/axios";
-import { GoalListResponse, GoalResponse } from "@/types/goal";
+import { GoalResponse } from "@/types/goal";
 
 import { ENDPOINT } from "../endpoint";
 
 export const getGoal = async (id: number) => {
   const { data } = await api.get<GoalResponse>(ENDPOINT.GOAL.GET_BY_ID(id));
 
-  return data;
-};
-
-export const getGoalList = async (pageParam: string | number) => {
-  const { data } = await api.get<GoalListResponse>(ENDPOINT.GOAL.GET_ALL, {
-    params: { cursor: pageParam },
-  });
   return data;
 };
 
