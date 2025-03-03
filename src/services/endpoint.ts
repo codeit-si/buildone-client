@@ -23,5 +23,13 @@ export const ENDPOINT = {
   },
   DASHBOARD: {
     GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
+    GET_TODO_STREAK: `${PREFIX}/dashboard/todos/streak`,
+  },
+  NOTES: {
+    GET_BY_ID: (noteId: number) => `${PREFIX}/notes/${noteId}`,
+    UPDATE: (noteId: number) => `${PREFIX}/notes/${noteId}`,
+    DELETE: (noteId: number) => `${PREFIX}/notes/${noteId}`,
+    CREATE: `${PREFIX}/notes`,
+    LIST: `${PREFIX}/notes`,
   },
 } as const;

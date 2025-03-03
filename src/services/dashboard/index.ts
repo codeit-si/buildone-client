@@ -63,7 +63,7 @@ export const getProgressByGoalId = async (goalId: number) => {
 
 export const getTodoStreak = async (): Promise<DashboardStreakResponse> => {
   const { data } = await api.get<DashboardStreakResponse>(
-    "/api/v1/dashboard/todos/streak", // 나중에 따로 빼기
+    ENDPOINT.DASHBOARD.GET_TODO_STREAK,
   );
   return data;
 };

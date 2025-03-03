@@ -1,13 +1,14 @@
 import api from "@/lib/axios";
 import { NoteListParams, NoteListResponse } from "@/types/note";
 
+import { ENDPOINT } from "../../endpoint";
+
 export const getNotesByGoalId = async ({
   goalId,
   cursor,
   size,
 }: NoteListParams): Promise<NoteListResponse> => {
-  const url = `/api/v1/notes`; // 나중에 따로 빼주기
-  const { data } = await api.get<NoteListResponse>(url, {
+  const { data } = await api.get<NoteListResponse>(ENDPOINT.NOTES.LIST, {
     params: { cursor, size, goalId },
   });
   return data;
