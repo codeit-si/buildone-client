@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { useDeleteGoal } from "@/hooks/queries/use-goal";
 
-import Dropdown from "../@common/dropdown";
+import Dropdown from "../@common/dropdown/dropdown";
 import Popup from "../@common/portal/popup";
 
 interface GoalSummaryDropdownProps {

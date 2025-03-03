@@ -17,7 +17,7 @@ export const useDeleteGoal = () => {
       });
 
       queryClient.invalidateQueries({
-        queryKey: ["dashboard"],
+        queryKey: ["dashboard", "todos", "recent"],
       });
 
       router.push("/dashboard");
