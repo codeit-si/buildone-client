@@ -12,7 +12,7 @@ export const ENDPOINT = {
     CREATE: `${PREFIX}/goals`,
     UPDATE: (id: number) => `${PREFIX}/goals/${id}`,
     DELETE: (id: number) => `${PREFIX}/goals/${id}`,
-    GET_PROGRESS: (id: number) => `${PREFIX}/goals/progress/${id}`,
+    GET_PROGRESS: `${PREFIX}/goals/progress`,
   },
   TODO: {
     GET_ALL: `${PREFIX}/todos`,
