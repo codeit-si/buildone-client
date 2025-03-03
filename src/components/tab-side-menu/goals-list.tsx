@@ -31,7 +31,7 @@ export default function GoalsList({ goals, setIsAdding }: GoalsListProps) {
     <ul ref={listRef} className={goalsListStyle}>
       {goals.map((goal) => (
         <li key={goal.id} className="hover:text-dark-blue-700 hover:underline">
-          <Link href={`goals/${goal.id}`}>{goal.text}</Link>
+          <Link href={`goals/${goal.id}`}>{goal.title}</Link>
         </li>
       ))}
     </ul>

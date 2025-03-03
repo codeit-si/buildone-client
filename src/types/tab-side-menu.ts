@@ -1,6 +1,6 @@
 import { ReactNode, SetStateAction } from "react";
 
-import { TabItem } from "@/components/tab-side-menu/tab-input";
+import { GoalResponse } from "./goal";
 
 export interface LinkProps {
   href: string;
@@ -29,7 +29,7 @@ export interface IsAddingProps {
 }
 
 export interface GoalsListProps {
-  goals: TabItem[];
+  goals: GoalResponse[];
   handleInputChange: (id: number, newValue: string) => void;
   setIsAdding: (value: boolean) => void;
 }
@@ -40,11 +40,5 @@ export interface AddGoalSectionProps {
   handleSubmit: (e: React.FormEvent) => void;
   setNewGoal: (value: string) => void;
   newGoal: string;
-  goals: TabItem[];
-}
-
-export interface UserInformations {
-  name: string;
-  email: string;
-  profileImage: string;
+  goals: GoalResponse[];
 }

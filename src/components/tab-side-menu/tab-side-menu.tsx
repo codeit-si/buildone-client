@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { cva } from "class-variance-authority";
 
 import GoalsMenu from "@/components/tab-side-menu/goals-menu";
-import { TabItem } from "@/components/tab-side-menu/tab-input";
+import { createGoal, getGoalList } from "@/services/goal";
+import { GoalResponse } from "@/types/goal";
 
 import AddGoalSection from "./add-goal-section";
 import GoalsList from "./goals-list";
@@ -60,23 +61,35 @@ const topHeaderStyle = cva("flex w-full items-center justify-between", {
 export default function TabSideMenu() {
   const [isTabMinimized, setIsTabMinimized] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
-  const [goals, setGoals] = useState<TabItem[]>([]);
+  const [fetchedGoals, setFetchedGoals] = useState<GoalResponse[]>([]);
   const [newGoal, setNewGoal] = useState("");
+
+  const fetchGoals = async (pageParam: number) => {
+    const { goals } = await getGoalList(pageParam);
+    setFetchedGoals((prevGoals) => [...prevGoals, ...goals]);
+  };
+
+  useEffect(() => {
+    fetchGoals(0);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newGoal.trim() === "") return;
-    const newTab: TabItem = {
-      id: Date.now(),
-      text: newGoal,
+    const newGoalData: GoalResponse = {
+      id: 0,
+      title: newGoal,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
-    setGoals([...goals, newTab]);
+    createGoal(newGoalData);
+    setFetchedGoals([...fetchedGoals, newGoalData]);
     setNewGoal("");
   };
 
   // 목표 텍스트 변경 함수
   const handleInputChange = (id: number, newValue: string) => {
-    setGoals((prevGoals) =>
+    setFetchedGoals((prevGoals) =>
       prevGoals.map((goal) =>
         goal.id === id ? { ...goal, text: newValue } : goal,
       ),
@@ -127,12 +140,12 @@ export default function TabSideMenu() {
           <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />
           <div className="px-32 md:px-24">
             <GoalsList
-              goals={goals}
+              goals={fetchedGoals}
               handleInputChange={handleInputChange}
               setIsAdding={setIsAdding}
             />
             <AddGoalSection
-              goals={goals}
+              goals={fetchedGoals}
               handleSubmit={handleSubmit}
               isAdding={isAdding}
               newGoal={newGoal}

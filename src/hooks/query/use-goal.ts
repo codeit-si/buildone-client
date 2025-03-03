@@ -3,7 +3,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-import { deleteGoal, updateGoal } from "@/services/goal";
+import { createGoal, deleteGoal, updateGoal } from "@/services/goal";
+import { GoalResponse } from "@/types/dashboard";
 
 export const useDeleteGoal = () => {
   const queryClient = useQueryClient();
@@ -34,6 +35,19 @@ export const useUpdateGoal = () => {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
         queryKey: ["goal", { goalId: variables.goalId }],
+      });
+    },
+  });
+};
+
+export const useCreateGoal = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<GoalResponse, Error, { title: string }>({
+    mutationFn: createGoal,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["goals"],
       });
     },
   });
