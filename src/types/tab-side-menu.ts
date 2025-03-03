@@ -1,10 +1,5 @@
 import { ReactNode, SetStateAction } from "react";
 
-import {
-  FetchNextPageOptions,
-  InfiniteQueryObserverResult,
-} from "@tanstack/react-query";
-
 import { GoalResponse } from "./goal";
 
 export interface LinkProps {
@@ -36,16 +31,6 @@ export interface IsAddingProps {
 export interface GoalsListProps {
   goals: GoalResponse[];
   setIsAdding: (value: boolean) => void;
-  hasNextPage: boolean;
-  fetchNextPage: (options?: FetchNextPageOptions) => Promise<
-    InfiniteQueryObserverResult<
-      {
-        pages: GoalResponse[];
-        pageParams: number[];
-      },
-      Error
-    >
-  >;
 }
 
 export interface AddGoalSectionProps {

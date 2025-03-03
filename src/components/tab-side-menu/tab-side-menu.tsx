@@ -65,9 +65,7 @@ export default function TabSideMenu() {
   const [isAdding, setIsAdding] = useState(false);
   const [newGoal, setNewGoal] = useState("");
   const { mutate } = useCreateGoal();
-  const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery(
-    getInfiniteGoalsOptions({}),
-  );
+  const { data } = useSuspenseInfiniteQuery(getInfiniteGoalsOptions({}));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -128,12 +126,7 @@ export default function TabSideMenu() {
           <TodosMenu />
           <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />
           <div className="px-32 md:px-24">
-            <GoalsList
-              goals={data?.pages}
-              setIsAdding={setIsAdding}
-              hasNextPage={hasNextPage}
-              fetchNextPage={fetchNextPage}
-            />
+            <GoalsList goals={data?.pages} setIsAdding={setIsAdding} />
             <AddGoalSection
               goals={data?.pages}
               handleSubmit={handleSubmit}
