@@ -1,7 +1,8 @@
 import ShowExam6 from "@/assets/landing-page/show_exam_6.svg";
+
 export default function LandingSection4() {
   return (
-    <section className="flex justify-center items-center gap-243 bg-white h-705">
+    <section className="flex h-705 items-center justify-center gap-243 bg-white">
       <ShowExam6 />
       <div className="flex flex-col gap-18">
         <span className="text-30 font-bold text-dark-blue-500">02</span>

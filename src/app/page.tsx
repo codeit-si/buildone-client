@@ -11,15 +11,15 @@ import LandingSection7 from "@/components/landing-page/landing-section-7";
 export default async function LandingPage() {
   return (
     <>
-      <LandingHeader/>
-      <LandingSection1/>
-      <LandingSection2/>
-      <LandingSection3/>
-      <LandingSection4/>
-      <LandingSection5/>
-      <LandingSection6/>
-      <LandingSection7/>
-      <LandingFooter/>
+      <LandingHeader />
+      <LandingSection1 />
+      <LandingSection2 />
+      <LandingSection3 />
+      <LandingSection4 />
+      <LandingSection5 />
+      <LandingSection6 />
+      <LandingSection7 />
+      <LandingFooter />
     </>
   );
 }

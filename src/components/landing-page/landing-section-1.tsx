@@ -13,7 +13,7 @@ export default function LandingSection1() {
               개발자를 위한 목표 & 학습 <br />
               관리 서비스
             </h1>
-            <BuilDoneTitle/>
+            <BuilDoneTitle />
           </div>
           <Link
             href='/login'
@@ -23,8 +23,8 @@ export default function LandingSection1() {
           </Link>
         </div>
         <div className="flex flex-col gap-12">
-          <ShowExam1/>
-          <ShowExam2/>
+          <ShowExam1 />
+          <ShowExam2 />
         </div>
       </div>
     </section>
