@@ -99,25 +99,27 @@ export default function FixedDropdown({
       ref={dropdownRef}
       onKeyDown={handleKeyDown}
     >
-      <button
-        aria-haspopup="true"
-        aria-expanded={isOpen}
-        aria-label="메뉴 열기"
-        onClick={toggleDropdown}
-        className="hidden items-center gap-5 justify-center rounded-full bg-white group-focus-within:flex group-hover:flex"
-      >
+      <div className="flex gap-5">
         {todoNoteId === null && (
           <Link
-            className="flex h-24 w-24 flex-col items-center"
+            className="hidden group-focus-within:flex group-hover:flex h-24 w-24 items-center"
             href={`/todos/${todoId}/note/create`}
           >
             <NoteWriteIcon />
           </Link>
         )}
-        <div ref={kebabRef} className="flex h-24 w-24 flex-col items-center">
-          <KebabIcon />
-        </div>
-      </button>
+        <button
+          aria-haspopup="true"
+          aria-expanded={isOpen}
+          aria-label="메뉴 열기"
+          onClick={toggleDropdown}
+          className="hidden items-center justify-center rounded-full bg-white group-focus-within:flex group-hover:flex"
+        >
+          <div ref={kebabRef} className="flex h-24 w-24 flex-col items-center">
+            <KebabIcon />
+          </div>
+        </button>
+      </div>
       <AnimatePresence>
         {isOpen && (
           <motion.div
