@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { cva } from "class-variance-authority";
 
 import GoalsMenu from "@/components/tab-side-menu/goals-menu";
-import { TabItem } from "@/components/tab-side-menu/tab-input";
+import { useCreateGoal } from "@/hooks/query/use-goal";
+import { getInfiniteGoalsOptions } from "@/services/dashboard/query";
 
 import AddGoalSection from "./add-goal-section";
 import GoalsList from "./goals-list";
@@ -15,7 +17,7 @@ import TodosMenu from "./todos-menu";
 import UserProfile from "./user-profile";
 
 const containerStyle = cva(
-  "fixed z-30 bg-white transition-all border-b border-slate-100 md:border-r md:border-slate-200",
+  "fixed z-10 bg-white transition-all border-b border-slate-100 md:border-r md:border-slate-200",
   {
     variants: {
       open: {
@@ -60,36 +62,22 @@ const topHeaderStyle = cva("flex w-full items-center justify-between", {
 export default function TabSideMenu() {
   const [isTabMinimized, setIsTabMinimized] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
-  const [goals, setGoals] = useState<TabItem[]>([]);
   const [newGoal, setNewGoal] = useState("");
+  const { mutate } = useCreateGoal();
+  const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery(
+    getInfiniteGoalsOptions({ size: 20 }),
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newGoal.trim() === "") return;
-    const newTab: TabItem = {
-      id: Date.now(),
-      text: newGoal,
-    };
-    setGoals([...goals, newTab]);
-    setNewGoal("");
-  };
-
-  // 목표 텍스트 변경 함수
-  const handleInputChange = (id: number, newValue: string) => {
-    setGoals((prevGoals) =>
-      prevGoals.map((goal) =>
-        goal.id === id ? { ...goal, text: newValue } : goal,
-      ),
-    );
+    mutate({ title: newGoal }, { onSuccess: () => setNewGoal("") });
   };
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1200) {
-        setIsTabMinimized(false);
-      } else {
-        setIsTabMinimized(true);
-      }
+      if (window.innerWidth >= 1200) setIsTabMinimized(false);
+      else setIsTabMinimized(true);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -127,12 +115,13 @@ export default function TabSideMenu() {
           <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />
           <div className="px-32 md:px-24">
             <GoalsList
-              goals={goals}
-              handleInputChange={handleInputChange}
+              goals={data?.pages}
+              hasNextPage={hasNextPage}
               setIsAdding={setIsAdding}
+              fetchNextPage={fetchNextPage}
             />
             <AddGoalSection
-              goals={goals}
+              goals={data?.pages}
               handleSubmit={handleSubmit}
               isAdding={isAdding}
               newGoal={newGoal}

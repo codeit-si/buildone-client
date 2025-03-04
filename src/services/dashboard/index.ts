@@ -1,11 +1,10 @@
 import api from "@/lib/axios";
 import {
   DashboardRecentTodoListResponse,
-  GoalListParams,
-  GoalListResponse,
-  TodoListResponse,
   TodosByGoalParams,
 } from "@/types/dashboard";
+import { GoalListParams, GoalListResponse } from "@/types/goal";
+import { TodoListResponse } from "@/types/todo";
 
 import { ENDPOINT } from "../endpoint";
 
@@ -50,7 +49,7 @@ export const getInfiniteTodosByGoalId = async ({
 
 export const getProgressByGoalId = async (goalId: number) => {
   const { data } = await api.get<{ progress: number }>(
-    ENDPOINT.GOAL.GET_PROGRESS(goalId),
+    ENDPOINT.GOAL.GET_PROGRESS,
     {
       params: {
         goalId,

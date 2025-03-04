@@ -3,7 +3,7 @@ import { Suspense, useState } from "react";
 import * as motion from "motion/react-client";
 
 import ArrowDown from "@/assets/icons-small/arrow/arrow_down.svg";
-import CreateTodoModal from "@/components/@common//todo-modal/create-todo-modal";
+import TodoModal from "@/components/@common/todo-modal/todo-modal";
 import PlusIcon from "@/components/@svgr/plus-icon";
 import { GoalResponse } from "@/types/dashboard";
 
@@ -92,10 +92,10 @@ export default function GoalItem({ goal }: GoalItemProps) {
         </motion.div>
       )}
       {isModalOpen && (
-        <CreateTodoModal
+        <TodoModal
           goalId={goal.id}
           open={isModalOpen}
-          setOpen={setIsModalOpen}
+          onOpenChange={setIsModalOpen}
         />
       )}
     </GoalContainer>

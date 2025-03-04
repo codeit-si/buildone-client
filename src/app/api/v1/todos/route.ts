@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { Todo } from "@/types/todo";
+import { TodoResponse } from "@/types/todo";
 
 import { todos } from "./generate-random-todos";
 
@@ -28,7 +28,7 @@ export const POST = async (request: NextRequest) => {
   if (!body.title)
     return NextResponse.json({ error: "Title is required" }, { status: 400 });
 
-  const newTodo: Todo = {
+  const newTodo: TodoResponse = {
     id: Date.now(),
     noteId: body.noteId ?? null,
     title: body.title,
