@@ -1,9 +1,10 @@
-"use client"
+"use client";
+
 import { useRouter } from "next/navigation";
 
-import BuilDoneTitle from '@/assets/landing-page/buildone_title.svg'
-import ShowExam1 from '@/assets/landing-page/show_exam_1.svg'
-import ShowExam2 from '@/assets/landing-page/show_exam_2.svg'
+import BuilDoneTitle from "@/assets/landing-page/buildone_title.svg";
+import ShowExam1 from "@/assets/landing-page/show_exam_1.svg";
+import ShowExam2 from "@/assets/landing-page/show_exam_2.svg";
 
 export default function LandingSection1() {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function LandingSection1() {
               개발자를 위한 목표 & 학습 <br />
               관리 서비스
             </h1>
-            <BuilDoneTitle/>
+            <BuilDoneTitle />
           </div>
           <button
             onClick={() => router.push("/login")}
@@ -26,8 +27,8 @@ export default function LandingSection1() {
           </button>
         </div>
         <div className="flex flex-col gap-12">
-          <ShowExam1/>
-          <ShowExam2/>
+          <ShowExam1 />
+          <ShowExam2 />
         </div>
       </div>
     </section>

@@ -6,7 +6,7 @@ export default function LandingSection7() {
   const router = useRouter();
   return (
     <section className="flex h-442 items-center justify-center bg-dark-blue-200">
-      <div className="flex flex-col gap-30 text-center items-center">
+      <div className="flex flex-col items-center gap-30 text-center">
         <h2 className="text-40 font-bold text-slate-800">
           목표를 정하고,
           <br />

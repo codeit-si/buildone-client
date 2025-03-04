@@ -1,4 +1,5 @@
 import ShowExam8 from "@/assets/landing-page/show_exam_8.svg";
+
 export default function LandingSection6() {
   return (
     <section className="flex h-705 items-center justify-center gap-243 bg-white">

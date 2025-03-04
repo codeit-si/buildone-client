@@ -1,6 +1,8 @@
+import Link from "next/link";
+
 export default function LandingFooter() {
   return (
-    <footer className="flex h-180 flex-col items-center justify-center gap-16 text-16 bg-white text-slate-600">
+    <footer className="flex h-180 flex-col items-center justify-center gap-16 bg-white text-16 text-slate-600">
       <div className="flex gap-12">
         <div className="flex gap-8">
           <b className="text-slate-800">builDone</b>
@@ -21,9 +23,9 @@ export default function LandingFooter() {
         </div>
         <div className="flex gap-8">
           <b className="text-slate-800">이메일 문의</b>
-          <a className="hover:underline" href="#">
+          <Link className="hover:underline" href="/">
             info@buildone.co.kr
-          </a>
+          </Link>
         </div>
       </div>
       <span>Copyright © builDone All rights reserved.</span>
