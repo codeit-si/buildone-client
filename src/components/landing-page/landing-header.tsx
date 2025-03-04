@@ -1,5 +1,7 @@
-import BuilDoneLogo from "@/assets/logo/main_logo_small.svg";
 import Link from "next/link";
+
+import BuilDoneLogo from "@/assets/logo/main_logo_small.svg";
+
 export default function LandingHeader() {
   return (
     <header className="fixed h-80 w-full border-b bg-white">

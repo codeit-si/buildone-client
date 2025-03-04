@@ -1,7 +1,8 @@
-import BuilDoneTitle from '@/assets/landing-page/buildone_title.svg'
-import ShowExam1 from '@/assets/landing-page/show_exam_1.svg'
-import ShowExam2 from '@/assets/landing-page/show_exam_2.svg'
 import Link from "next/link";
+
+import BuilDoneTitle from "@/assets/landing-page/buildone_title.svg";
+import ShowExam1 from "@/assets/landing-page/show_exam_1.svg";
+import ShowExam2 from "@/assets/landing-page/show_exam_2.svg";
 
 export default function LandingSection1() {
   return (
@@ -16,7 +17,7 @@ export default function LandingSection1() {
             <BuilDoneTitle />
           </div>
           <Link
-            href='/login'
+            href="/login"
             className="h-52 w-138 rounded-8 bg-dark-blue-500 text-18 font-bold text-white hover:bg-dark-blue-600"
           >
             지금 시작하기
