@@ -19,7 +19,7 @@ export const getPresignedUrl = async ({
   return data.presignedUrl;
 };
 
-interface UploadFileToPresignedUrl {
+interface PutFileToPresignedUrlParams {
   presignedUrl: string;
   file: File;
 }
@@ -27,7 +27,7 @@ interface UploadFileToPresignedUrl {
 export const putFileToPresignedUrl = async ({
   presignedUrl,
   file,
-}: UploadFileToPresignedUrl) => {
+}: PutFileToPresignedUrlParams) => {
   const { data } = await axios.put(presignedUrl, file, {
     headers: {
       "Content-Type": file.type,

@@ -4,10 +4,7 @@ import CheckboxOff from "@/assets/icons-small/checkbox/checkbox_off.svg";
 import CheckboxOn from "@/assets/icons-small/checkbox/checkbox_on.svg";
 import { useCreateTodo, useUpdateTodo } from "@/hooks/query/use-todo";
 import { cn } from "@/lib/cn";
-import {
-  getPresignedUrl,
-  putFileToPresignedUrl,
-} from "@/services/file/upload-file-to-presigned-url";
+import { getPresignedUrl, putFileToPresignedUrl } from "@/services/file";
 import { GoalResponse } from "@/types/dashboard";
 import { TodoResponse } from "@/types/todo";
 

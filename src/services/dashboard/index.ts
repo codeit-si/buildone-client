@@ -1,10 +1,9 @@
 import api from "@/lib/axios";
 import {
   DashboardRecentTodoListResponse,
-  GoalListParams,
   TodosByGoalParams,
 } from "@/types/dashboard";
-import { GoalListResponse } from "@/types/goal";
+import { GoalListParams, GoalListResponse } from "@/types/goal";
 import { TodoListResponse } from "@/types/todo";
 
 import { ENDPOINT } from "../endpoint";

@@ -1,7 +1,6 @@
 import { NextRequest } from "next/server";
 
-import { GoalListParams } from "@/types/dashboard";
-import { GoalListResponse } from "@/types/goal";
+import { GoalListParams, GoalListResponse } from "@/types/goal";
 import sleep from "@/utils/sleep";
 
 const generateMockGoals = ({

@@ -16,3 +16,10 @@ export interface GoalListResponse {
   paginationInformation: CommonPaginationInformationResponse;
   goals: GoalResponse[];
 }
+
+export interface GoalListParams {
+  cursor?: number;
+  size?: number;
+  sortOrder?: "newest" | "oldest";
+  moreKeys?: string[];
+}

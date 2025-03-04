@@ -146,11 +146,11 @@ function ModalContent({
   className,
   hasCloseIcon = true,
   closeOnOverlayClick = true,
-  setHandler,
+  onBeforeClose,
 }: ComponentProps<"div"> &
   ModalOverlayProps & {
     hasCloseIcon?: boolean;
-    setHandler?: Dispatch<SetStateAction<boolean>>;
+    onBeforeClose?: Dispatch<SetStateAction<boolean>>;
   }) {
   const { open, setOpen } = useModal();
   const [[title, footer], nonContentChild] = splitChildrenByComponents(
@@ -159,9 +159,9 @@ function ModalContent({
   );
 
   const handleClose = () => {
-    if (!setHandler) setOpen(false);
+    if (!onBeforeClose) setOpen(false);
     else {
-      setHandler(true);
+      onBeforeClose(true);
     }
   };
 

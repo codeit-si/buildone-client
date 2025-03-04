@@ -37,10 +37,8 @@ export default function TodoTitleAndCheckBox({
             toggleStatus({
               todoId: todo.id,
               newTodo: {
-                fileUrl: todo.fileUrl,
+                ...todo,
                 isDone: !todo.isDone,
-                title: todo.title,
-                linkUrl: todo.linkUrl,
               },
             })
           }

@@ -37,13 +37,6 @@ export interface GoalResponse {
   updatedAt: string;
 }
 
-export interface GoalListParams {
-  cursor?: number;
-  size?: number;
-  sortOrder?: "newest" | "oldest";
-  moreKeys?: string[];
-}
-
 export interface TodosByGoalParams {
   goalId?: number;
   cursor?: number;
