@@ -1,17 +1,10 @@
-export interface WithClassName {
-  className?: string;
-}
+import { GoalSimpleResponse } from "./goal";
 
-export interface GoalSimpleResponse {
-  id: number;
-  title: string;
-}
-
-export interface TodoResponse {
+interface TodoResponse {
   id: number;
   noteId: number | null;
   title: string;
-  goalInformation: GoalSimpleResponse;
+  goalInformation: GoalSimpleResponse | null;
   linkUrl: string | null;
   fileUrl: string | null;
   isDone: boolean;
@@ -19,13 +12,8 @@ export interface TodoResponse {
   updatedAt: string;
 }
 
-export interface TodoListResponse {
-  paginationInformation: {
-    nextCursor: number;
-    totalCount: number;
-    hasNext: boolean;
-  };
-  todos: TodoResponse[];
+export interface WithClassName {
+  className?: string;
 }
 
 export interface DashboardRecentTodoListResponse {
@@ -47,18 +35,6 @@ export interface GoalResponse {
   title: string;
   createdAt: string;
   updatedAt: string;
-}
-
-export interface GoalListParams {
-  cursor?: number;
-  size?: number;
-  sortOrder?: "newest" | "oldest";
-  moreKeys?: string[];
-}
-
-export interface GoalListResponse {
-  paginationInformation: CommonPaginationInformationResponse;
-  goals: GoalResponse[];
 }
 
 export interface TodosByGoalParams {

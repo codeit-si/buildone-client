@@ -166,7 +166,7 @@ function PopupContent({ children, className }: ComponentProps<"div">) {
           </motion.div>
         )}
       </AnimatePresence>
-      <PopupOverlay />
+      <PopupOverlay className="z-40" />
     </PopupPortal>
   );
 }
