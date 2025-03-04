@@ -6,23 +6,30 @@ export const ENDPOINT = {
     SIGNUP: `${PREFIX}/auth/signup`,
     TOKEN_VALIDATION: `${PREFIX}/auth/token`,
   },
-  // 아래 endpoint들은 예시입니다!
   GOAL: {
     GET_ALL: `${PREFIX}/goals`,
     GET_BY_ID: (id: number) => `${PREFIX}/goals/${id}`,
     CREATE: `${PREFIX}/goals`,
     UPDATE: (id: number) => `${PREFIX}/goals/${id}`,
     DELETE: (id: number) => `${PREFIX}/goals/${id}`,
-    GET_PROGRESS: (id: number) => `${PREFIX}/goals/progress/${id}`,
+    GET_PROGRESS: `${PREFIX}/goals/progress`,
   },
   TODO: {
     GET_ALL: `${PREFIX}/todos`,
     GET_BY_ID: (id: number) => `${PREFIX}/todos/${id}`,
     CREATE: `${PREFIX}/todos`,
     UPDATE: (id: number) => `${PREFIX}/todos/${id}`,
+    POST: `${PREFIX}/todos`,
     DELETE: (id: number) => `${PREFIX}/todos/${id}`,
   },
   DASHBOARD: {
     GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
+  },
+  FILE: {
+    GET: (prefix: string, fileName: string) =>
+      `${PREFIX}/file/presigned-url/${prefix}/${fileName}`,
+    DASHBOARD: {
+      GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
+    },
   },
 } as const;

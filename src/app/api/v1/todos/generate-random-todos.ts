@@ -1,4 +1,4 @@
-import { GoalInformation, Todo } from "@/types/todo";
+import { TodoResponse } from "@/types/todo";
 
 const getRandomDate = (daysAgo: number): string => {
   const date = new Date();
@@ -22,7 +22,7 @@ const getRandomTitle = (): string => {
   return titles[Math.floor(Math.random() * titles.length)];
 };
 
-const getRandomGoal = (): GoalInformation => {
+const getRandomGoal = () => {
   const goals = [
     { id: 1, title: "Improve team productivity" },
     { id: 2, title: "Enhance security measures" },
@@ -33,7 +33,7 @@ const getRandomGoal = (): GoalInformation => {
   return goals[Math.floor(Math.random() * goals.length)];
 };
 
-export const generateRandomTodos = (count: number): Todo[] => {
+export const generateRandomTodos = (count: number): TodoResponse[] => {
   return Array.from({ length: count }, (_, i) => {
     const createdAt = getRandomDate(100);
     const updatedAt = getRandomDate(10);
@@ -52,4 +52,4 @@ export const generateRandomTodos = (count: number): Todo[] => {
   });
 };
 
-export const todos: Todo[] = generateRandomTodos(120);
+export const todos: TodoResponse[] = generateRandomTodos(120);

@@ -1,9 +1,9 @@
-import { Todo } from "@/types/todo";
+import { TodoResponse } from "@/types/todo";
 
 import GoalIcon from "@/assets/goal.svg";
 
 interface GoalProps {
-  todo: Todo;
+  todo: TodoResponse;
 }
 
 export default function Goal({
