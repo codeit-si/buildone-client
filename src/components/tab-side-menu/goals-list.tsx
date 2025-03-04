@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react";
 
 import Link from "next/link";
 
-import { GoalsListProps } from "@/types/tab-side-menu";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
+import { GoalsListProps } from "@/types/tab-side-menu";
 
 const goalsListStyle =
   "max-h-[calc(100vh-450px)] list-disc list-inside space-y-10 overflow-y-auto text-slate-700";

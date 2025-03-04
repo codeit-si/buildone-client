@@ -1,10 +1,11 @@
-import { ReactNode, RefObject, SetStateAction } from "react";
+import { ReactNode, SetStateAction } from "react";
 
-import { GoalResponse } from "./goal";
 import {
   FetchNextPageOptions,
   InfiniteQueryObserverResult,
 } from "@tanstack/react-query";
+
+import { GoalResponse } from "./goal";
 
 export interface LinkProps {
   href: string;
