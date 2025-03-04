@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
+import NoteWriteIcon from "@/assets/icons-small/note-write.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
 import { useDeleteTodo } from "@/hooks/query/use-todo";
@@ -72,12 +73,17 @@ export default function ListTodo({
 
   const iconSpread = (currentTodo: Todo) => {
     const icons = [
-      { key: "file", url: currentTodo.fileUrl, Icon: FileIcon },
-      { key: "link", url: currentTodo.linkUrl, Icon: LinkIcon },
       {
         key: "note",
         url: currentTodo.noteId ? `/notes/${currentTodo.noteId}` : null,
         Icon: NoteIcon,
+      },
+      { key: "link", url: currentTodo.linkUrl, Icon: LinkIcon },
+      { key: "file", url: currentTodo.fileUrl, Icon: FileIcon },
+      {
+        key: "note-create",
+        url: !currentTodo.noteId ? `/todos/${todo.id}/note/create` : null,
+        Icon: NoteWriteIcon,
       },
     ];
 
@@ -87,7 +93,7 @@ export default function ListTodo({
         <Link
           key={key}
           href={url || "#"}
-          target="_blank"
+          target={`${key === "file" || key === "link" ? "_blank" : "_self"}`}
           rel="noopener noreferrer"
           aria-label={`${key} 열기`}
         >

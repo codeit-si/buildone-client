@@ -209,18 +209,10 @@ export default function NotesPage() {
             {/* 임시 저장 노트 로드 토스트 */}
             <LoadNoteToastManager onLoadNote={handleOpenLoadModal} />
             {/* 목표 표시 */}
-            <Goal
-              goalText={
-                isEditMode ? (noteData?.goalInformation.title ?? "") : ""
-              }
-            />
+            <Goal goalText={noteData?.goalInformation.title ?? ""} />
 
             {/* To do 항목 */}
-            <Todo
-              todoText={
-                isEditMode ? (noteData?.todoInformation.title ?? "") : ""
-              }
-            />
+            <Todo todoText={noteData?.todoInformation.title ?? ""} />
 
             {/* 노트 제목 입력 */}
             <div className="flex items-center gap-8 border-b border-t border-slate-200">
