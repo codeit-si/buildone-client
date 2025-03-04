@@ -8,6 +8,7 @@ import TodosByGoalContainer from "@/components/dashboard/todos-by-goal/todos-by-
 import getQueryClient from "@/lib/get-query-client";
 import {
   getDashboardOptions,
+  getDashboardProgressOptions,
   getInfiniteGoalsOptions,
 } from "@/services/dashboard/query";
 
@@ -16,8 +17,11 @@ export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(getDashboardOptions());
-  await queryClient.prefetchInfiniteQuery(getInfiniteGoalsOptions({}));
+  await Promise.all([
+    queryClient.prefetchQuery(getDashboardOptions()),
+    queryClient.prefetchInfiniteQuery(getInfiniteGoalsOptions({})),
+    queryClient.prefetchQuery(getDashboardProgressOptions()),
+  ]);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

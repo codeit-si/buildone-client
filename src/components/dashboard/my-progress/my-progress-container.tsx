@@ -1,9 +1,14 @@
 import StreakBoard from "@/components/dashboard/streak-board/streak-board";
 
-export default function MyProgressContainer(): JSX.Element {
+import SectionContainer from "../section-container";
+
+import MyProgress from "./my-progress";
+
+export default async function MyProgressContainer() {
   return (
-    <section className="relative flex h-258 w-full flex-col gap-16 rounded-2xl bg-white p-16 md:h-250">
+    <SectionContainer>
+      <MyProgress />
       <StreakBoard />
-    </section>
+    </SectionContainer>
   );
 }

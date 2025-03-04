@@ -4,6 +4,7 @@ import { GoalListParams, TodosByGoalParams } from "@/types/dashboard";
 
 import {
   getDashboard,
+  getDashboardProgress,
   getInfiniteGoals,
   getInfiniteTodosByGoalId,
   getProgressByGoalId,
@@ -69,4 +70,10 @@ export const getProgressByGoalIdOptions = (goalId: number) =>
   queryOptions({
     queryKey: ["progress", goalId],
     queryFn: () => getProgressByGoalId(goalId),
+  });
+
+export const getDashboardProgressOptions = () =>
+  queryOptions({
+    queryKey: ["dashboard", "progress"],
+    queryFn: () => getDashboardProgress(),
   });

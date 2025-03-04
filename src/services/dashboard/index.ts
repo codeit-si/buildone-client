@@ -1,6 +1,7 @@
 import api from "@/lib/axios";
 import {
   DashboardRecentTodoListResponse,
+  DashboardTodoProgressResponse,
   GoalListParams,
   GoalListResponse,
   TodoListResponse,
@@ -56,6 +57,13 @@ export const getProgressByGoalId = async (goalId: number) => {
         goalId,
       },
     },
+  );
+  return data;
+};
+
+export const getDashboardProgress = async () => {
+  const { data } = await api.get<DashboardTodoProgressResponse>(
+    ENDPOINT.DASHBOARD.PROGRESS,
   );
   return data;
 };
