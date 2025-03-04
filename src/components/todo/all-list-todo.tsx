@@ -39,7 +39,7 @@ export default function AllListTodo() {
   return (
     <>
       <div className="mb-16 mt-24 flex items-center justify-between">
-        <h2 className="text-18 font-semibold text-slate-600">{`모든 할 일 (${todos?.length})`}</h2>
+        <h2 className="text-18 font-semibold text-slate-900">{`모든 할 일 (${todos?.length})`}</h2>
         <button
           onClick={() => setIsModalOpen(true)}
           className="flex items-center gap-3 font-semibold text-dark-blue-600"
