@@ -10,7 +10,7 @@ export default function LandingSection7() {
           꾸준히 성장하세요!
         </h2>
         <Link
-          href='login'
+          href="login"
           className="h-52 w-138 rounded-8 bg-dark-blue-500 text-18 font-bold text-white hover:bg-dark-blue-600"
         >
           지금 시작하기
