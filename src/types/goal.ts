@@ -1,3 +1,5 @@
+import { CommonPaginationInformationResponse } from ".";
+
 export interface GoalResponse {
   id: number;
   title: string;
@@ -5,18 +7,19 @@ export interface GoalResponse {
   updatedAt: string;
 }
 
+export interface GoalSimpleResponse {
+  id: number;
+  title: string;
+}
+
 export interface GoalListResponse {
-  paginationInformation: {
-    nextCursor: number;
-    totalCount: number;
-    hasNext: boolean;
-  };
-  goals: [
-    {
-      id: number;
-      title: string;
-      createdAt: string;
-      updatedAt: string;
-    },
-  ];
+  paginationInformation: CommonPaginationInformationResponse;
+  goals: GoalResponse[];
+}
+
+export interface GoalListParams {
+  cursor?: number;
+  size?: number;
+  sortOrder?: "newest" | "oldest";
+  moreKeys?: string[];
 }
