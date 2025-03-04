@@ -50,7 +50,7 @@ export default function TodoList({ goalId, done }: TodoListProps) {
           </button>
         )}
       </div>
-      {data ? (
+      {data.todos.length > 0 ? (
         <div className="mt-16">
           {data.todos.length > 0 && (
             <ul className="flex flex-col gap-8">

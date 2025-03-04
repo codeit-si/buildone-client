@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 import FlagGoalIcon from "@/assets/icons-big/flag_goal.svg";
 import { getProgressByGoalIdOptions } from "@/services/dashboard/query";
@@ -18,8 +18,8 @@ interface GoalSummaryProps {
 }
 
 export default function GoalSummary({ goalId }: GoalSummaryProps) {
-  const { data: goalData } = useQuery(getGoalOptions(Number(goalId)));
-  const { data: progressData } = useQuery(
+  const { data: goalData } = useSuspenseQuery(getGoalOptions(Number(goalId)));
+  const { data: progressData } = useSuspenseQuery(
     getProgressByGoalIdOptions(Number(goalId)),
   );
 
