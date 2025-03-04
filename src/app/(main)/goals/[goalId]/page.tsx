@@ -38,7 +38,7 @@ export default async function GoalDetailPage({
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <div className="w-343 py-16 max-lg:mx-auto md:w-636 md:py-24 lg:ml-80 lg:w-1200">
+      <div className="w-343 pb-16 pt-24 max-lg:mx-auto md:w-636 md:py-24 lg:ml-80 lg:w-1200">
         <h1 className="hidden text-lg font-semibold md:block">목표</h1>
         <div className="flex flex-col gap-16 md:gap-24">
           <GoalSummary goalId={params.goalId} />
