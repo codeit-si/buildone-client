@@ -12,7 +12,7 @@ import GoalList from "./goal-list";
 
 export default function TodosByGoalContainer() {
   return (
-    <SectionContainer className="mt-16 min-h-200 md:col-span-2 md:min-h-511">
+    <SectionContainer className="mt-12 md:mt-16 min-h-200 md:col-span-2 md:min-h-511">
       <SectionTitle>
         <div className="flex h-40 w-40 items-center justify-center rounded-15 bg-blue-500">
           <FlagIcon />

@@ -13,7 +13,7 @@ export default function SectionContainer({
   return (
     <section
       className={cn(
-        "flex w-full flex-col gap-16 rounded-12 bg-white p-16",
+        "mb-12 flex w-full flex-col gap-16 rounded-12 bg-white p-16 md:m-0",
         className,
       )}
     >
