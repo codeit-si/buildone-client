@@ -7,7 +7,6 @@ import LandingSection4 from "@/components/landing-page/landing-section-4";
 import LandingSection5 from "@/components/landing-page/landing-section-5";
 import LandingSection6 from "@/components/landing-page/landing-section-6";
 import LandingSection7 from "@/components/landing-page/landing-section-7";
-import Link from "next/link";
 
 export default async function LandingPage() {
   return (
