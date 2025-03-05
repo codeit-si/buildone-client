@@ -1,4 +1,4 @@
-import StreakBoard from "@/components/dashboard/streak-board/streak-board";
+// import StreakBoard from "@/components/dashboard/streak-board/streak-board";
 
 import SectionContainer from "../section-container";
 
@@ -8,7 +8,7 @@ export default async function MyProgressContainer() {
   return (
     <SectionContainer>
       <MyProgress />
-      <StreakBoard />
+      {/* <StreakBoard /> */}
     </SectionContainer>
   );
 }

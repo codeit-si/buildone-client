@@ -1,28 +1,48 @@
+"use client";
+
+import { useEffect } from "react";
+
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ResponsiveContainer, PieChart, Pie } from "recharts";
+import { useSpring, motion } from "motion/react";
 
 import { getDashboardProgressOptions } from "@/services/dashboard/query";
 
 export default function MyProgress() {
   const { data } = useSuspenseQuery(getDashboardProgressOptions());
 
-  const progressData = [{ name: "내 진행 상황", value: data?.progress ?? 0 }];
+  const progress = useSpring(0, { damping: 15 });
+
+  useEffect(() => {
+    if (data.progress !== undefined) {
+      progress.set(283 - (data.progress / 100) * 283);
+    }
+  }, [data.progress, progress]);
 
   return (
-    <ResponsiveContainer>
-      <PieChart width={730} height={250}>
-        <Pie
-          data={progressData}
-          dataKey="value"
-          nameKey="name"
-          cx="50%"
-          cy="50%"
-          innerRadius={60}
-          outerRadius={80}
-          fill="#ffffff"
-          label
-        />
-      </PieChart>
-    </ResponsiveContainer>
+    <svg width="200" height="200" viewBox="0 0 100 100">
+      <circle
+        cx="50"
+        cy="50"
+        r="35"
+        stroke="black"
+        strokeWidth="20"
+        fill="transparent"
+      />
+      <motion.circle
+        cx="50"
+        cy="50"
+        r="35"
+        stroke="white"
+        strokeWidth="20"
+        fill="white"
+        strokeDasharray="283"
+        style={{
+          strokeDashoffset: progress.get(),
+          transform: "rotate(-90deg)",
+          transformOrigin: "50% 50%",
+        }}
+        transition={{ type: "spring", damping: 15 }}
+      />
+    </svg>
   );
 }
