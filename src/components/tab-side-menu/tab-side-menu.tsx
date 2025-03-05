@@ -116,10 +116,7 @@ export default function TabSideMenu() {
         {/* 탭 열였을때 나타나는 bottom menus */}
         {!isTabMinimized && (
           <>
-            <TodosMenu
-              isTabMinimized={isTabMinimized}
-              setIsTabMinimized={setIsTabMinimized}
-            />
+            <TodosMenu />
             <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />
             <div className="px-32 md:px-24">
               <GoalsList
