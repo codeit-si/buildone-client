@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, useEffect } from "react";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 
@@ -10,6 +10,8 @@ import { getInfiniteGoalsOptions } from "@/services/dashboard/query";
 
 import { BASE_CLASS } from "../input";
 import Label from "../label";
+
+import { useTodoFormContext } from "./todo-form-provider";
 
 interface GoalDropdownProps {
   goalId?: number;
@@ -25,7 +27,7 @@ export default function GoalDropdown({ goalId }: GoalDropdownProps) {
   });
 
   const { isOpen, ref, toggleHandler } = useSelector();
-  const [selectedGoalId, setSelectedGoalId] = useState<number>(goalId ?? -1);
+  const { selectedGoalId, setSelectedGoalId } = useTodoFormContext();
 
   const goalTitle = data?.pages.find(
     (page) => page.id === selectedGoalId,
@@ -46,7 +48,7 @@ export default function GoalDropdown({ goalId }: GoalDropdownProps) {
     if (goalId) {
       setSelectedGoalId(goalId);
     }
-  }, [goalId]);
+  }, [goalId, setSelectedGoalId]);
 
   return (
     <div

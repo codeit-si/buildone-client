@@ -1,6 +1,7 @@
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
-import { GoalListParams, TodosByGoalParams } from "@/types/dashboard";
+import { TodosByGoalParams } from "@/types/dashboard";
+import { GoalListParams } from "@/types/goal";
 
 import {
   getDashboard,
