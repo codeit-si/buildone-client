@@ -28,9 +28,9 @@ export const useUpdateGoal = () => {
   return useMutation({
     mutationFn: ({ goalId, title }: { goalId: number; title: string }) =>
       updateGoal(goalId, title),
-    onSuccess: (_, variables) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: goalKeys.detail(variables.goalId),
+        queryKey: goalKeys.all,
       });
     },
   });
