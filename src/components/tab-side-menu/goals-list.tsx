@@ -17,27 +17,29 @@ export default function GoalsList({
   const listRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (listRef.current && !listRef.current.contains(event.target as Node))
-        setIsAdding(false);
-    };
-
+    const handleClickOutside = (event: MouseEvent) =>
+      listRef.current &&
+      !listRef.current.contains(event.target as Node) &&
+      setIsAdding(false);
     document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [setIsAdding]);
 
   useEffect(() => {
-    if (goals.length > 0) setIsAdding(false);
-  }, [goals, setIsAdding]);
+    goals.length > 0 && setIsAdding(false);
+  }, [goals.length, setIsAdding]);
+
+  const reSortedGoalsList = goals.sort((a, b) => {
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+    return dateA.getTime() - dateB.getTime();
+  });
 
   const { ref } = useInfiniteScroll({ fetchNextPage, hasNextPage });
 
   return (
     <ul ref={listRef} className={goalsListStyle}>
-      {goals.map((goal) => (
+      {reSortedGoalsList.map((goal) => (
         <li key={goal.id} className="hover:text-dark-blue-700 hover:underline">
           <Link href={`goals/${goal.id}`}>{goal.title}</Link>
         </li>
