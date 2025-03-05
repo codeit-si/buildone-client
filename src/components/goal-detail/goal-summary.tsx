@@ -5,8 +5,10 @@ import { useEffect, useRef, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import FlagGoalIcon from "@/assets/icons-big/flag_goal.svg";
-import { getProgressByGoalIdOptions } from "@/services/dashboard/query";
-import { getGoalOptions } from "@/services/goal/query";
+import {
+  getGoalOptions,
+  getProgressByGoalIdOptions,
+} from "@/services/goal/query";
 
 import ProgressBar from "../@common/progress-bar";
 

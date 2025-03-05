@@ -4,6 +4,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 import { createGoal, deleteGoal, updateGoal } from "@/services/goal";
+import { invalidateGoalRelatedQueries } from "@/services/invalidate";
+import { goalKeys } from "@/services/query-key";
 import { GoalResponse } from "@/types/dashboard";
 
 export const useDeleteGoal = () => {
@@ -13,13 +15,7 @@ export const useDeleteGoal = () => {
   return useMutation({
     mutationFn: (goalId: number) => deleteGoal(goalId),
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["goals"],
-      });
-
-      queryClient.invalidateQueries({
-        queryKey: ["dashboard", "todos", "recent"],
-      });
+      invalidateGoalRelatedQueries(queryClient);
 
       router.push("/dashboard");
     },
@@ -32,9 +28,9 @@ export const useUpdateGoal = () => {
   return useMutation({
     mutationFn: ({ goalId, title }: { goalId: number; title: string }) =>
       updateGoal(goalId, title),
-    onSuccess: (_, variables) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["goal", { goalId: variables.goalId }],
+        queryKey: goalKeys.all,
       });
     },
   });
@@ -46,9 +42,7 @@ export const useCreateGoal = () => {
   return useMutation<GoalResponse, Error, { title: string }>({
     mutationFn: createGoal,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["goals"],
-      });
+      invalidateGoalRelatedQueries(queryClient);
     },
   });
 };
