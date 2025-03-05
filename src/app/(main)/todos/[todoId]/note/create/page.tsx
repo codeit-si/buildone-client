@@ -2,8 +2,7 @@
 
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 
-import { useQuery } from "@tanstack/react-query";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Button from "@/components/@common/button";
 import Counting from "@/components/@common/counting";
@@ -22,20 +21,18 @@ import Todo from "@/components/note/todo";
 import { useCreateOrUpdateNote } from "@/hooks/query/use-mutation";
 import { useNoteDetail } from "@/hooks/query/use-notes";
 import "@/styles/note.css";
-// 단일 Todo 상세 정보를 가져오는 API 함수 (구현되어 있어야 함)
-import { getTodoDetail } from "@/services/todo";
-import { TodoResponse } from "@/types/todo";
+// 단일 Todo 상세 정보를 가져오는 API 함수
+import { useTodoDetail } from "@/hooks/query/use-todo-detail";
 import { countWithoutSpaces, countWithSpaces } from "@/utils/text-utils";
 
-export default function NotesPage() {
+export default function NotesPage({ params }: { params: { todoId: string } }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const params = useParams();
   const noteIdParam = searchParams.get("noteId");
   // noteId가 있으면 수정모드, 없으면 새로 작성하는 모드
   const noteId = noteIdParam ? Number(noteIdParam) : null;
   // [todoId]는 라우트 동적 세그먼트에서 추출
-  const todoId = params?.todoId ? Number(params.todoId) : null;
+  const todoId = Number(params.todoId);
   const isEditMode = noteId !== null;
 
   const [title, setTitle] = useState<string>("");
@@ -52,14 +49,10 @@ export default function NotesPage() {
   const { data: noteData, isLoading: noteLoading } = useNoteDetail(noteId);
 
   // 새 노트 작성 시(todoId가 있을 때) todo 상세 정보를 조회함.
-  const { data: todoData, isLoading: todoLoading } = useQuery<TodoResponse>({
-    queryKey: ["todoDetail", todoId],
-    queryFn: () => {
-      if (!todoId) throw new Error("todoId가 필요합니다.");
-      return getTodoDetail(todoId);
-    },
-    enabled: !isEditMode && Boolean(todoId),
-  });
+  const { data: todoData, isLoading: todoLoading } = useTodoDetail(
+    todoId,
+    isEditMode,
+  );
 
   // 수정 모드일 경우 noteData를 기반으로 초기화
   useEffect(() => {
