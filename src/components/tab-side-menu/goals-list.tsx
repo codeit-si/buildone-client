@@ -39,7 +39,7 @@ export default function GoalsList({
     <ul ref={listRef} className={goalsListStyle}>
       {goals.map((goal) => (
         <li key={goal.id} className="hover:text-dark-blue-700 hover:underline">
-          <Link href={`goals/${goal.id}`}>{goal.title}</Link>
+          <Link href={`/goals/${goal.id}`}>{goal.title}</Link>
         </li>
       ))}
       {hasNextPage && <div ref={ref} className="h-1" />}
