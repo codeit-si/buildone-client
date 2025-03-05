@@ -3,26 +3,22 @@ import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 import { TodosByGoalParams } from "@/types/dashboard";
 import { GoalListParams } from "@/types/goal";
 
-import {
-  getDashboard,
-  getInfiniteGoals,
-  getInfiniteTodosByGoalId,
-  getProgressByGoalId,
-} from ".";
+import { dashboardKeys, goalKeys, todoKeys } from "../query-key";
+
+import { getDashboard, getInfiniteGoals, getInfiniteTodosByGoalId } from ".";
 
 export const getDashboardOptions = () =>
   queryOptions({
-    queryKey: ["dashboard", "todos", "recent"],
+    queryKey: dashboardKeys.recent(),
     queryFn: () => getDashboard(),
   });
 
 export const getInfiniteGoalsOptions = ({
   size = 3,
-  moreKeys = [],
   sortOrder = "newest",
 }: GoalListParams) => {
   return infiniteQueryOptions({
-    queryKey: ["goals", ...moreKeys],
+    queryKey: goalKeys.list(size),
     queryFn: ({ pageParam }) =>
       getInfiniteGoals({ size, sortOrder, cursor: pageParam }),
     getNextPageParam: (lastPage) =>
@@ -43,7 +39,7 @@ export const getDashboardInfiniteTodosByGoalIdOptions = ({
   done,
 }: TodosByGoalParams) => {
   return infiniteQueryOptions({
-    queryKey: ["todos", goalId, done],
+    queryKey: todoKeys.list({ size, goalId, done }),
     queryFn: ({ pageParam }) => {
       return getInfiniteTodosByGoalId({
         goalId,
@@ -65,9 +61,3 @@ export const getDashboardInfiniteTodosByGoalIdOptions = ({
     }),
   });
 };
-
-export const getProgressByGoalIdOptions = (goalId: number) =>
-  queryOptions({
-    queryKey: ["progress", goalId],
-    queryFn: () => getProgressByGoalId(goalId),
-  });
