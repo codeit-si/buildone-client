@@ -93,7 +93,7 @@ export default function TabSideMenu() {
   }, []);
 
   useEffect(() => {
-    if (!isTabMinimized) document.body.style.overflow = "hidden";
+    if (!isTabMinimized && window.innerWidth <= 744) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "auto";
   }, [isTabMinimized]);
 
@@ -138,7 +138,7 @@ export default function TabSideMenu() {
         )}
       </div>
       {!isTabMinimized && (
-        <div className="fixed left-0 top-0 z-20 h-screen w-screen bg-black bg-opacity-50" />
+        <div className="lg:hidden fixed left-0 top-0 z-20 h-screen w-screen bg-black bg-opacity-50" />
       )}
     </>
   );
