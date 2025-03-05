@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 export default async function TodosPage() {
   const queryClient = getQueryClient();
 
-  queryClient.prefetchInfiniteQuery(
+  await queryClient.prefetchInfiniteQuery(
     getInfiniteTodosByGoalIdOptions({ size: 40 }),
   );
 

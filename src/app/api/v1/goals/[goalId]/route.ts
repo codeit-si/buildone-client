@@ -1,6 +1,6 @@
 import { GoalResponse } from "@/types/dashboard";
 
-export const goalsMockData: GoalResponse[] = [
+const goalsMockData: GoalResponse[] = [
   {
     id: 1,
     title: "자바스크립트로 웹 서비스 만들기 1",

@@ -22,3 +22,8 @@ export const updateGoal = async (goalId: number, title: string) => {
 
   return res;
 };
+
+export const createGoal = async (newGoal: { title: string }) => {
+  const { data } = await api.post<GoalResponse>(ENDPOINT.GOAL.CREATE, newGoal);
+  return data;
+};

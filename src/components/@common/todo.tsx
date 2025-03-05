@@ -8,15 +8,15 @@ import NoteWriteIcon from "@/assets/icons-small/note-write.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
 import { useDeleteTodo } from "@/hooks/query/use-todo";
-import { Todo } from "@/types/todo";
+import { TodoResponse } from "@/types/todo";
 
 import Goal from "../todo/goal";
-import TodoCreateModal from "../todo/todo-modal";
 
 import FixedDropdown from "./dropdown/fixed-dropdown";
+import TodoModal from "./todo-modal/todo-modal";
 
 interface Props {
-  todo: Todo;
+  todo: TodoResponse;
   index: number;
   showGoal?: boolean;
   showDropdownOnHover?: boolean;
@@ -33,25 +33,23 @@ export default function ListTodo({
   index,
   showGoal,
 }: Props) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const { mutate } = useDeleteTodo();
 
-  const handleDelete = async (selectedTodoForDelete: Todo) => {
+  const handleDelete = async (selectedTodoForDelete: TodoResponse) => {
     if (!selectedTodoForDelete.id) return;
 
     mutate(todo.id);
   };
 
-  const getDropdownItems = (selectedTodoItem: Todo): DropdownItem[] => {
+  const getDropdownItems = (selectedTodoItem: TodoResponse): DropdownItem[] => {
     const baseItems: DropdownItem[] = [
       {
         id: "edit",
         label: "수정하기",
         onClick: () => {
-          setSelectedTodo(selectedTodoItem);
-          setIsModalOpen(true); // 모달 열기
+          setIsEditModalOpen(true); // 모달 열기
         },
       },
       {
@@ -71,7 +69,7 @@ export default function ListTodo({
     return baseItems;
   };
 
-  const iconSpread = (currentTodo: Todo) => {
+  const iconSpread = (currentTodo: TodoResponse) => {
     const icons = [
       {
         key: "note",
@@ -127,10 +125,12 @@ export default function ListTodo({
           </div>
         )}
       </li>
-      {isModalOpen && (
-        <TodoCreateModal
-          onClose={() => setIsModalOpen(false)}
-          selectedTodo={selectedTodo}
+      {isEditModalOpen && (
+        <TodoModal
+          goalId={todo.goalInformation?.id}
+          todo={todo}
+          open={isEditModalOpen}
+          onOpenChange={setIsEditModalOpen}
         />
       )}
     </>
