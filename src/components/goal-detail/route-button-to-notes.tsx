@@ -12,7 +12,7 @@ export default function RouteButtonToNotes({
 }: RouteButtonToNotesProps) {
   return (
     <Link
-      href={`/notes/${goalId}`}
+      href={`/goals/${goalId}/notes`}
       className="flex items-center justify-between gap-x-8 rounded-12 border border-slate-100 bg-dark-blue-200 px-24 py-16"
     >
       <div className="flex items-center gap-x-8">

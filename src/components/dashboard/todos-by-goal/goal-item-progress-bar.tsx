@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import ProgressBar from "@/components/@common/progress-bar";
-import { getProgressByGoalIdOptions } from "@/services/dashboard/query";
+import { getProgressByGoalIdOptions } from "@/services/goal/query";
 
 interface GoalItemProgressBarProps {
   goalId: number;
