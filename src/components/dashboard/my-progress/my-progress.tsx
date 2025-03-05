@@ -7,41 +7,42 @@ import { useSpring, motion } from "motion/react";
 
 import { getDashboardProgressOptions } from "@/services/dashboard/query";
 
+const radius = 35;
+const circumference = 2 * Math.PI * radius;
+
 export default function MyProgress() {
   const { data } = useSuspenseQuery(getDashboardProgressOptions());
 
-  const progress = useSpring(0, { damping: 15 });
+  const progress = useSpring(283, { damping: 15 });
 
   useEffect(() => {
     if (data.progress !== undefined) {
-      progress.set(283 - (data.progress / 100) * 283);
+      progress.set(circumference - (data.progress / 100) * circumference);
     }
   }, [data.progress, progress]);
 
   return (
-    <svg width="200" height="200" viewBox="0 0 100 100">
+    <svg width="166" height="166" viewBox="0 0 100 100">
       <circle
         cx="50"
         cy="50"
-        r="35"
-        stroke="black"
-        strokeWidth="20"
+        r={radius}
+        stroke="white"
+        strokeWidth="15"
         fill="transparent"
       />
       <motion.circle
         cx="50"
         cy="50"
-        r="35"
-        stroke="white"
-        strokeWidth="20"
-        fill="white"
-        strokeDasharray="283"
+        r={radius}
+        stroke="black"
+        strokeWidth="15"
+        fill="transparent"
+        strokeDasharray={circumference}
         style={{
-          strokeDashoffset: progress.get(),
-          transform: "rotate(-90deg)",
+          strokeDashoffset: progress,
           transformOrigin: "50% 50%",
         }}
-        transition={{ type: "spring", damping: 15 }}
       />
     </svg>
   );

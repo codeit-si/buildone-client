@@ -6,7 +6,7 @@ import MyProgress from "./my-progress";
 
 export default async function MyProgressContainer() {
   return (
-    <SectionContainer>
+    <SectionContainer className="bg-dark-blue-500">
       <MyProgress />
       {/* <StreakBoard /> */}
     </SectionContainer>
