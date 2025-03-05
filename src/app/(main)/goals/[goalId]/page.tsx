@@ -4,8 +4,10 @@ import GoalSummary from "@/components/goal-detail/goal-summary";
 import RouteButtonToNotes from "@/components/goal-detail/route-button-to-notes";
 import TodoList from "@/components/goal-detail/todo-list";
 import getQueryClient from "@/lib/get-query-client";
-import { getProgressByGoalIdOptions } from "@/services/dashboard/query";
-import { getGoalOptions } from "@/services/goal/query";
+import {
+  getGoalOptions,
+  getProgressByGoalIdOptions,
+} from "@/services/goal/query";
 import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
 
 export default async function GoalDetailPage({

@@ -19,7 +19,7 @@ interface GoalDropdownProps {
 
 export default function GoalDropdown({ goalId }: GoalDropdownProps) {
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    getInfiniteGoalsOptions({ size: 20, moreKeys: ["goal-dropdown"] }),
+    getInfiniteGoalsOptions({ size: 20 }),
   );
   const { ref: scrollRef, refTrigger } = useInfiniteScroll({
     hasNextPage,
