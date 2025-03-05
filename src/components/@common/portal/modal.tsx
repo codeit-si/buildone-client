@@ -199,7 +199,7 @@ function ModalContent({
         )}
       </AnimatePresence>
       <ModalOverlay
-        className="z-20"
+        className="z-30"
         closeOnOverlayClick={closeOnOverlayClick}
       />
     </ModalPortal>
