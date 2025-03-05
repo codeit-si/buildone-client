@@ -85,7 +85,7 @@ export default function StreakBoard(): JSX.Element {
       </div>
 
       {/* 스트릭 보드 */}
-      <div className="scrollbar-horizontality flex overflow-x-auto">
+      <div className="scrollbar-horizontality flex overflow-x-auto pr-5">
         {renderPastBoard()}
         {renderCurrentWeek()}
       </div>
