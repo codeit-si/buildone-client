@@ -4,11 +4,11 @@ import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
+import Link from "next/link";
 
 import KebabIcon from "@/assets/icons-small/kebab.svg";
 import NoteWriteIcon from "@/assets/icons-small/note_write.svg";
 import DropdownItem from "@/components/@common/dropdown/dropdown-item";
-import Link from "next/link";
 
 interface DropdownItemType {
   label: string;
@@ -102,7 +102,7 @@ export default function FixedDropdown({
       <div className="flex gap-5">
         {todoNoteId === null && (
           <Link
-            className="hidden group-focus-within:flex group-hover:flex h-24 w-24 items-center"
+            className="hidden h-24 w-24 items-center group-focus-within:flex group-hover:flex"
             href={`/todos/${todoId}/note/create`}
           >
             <NoteWriteIcon />

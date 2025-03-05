@@ -3,15 +3,22 @@
 import { useState } from "react";
 
 import DashBoard from "@/assets/icons-small/dashboard.svg";
+import { IsTabMinimizedProps } from "@/types/tab-side-menu";
 
 import TodoModal from "../@common/todo-modal/todo-modal";
 
 import CustomButton from "./custom-button";
 import Menus from "./menus";
 
-export default function TodosMenu() {
+export default function TodosMenu({
+  isTabMinimized,
+  setIsTabMinimized,
+}: IsTabMinimizedProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const addButtonClickEvent = () => {
+    setIsModalOpen(true);
+    setIsTabMinimized(!isTabMinimized);
+  };
   return (
     <>
       <div className="flex items-center justify-between border-t p-16 px-24 py-16">
@@ -24,7 +31,7 @@ export default function TodosMenu() {
         <CustomButton
           isMobile
           color="white"
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => addButtonClickEvent()}
         >
           새 할 일
         </CustomButton>
