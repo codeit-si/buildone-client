@@ -115,7 +115,11 @@ export default function ListTodo({
           >
             {iconSpread(todo)}
             {showDropdownOnHover && (
-              <FixedDropdown items={getDropdownItems(todo)} />
+              <FixedDropdown
+                items={getDropdownItems(todo)}
+                todoId={todo.id}
+                todoNoteId={todo.noteId}
+              />
             )}
           </div>
         </div>

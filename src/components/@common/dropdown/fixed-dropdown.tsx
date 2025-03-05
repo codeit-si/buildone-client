@@ -6,7 +6,9 @@ import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
 import KebabIcon from "@/assets/icons-small/kebab.svg";
+import NoteWriteIcon from "@/assets/icons-small/note_write.svg";
 import DropdownItem from "@/components/@common/dropdown/dropdown-item";
+import Link from "next/link";
 
 interface DropdownItemType {
   label: string;
@@ -14,9 +16,15 @@ interface DropdownItemType {
 }
 interface DropdownProps {
   items: DropdownItemType[];
+  todoId: number;
+  todoNoteId: number | null;
 }
 
-export default function FixedDropdown({ items }: DropdownProps) {
+export default function FixedDropdown({
+  items,
+  todoId,
+  todoNoteId,
+}: DropdownProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const kebabRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -91,17 +99,27 @@ export default function FixedDropdown({ items }: DropdownProps) {
       ref={dropdownRef}
       onKeyDown={handleKeyDown}
     >
-      <button
-        aria-haspopup="true"
-        aria-expanded={isOpen}
-        aria-label="메뉴 열기"
-        onClick={toggleDropdown}
-        className="hidden h-24 w-24 items-center justify-center rounded-full bg-white group-focus-within:flex group-hover:flex"
-      >
-        <div ref={kebabRef} className="flex w-full flex-col items-center">
-          <KebabIcon />
-        </div>
-      </button>
+      <div className="flex gap-5">
+        {todoNoteId === null && (
+          <Link
+            className="hidden group-focus-within:flex group-hover:flex h-24 w-24 items-center"
+            href={`/todos/${todoId}/note/create`}
+          >
+            <NoteWriteIcon />
+          </Link>
+        )}
+        <button
+          aria-haspopup="true"
+          aria-expanded={isOpen}
+          aria-label="메뉴 열기"
+          onClick={toggleDropdown}
+          className="hidden items-center justify-center rounded-full bg-white group-focus-within:flex group-hover:flex"
+        >
+          <div ref={kebabRef} className="flex h-24 w-24 flex-col items-center">
+            <KebabIcon />
+          </div>
+        </button>
+      </div>
       <AnimatePresence>
         {isOpen && (
           <motion.div

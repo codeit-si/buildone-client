@@ -18,7 +18,7 @@ export default function LandingSection1() {
           </div>
           <Link
             href="/login"
-            className="h-52 w-138 rounded-8 bg-dark-blue-500 text-18 font-bold text-white hover:bg-dark-blue-600"
+            className="flex h-52 w-138 items-center justify-center rounded-8 bg-dark-blue-500 text-18 font-bold text-white hover:bg-dark-blue-600"
           >
             지금 시작하기
           </Link>
