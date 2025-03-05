@@ -3,14 +3,15 @@ import { infiniteQueryOptions } from "@tanstack/react-query";
 import { TodosByGoalParams } from "@/types/dashboard";
 
 import { getInfiniteTodosByGoalId } from "../dashboard";
+import { todoKeys } from "../query-key";
 
 export const getInfiniteTodosByGoalIdOptions = ({
   goalId,
-  size = 30,
+  size = 40,
   done,
 }: TodosByGoalParams) => {
   return infiniteQueryOptions({
-    queryKey: ["todos", { goalId, isDone: done }],
+    queryKey: todoKeys.list({ size, goalId, done }),
     queryFn: ({ pageParam }) => {
       return getInfiniteTodosByGoalId({
         goalId,
