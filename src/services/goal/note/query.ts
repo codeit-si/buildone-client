@@ -1,11 +1,12 @@
 import { queryOptions } from "@tanstack/react-query";
 
-import { NoteListParams } from "@/types/note";
+import { noteKeys } from "@/services/query-key";
+import { NoteListParams, NoteListResponse } from "@/types/note";
 
-import { getNotesByGoalId } from "./index";
+import { getNotesByGoalId } from ".";
 
 export const getNotesByGoalIdOptions = (params: NoteListParams) =>
-  queryOptions({
-    queryKey: ["notes", params.goalId, params.done],
+  queryOptions<NoteListResponse>({
+    queryKey: noteKeys.list(params),
     queryFn: () => getNotesByGoalId(params),
   });

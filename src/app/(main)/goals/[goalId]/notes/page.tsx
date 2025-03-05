@@ -1,19 +1,18 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 
 import FlagGoalSmall from "@/assets/icons-big/flag_goal_small.svg";
 import Card from "@/components/note/card";
-import { getNotesByGoalIdOptions } from "@/services/goal/note/query";
+import { useNotesByGoalId } from "@/hooks/query/use-notes";
 import "@/styles/note.css";
 
 export default function NoteCollection() {
   const { goalId } = useParams();
-
-  const { data, isLoading, error } = useQuery(
-    getNotesByGoalIdOptions({ goalId: Number(goalId), size: 10 }),
-  );
+  const { data, isLoading, error } = useNotesByGoalId({
+    goalId: Number(goalId),
+    size: 10,
+  });
 
   const goalTitle = data?.notes[0]?.goalInformation?.title || "노트 모아보기";
 

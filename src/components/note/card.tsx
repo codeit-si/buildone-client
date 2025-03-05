@@ -2,18 +2,18 @@
 
 import { useState } from "react";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 import Dropdown from "@/components/@common/dropdown/dropdown";
 import Modal from "@/components/@common/portal/modal";
 import Sheet from "@/components/@common/portal/sheet";
 import DetailSheet from "@/components/note/detail-sheet";
-import { deleteNote, getNote } from "@/services/note";
-import { Note } from "@/types/note";
+import { useDeleteNote } from "@/hooks/query/use-mutation";
+import { useNoteDetail } from "@/hooks/query/use-notes";
+import { NoteResponse } from "@/types/note";
 
 interface NoteCardProps {
-  note: Note;
+  note: NoteResponse;
 }
 
 export default function NoteCard({ note }: NoteCardProps): JSX.Element | null {
@@ -22,19 +22,11 @@ export default function NoteCard({ note }: NoteCardProps): JSX.Element | null {
   const [modalOpen, setModalOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
 
-  const deleteMutation = useMutation({
-    mutationFn: () => deleteNote(note.id),
-    onSuccess: () => {
-      setIsDeleted(true);
-    },
+  const { mutate: deleteNote } = useDeleteNote({
+    onSuccess: () => setIsDeleted(true),
   });
 
-  // 상세 노트 정보를 별도로 불러와서 tags를 사용합니다.
-  const { data: detailedNote } = useQuery<Note, Error>({
-    queryKey: ["noteDetail", note.id],
-    queryFn: () => getNote(note.id),
-    retry: false,
-  });
+  const { data: detailedNote } = useNoteDetail(note.id);
 
   if (isDeleted) return null;
 
@@ -96,7 +88,7 @@ export default function NoteCard({ note }: NoteCardProps): JSX.Element | null {
             <Modal.Close
               variant="solid"
               className="w-120 min-w-120"
-              onClick={(): void => deleteMutation.mutate()}
+              onClick={(): void => deleteNote(note.id)}
             >
               삭제
             </Modal.Close>

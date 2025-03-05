@@ -11,7 +11,7 @@ import Sheet from "@/components/@common/portal/sheet";
 import Goal from "@/components/note/goal";
 import Todo from "@/components/note/todo";
 import { getNote } from "@/services/note";
-import { Note } from "@/types/note";
+import { NoteResponse } from "@/types/note";
 
 interface DetailSheetProps {
   noteId: number;
@@ -22,7 +22,7 @@ export default function DetailSheet({ noteId }: DetailSheetProps): JSX.Element {
     data: note,
     isLoading,
     error,
-  } = useQuery<Note, Error>({
+  } = useQuery<NoteResponse, Error>({
     queryKey: ["noteDetail", noteId],
     queryFn: () => getNote(noteId),
   });
