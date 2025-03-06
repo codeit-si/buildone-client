@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import ListTodo from "@/components/@common/todo";
+import Todo from "@/components/@common/todo";
 import { cn } from "@/lib/cn";
 import { getDashboardOptions } from "@/services/dashboard/query";
 
@@ -30,7 +30,7 @@ export default function RecentlyTodoList() {
       {todos && (
         <ul className="flex flex-col gap-8 pr-8">
           {todos.map((todo, index) => (
-            <ListTodo
+            <Todo
               key={todo.id}
               todo={todo}
               index={index}
