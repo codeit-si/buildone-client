@@ -11,9 +11,9 @@ export const useNotesByGoalId = (params: NoteListParams) => {
   });
 };
 
-export const useNoteDetail = (noteId: number | null) => {
+export const useNoteDetail = (noteId: number) => {
   return useQuery<NoteResponse>({
-    queryKey: noteId ? noteKeys.detail(noteId) : ["notes", "detail", "empty"],
+    queryKey: noteKeys.detail(noteId),
     queryFn: () => {
       if (!noteId) throw new Error("noteId가 필요합니다.");
       return getNote(noteId);

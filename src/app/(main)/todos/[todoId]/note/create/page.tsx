@@ -46,7 +46,7 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
   const tempSaveManagerRef = useRef<TempSaveManagerRef>(null);
 
   // 수정 모드에서는 noteData를 불러옴.
-  const { data: noteData, isLoading: noteLoading } = useNoteDetail(noteId);
+  const { data: noteData, isLoading: noteLoading } = useNoteDetail(noteId!);
 
   // 새 노트 작성 시(todoId가 있을 때) todo 상세 정보를 조회함.
   const { data: todoData, isLoading: todoLoading } = useTodoDetail(
