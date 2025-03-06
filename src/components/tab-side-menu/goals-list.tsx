@@ -27,17 +27,25 @@ export default function GoalsList({
 
   useEffect(() => {
     goals.length > 0 && setIsAdding(false);
+    if (listRef.current)
+      listRef.current.scrollTop = listRef.current.scrollHeight;
   }, [goals.length, setIsAdding]);
 
   const { ref } = useInfiniteScroll({ fetchNextPage, hasNextPage });
 
   return (
     <ul ref={listRef} className={goalsListStyle}>
-      {goals.slice().reverse().map((goal) => (
-        <li key={goal.id} className="hover:text-dark-blue-700 hover:underline">
-          <Link href={`/goals/${goal.id}`}>{goal.title}</Link>
-        </li>
-      ))}
+      {goals
+        .slice()
+        .reverse()
+        .map((goal) => (
+          <li
+            key={goal.id}
+            className="hover:text-dark-blue-700 hover:underline"
+          >
+            <Link href={`/goals/${goal.id}`}>{goal.title}</Link>
+          </li>
+        ))}
       {hasNextPage && <div ref={ref} className="h-1" />}
     </ul>
   );
