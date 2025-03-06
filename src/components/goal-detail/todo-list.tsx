@@ -10,7 +10,7 @@ import { cn } from "@/lib/cn";
 import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
 
 import LoadingSpinner from "../@common/loading-spinner";
-import ListTodo from "../@common/todo";
+import Todo from "../@common/todo";
 import TodoModal from "../@common/todo-modal/todo-modal";
 
 interface TodoListProps {
@@ -62,7 +62,7 @@ export default function TodoList({ goalId, done }: TodoListProps) {
             {data.todos.length > 0 && (
               <ul className="flex flex-col gap-8">
                 {data.todos.map((todo) => (
-                  <ListTodo
+                  <Todo
                     key={`todo-list-by-goal-${todo.id}`}
                     index={todo.id}
                     todo={todo}
