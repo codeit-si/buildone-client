@@ -17,7 +17,7 @@ import TodosMenu from "./todos-menu";
 import UserProfile from "./user-profile";
 
 const containerStyle = cva(
-  "fixed z-10 bg-white transition-all border-b border-slate-100 md:border-r md:border-slate-200",
+  "fixed z-20 bg-white transition-all border-b border-slate-100 md:border-r md:border-slate-200",
   {
     variants: {
       open: {
