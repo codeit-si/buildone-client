@@ -9,7 +9,7 @@ export default function LandingHeader() {
         <BuilDoneLogo />
         <Link
           href="/login"
-          className="rounded-8 border border-dark-blue-500 px-12 py-10 text-16 font-bold text-dark-blue-500 transition-colors delay-75 hover:bg-dark-blue-500 hover:text-white"
+          className="flex items-center justify-center rounded-8 border border-dark-blue-500 px-12 py-10 text-16 font-bold text-dark-blue-500 transition-colors delay-75 hover:bg-dark-blue-500 hover:text-white"
         >
           로그인/회원가입
         </Link>

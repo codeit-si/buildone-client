@@ -48,18 +48,6 @@ export const getInfiniteTodosByGoalId = async ({
   return data;
 };
 
-export const getProgressByGoalId = async (goalId: number) => {
-  const { data } = await api.get<{ progress: number }>(
-    ENDPOINT.GOAL.GET_PROGRESS,
-    {
-      params: {
-        goalId,
-      },
-    },
-  );
-  return data;
-};
-
 export const getDashboardProgress = async () => {
   const { data } = await api.get<DashboardTodoProgressResponse>(
     ENDPOINT.DASHBOARD.PROGRESS,

@@ -27,3 +27,15 @@ export const createGoal = async (newGoal: { title: string }) => {
   const { data } = await api.post<GoalResponse>(ENDPOINT.GOAL.CREATE, newGoal);
   return data;
 };
+
+export const getProgressByGoalId = async (goalId: number) => {
+  const { data } = await api.get<{ progress: number }>(
+    ENDPOINT.GOAL.GET_PROGRESS,
+    {
+      params: {
+        goalId,
+      },
+    },
+  );
+  return data;
+};

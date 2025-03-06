@@ -24,7 +24,7 @@ export default function Filter({
   setFilter,
 }: FilterProps): JSX.Element {
   return (
-    <div className="mb-25 flex gap-10" role="group" aria-label="작업 상태 필터">
+    <div className="mb-16 flex gap-8" role="group" aria-label="작업 상태 필터">
       {Object.entries(filters).map(([value, label]) => (
         <Button
           key={value}
