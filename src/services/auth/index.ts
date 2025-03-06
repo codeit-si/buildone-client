@@ -23,7 +23,7 @@ export const login = async (
   const { memberInformation } = res.data;
 
   useAuthStore.getState().actions.setAccessToken(accessToken);
-  useUserStore.getState().actions.setUserInfo(memberInformation);
+  useUserStore.getState().setUserInfo(memberInformation);
 
   await storeAccessTokenInCookie(accessToken);
 
