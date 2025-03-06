@@ -19,7 +19,7 @@ export default function MyProgress() {
 
   useEffect(() => {
     if (data.progress !== undefined) {
-      progress.set(circumference - (data.progress / 100) * circumference);
+      progress.set(circumference - (66 / 100) * circumference);
       progressNotRounded.set(data.progress);
     }
   }, [data.progress, progress, progressNotRounded]);
