@@ -1,11 +1,10 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 import { MemberInformation } from "@/types/auth";
 
 interface UserState {
-  id: number;
-  email: string;
-  name: string;
+  userInformation: MemberInformation | null;
 
   actions: {
     setUserInfo: (userInfo: MemberInformation) => void;
@@ -13,20 +12,21 @@ interface UserState {
   };
 }
 
-const initialState = {
-  id: 0,
-  email: "",
-  name: "",
-};
+export const useUserStore = create<UserState>()(
+  persist(
+    (set) => ({
+      userInformation: null,
 
-export const useUserStore = create<UserState>()((set) => ({
-  ...initialState,
-
-  actions: {
-    setUserInfo: ({ id, email, name }: MemberInformation) =>
-      set({ id, email, name }),
-    removeUserInfo: () => set(initialState),
-  },
-}));
+      actions: {
+        setUserInfo: ({ id, email, name }: MemberInformation) =>
+          set({ userInformation: { id, email, name } }),
+        removeUserInfo: () => set({ userInformation: null }),
+      },
+    }),
+    {
+      name: "user-information",
+    },
+  ),
+);
 
 export const useUserActions = () => useUserStore((state) => state.actions);
