@@ -27,9 +27,7 @@ export default function GoalSummaryDropdown({
     },
     {
       label: "삭제하기",
-      onClick: () => {
-        setPopupOpen(true);
-      },
+      onClick: () => setPopupOpen(true),
     },
   ];
 

@@ -80,7 +80,7 @@ export default function StreakBoard(): JSX.Element {
   };
 
   return (
-    <div className="mx-8 mb-24">
+    <div>
       {/* 진행 상황 헤더 */}
       <div className="mb-14 flex items-center">
         <ProgressIcon className="mr-11 h-40 w-40" aria-label="아이콘" />
@@ -93,7 +93,7 @@ export default function StreakBoard(): JSX.Element {
       </div>
 
       {/* 스트릭 보드 */}
-      <div className="scrollbar-horizontality flex overflow-x-auto">
+      <div className="scrollbar-horizontality flex overflow-x-auto pr-5">
         {renderPastBoard()}
         {renderCurrentWeek()}
       </div>
