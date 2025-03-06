@@ -11,22 +11,23 @@ import { getInfiniteGoalsOptions } from "@/services/dashboard/query";
 
 import AddGoalSection from "./add-goal-section";
 import GoalsList from "./goals-list";
-import LogoComponent from "./logo";
+import Logo from "./logo";
 import TabToggle from "./tab-toggle";
 import TodosMenu from "./todos-menu";
 import UserProfile from "./user-profile";
 
 const containerStyle = cva(
-  "fixed z-10 bg-white transition-all border-b border-slate-100 md:border-r md:border-slate-200",
+  "fixed z-30 bg-white transition-all delay-200 border-b border-slate-100 md:border-r md:border-slate-200",
   {
     variants: {
       open: {
-        true: "h-full w-full md:w-280 lg:w-280",
-        false: "w-full h-48 max-h-screen overflow-y-auto md:w-60 md:h-full",
+        true: "h-full w-full md:w-280 lg:w-280 overflow-hidden",
+        false:
+          "w-full h-48 max-h-screen overflow-y-auto md:w-60 md:h-full overflow-hidden",
       },
     },
     defaultVariants: {
-      open: false,
+      open: true,
     },
   },
 );
@@ -41,7 +42,7 @@ const topSectionStyle = cva(
       },
     },
     defaultVariants: {
-      open: false,
+      open: true,
     },
   },
 );
@@ -51,16 +52,16 @@ const topHeaderStyle = cva("flex w-full items-center justify-between", {
     open: {
       true: "mt-20 md:m-0",
       false:
-        "h-full flex-row px-20 gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
+        "h-full md:border-none flex-row px-20 gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
     },
   },
   defaultVariants: {
-    open: false,
+    open: true,
   },
 });
 
 export default function TabSideMenu() {
-  const [isTabMinimized, setIsTabMinimized] = useState(false);
+  const [isTabMinimized, setIsTabMinimized] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
   const [newGoal, setNewGoal] = useState("");
   const { mutate } = useCreateGoal();
@@ -93,44 +94,55 @@ export default function TabSideMenu() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  useEffect(() => {
+    if (!isTabMinimized && window.innerWidth <= 744)
+      document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "auto";
+  }, [isTabMinimized]);
+
   return (
-    <div className={containerStyle({ open: !isTabMinimized })}>
-      <div className={topSectionStyle({ open: !isTabMinimized })}>
-        <div className={topHeaderStyle({ open: !isTabMinimized })}>
-          <LogoComponent
-            isTabMinimized={isTabMinimized}
-            setIsTabMinimized={setIsTabMinimized}
-          />
-          <TabToggle
-            isTabMinimized={isTabMinimized}
-            setIsTabMinimized={setIsTabMinimized}
-          />
-        </div>
-        <UserProfile isTabOpen={isTabMinimized} />
-      </div>
-      {/* 탭 열였을때 나타나는 bottom menus */}
-      {!isTabMinimized && (
-        <>
-          <TodosMenu />
-          <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />
-          <div className="px-32 md:px-24">
-            <GoalsList
-              goals={data?.pages}
-              hasNextPage={hasNextPage}
-              setIsAdding={setIsAdding}
-              fetchNextPage={fetchNextPage}
+    <>
+      <div className={containerStyle({ open: !isTabMinimized })}>
+        <div className={topSectionStyle({ open: !isTabMinimized })}>
+          <div className={topHeaderStyle({ open: !isTabMinimized })}>
+            <Logo
+              isTabMinimized={isTabMinimized}
+              setIsTabMinimized={setIsTabMinimized}
             />
-            <AddGoalSection
-              goals={data?.pages}
-              handleSubmit={handleSubmit}
-              isAdding={isAdding}
-              newGoal={newGoal}
-              setIsAdding={setIsAdding}
-              setNewGoal={setNewGoal}
+            <TabToggle
+              isTabMinimized={isTabMinimized}
+              setIsTabMinimized={setIsTabMinimized}
             />
           </div>
-        </>
+          <UserProfile isTabOpen={isTabMinimized} />
+        </div>
+        {/* 탭 열였을때 나타나는 bottom menus */}
+        {!isTabMinimized && (
+          <>
+            <TodosMenu />
+            <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />
+            <div className="px-32 md:px-24">
+              <GoalsList
+                goals={data?.pages}
+                hasNextPage={hasNextPage}
+                setIsAdding={setIsAdding}
+                fetchNextPage={fetchNextPage}
+              />
+              <AddGoalSection
+                goals={data?.pages}
+                handleSubmit={handleSubmit}
+                isAdding={isAdding}
+                newGoal={newGoal}
+                setIsAdding={setIsAdding}
+                setNewGoal={setNewGoal}
+              />
+            </div>
+          </>
+        )}
+      </div>
+      {!isTabMinimized && (
+        <div className="fixed left-0 top-0 z-20 h-screen w-screen bg-black bg-opacity-50 lg:hidden" />
       )}
-    </div>
+    </>
   );
 }

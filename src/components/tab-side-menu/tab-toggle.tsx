@@ -7,7 +7,7 @@ import Button from "@/components/@common/button";
 import { IsTabMinimizedProps } from "@/types/tab-side-menu";
 
 const mobileStatusTitleStyle = cva(
-  "text-base font-semibold leading-6 text-slate-800 md:hidden",
+  "text-16 font-semibold ml-16 leading-6 text-slate-800 md:hidden",
   {
     variants: {
       open: {

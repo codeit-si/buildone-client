@@ -6,7 +6,7 @@ import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { GoalsListProps } from "@/types/tab-side-menu";
 
 const goalsListStyle =
-  "max-h-[calc(100vh-450px)] list-disc list-inside space-y-10 overflow-y-auto text-slate-700";
+  "scrollbar max-h-[calc(100vh-450px)] list-disc list-inside space-y-10 overflow-y-auto text-slate-700";
 
 export default function GoalsList({
   goals,
