@@ -1,6 +1,8 @@
-import { useDeleteTodo } from "@/hooks/query/use-todo";
-import Popup from "../@common/portal/popup";
 import { Dispatch, SetStateAction } from "react";
+
+import { useDeleteTodo } from "@/hooks/query/use-todo";
+
+import Popup from "../@common/portal/popup";
 
 export default function TodoDeletePopup({
   todoId,
@@ -20,7 +22,9 @@ export default function TodoDeletePopup({
         <Popup.Trigger className="hidden">삭제하기</Popup.Trigger>
         <Popup.Content>
           <div className="flex flex-col items-center justify-center text-base font-medium text-slate-800">
-            <span className="line-clamp-1 mb-10 font-bold">"{todoTitle}"</span>
+            <span className="mb-10 line-clamp-1 font-bold">
+              &quot;{todoTitle}&quot;
+            </span>
             <span>이 할 일을 삭제하시겠어요?</span>
             <span>삭제된 할 일은 복구할 수 없습니다.</span>
           </div>

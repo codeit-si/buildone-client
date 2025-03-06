@@ -6,14 +6,13 @@ import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
-import { useDeleteTodo } from "@/hooks/query/use-todo";
 import { TodoResponse } from "@/types/todo";
 
 import Goal from "../todo/goal";
+import TodoDeletePopup from "../todo/todo-delete-popup";
 
 import FixedDropdown from "./dropdown/fixed-dropdown";
 import TodoModal from "./todo-modal/todo-modal";
-import TodoDeletePopup from "../todo/todo-delete-popup";
 
 interface Props {
   todo: TodoResponse;
