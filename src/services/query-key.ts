@@ -23,5 +23,7 @@ export const dashboardKeys = {
 
 export const noteKeys = {
   all: ["notes"] as const,
+  list: (params: { goalId: number; size?: number }) =>
+    [...noteKeys.all, "list", params] as const,
   detail: (id: number) => [...noteKeys.all, "detail", { noteId: id }] as const,
 };
