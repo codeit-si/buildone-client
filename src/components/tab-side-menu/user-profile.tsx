@@ -1,11 +1,10 @@
-// import Image from "next/image";
-
 import { useState } from "react";
 
 import Profile from "@/assets/icons-big/profile.svg";
 import Button from "@/components/@common/button";
 import { useUserStore } from "@/store/user-store";
 
+import Skeleton from "../@common/skeleton";
 import TodoModal from "../@common/todo-modal/todo-modal";
 
 import CustomButton from "./custom-button";
@@ -29,12 +28,21 @@ export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
         </div>
         <div className={profileInfoStyle}>
           <div>
-            <p className="text-sm font-semibold text-slate-800">
-              {userInformation?.name || "체다치즈"}
-            </p>
-            <p className="text-sm font-medium text-slate-600">
-              {userInformation?.email || "chedacheese@slid.kr"}
-            </p>
+            {userInformation ? (
+              <>
+                <p className="text-sm font-semibold text-slate-800">
+                  {userInformation.name || ""}
+                </p>
+                <p className="text-sm font-medium text-slate-600">
+                  {userInformation.email || ""}
+                </p>
+              </>
+            ) : (
+              <div className="flex flex-col gap-y-10 pt-4">
+                <Skeleton className="h-11 w-50" />
+                <Skeleton className="h-11 w-132" />
+              </div>
+            )}
           </div>
           <Button className={logoutButtonStyle}>로그아웃</Button>
         </div>
