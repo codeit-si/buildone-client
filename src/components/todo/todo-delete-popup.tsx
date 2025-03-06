@@ -19,7 +19,6 @@ export default function TodoDeletePopup({
   return (
     <div className="ml-auto">
       <Popup.Root open={isDeletePopupOpen} onOpenChange={setIsDeletePopupOpen}>
-        <Popup.Trigger className="hidden">삭제하기</Popup.Trigger>
         <Popup.Content>
           <div className="flex flex-col items-center justify-center text-base font-medium text-slate-800">
             <span className="mb-10 line-clamp-1 font-bold">
