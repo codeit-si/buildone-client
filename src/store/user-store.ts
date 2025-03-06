@@ -3,9 +3,7 @@ import { create } from "zustand";
 import { MemberInformation } from "@/types/auth";
 
 interface UserState {
-  id: number;
-  email: string;
-  name: string;
+  userInformation: MemberInformation | null;
 
   actions: {
     setUserInfo: (userInfo: MemberInformation) => void;
@@ -13,19 +11,13 @@ interface UserState {
   };
 }
 
-const initialState = {
-  id: 0,
-  email: "",
-  name: "",
-};
-
 export const useUserStore = create<UserState>()((set) => ({
-  ...initialState,
+  userInformation: null,
 
   actions: {
     setUserInfo: ({ id, email, name }: MemberInformation) =>
-      set({ id, email, name }),
-    removeUserInfo: () => set(initialState),
+      set({ userInformation: { id, email, name } }),
+    removeUserInfo: () => set({ userInformation: null }),
   },
 }));
 
