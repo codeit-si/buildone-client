@@ -29,17 +29,11 @@ export default function GoalsList({
     goals.length > 0 && setIsAdding(false);
   }, [goals.length, setIsAdding]);
 
-  const reSortedGoalsList = goals.sort((a, b) => {
-    const dateA = new Date(a.createdAt);
-    const dateB = new Date(b.createdAt);
-    return dateA.getTime() - dateB.getTime();
-  });
-
   const { ref } = useInfiniteScroll({ fetchNextPage, hasNextPage });
 
   return (
     <ul ref={listRef} className={goalsListStyle}>
-      {reSortedGoalsList.map((goal) => (
+      {goals.reverse().map((goal) => (
         <li key={goal.id} className="hover:text-dark-blue-700 hover:underline">
           <Link href={`goals/${goal.id}`}>{goal.title}</Link>
         </li>
