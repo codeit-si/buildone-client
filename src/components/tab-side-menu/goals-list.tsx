@@ -33,7 +33,7 @@ export default function GoalsList({
 
   return (
     <ul ref={listRef} className={goalsListStyle}>
-      {goals.reverse().map((goal) => (
+      {goals.slice().reverse().map((goal) => (
         <li key={goal.id} className="hover:text-dark-blue-700 hover:underline">
           <Link href={`goals/${goal.id}`}>{goal.title}</Link>
         </li>
