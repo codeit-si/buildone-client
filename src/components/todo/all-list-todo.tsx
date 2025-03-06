@@ -39,7 +39,7 @@ export default function AllListTodo() {
   return (
     <>
       <div className="mb-16 mt-24 flex items-center justify-between">
-        <h2 className="text-18 font-semibold text-slate-600">{`모든 할 일 (${todos?.length})`}</h2>
+        <h2 className="text-18 font-semibold text-slate-900">{`모든 할 일 (${todos?.length})`}</h2>
         <button
           onClick={() => setIsModalOpen(true)}
           className="flex items-center gap-3 font-semibold text-dark-blue-600"
@@ -48,10 +48,10 @@ export default function AllListTodo() {
           <span className="text-14/3">할일 추가</span>
         </button>
       </div>
-      <div className="min-h-[2080px] w-full rounded-xl rounded-b-none border-slate-300 bg-white p-20 text-sm text-slate-800">
+      <div className="mb-16 min-h-[calc(100vh-131px)] md:min-h-[calc(100vh-91px)] w-full rounded-xl border-slate-300 bg-white p-16 md:p-24 text-sm text-slate-800 lg:mb-24 lg:p-24">
         <Filter filter={filter} setFilter={setFilter} />
         <ul className="flex flex-col gap-8">
-          {todos?.length !== 0 &&
+          {todos?.length !== 0 ? (
             todos?.map((todo, index) => (
               <Todo
                 key={todo.id}
@@ -60,8 +60,19 @@ export default function AllListTodo() {
                 showDropdownOnHover // 드롭다운 호버 여부
                 showGoal // 목표 보여주기 여부
               />
-            ))}
-          {todos?.length === 0 && <p key="no-todos">할 일이 없습니다</p>}
+            ))
+          ) : (
+            <div
+              className="flex min-h-[calc(100vh-220px)] md:min-h-[calc(100vh-200px)] w-full items-center justify-center text-center"
+              key="no-todos"
+            >
+              <p>
+                {filter === "todo" && "아직 해야 할 일이 없어요"}
+                {filter === "done" && "아직 다 한 일이 없어요"}
+                {filter === "all" && "할 일이 없어요"}
+              </p>
+            </div>
+          )}
         </ul>
         {/* 페이지가 남아 있을 경우에만 추가 데이터 요청 */}
         {hasNextPage && <div ref={ref} className="h-1" />}
