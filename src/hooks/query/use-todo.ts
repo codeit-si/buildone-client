@@ -13,8 +13,8 @@ export const useCreateTodo = () => {
 
   return useMutation({
     mutationFn: (newTodo: TodoParams) => createTodo(newTodo),
-    onSuccess: () => {
-      invalidateTodoRelatedQueries(queryClient);
+    onSuccess: (data) => {
+      invalidateTodoRelatedQueries(queryClient, data.goalInformation?.id);
     },
   });
 };
@@ -30,19 +30,19 @@ export const useUpdateTodo = () => {
       todoId: number;
       newTodo: TodoParams;
     }) => updateTodo(todoId, newTodo),
-    onSuccess: () => {
-      invalidateTodoRelatedQueries(queryClient);
+    onSuccess: (data) => {
+      invalidateTodoRelatedQueries(queryClient, data.goalInformation?.id);
     },
   });
 };
 
-export const useDeleteTodo = () => {
+export const useDeleteTodo = (goalId?: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (todoId: number) => deleteTodo(todoId),
     onSuccess: () => {
-      invalidateTodoRelatedQueries(queryClient);
+      invalidateTodoRelatedQueries(queryClient, goalId);
     },
   });
 };
