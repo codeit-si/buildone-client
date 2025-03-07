@@ -130,6 +130,7 @@ export default function Todo({
           todoTitle={todo.title}
           isDeletePopupOpen={isDeletePopupOpen}
           setIsDeletePopupOpen={setIsDeletePopupOpen}
+          goalId={todo.goalInformation?.id}
         />
       )}
     </>

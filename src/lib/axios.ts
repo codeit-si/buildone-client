@@ -57,7 +57,7 @@ api.interceptors.response.use(
 
         throw new Error("토큰 갱신에 실패했습니다.");
       } catch (reissueError) {
-        const { removeAccessToken } = useAuthStore.getState().actions;
+        const { removeAccessToken } = useAuthStore.getState();
         removeAccessToken();
 
         return Promise.reject(new ApiError("로그인이 필요합니다."));
