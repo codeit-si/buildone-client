@@ -1,43 +1,53 @@
 "use client";
 
-import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 import DeleteIcon from "@/assets/icons-small/delete_slate_400.svg";
 
-type Tag = {
+export type Tag = {
   id: string;
   text: string;
 };
 
-export default function TagInput(): JSX.Element {
-  const [inputValue, setInputValue] = useState("");
-  const [tags, setTags] = useState<Tag[]>([]);
-  const tagIdCounter = useRef(0);
+interface TagInputProps {
+  tags: Tag[];
+  setTags: (tags: Tag[]) => void;
+}
 
-  const getNextTagId = (): number => {
-    const nextId = tagIdCounter.current + 1;
-    tagIdCounter.current = nextId;
-    return nextId;
-  };
+export default function TagInput({
+  tags,
+  setTags,
+}: TagInputProps): JSX.Element {
+  const [inputValue, setInputValue] = useState("");
+
+  // 화살표 함수로 새 태그 생성
+  const createNewTag = (text: string): Tag => ({
+    id: text, // 텍스트 자체를 key로 사용
+    text,
+  });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === " " && inputValue.trim() !== "") {
+    if ((e.key === " " || e.key === "Enter") && inputValue.trim() !== "") {
       e.preventDefault();
-      const newTag: Tag = {
-        id: `tag-${getNextTagId()}`,
-        text: inputValue.trim(),
-      };
-      setTags((prev) => [...prev, newTag]);
+      const newTagText = inputValue.trim();
+      // 중복 체크: 이미 같은 텍스트가 있는 경우
+      const isDuplicate = tags.some((tag) => tag.text === newTagText);
+      if (isDuplicate) {
+        setInputValue(""); // 중복된 태그 입력 시, 태그 생성 x
+        return;
+      }
+      const newTag = createNewTag(newTagText);
+      setTags([...tags, newTag]);
       setInputValue("");
     }
   };
 
   const handleRemoveTag = (id: string) => {
-    setTags((prev) => prev.filter((tag) => tag.id !== id));
+    setTags(tags.filter((tag) => tag.id !== id));
   };
 
   return (

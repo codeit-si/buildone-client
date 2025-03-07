@@ -1,6 +1,8 @@
 "use client";
 
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Button from "@/components/@common/button";
 import Counting from "@/components/@common/counting";
@@ -10,24 +12,83 @@ import LinkAttached from "@/components/note/link-attached";
 import LoadNoteToastManager, {
   NoteData,
 } from "@/components/note/load-note-toast-manager";
-import TagInput from "@/components/note/tag";
+import TagInput, { Tag } from "@/components/note/tag";
 import TempSaveManager, {
   TempSaveManagerRef,
 } from "@/components/note/temp-save-manager";
 import Tiptap from "@/components/note/tiptap";
 import Todo from "@/components/note/todo";
+import { useCreateOrUpdateNote, useNoteDetail } from "@/hooks/query/use-notes";
 import "@/styles/note.css";
+// 단일 Todo 상세 정보를 가져오는 API 함수
+import { useTodoDetail } from "@/hooks/query/use-todo";
 import { countWithoutSpaces, countWithSpaces } from "@/utils/text-utils";
 
-export default function NotesPage() {
+export default function NotesPage({ params }: { params: { todoId: string } }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const noteIdParam = searchParams.get("noteId");
+  // noteId가 있으면 수정모드, 없으면 새로 작성하는 모드
+  const noteId = noteIdParam ? Number(noteIdParam) : null;
+  // [todoId]는 라우트 동적 세그먼트에서 추출
+  const todoId = Number(params.todoId);
+  const isEditMode = noteId !== null;
+
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [link, setLink] = useState<string>("");
   const [showLink, setShowLink] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [loadedNote, setLoadedNote] = useState<NoteData | null>(null);
+  const [tags, setTags] = useState<Tag[]>([]);
 
   const tempSaveManagerRef = useRef<TempSaveManagerRef>(null);
+
+  // 수정 모드에서는 noteData를 불러옴.
+  const { data: noteData, isLoading: noteLoading } = useNoteDetail(noteId!);
+
+  // 새 노트 작성 시(todoId가 있을 때) todo 상세 정보를 조회함.
+  const { data: todoData, isLoading: todoLoading } = useTodoDetail(
+    todoId,
+    isEditMode,
+  );
+
+  // 수정 모드일 경우 noteData를 기반으로 초기화
+  useEffect(() => {
+    if (noteData) {
+      setTitle(noteData.title);
+      setContent(noteData.content);
+      if (noteData.linkUrl && noteData.linkUrl.trim() !== "") {
+        setLink(noteData.linkUrl);
+        setShowLink(true);
+      } else {
+        setLink("");
+        setShowLink(false);
+      }
+      if (noteData.tags && noteData.tags.length > 0) {
+        setTags(
+          noteData.tags.map((t: string, index: number) => ({
+            id: `${t}-${index}`,
+            text: t,
+          })),
+        );
+      } else {
+        setTags([]);
+      }
+    }
+  }, [noteData]);
+
+  const mutation = useCreateOrUpdateNote({
+    noteId,
+    todoId,
+    isEditMode,
+    onSuccess: (data) => {
+      const goalId = data.goalInformation?.id;
+      if (goalId) {
+        router.push(`/goals/${goalId}/notes`);
+      }
+    },
+  });
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
@@ -71,6 +132,25 @@ export default function NotesPage() {
     tempSaveManagerRef.current?.saveTempNote();
   };
 
+  const handleSubmit = () => {
+    mutation.mutate({
+      title,
+      content,
+      linkUrl: link,
+      tags: tags.map((tag) => tag.text),
+    });
+  };
+
+  if ((isEditMode && noteLoading) || (!isEditMode && todoLoading))
+    return <div>Loading...</div>;
+
+  // 수정 모드이면 noteData의 정보를 사용, 그렇지 않으면 todoData의 정보를 사용
+  const displayedTodoTitle = isEditMode
+    ? noteData?.todoInformation?.title
+    : todoData?.title;
+  const displayedGoalTitle = (isEditMode ? noteData : todoData)?.goalInformation
+    ?.title;
+
   return (
     <div className="min-h-screen bg-white">
       <div className="ml-16 pt-24 md:ml-24 lg:ml-80">
@@ -95,6 +175,7 @@ export default function NotesPage() {
                 size="sm"
                 shape="square"
                 disabled={!title.trim() || !content.trim()}
+                onClick={handleSubmit}
               >
                 작성 완료
               </Button>
@@ -106,10 +187,10 @@ export default function NotesPage() {
             <LoadNoteToastManager onLoadNote={handleOpenLoadModal} />
 
             {/* 목표 표시 */}
-            <Goal goalText="자바스크립트로 웹 서비스 만들기" />
+            <Goal goalText={displayedGoalTitle || ""} />
 
             {/* To do 항목 */}
-            <Todo todoText="자바스크립트 기초 챕터1 듣기" />
+            <Todo todoText={displayedTodoTitle || ""} />
 
             {/* 노트 제목 입력 */}
             <div className="flex items-center gap-8 border-b border-t border-slate-200">
@@ -124,10 +205,10 @@ export default function NotesPage() {
             </div>
 
             {/* 태그 입력 영역 */}
-            <TagInput />
+            <TagInput tags={tags} setTags={setTags} />
 
             {/* 에디터 영역 */}
-            <div className="mt-12">
+            <div className="mt-16">
               <Counting
                 type="text"
                 count={countWithoutSpaces(content)}
@@ -135,14 +216,14 @@ export default function NotesPage() {
               />
 
               {/* 링크 첨부 */}
-              <div className="mt-28">
+              <div className="mb-8 mt-12">
                 {showLink && (
                   <LinkAttached link={link} onRemove={handleRemoveLink} />
                 )}
               </div>
 
               {/* 본문 */}
-              <div className="mt-16">
+              <div className="mt-8">
                 <Tiptap
                   content={content}
                   setContents={setContent}
