@@ -30,6 +30,22 @@ export const login = async (
   return res;
 };
 
+/** 로그아웃 API */
+export const logout = async (): Promise<void> => {
+  try {
+    const response = await api.post(ENDPOINT.AUTH.LOGOUT);
+
+    if (response.status === 204) {
+      console.log("로그아웃 성공");
+    } else {
+      console.error("로그아웃 실패");
+    }
+  } catch (error) {
+    console.error("API 요청 중 오류 발생:", error);
+    throw error;
+  }
+};
+
 /** 회원가입 API */
 export const signup = async (
   name: string,
