@@ -1,13 +1,12 @@
 import axios from "axios";
 
-import { ApiError } from "./error";
-
+/** Next.js Route Handler 요청 인스턴스 */
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_ADDRESS,
   withCredentials: true,
 });
 
-api.interceptors.response.use(
-  (response) => response,
-  (error: unknown) => Promise.reject(new ApiError(error)),
-);
+/** Backend 요청 인스턴스 */
+export const serverApi = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_SERVER_ADDRESS,
+  withCredentials: true,
+});

@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 
-import { api } from "@/lib/axios";
+import { serverApi } from "@/lib/axios";
 import { LoginResponse, SignupResponse } from "@/types/auth";
 import { removeCookie, setCookie } from "@/utils/cookie";
 
@@ -11,7 +11,7 @@ export const login = async (
   email: string,
   password: string,
 ): Promise<AxiosResponse<LoginResponse>> => {
-  const res = await api.post<LoginResponse>(ENDPOINT.AUTH.LOGIN, {
+  const res = await serverApi.post<LoginResponse>(ENDPOINT.AUTH.LOGIN, {
     email,
     password,
   });
@@ -29,7 +29,7 @@ export const login = async (
 
 /** 로그아웃 API */
 export const logout = async (): Promise<AxiosResponse> => {
-  const res = await api.post(ENDPOINT.AUTH.LOGOUT);
+  const res = await serverApi.post(ENDPOINT.AUTH.LOGOUT);
   removeCookie("ACCESS_TOKEN");
 
   return res;
@@ -41,7 +41,7 @@ export const signup = async (
   email: string,
   password: string,
 ): Promise<AxiosResponse<SignupResponse>> => {
-  const res = await api.post<SignupResponse>(ENDPOINT.AUTH.SIGNUP, {
+  const res = await serverApi.post<SignupResponse>(ENDPOINT.AUTH.SIGNUP, {
     name,
     email,
     password,
