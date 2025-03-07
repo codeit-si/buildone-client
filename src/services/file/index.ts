@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import api from "@/lib/axios";
+import { api } from "@/lib/axios";
 import { ENDPOINT } from "@/services/endpoint";
 import { FilePresignedUrlResponse } from "@/types/file";
 

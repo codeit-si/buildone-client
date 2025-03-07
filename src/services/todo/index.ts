@@ -1,4 +1,4 @@
-import api from "@/lib/axios";
+import { api } from "@/lib/axios";
 import { TodoListResponse, TodoResponse } from "@/types/todo";
 
 import { ENDPOINT } from "../endpoint";
