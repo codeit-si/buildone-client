@@ -7,7 +7,6 @@ import LandingSection4 from "@/components/landing-page/landing-section-4";
 import LandingSection5 from "@/components/landing-page/landing-section-5";
 import LandingSection6 from "@/components/landing-page/landing-section-6";
 import LandingSection7 from "@/components/landing-page/landing-section-7";
-import FcmProvider from "@/lib/fcm-provider";
 
 export default async function LandingPage() {
   return (
@@ -21,7 +20,6 @@ export default async function LandingPage() {
       <LandingSection6 />
       <LandingSection7 />
       <LandingFooter />
-      <FcmProvider />
     </>
   );
 }
