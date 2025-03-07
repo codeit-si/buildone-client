@@ -26,7 +26,10 @@ export default function GoalsList({
   }, [setIsAdding]);
 
   useEffect(() => {
-    goals.length > 0 && setIsAdding(false);
+    if (goals.length > 0) {
+      setIsAdding(false);
+    }
+
     if (listRef.current)
       listRef.current.scrollTop = listRef.current.scrollHeight;
   }, [goals.length, setIsAdding]);
