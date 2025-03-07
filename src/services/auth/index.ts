@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 
-import api from "@/lib/axios";
+import { serverApi } from "@/lib/axios";
 import { useAuthStore } from "@/store/auth-store";
 import { useUserStore } from "@/store/user-store";
 import { LoginResponse, SignupResponse } from "@/types/auth";
@@ -14,7 +14,7 @@ export const login = async (
   email: string,
   password: string,
 ): Promise<AxiosResponse<LoginResponse>> => {
-  const res = await api.post<LoginResponse>(ENDPOINT.AUTH.LOGIN, {
+  const res = await serverApi.post<LoginResponse>(ENDPOINT.AUTH.LOGIN, {
     email,
     password,
   });
@@ -42,7 +42,7 @@ export const signup = async (
   email: string,
   password: string,
 ): Promise<AxiosResponse<SignupResponse>> => {
-  const res = await api.post<SignupResponse>(ENDPOINT.AUTH.SIGNUP, {
+  const res = await serverApi.post<SignupResponse>(ENDPOINT.AUTH.SIGNUP, {
     name,
     email,
     password,
