@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 import PlusIcon from "@/assets/icons-small/plus/plus_db_sm.svg";
-import ListTodo from "@/components/@common/todo";
+import Todo from "@/components/@common/todo";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
 
@@ -53,7 +53,7 @@ export default function AllListTodo() {
         <ul className="flex flex-col gap-8">
           {todos?.length !== 0 ? (
             todos?.map((todo, index) => (
-              <ListTodo
+              <Todo
                 key={todo.id}
                 index={index}
                 todo={todo}

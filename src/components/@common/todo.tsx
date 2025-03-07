@@ -6,10 +6,10 @@ import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
-import { useDeleteTodo } from "@/hooks/query/use-todo";
 import { TodoResponse } from "@/types/todo";
 
 import Goal from "../todo/goal";
+import TodoDeletePopup from "../todo/todo-delete-popup";
 
 import FixedDropdown from "./dropdown/fixed-dropdown";
 import TodoModal from "./todo-modal/todo-modal";
@@ -26,21 +26,14 @@ interface DropdownItem {
   onClick: () => void;
 }
 
-export default function ListTodo({
+export default function Todo({
   todo,
   showDropdownOnHover,
   index,
   showGoal,
 }: Props) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  const { mutate } = useDeleteTodo();
-
-  const handleDelete = async (selectedTodoForDelete: TodoResponse) => {
-    if (!selectedTodoForDelete.id) return;
-
-    mutate(todo.id);
-  };
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
   const getDropdownItems = (selectedTodoItem: TodoResponse): DropdownItem[] => {
     const baseItems: DropdownItem[] = [
@@ -48,13 +41,13 @@ export default function ListTodo({
         id: "edit",
         label: "수정하기",
         onClick: () => {
-          setIsEditModalOpen(true); // 모달 열기
+          setIsEditModalOpen(true);
         },
       },
       {
         id: "delete",
         label: "삭제하기",
-        onClick: () => handleDelete(selectedTodoItem),
+        onClick: () => setIsDeletePopupOpen(true),
       },
     ];
 
@@ -129,6 +122,14 @@ export default function ListTodo({
           todo={todo}
           open={isEditModalOpen}
           onOpenChange={setIsEditModalOpen}
+        />
+      )}
+      {isDeletePopupOpen && (
+        <TodoDeletePopup
+          todoId={todo.id}
+          todoTitle={todo.title}
+          isDeletePopupOpen={isDeletePopupOpen}
+          setIsDeletePopupOpen={setIsDeletePopupOpen}
         />
       )}
     </>
