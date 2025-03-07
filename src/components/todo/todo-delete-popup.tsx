@@ -9,13 +9,15 @@ export default function TodoDeletePopup({
   todoTitle,
   isDeletePopupOpen,
   setIsDeletePopupOpen,
+  goalId,
 }: {
   todoId: number;
   todoTitle: string;
   isDeletePopupOpen: boolean;
   setIsDeletePopupOpen: Dispatch<SetStateAction<boolean>>;
+  goalId?: number;
 }) {
-  const { mutate } = useDeleteTodo();
+  const { mutate } = useDeleteTodo(goalId);
   return (
     <div className="ml-auto">
       <Popup.Root open={isDeletePopupOpen} onOpenChange={setIsDeletePopupOpen}>
