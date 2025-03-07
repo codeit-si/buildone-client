@@ -8,8 +8,7 @@ import Dropdown from "@/components/@common/dropdown/dropdown";
 import Modal from "@/components/@common/portal/modal";
 import Sheet from "@/components/@common/portal/sheet";
 import DetailSheet from "@/components/note/detail-sheet";
-import { useDeleteNote } from "@/hooks/query/use-mutation";
-import { useNoteDetail } from "@/hooks/query/use-notes";
+import { useDeleteNote, useNoteDetail } from "@/hooks/query/use-notes";
 import { NoteResponse } from "@/types/note";
 
 interface NoteCardProps {

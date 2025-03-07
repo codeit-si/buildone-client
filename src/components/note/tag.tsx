@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 import DeleteIcon from "@/assets/icons-small/delete_slate_400.svg";
 
@@ -10,49 +10,44 @@ export type Tag = {
 };
 
 interface TagInputProps {
-  initialTags?: Tag[];
-  onTagsChange?: (tags: Tag[]) => void;
+  tags: Tag[];
+  setTags: (tags: Tag[]) => void;
 }
 
 export default function TagInput({
-  initialTags = [],
-  onTagsChange,
+  tags,
+  setTags,
 }: TagInputProps): JSX.Element {
   const [inputValue, setInputValue] = useState("");
-  const [tags, setTags] = useState<Tag[]>(initialTags);
-  const tagIdCounter = useRef(initialTags.length);
 
-  // 태그가 업데이트될 때마다 상위 컴포넌트에 전달
-  useEffect(() => {
-    if (onTagsChange) {
-      onTagsChange(tags);
-    }
-  }, [tags, onTagsChange]);
-
-  const getNextTagId = (): number => {
-    const nextId = tagIdCounter.current + 1;
-    tagIdCounter.current = nextId;
-    return nextId;
-  };
+  // 화살표 함수로 새 태그 생성
+  const createNewTag = (text: string): Tag => ({
+    id: text, // 텍스트 자체를 key로 사용
+    text,
+  });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === " " && inputValue.trim() !== "") {
+    if ((e.key === " " || e.key === "Enter") && inputValue.trim() !== "") {
       e.preventDefault();
-      const newTag: Tag = {
-        id: `tag-${getNextTagId()}`,
-        text: inputValue.trim(),
-      };
-      setTags((prev) => [...prev, newTag]);
+      const newTagText = inputValue.trim();
+      // 중복 체크: 이미 같은 텍스트가 있는 경우
+      const isDuplicate = tags.some((tag) => tag.text === newTagText);
+      if (isDuplicate) {
+        setInputValue(""); // 중복된 태그 입력 시, 태그 생성 x
+        return;
+      }
+      const newTag = createNewTag(newTagText);
+      setTags([...tags, newTag]);
       setInputValue("");
     }
   };
 
   const handleRemoveTag = (id: string) => {
-    setTags((prev) => prev.filter((tag) => tag.id !== id));
+    setTags(tags.filter((tag) => tag.id !== id));
   };
 
   return (

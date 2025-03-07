@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -18,11 +18,10 @@ import TempSaveManager, {
 } from "@/components/note/temp-save-manager";
 import Tiptap from "@/components/note/tiptap";
 import Todo from "@/components/note/todo";
-import { useCreateOrUpdateNote } from "@/hooks/query/use-mutation";
-import { useNoteDetail } from "@/hooks/query/use-notes";
+import { useCreateOrUpdateNote, useNoteDetail } from "@/hooks/query/use-notes";
 import "@/styles/note.css";
 // 단일 Todo 상세 정보를 가져오는 API 함수
-import { useTodoDetail } from "@/hooks/query/use-todo-detail";
+import { useTodoDetail } from "@/hooks/query/use-todo";
 import { countWithoutSpaces, countWithSpaces } from "@/utils/text-utils";
 
 export default function NotesPage({ params }: { params: { todoId: string } }) {
@@ -77,15 +76,6 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
         setTags([]);
       }
     }
-  }, [noteData]);
-
-  const memoizedInitialTags = useMemo(() => {
-    return noteData && noteData.tags
-      ? noteData.tags.map((t: string, index: number) => ({
-          id: `${t}-${index}`,
-          text: t,
-        }))
-      : [];
   }, [noteData]);
 
   const mutation = useCreateOrUpdateNote({
@@ -215,10 +205,7 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
             </div>
 
             {/* 태그 입력 영역 */}
-            <TagInput
-              initialTags={memoizedInitialTags}
-              onTagsChange={(newTags) => setTags(newTags)}
-            />
+            <TagInput tags={tags} setTags={setTags} />
 
             {/* 에디터 영역 */}
             <div className="mt-16">
