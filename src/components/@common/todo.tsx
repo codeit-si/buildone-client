@@ -8,10 +8,12 @@ import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
 import { TodoResponse } from "@/types/todo";
 
+import DetailSheet from "../note/detail-sheet";
 import Goal from "../todo/goal";
 import TodoDeletePopup from "../todo/todo-delete-popup";
 
 import FixedDropdown from "./dropdown/fixed-dropdown";
+import Sheet from "./portal/sheet";
 import TodoModal from "./todo-modal/todo-modal";
 
 interface Props {
@@ -34,6 +36,7 @@ export default function Todo({
 }: Props) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   const getDropdownItems = (selectedTodoItem: TodoResponse): DropdownItem[] => {
     const baseItems: DropdownItem[] = [
@@ -53,7 +56,7 @@ export default function Todo({
 
     if (selectedTodoItem.noteId !== null) {
       return [
-        { id: "note", label: "노트보기", onClick: () => {} },
+        { id: "note", label: "노트보기", onClick: () => setSheetOpen(true) },
         ...baseItems,
       ];
     }
@@ -63,13 +66,13 @@ export default function Todo({
 
   const iconSpread = (currentTodo: TodoResponse) => {
     const icons = [
+      { key: "file", url: currentTodo.fileUrl, Icon: FileIcon },
+      { key: "link", url: currentTodo.linkUrl, Icon: LinkIcon },
       {
         key: "note",
         url: currentTodo.noteId ? `/notes/${currentTodo.noteId}` : null,
         Icon: NoteIcon,
       },
-      { key: "link", url: currentTodo.linkUrl, Icon: LinkIcon },
-      { key: "file", url: currentTodo.fileUrl, Icon: FileIcon },
     ];
 
     return icons
@@ -78,7 +81,7 @@ export default function Todo({
         <Link
           key={key}
           href={url || "#"}
-          target={`${key === "file" || key === "link" ? "_blank" : "_self"}`}
+          target="_blank"
           rel="noopener noreferrer"
           aria-label={`${key} 열기`}
         >
@@ -116,6 +119,14 @@ export default function Todo({
           </div>
         )}
       </li>
+      {sheetOpen && todo.noteId !== null && (
+        <Sheet.Root open={sheetOpen} onOpenChange={setSheetOpen}>
+          <DetailSheet noteId={todo.noteId} />
+          <Sheet.Trigger className="h-40 w-full border-b border-b-slate-200 text-left font-medium">
+            {todo.title}
+          </Sheet.Trigger>
+        </Sheet.Root>
+      )}
       {isEditModalOpen && (
         <TodoModal
           goalId={todo.goalInformation?.id}
