@@ -17,13 +17,13 @@ interface DropdownItemType {
 interface DropdownProps {
   items: DropdownItemType[];
   todoId: number;
-  todoNoteId: number | null;
+  noteId: number | null;
 }
 
 export default function FixedDropdown({
   items,
   todoId,
-  todoNoteId,
+  noteId,
 }: DropdownProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const kebabRef = useRef<HTMLDivElement>(null);
@@ -100,14 +100,14 @@ export default function FixedDropdown({
       onKeyDown={handleKeyDown}
     >
       <div className="flex gap-5">
-        {todoNoteId !== null ? null : (
+        {noteId === null ? (
           <Link
             className="hidden h-24 w-24 items-center group-focus-within:flex group-hover:flex"
-            href={`/todos/${todoId}/note/create`}
+            href={`/todos/${todoId}/note/${noteId}/create`}
           >
             <NoteWriteIcon />
           </Link>
-        )}
+        ) : null}
         <button
           aria-haspopup="true"
           aria-expanded={isOpen}

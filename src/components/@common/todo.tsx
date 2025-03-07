@@ -61,7 +61,10 @@ export default function Todo({
         {
           id: "note",
           label: "노트보기",
-          onClick: () => router.push(`note/${selectedTodoItem.noteId}`),
+          onClick: () =>
+            router.push(
+              `/todos/${selectedTodoItem.id}/note/${selectedTodoItem.noteId}/create`,
+            ),
         },
         ...baseItems,
       ];
@@ -127,7 +130,7 @@ export default function Todo({
               <FixedDropdown
                 items={getDropdownItems(todo)}
                 todoId={todo.id}
-                todoNoteId={todo.noteId}
+                noteId={todo.noteId}
               />
             )}
           </div>
@@ -140,7 +143,7 @@ export default function Todo({
       </li>
       {sheetOpen && todo.noteId !== null && (
         <Sheet.Root open={sheetOpen} onOpenChange={setSheetOpen}>
-          <DetailSheet noteId={todo.noteId} />
+          <DetailSheet noteId={todo.noteId} linkUrl={todo.linkUrl} />
         </Sheet.Root>
       )}
       {isEditModalOpen && (

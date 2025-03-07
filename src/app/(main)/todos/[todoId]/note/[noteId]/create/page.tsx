@@ -24,7 +24,11 @@ import "@/styles/note.css";
 import { useTodoDetail } from "@/hooks/query/use-todo";
 import { countWithoutSpaces, countWithSpaces } from "@/utils/text-utils";
 
-export default function NotesPage({ params }: { params: { todoId: string } }) {
+export default function NotesPage({
+  params,
+}: {
+  params: { todoId: string; noteId: string };
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const noteIdParam = searchParams.get("noteId");
