@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
@@ -37,6 +38,7 @@ export default function Todo({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const router = useRouter();
 
   const getDropdownItems = (selectedTodoItem: TodoResponse): DropdownItem[] => {
     const baseItems: DropdownItem[] = [
@@ -56,7 +58,11 @@ export default function Todo({
 
     if (selectedTodoItem.noteId !== null) {
       return [
-        { id: "note", label: "노트보기", onClick: () => setSheetOpen(true) },
+        {
+          id: "note",
+          label: "노트보기",
+          onClick: () => router.push(`note/${selectedTodoItem.noteId}`),
+        },
         ...baseItems,
       ];
     }
@@ -70,24 +76,37 @@ export default function Todo({
       { key: "link", url: currentTodo.linkUrl, Icon: LinkIcon },
       {
         key: "note",
-        url: currentTodo.noteId ? `/notes/${currentTodo.noteId}` : null,
+        url: null,
         Icon: NoteIcon,
+        onClick:
+          currentTodo.noteId !== null ? () => setSheetOpen(true) : undefined,
       },
     ];
 
     return icons
-      .filter(({ url }) => url !== null)
-      .map(({ key, url, Icon }) => (
-        <Link
-          key={key}
-          href={url || "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${key} 열기`}
-        >
-          <Icon />
-        </Link>
-      ));
+      .filter(({ url, onClick }) => url !== null || onClick)
+      .map(({ key, url, Icon, onClick }) =>
+        url ? (
+          <Link
+            key={key}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${key} 열기`}
+          >
+            <Icon />
+          </Link>
+        ) : (
+          <button
+            key={key}
+            onClick={onClick}
+            disabled={!onClick}
+            aria-label={`${key} 열기`}
+          >
+            <Icon />
+          </button>
+        ),
+      );
   };
 
   return (
@@ -122,9 +141,6 @@ export default function Todo({
       {sheetOpen && todo.noteId !== null && (
         <Sheet.Root open={sheetOpen} onOpenChange={setSheetOpen}>
           <DetailSheet noteId={todo.noteId} />
-          <Sheet.Trigger className="h-40 w-full border-b border-b-slate-200 text-left font-medium">
-            {todo.title}
-          </Sheet.Trigger>
         </Sheet.Root>
       )}
       {isEditModalOpen && (
