@@ -24,7 +24,7 @@ export default function MyProgressContainer() {
       {!toggleStreak && (
         <div className="relative h-full w-full">
           <MyProgress />
-          <div className="absolute -bottom-16 -right-16">
+          <div className="absolute -bottom-16 -right-16 lg:-right-24">
             <EllipseIcon />
           </div>
         </div>
