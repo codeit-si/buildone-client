@@ -1,4 +1,5 @@
-const PREFIX = `/api/v1`;
+const PREFIX =
+  `/api/v1${process.env.NEXT_PUBLIC_MOCK_ENABLED === "true" ? "/mocks" : ""}` as const;
 
 export const ENDPOINT = {
   AUTH: {
