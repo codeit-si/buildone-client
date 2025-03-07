@@ -1,4 +1,4 @@
-import api from "@/lib/axios";
+import { api } from "@/lib/axios";
 import { GoalResponse } from "@/types/goal";
 
 import { ENDPOINT } from "../endpoint";
