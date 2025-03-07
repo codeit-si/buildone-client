@@ -1,29 +1,19 @@
 import { create } from "zustand";
 
 interface AuthState {
-  accessToken: string;
-  expiredTime: string;
+  accessToken: string | null;
 
-  actions: {
-    setAccessToken: (token: string) => void;
-    setExpiredTime: (time: string) => void;
-    removeAccessToken: () => void;
-  };
+  setAccessToken: (token: string) => void;
+  removeAccessToken: () => void;
 }
 
 const initialState = {
-  accessToken: "",
-  expiredTime: "",
+  accessToken: null,
 };
 
 export const useAuthStore = create<AuthState>()((set) => ({
   ...initialState,
 
-  actions: {
-    setAccessToken: (token: string) => set({ accessToken: token }),
-    setExpiredTime: (time: string) => set({ expiredTime: time }),
-    removeAccessToken: () => set(initialState),
-  },
+  setAccessToken: (token: string) => set({ accessToken: token }),
+  removeAccessToken: () => set(initialState),
 }));
-
-export const useAuthActions = () => useAuthStore((state) => state.actions);

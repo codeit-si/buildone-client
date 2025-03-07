@@ -3,8 +3,10 @@
 import {
   ComponentProps,
   createContext,
+  Dispatch,
   ElementType,
   PropsWithChildren,
+  SetStateAction,
   useContext,
   useEffect,
   useMemo,
@@ -15,7 +17,7 @@ import { createPortal } from "react-dom";
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 
-import IcClose from "@/assets/ic_close.svg";
+import IcClose from "@/assets/icons-small/close.svg";
 import Button, { ButtonProps } from "@/components/@common/button";
 import usePortalClosesByEscapeKey from "@/hooks/portal/use-portal-closes-by-escape-key";
 import usePortalOpen from "@/hooks/portal/use-portal-open";
@@ -143,12 +145,25 @@ function ModalContent({
   children,
   className,
   hasCloseIcon = true,
-}: ComponentProps<"div"> & { hasCloseIcon?: boolean }) {
+  closeOnOverlayClick = true,
+  onBeforeClose,
+}: ComponentProps<"div"> &
+  ModalOverlayProps & {
+    hasCloseIcon?: boolean;
+    onBeforeClose?: Dispatch<SetStateAction<boolean>>;
+  }) {
   const { open, setOpen } = useModal();
   const [[title, footer], nonContentChild] = splitChildrenByComponents(
     [ModalTitle, ModalFooter],
     children,
   );
+
+  const handleClose = () => {
+    if (!onBeforeClose) setOpen(false);
+    else {
+      onBeforeClose(true);
+    }
+  };
 
   return (
     <ModalPortal>
@@ -172,7 +187,7 @@ function ModalContent({
               {hasCloseIcon && (
                 <button
                   className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"
-                  onClick={() => setOpen(false)}
+                  onClick={handleClose}
                 >
                   <IcClose />
                 </button>
@@ -183,7 +198,10 @@ function ModalContent({
           </motion.div>
         )}
       </AnimatePresence>
-      <ModalOverlay />
+      <ModalOverlay
+        className="z-30"
+        closeOnOverlayClick={closeOnOverlayClick}
+      />
     </ModalPortal>
   );
 }

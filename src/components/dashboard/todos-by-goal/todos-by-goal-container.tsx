@@ -1,29 +1,31 @@
+"use client";
+
+import { Suspense } from "react";
+
+import FlagIcon from "@/assets/flag.svg";
+
+import DashboardLoading from "../dashboard-loading";
+import SectionContainer from "../section-container";
+import SectionTitle from "../section-title";
+
+import GoalList from "./goal-list";
+
 export default function TodosByGoalContainer() {
   return (
-    <section className="w-full rounded-2xl bg-white md:col-span-2 md:mt-16">
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-      <div className="h-100">hello</div>
-    </section>
+    <SectionContainer className="mt-12 min-h-200 md:col-span-2 md:mt-16 md:min-h-511">
+      <SectionTitle>
+        <div className="flex h-40 w-40 items-center justify-center rounded-15 bg-blue-500">
+          <FlagIcon />
+        </div>
+        <h2 className="line-clamp-1">목표 별 할일</h2>
+      </SectionTitle>
+      <Suspense
+        fallback={
+          <DashboardLoading>목표를 불러오는 중입니다...</DashboardLoading>
+        }
+      >
+        <GoalList />
+      </Suspense>
+    </SectionContainer>
   );
 }

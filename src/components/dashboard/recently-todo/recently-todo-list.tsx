@@ -4,12 +4,9 @@ import { useEffect, useRef, useState } from "react";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 
+import Todo from "@/components/@common/todo";
 import { cn } from "@/lib/cn";
 import { getDashboardOptions } from "@/services/dashboard/query";
-
-import Goal from "./goal";
-import RecentlyTodoCheckbox from "./recently-todo-item";
-import TodoIcons from "./todo-icons";
 
 export default function RecentlyTodoList() {
   const { data } = useSuspenseQuery(getDashboardOptions());
@@ -30,22 +27,29 @@ export default function RecentlyTodoList() {
       className="scrollbar h-full overflow-y-auto"
       role="region"
     >
-      <ul className="flex flex-col gap-8 pr-8">
-        {todos.map((todo) => (
-          <li key={todo.id} className="text-sm">
-            <div className="flex items-center justify-between">
-              <RecentlyTodoCheckbox todo={todo} />
-              <TodoIcons todo={todo} />
-            </div>
-            {todo.goalInformation && (
-              <Goal goal={todo.goalInformation} isDone={todo.isDone} />
-            )}
-          </li>
-        ))}
-      </ul>
+      {todos && (
+        <ul className="flex flex-col gap-8 pr-8">
+          {todos.map((todo, index) => (
+            <Todo
+              key={todo.id}
+              todo={todo}
+              index={index}
+              showGoal
+              showDropdownOnHover
+            />
+          ))}
+        </ul>
+      )}
+      {!todos && (
+        <div className="flex h-full w-full items-center justify-center">
+          <span className="h-40 text-sm text-slate-500">
+            최근에 등록한 할 일이 없어요
+          </span>
+        </div>
+      )}
       <div
         className={cn(
-          "pointer-events-none bottom-0 -mt-10 h-30 w-full bg-gradient-to-t from-white from-30% to-white/0",
+          "pointer-events-none bottom-0 -mt-10 h-30 w-full bg-gradient-to-t from-white from-10% to-white/0 to-70%",
           isOverflowing ? "sticky" : "hidden",
         )}
       />

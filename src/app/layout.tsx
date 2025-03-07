@@ -1,5 +1,6 @@
 import localFont from "next/font/local";
 
+import ResponsiveToaster from "@/lib/responsive-toaster";
 import TanstackQueryProvider from "@/lib/tanstack-query-provider";
 
 import type { Metadata } from "next";
@@ -14,8 +15,11 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Slid Todo",
-  description: "Slid Todo",
+  title: "BuilDone",
+  description: "BuilDone에서 목표, 학습, 생산성을 한곳에서 관리하세요!",
+  icons: {
+    icon: "/image/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -26,7 +30,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${pretendard.variable} font-pretendard`}>
-        <TanstackQueryProvider>{children}</TanstackQueryProvider>
+        <TanstackQueryProvider>
+          <ResponsiveToaster />
+          {children}
+        </TanstackQueryProvider>
       </body>
     </html>
   );

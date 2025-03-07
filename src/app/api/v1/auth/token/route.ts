@@ -1,10 +1,10 @@
 import { cookies } from "next/headers";
 
-export async function POST() {
+export const POST = async () => {
   const cookieStore = cookies();
   const refreshToken = cookieStore.get("refresh-token")?.value;
 
-  if (refreshToken !== "") {
+  if (refreshToken) {
     return new Response(
       JSON.stringify({
         accessToken: "ACCESS_TOKEN_IN_HEADER",
@@ -29,4 +29,4 @@ export async function POST() {
       status: 401,
     },
   );
-}
+};

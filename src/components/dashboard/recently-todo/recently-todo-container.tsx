@@ -2,19 +2,23 @@ import { Suspense } from "react";
 
 import Link from "next/link";
 
-import RightArrow from "@/assets/arrow_right.svg";
-import RecentlyTodoIcon from "@/assets/recently_todo.svg";
+import RecentlyTodoIcon from "@/assets/icons-big/recently_todo.svg";
+import RightArrow from "@/assets/icons-small/arrow/arrow_right.svg";
+
+import DashboardLoading from "../dashboard-loading";
+import SectionContainer from "../section-container";
+import SectionTitle from "../section-title";
 
 import RecentlyTodoList from "./recently-todo-list";
 
 export default function RecentlyTodoContainer() {
   return (
-    <section className="relative flex h-258 w-full flex-col gap-16 rounded-2xl bg-white p-16 md:h-250">
+    <SectionContainer className="relative">
       <div className="flex items-center justify-between pr-4">
-        <div className="flex items-center gap-8 text-base font-semibold md:text-lg">
+        <SectionTitle>
           <RecentlyTodoIcon />
-          <h2>최근 등록한 할 일</h2>
-        </div>
+          <h2 className="line-clamp-1">최근 등록한 할 일</h2>
+        </SectionTitle>
         <Link
           href="/todos"
           className="flex items-center justify-center gap-8 text-sm font-medium text-slate-600"
@@ -22,9 +26,15 @@ export default function RecentlyTodoContainer() {
           모두 보기 <RightArrow />
         </Link>
       </div>
-      <Suspense fallback={<div>RecentlyTodoList 로딩중</div>}>
+      <Suspense
+        fallback={
+          <DashboardLoading>
+            최근 등록한 할 일을 불러오는 중입니다...
+          </DashboardLoading>
+        }
+      >
         <RecentlyTodoList />
       </Suspense>
-    </section>
+    </SectionContainer>
   );
 }

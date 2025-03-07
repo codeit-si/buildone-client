@@ -1,25 +1,25 @@
-"use server";
+import LandingFooter from "@/components/landing-page/landing-footer";
+import LandingHeader from "@/components/landing-page/landing-header";
+import LandingSection1 from "@/components/landing-page/landing-section-1";
+import LandingSection2 from "@/components/landing-page/landing-section-2";
+import LandingSection3 from "@/components/landing-page/landing-section-3";
+import LandingSection4 from "@/components/landing-page/landing-section-4";
+import LandingSection5 from "@/components/landing-page/landing-section-5";
+import LandingSection6 from "@/components/landing-page/landing-section-6";
+import LandingSection7 from "@/components/landing-page/landing-section-7";
 
-import { Suspense } from "react";
-
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-
-import ListTodo from "@/components/@common/list-todo";
-
-import getQueryClient from "../lib/get-query-client";
-
-export default async function Home() {
-  const queryClient = getQueryClient();
-
+export default async function LandingPage() {
   return (
-    <main>
-      <h1>HomePage</h1>
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        {/* Streaming 컴포넌트트 */}
-        <Suspense fallback={<h1>Loading...</h1>}>
-          <ListTodo />
-        </Suspense>
-      </HydrationBoundary>
-    </main>
+    <>
+      <LandingHeader />
+      <LandingSection1 />
+      <LandingSection2 />
+      <LandingSection3 />
+      <LandingSection4 />
+      <LandingSection5 />
+      <LandingSection6 />
+      <LandingSection7 />
+      <LandingFooter />
+    </>
   );
 }
