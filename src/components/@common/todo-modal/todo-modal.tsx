@@ -33,6 +33,7 @@ export default function TodoModal({
       {/* 모달 상단의 X버튼을 누르면 팝업이 나오는데 이 부분은 따로 구현하겠습니다. (지금은은 바로 닫힙니다.) */}
       <Modal.Content
         className="z-40 h-full"
+        data-ignore-click
         onBeforeClose={setIsPopupOpen}
         closeOnOverlayClick={false}
       >

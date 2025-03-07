@@ -100,7 +100,7 @@ export default function TodoFormProvider({
       defaultValues: {
         title: todo?.title || "",
         isDone: !!todo?.isDone,
-        link: todo?.linkUrl ?? "",
+        link: todo?.linkUrl ?? undefined,
       },
     });
   const [selectedGoalId, setSelectedGoalId] = useState<number | undefined>(
@@ -111,7 +111,8 @@ export default function TodoFormProvider({
    * 위와 같은 형식으로 fileUrl이 저장되어있음
    * split("-").slice(9).join("-")을 하면 파일 이름만 추출할 수 있음
    */
-  const fileName = todo?.fileUrl?.split("-").slice(9).join("-");
+  const encodeFileName = todo?.fileUrl?.split("-").slice(9).join("-");
+  const fileName = encodeFileName && decodeURIComponent(encodeFileName);
 
   const formContextValue = useMemo(
     () => ({

@@ -53,25 +53,20 @@ export default function TodoModalForm({
       [fileUrl] = presignedUrl.split("?");
     }
     const { title, link, isDone: done } = data;
+    const newData = {
+      goalId: selectedGoalId,
+      title,
+      fileUrl,
+      linkUrl: link || undefined,
+      isDone: done ?? false,
+    };
     if (todo && done !== undefined) {
       updateMutate({
         todoId: todo.id,
-        newTodo: {
-          goalId: selectedGoalId,
-          title,
-          fileUrl,
-          linkUrl: link || undefined,
-          isDone: done,
-        },
+        newTodo: newData,
       });
     } else {
-      createMutate({
-        goalId: selectedGoalId,
-        title,
-        fileUrl,
-        linkUrl: link,
-        isDone: false,
-      });
+      createMutate(newData);
     }
     onOpenChange(false);
   };
