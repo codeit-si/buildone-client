@@ -1,14 +1,14 @@
 import { useState } from "react";
 
 import Profile from "@/assets/icons-big/profile.svg";
+import { logout } from "@/services/auth";
+import { useAuthStore } from "@/store/auth-store";
 import { useUserStore } from "@/store/user-store";
 
 import Skeleton from "../@common/skeleton";
 import TodoModal from "../@common/todo-modal/todo-modal";
 
 import CustomButton from "./custom-button";
-import { logout } from "@/services/auth";
-import { useAuthStore } from "@/store/auth-store";
 
 const logoutButtonStyle =
   "min-h-0 w-fit min-w-0 justify-normal bg-opacity-0 p-0 text-xs font-normal text-slate-400 hover:bg-opacity-0";
@@ -23,13 +23,9 @@ export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
   if (isTabOpen) return null;
 
   const logoutHandler = async () => {
-    try {
-      logout()
-      useAuthStore.getState().setAccessToken("");
-      window.location.href = '/login';
-    } catch (error) {
-      console.error('로그아웃 중 오류 발생:', error);
-    }
+    logout();
+    useAuthStore.getState().setAccessToken("");
+    window.location.href = "/login";
   };
 
   return (
