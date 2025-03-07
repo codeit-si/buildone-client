@@ -36,7 +36,7 @@ export default function TodoModal({
         onBeforeClose={setIsPopupOpen}
         closeOnOverlayClick={false}
       >
-        <Modal.Title>할일 생성</Modal.Title>
+        <Modal.Title>{todo ? "할일 수정" : "할일 생성"}</Modal.Title>
         <TodoFormProvider todo={todo}>
           <TodoModalForm
             goalId={goalId}

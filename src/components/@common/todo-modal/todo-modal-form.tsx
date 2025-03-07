@@ -13,11 +13,7 @@ import Input from "../input";
 
 import AttachedInputWrapper from "./attached-input-wrapper";
 import GoalDropdown from "./goal-dropdown";
-import {
-  SelectOptionType,
-  TodoModalSchema,
-  useTodoFormContext,
-} from "./todo-form-provider";
+import { TodoModalSchema, useTodoFormContext } from "./todo-form-provider";
 
 interface TodoModalProps {
   goalId?: GoalResponse["id"];
@@ -44,10 +40,6 @@ export default function TodoModalForm({
 
   const isDone = watch("isDone");
 
-  const handleToggleInput = (value: SelectOptionType) => {
-    setValue(value === "file" ? "link" : "file", undefined);
-  };
-
   const onSubmit = async (data: TodoModalSchema) => {
     let fileUrl = todo?.fileUrl;
     if (data.file && data.file[0]) {
@@ -68,7 +60,7 @@ export default function TodoModalForm({
           goalId: selectedGoalId,
           title,
           fileUrl,
-          linkUrl: link,
+          linkUrl: link || undefined,
           isDone: done,
         },
       });
@@ -119,7 +111,7 @@ export default function TodoModalForm({
             </p>
           )}
         </div>
-        <AttachedInputWrapper handleToggleInput={handleToggleInput} />
+        <AttachedInputWrapper />
         <GoalDropdown goalId={goalId} />
       </div>
       <Button

@@ -34,7 +34,10 @@ export const todoModalSchema = z
       .min(1, "제목을 입력해주세요")
       .max(30, "30자 이내로 입력해주세요"),
     file: z.custom<FileList | null | undefined>().optional(),
-    link: z.string().url("올바른 URL을 입력해주세요").optional(),
+    link: z.union([
+      z.literal(""),
+      z.string().trim().url("올바른 URL을 입력해주세요"),
+    ]),
     isDone: z.boolean().optional(),
   })
   .superRefine(({ file }, ctx) => {
@@ -67,6 +70,7 @@ interface TodoModalFormContextProps {
   setValue: UseFormSetValue<TodoModalSchema>;
   selectedGoalId?: number;
   setSelectedGoalId: Dispatch<SetStateAction<number | undefined>>;
+  fileName?: string;
 }
 
 const TodoFormContext = createContext<TodoModalFormContextProps | null>(null);
@@ -96,11 +100,18 @@ export default function TodoFormProvider({
       defaultValues: {
         title: todo?.title || "",
         isDone: !!todo?.isDone,
+        link: todo?.linkUrl ?? "",
       },
     });
   const [selectedGoalId, setSelectedGoalId] = useState<number | undefined>(
     goalId,
   );
+  /**
+   * https://buildone-dev-bucket.s3.ap-northeast-2.amazonaws.com/todo/10d94c36-9b73-4d16-8eeb-2415752c841c-111.pdf
+   * 위와 같은 형식으로 fileUrl이 저장되어있음
+   * split("-").slice(9).join("-")을 하면 파일 이름만 추출할 수 있음
+   */
+  const fileName = todo?.fileUrl?.split("-").slice(9).join("-");
 
   const formContextValue = useMemo(
     () => ({
@@ -112,6 +123,7 @@ export default function TodoFormProvider({
       trigger,
       selectedGoalId,
       setSelectedGoalId,
+      fileName,
     }),
     [
       register,
@@ -121,6 +133,7 @@ export default function TodoFormProvider({
       handleSubmit,
       setValue,
       selectedGoalId,
+      fileName,
     ],
   );
 
