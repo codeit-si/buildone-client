@@ -48,7 +48,7 @@ export default function AllListTodo() {
           <span className="text-14/3">할일 추가</span>
         </button>
       </div>
-      <div className="mb-16 min-h-[calc(100vh-131px)] md:min-h-[calc(100vh-91px)] w-full rounded-xl border-slate-300 bg-white p-16 md:p-24 text-sm text-slate-800 lg:mb-24 lg:p-24">
+      <div className="mb-16 min-h-[calc(100vh-131px)] w-full rounded-xl border-slate-300 bg-white p-16 text-sm text-slate-800 md:min-h-[calc(100vh-91px)] md:p-24 lg:mb-24 lg:p-24">
         <Filter filter={filter} setFilter={setFilter} />
         <ul className="flex flex-col gap-8">
           {todos?.length !== 0 ? (
@@ -63,7 +63,7 @@ export default function AllListTodo() {
             ))
           ) : (
             <div
-              className="flex min-h-[calc(100vh-220px)] md:min-h-[calc(100vh-200px)] w-full items-center justify-center text-center"
+              className="flex min-h-[calc(100vh-220px)] w-full items-center justify-center text-center md:min-h-[calc(100vh-200px)]"
               key="no-todos"
             >
               <p>
