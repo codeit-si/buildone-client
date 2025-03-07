@@ -1,6 +1,7 @@
-import { Suspense, useState } from "react";
+import { MouseEvent, Suspense, useState } from "react";
 
 import * as motion from "motion/react-client";
+import { useRouter } from "next/navigation";
 
 import ArrowDown from "@/assets/icons-small/arrow/arrow_down.svg";
 import TodoModal from "@/components/@common/todo-modal/todo-modal";
@@ -20,6 +21,7 @@ export default function GoalItem({ goal }: GoalItemProps) {
   const [todoNext, setTodoNext] = useState<SetNextType>();
   const [doneNext, setDoneNext] = useState<SetNextType>();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter();
 
   const hasNext = !!todoNext?.hasNextPage || !!doneNext?.hasNextPage;
 
@@ -32,8 +34,18 @@ export default function GoalItem({ goal }: GoalItemProps) {
     }
   };
 
+  const handleClickGoalContainer = (e: MouseEvent) => {
+    e.stopPropagation();
+    if (e.currentTarget === e.target) {
+      router.push(`/goals/${goal.id}`);
+    }
+  };
+
   return (
-    <GoalContainer className="relative min-h-384 pb-72 md:min-h-304">
+    <GoalContainer
+      className="relative min-h-384 pb-72 md:min-h-304"
+      onClick={handleClickGoalContainer}
+    >
       <div className="flex justify-between">
         <GoalTitle>{goal.title}</GoalTitle>
         <button
