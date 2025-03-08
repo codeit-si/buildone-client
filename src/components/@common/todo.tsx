@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
@@ -38,7 +37,6 @@ export default function Todo({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
-  const router = useRouter();
 
   const getDropdownItems = (selectedTodoItem: TodoResponse): DropdownItem[] => {
     const baseItems: DropdownItem[] = [
@@ -61,10 +59,7 @@ export default function Todo({
         {
           id: "note",
           label: "노트보기",
-          onClick: () =>
-            router.push(
-              `/todos/${selectedTodoItem.id}/note/${selectedTodoItem.noteId}/create`,
-            ),
+          onClick: () => setSheetOpen(true),
         },
         ...baseItems,
       ];
