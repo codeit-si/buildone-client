@@ -19,12 +19,13 @@ const profileInfoStyle =
 export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
   const { userInformation } = useUserStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { removeAccessToken } = useAuthStore();
 
   if (isTabOpen) return null;
 
   const logoutHandler = async () => {
     logout();
-    useAuthStore.getState().setAccessToken("");
+    removeAccessToken();
     window.location.href = "/login";
   };
 
