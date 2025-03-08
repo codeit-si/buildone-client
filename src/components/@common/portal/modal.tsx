@@ -135,6 +135,7 @@ function ModalOverlay({
           onClick={() => {
             if (closeOnOverlayClick) setOpen(false);
           }}
+          data-ignore-click
         />
       )}
     </AnimatePresence>
@@ -181,6 +182,7 @@ function ModalContent({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 0.1 } }}
             exit={{ opacity: 0, transition: { duration: 0.1 } }}
+            data-ignore-click
           >
             <div className={cn("flex w-full justify-between")}>
               {title || <div className="grow" />}
