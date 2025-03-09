@@ -40,10 +40,10 @@ export default function TabToggle({
           </div>
         ) : (
           <>
-            <div className="hidden md:block lg:block">
+            <div className="hidden md:block">
               <TabOn />
             </div>
-            <div className="block md:hidden lg:hidden">
+            <div className="block md:hidden">
               <Sandwich />
             </div>
           </>

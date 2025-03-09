@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { cva } from "class-variance-authority";
+
 import Profile from "@/assets/icons-big/profile.svg";
 import { logout } from "@/services/auth";
 import { useAuthStore } from "@/store/auth-store";
@@ -9,6 +11,21 @@ import Skeleton from "../@common/skeleton";
 import TodoModal from "../@common/todo-modal/todo-modal";
 
 import CustomButton from "./custom-button";
+
+const containerStyle = cva(
+  "hidden md:block overflow-hidden transition-all duration-300",
+  {
+    variants: {
+      open: {
+        true: "-translate-x-full opacity-0",
+        false: "translate-x-0 opacity-100",
+      },
+    },
+    defaultVariants: {
+      open: true,
+    },
+  },
+);
 
 const logoutButtonStyle =
   "min-h-0 w-fit min-w-0 justify-normal bg-opacity-0 p-0 text-xs font-normal text-slate-400 hover:bg-opacity-0";
@@ -21,8 +38,6 @@ export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { removeAccessToken } = useAuthStore();
 
-  if (isTabOpen) return null;
-
   const logoutHandler = async () => {
     logout();
     removeAccessToken();
@@ -30,8 +45,8 @@ export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
   };
 
   return (
-    <>
-      <div className="flex w-full gap-12">
+    <div className={containerStyle({ open: isTabOpen })}>
+      <div className="mb-12 flex w-full gap-12">
         <div className="min-w-40 md:min-w-64 lg:min-w-64">
           <Profile />
         </div>
@@ -68,6 +83,6 @@ export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
       {isModalOpen && (
         <TodoModal open={isModalOpen} onOpenChange={setIsModalOpen} />
       )}
-    </>
+    </div>
   );
 }
