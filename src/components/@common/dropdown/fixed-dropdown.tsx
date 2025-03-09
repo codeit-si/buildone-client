@@ -103,7 +103,7 @@ export default function FixedDropdown({
         {noteId === null ? (
           <Link
             className="hidden h-24 w-24 items-center group-focus-within:flex group-hover:flex"
-            href={`/todos/${todoId}/note/${noteId}/create`}
+            href={`/todos/${todoId}/note/create`}
           >
             <NoteWriteIcon />
           </Link>
