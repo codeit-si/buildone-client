@@ -33,11 +33,11 @@ const containerStyle = cva(
 );
 
 const topSectionStyle = cva(
-  "flex flex-col gap-14 md:gap-16 md:items-center p-0 md:p-24 md:pt-18",
+  "flex flex-col md:gap-16 md:items-center md:pt-18",
   {
     variants: {
       open: {
-        true: "p-24 pt-0 md:p-20",
+        true: "px-24 pt-0 md:p-20",
         false: "h-full p-0",
       },
     },
@@ -48,13 +48,13 @@ const topSectionStyle = cva(
 );
 
 const topHeaderStyle = cva(
-  "flex w-full relative items-center justify-between",
+  "flex w-full relative items-center md:justify-normal",
   {
     variants: {
       open: {
-        true: "mt-20 md:m-0",
+        true: "mt-16 md:m-0",
         false:
-          "h-full md:border-none flex-row px-20 gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
+          "h-full md:border-none flex-row px-16 md:gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
       },
     },
     defaultVariants: {

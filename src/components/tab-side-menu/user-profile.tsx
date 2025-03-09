@@ -13,12 +13,12 @@ import TodoModal from "../@common/todo-modal/todo-modal";
 import CustomButton from "./custom-button";
 
 const containerStyle = cva(
-  "hidden md:block overflow-hidden transition-all duration-300",
+  "w-full md:block overflow-hidden transition-all duration-300",
   {
     variants: {
       open: {
-        true: "-translate-x-full opacity-0",
-        false: "translate-x-0 opacity-100",
+        true: "-translate-x-full opacity-0 h-0",
+        false: "translate-x-0 opacity-100 mt-16 md:m-0",
       },
     },
     defaultVariants: {
@@ -46,7 +46,7 @@ export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
 
   return (
     <div className={containerStyle({ open: isTabOpen })}>
-      <div className="mb-12 flex w-full gap-12">
+      <div className="mb-24 flex w-full gap-12">
         <div className="min-w-40 md:min-w-64 lg:min-w-64">
           <Profile />
         </div>
