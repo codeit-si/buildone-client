@@ -4,7 +4,6 @@ import { cva } from "class-variance-authority";
 
 import Profile from "@/assets/icons-big/profile.svg";
 import { logout } from "@/services/auth";
-import { useAuthStore } from "@/store/auth-store";
 import { useUserStore } from "@/store/user-store";
 
 import Skeleton from "../@common/skeleton";
@@ -36,11 +35,9 @@ const profileInfoStyle =
 export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
   const { userInformation } = useUserStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { removeAccessToken } = useAuthStore();
 
   const logoutHandler = async () => {
     logout();
-    removeAccessToken();
     window.location.href = "/login";
   };
 
