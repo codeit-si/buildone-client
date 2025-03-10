@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 
 import { api } from "@/lib/axios";
 import { LoginResponse, SignupResponse } from "@/types/auth";
-import { setCookie } from "@/utils/cookie";
+import { removeCookie, setCookie } from "@/utils/cookie";
 
 import { ENDPOINT } from "../endpoint";
 
@@ -30,6 +30,8 @@ export const login = async (
 /** 로그아웃 API */
 export const logout = async (): Promise<AxiosResponse> => {
   const res = await api.post(ENDPOINT.AUTH.LOGOUT);
+  removeCookie("ACCESS_TOKEN");
+
   return res;
 };
 
