@@ -4,13 +4,17 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 import TabSideMenu from "@/components/tab-side-menu/tab-side-menu";
 import getQueryClient from "@/lib/get-query-client";
+import { getInfiniteGoalsOptions } from "@/services/dashboard/query";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const queryClient = getQueryClient();
+  await queryClient.prefetchInfiniteQuery(
+    getInfiniteGoalsOptions({ size: 20 }),
+  );
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
