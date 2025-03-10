@@ -1,12 +1,14 @@
 import { useState } from "react";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
 import useInView from "@/hooks/use-in-view";
+import { cn } from "@/lib/cn";
 import { TodoResponse } from "@/types/todo";
 
 import Goal from "../todo/goal";
@@ -36,6 +38,7 @@ export default function Todo({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [ref, isInView] = useInView();
+  const pathname = usePathname();
 
   const getDropdownItems = (selectedTodoItem: TodoResponse): DropdownItem[] => {
     const baseItems: DropdownItem[] = [
@@ -80,7 +83,7 @@ export default function Todo({
         <Link
           key={key}
           href={url || "#"}
-          className="hover:drop-shadow"
+          className="ml-5 hover:drop-shadow"
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${key} 열기`}
@@ -95,14 +98,18 @@ export default function Todo({
       <li
         ref={ref}
         aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
-        className={`group flex flex-col text-slate-800 transition-opacity duration-1000 ease-out hover:font-bold hover:text-dark-blue-700 ${isInView ? `opacity-100` : "opacity-0"}`}
+        className={cn(
+          "group flex flex-col text-slate-800 transition-all hover:font-bold hover:text-dark-blue-700",
+          pathname.includes("todos") &&
+            `${isInView ? "animate-fadeIn" : "animate-fadeOut opacity-0"}`,
+        )}
       >
         <div className="flex items-center justify-between">
           <TodoTitleAndCheckBox index={index} todo={todo} />
           <div
             role="group"
             aria-label="할일 관련 작업"
-            className="relative flex gap-5 text-slate-700"
+            className="flex text-slate-700"
           >
             {iconSpread(todo)}
             {showDropdownOnHover && (

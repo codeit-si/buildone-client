@@ -93,16 +93,16 @@ export default function FixedDropdown({
 
   return (
     <div
-      className="font-normal group-focus-within:pr-5 group-hover:pr-5"
+      className="font-normal"
       tabIndex={-1}
       role="menu"
       ref={dropdownRef}
       onKeyDown={handleKeyDown}
     >
-      <div className="flex gap-5">
+      <div className="flex">
         {todoNoteId === null && (
           <Link
-            className="hidden h-24 w-24 items-center hover:drop-shadow group-focus-within:flex group-hover:flex"
+            className="ml-5 hidden h-24 w-24 items-center hover:drop-shadow group-focus-within:flex group-hover:flex"
             href={`/todos/${todoId}/note/create`}
           >
             <NoteWriteIcon />
@@ -113,9 +113,9 @@ export default function FixedDropdown({
           aria-expanded={isOpen}
           aria-label="메뉴 열기"
           onClick={toggleDropdown}
-          className="hidden items-center justify-center rounded-full bg-white hover:drop-shadow group-focus-within:flex group-hover:flex"
+          className="ml-5 hidden items-center justify-center rounded-full bg-white hover:drop-shadow group-focus-within:flex group-hover:flex"
         >
-          <div ref={kebabRef} className="flex h-24 w-24 flex-col items-center">
+          <div ref={kebabRef} className="flex flex-col items-center">
             <KebabIcon />
           </div>
         </button>
@@ -129,7 +129,7 @@ export default function FixedDropdown({
             role="menu"
             aria-label="옵션 선택 드롭다운"
             className="fixed z-50 h-auto w-81 overflow-hidden rounded-17 bg-white shadow-md"
-            style={{ top: position.top, left: position.left }}
+            style={{ top: position.top + 5, left: position.left, zIndex: 100 }}
           >
             {items.map(({ label, onClick }, i) => (
               <DropdownItem
