@@ -95,14 +95,14 @@ export default function Todo({
       <li
         ref={ref}
         aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
-        className={`group flex flex-col text-slate-800 transition-all duration-1000 ease-out hover:font-bold hover:text-dark-blue-700 ${isInView ? `translate-y-0 opacity-100` : "translate-y-4 opacity-0"}`}
+        className={`group flex flex-col text-slate-800 transition-opacity duration-1000 ease-out hover:font-bold hover:text-dark-blue-700 ${isInView ? `opacity-100` : "opacity-0"}`}
       >
         <div className="flex items-center justify-between">
           <TodoTitleAndCheckBox index={index} todo={todo} />
           <div
             role="group"
             aria-label="할일 관련 작업"
-            className="flex gap-5 text-slate-700"
+            className="relative flex gap-5 text-slate-700"
           >
             {iconSpread(todo)}
             {showDropdownOnHover && (

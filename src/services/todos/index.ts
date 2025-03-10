@@ -1,7 +1,15 @@
 import api from "@/lib/axios";
-import { Todo, TodoListResponse } from "@/types/todo";
+import { TodoListResponse, TodoResponse } from "@/types/todo";
 
 import { ENDPOINT } from "../endpoint";
+
+export interface TodoParams {
+  goalId?: number;
+  title: TodoResponse["title"];
+  fileUrl?: TodoResponse["fileUrl"];
+  linkUrl?: TodoResponse["linkUrl"];
+  isDone: TodoResponse["isDone"];
+}
 
 export const getTodos = async (
   pageParam: number,
@@ -22,21 +30,19 @@ export const getTodos = async (
   };
 };
 
-export const createTodo = async (newTodo: Todo) => {
-  const { data } = await api.post<Todo>(ENDPOINT.TODO.CREATE, newTodo);
+export const createTodo = async (newTodo: TodoParams) => {
+  const { data } = await api.post<TodoResponse>(ENDPOINT.TODO.CREATE, newTodo);
   return data;
 };
 
-export const updateTodo = async (updatedTodo: Todo) => {
-  const url = ENDPOINT.TODO.UPDATE(updatedTodo.id);
-  const { data } = await api.put<Todo>(url, updatedTodo);
+export const updateTodo = async (todoId: number, updatedTodo: TodoParams) => {
+  const url = ENDPOINT.TODO.UPDATE(todoId);
+  const { data } = await api.put<TodoResponse>(url, updatedTodo);
   return data;
 };
 
-export const deleteTodo = async (deletedTodo: Todo) => {
-  const url = ENDPOINT.TODO.DELETE(deletedTodo.id);
-  const { data } = await api.delete<Todo>(url, {
-    data: { id: deletedTodo.id },
-  });
+export const deleteTodo = async (id: number) => {
+  const { data } = await api.delete(ENDPOINT.TODO.DELETE(id));
+
   return data;
 };

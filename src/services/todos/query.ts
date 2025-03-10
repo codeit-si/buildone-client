@@ -1,70 +1,35 @@
-import {
-  InfiniteData,
-  useMutation,
-  useSuspenseInfiniteQuery,
-} from "@tanstack/react-query";
+import { infiniteQueryOptions } from "@tanstack/react-query";
 
-import getQueryClient from "@/lib/get-query-client";
-import { TodoListResponse } from "@/types/todo";
+import { TodosByGoalParams } from "@/types/dashboard";
 
-import { getTodos, updateTodo } from ".";
+import { getInfiniteTodosByGoalId } from "../dashboard";
+import { todoKeys } from "../query-key";
 
-const queryClient = getQueryClient();
-
-export const refetchTodo = () => {
-  queryClient.invalidateQueries({
-    queryKey: ["todos"],
-    refetchActive: true,
-  });
-};
-
-export const useToggleStatus = () => {
-  return useMutation({
-    mutationFn: async (id: number) => {
-      const todoToUpdate = queryClient
-        .getQueryData<InfiniteData<TodoListResponse>>(["todos"])
-        ?.pages.flatMap((page) => page.todos)
-        .find((todo) => todo.id === id);
-
-      if (!todoToUpdate) return;
-
-      queryClient.setQueryData<InfiniteData<TodoListResponse>>(
-        ["todos"],
-        (oldData) => {
-          if (!oldData) return oldData;
-
-          return {
-            ...oldData,
-            pages: oldData.pages.map((page) => ({
-              ...page,
-              todos: page.todos.map((todo) =>
-                todo.id === todoToUpdate.id
-                  ? { ...todo, isDone: !todo.isDone }
-                  : todo,
-              ),
-            })),
-          };
-        },
-      );
-
-      await updateTodo({
-        ...todoToUpdate,
-        isDone: !todoToUpdate.isDone,
+export const getInfiniteTodosByGoalIdOptions = ({
+  goalId,
+  size = 40,
+  done,
+}: TodosByGoalParams) => {
+  return infiniteQueryOptions({
+    queryKey: todoKeys.list({ size, goalId, done }),
+    queryFn: ({ pageParam }) => {
+      return getInfiniteTodosByGoalId({
+        goalId,
+        done,
+        size,
+        cursor: pageParam,
       });
     },
-    onSuccess: () => refetchTodo(),
-  });
-};
-
-export const useAllTodosInfiniteQuery = () => {
-  return useSuspenseInfiniteQuery({
-    queryKey: ["todos"],
-    queryFn: ({ pageParam = 1 }) => getTodos(pageParam),
-    getNextPageParam: (lastPage) => {
-      return lastPage.paginationInformation?.hasNext
+    getNextPageParam: (lastPage) =>
+      lastPage.paginationInformation.hasNext
         ? lastPage.paginationInformation.nextCursor
-        : undefined;
-    },
-    initialPageParam: 1,
+        : null,
+    initialPageParam: 0,
+    select: (data) => ({
+      pages: data.pages.map((page) => page.todos),
+      todos: data.pages.flatMap((page) => page.todos),
+      totalCount: data.pages[0].paginationInformation.totalCount,
+      pageParams: data.pageParams,
+    }),
   });
 };
