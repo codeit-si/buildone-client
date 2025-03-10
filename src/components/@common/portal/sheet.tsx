@@ -174,7 +174,7 @@ function SheetContent({
           </motion.div>
         )}
       </AnimatePresence>
-      <SheetOverlay />
+      <SheetOverlay className="z-30" />
     </SheetPortal>
   );
 }

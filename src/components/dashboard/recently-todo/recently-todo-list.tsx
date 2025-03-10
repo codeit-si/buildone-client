@@ -40,7 +40,7 @@ export default function RecentlyTodoList() {
           ))}
         </ul>
       )}
-      {!todos && (
+      {todos?.length === 0 && (
         <div className="flex h-full w-full items-center justify-center">
           <span className="h-40 text-sm text-slate-500">
             최근에 등록한 할 일이 없어요

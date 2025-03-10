@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { cva } from "class-variance-authority";
+import { usePathname } from "next/navigation";
 
 import GoalsMenu from "@/components/tab-side-menu/goals-menu";
 import { useCreateGoal } from "@/hooks/query/use-goal";
@@ -17,7 +18,7 @@ import TodosMenu from "./todos-menu";
 import UserProfile from "./user-profile";
 
 const containerStyle = cva(
-  "fixed z-30 bg-white transition-all delay-200 border-b border-slate-100 md:border-r md:border-slate-200",
+  "overflow-y-hidden fixed z-30 transition-all duration-100 bg-white border-b border-slate-100 md:border-r md:border-slate-200",
   {
     variants: {
       open: {
@@ -33,11 +34,11 @@ const containerStyle = cva(
 );
 
 const topSectionStyle = cva(
-  "flex flex-col gap-14 md:gap-16 md:items-center p-0 md:p-24 md:pt-18",
+  "flex flex-col md:gap-16 md:items-center md:pt-18",
   {
     variants: {
       open: {
-        true: "p-24 pt-0 md:p-20",
+        true: "px-24 pt-0 md:p-20",
         false: "h-full p-0",
       },
     },
@@ -47,24 +48,28 @@ const topSectionStyle = cva(
   },
 );
 
-const topHeaderStyle = cva("flex w-full items-center justify-between", {
-  variants: {
-    open: {
-      true: "mt-20 md:m-0",
-      false:
-        "h-full md:border-none flex-row px-20 gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
+const topHeaderStyle = cva(
+  "flex w-full relative items-center md:justify-normal",
+  {
+    variants: {
+      open: {
+        true: "mt-16 md:m-0",
+        false:
+          "h-full md:border-none flex-row px-16 md:gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
+      },
+    },
+    defaultVariants: {
+      open: true,
     },
   },
-  defaultVariants: {
-    open: true,
-  },
-});
+);
 
 export default function TabSideMenu() {
   const [isTabMinimized, setIsTabMinimized] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
   const [newGoal, setNewGoal] = useState("");
   const { mutate } = useCreateGoal();
+  const pathname = usePathname();
   const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery(
     getInfiniteGoalsOptions({ size: 20 }),
   );
@@ -100,6 +105,10 @@ export default function TabSideMenu() {
     else document.body.style.overflow = "auto";
   }, [isTabMinimized]);
 
+  useEffect(() => {
+    setIsTabMinimized(true);
+  }, [pathname]);
+
   return (
     <>
       <div className={containerStyle({ open: !isTabMinimized })}>
@@ -117,28 +126,32 @@ export default function TabSideMenu() {
           <UserProfile isTabOpen={isTabMinimized} />
         </div>
         {/* 탭 열였을때 나타나는 bottom menus */}
-        {!isTabMinimized && (
-          <>
-            <TodosMenu />
-            <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />
-            <div className="px-32 md:px-24">
-              <GoalsList
-                goals={data?.pages}
-                hasNextPage={hasNextPage}
-                setIsAdding={setIsAdding}
-                fetchNextPage={fetchNextPage}
-              />
-              <AddGoalSection
-                goals={data?.pages}
-                handleSubmit={handleSubmit}
-                isAdding={isAdding}
-                newGoal={newGoal}
-                setIsAdding={setIsAdding}
-                setNewGoal={setNewGoal}
-              />
-            </div>
-          </>
-        )}
+        <div
+          className={`transition-all duration-100 ${
+            isTabMinimized
+              ? "-translate-y-1000 opacity-0 md:-translate-x-full"
+              : "translate-y-0 opacity-100 md:translate-x-0"
+          }`}
+        >
+          <TodosMenu />
+          <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />
+          <div className="px-32 md:px-24">
+            <GoalsList
+              goals={data?.pages}
+              hasNextPage={hasNextPage}
+              setIsAdding={setIsAdding}
+              fetchNextPage={fetchNextPage}
+            />
+            <AddGoalSection
+              goals={data?.pages}
+              handleSubmit={handleSubmit}
+              isAdding={isAdding}
+              newGoal={newGoal}
+              setIsAdding={setIsAdding}
+              setNewGoal={setNewGoal}
+            />
+          </div>
+        </div>
       </div>
       {!isTabMinimized && (
         <div className="fixed left-0 top-0 z-20 h-screen w-screen bg-black bg-opacity-50 lg:hidden" />
