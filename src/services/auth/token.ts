@@ -4,8 +4,6 @@ import { ReissueAccessTokenResponse } from "@/types/auth";
 
 import { ENDPOINT } from "../endpoint";
 
-import { storeAccessTokenInCookie } from "./route-handler";
-
 /** 기존 config에 Authorization 헤더 추가 */
 export const getConfigWithAuthorizationHeaders = (
   config: InternalAxiosRequestConfig,
@@ -34,8 +32,6 @@ export const reissueAccessToken = async (): Promise<string | null> => {
     if (!token) {
       throw new Error("토큰이 응답에 포함되지 않았습니다.");
     }
-
-    await storeAccessTokenInCookie(token);
 
     return token;
   } catch (error) {
