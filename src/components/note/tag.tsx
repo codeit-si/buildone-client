@@ -51,7 +51,7 @@ export default function TagInput({
   };
 
   return (
-    <div className="container-width flex flex-nowrap overflow-hidden border-b py-8">
+    <div className="flex flex-nowrap overflow-hidden border-b py-8">
       {tags.map((tag) => (
         <div
           key={tag.id}

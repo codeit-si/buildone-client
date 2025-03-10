@@ -9,7 +9,7 @@ interface LoadNoteToastProps {
 export default function LoadNoteToast({ onClose, onLoad }: LoadNoteToastProps) {
   return (
     <div
-      className="container-width mb-24 h-60 rounded-28 bg-dark-blue-100 md:h-56"
+      className="mb-24 h-60 rounded-28 bg-dark-blue-100 md:h-56"
       aria-label="임시 저장 노트 로드 토스트"
     >
       <div className="flex items-center justify-between px-12 py-10">

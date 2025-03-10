@@ -153,107 +153,105 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="ml-16 pt-24 md:ml-24 lg:ml-80">
-        <div className="container-width">
-          {/* 헤더 */}
-          <div className="grid h-44 grid-cols-[162px_auto] items-center">
-            <h1 className="truncate font-semibold text-slate-900 md:text-lg">
-              노트 작성
-            </h1>
-            <div className="flex justify-end gap-8">
-              <Button
-                variant="outlined"
-                size="sm"
-                shape="square"
-                className="border-0"
-                onClick={handleTempSave}
-              >
-                임시저장
-              </Button>
-              <Button
-                variant="solid"
-                size="sm"
-                shape="square"
-                disabled={!title.trim() || !content.trim()}
-                onClick={handleSubmit}
-              >
-                작성 완료
-              </Button>
-            </div>
-          </div>
-
-          <div className="mt-16">
-            {/* 임시 저장 노트 로드 토스트 */}
-            <LoadNoteToastManager onLoadNote={handleOpenLoadModal} />
-
-            {/* 목표 표시 */}
-            <Goal goalText={displayedGoalTitle || ""} />
-
-            {/* To do 항목 */}
-            <Todo todoText={displayedTodoTitle || ""} />
-
-            {/* 노트 제목 입력 */}
-            <div className="flex items-center gap-8 border-b border-t border-slate-200">
-              <input
-                type="text"
-                className="h-52 w-full text-lg placeholder:text-lg focus:outline-none"
-                placeholder="노트의 제목을 입력해주세요"
-                value={title}
-                onChange={handleTitleChange}
-              />
-              <Counting type="title" count={title.length} total={30} />
-            </div>
-
-            {/* 태그 입력 영역 */}
-            <TagInput tags={tags} setTags={setTags} />
-
-            {/* 에디터 영역 */}
-            <div className="mt-16">
-              <Counting
-                type="text"
-                count={countWithoutSpaces(content)}
-                total={countWithSpaces(content)}
-              />
-
-              {/* 링크 첨부 */}
-              <div className="mb-8 mt-12">
-                {showLink && (
-                  <LinkAttached link={link} onRemove={handleRemoveLink} />
-                )}
-              </div>
-
-              {/* 본문 */}
-              <div className="mt-8">
-                <Tiptap
-                  content={content}
-                  setContents={setContent}
-                  onLinkSubmit={handleAddLink}
-                />
-              </div>
-            </div>
-            <TempSaveManager
-              ref={tempSaveManagerRef}
-              title={title}
-              content={content}
-              link={showLink ? link : ""}
-            />
+      <div className="container-width pt-24">
+        {/* 헤더 */}
+        <div className="grid h-44 grid-cols-[162px_auto] items-center">
+          <h1 className="truncate font-semibold text-slate-900 md:text-lg">
+            노트 작성
+          </h1>
+          <div className="flex justify-end gap-8">
+            <Button
+              variant="outlined"
+              size="sm"
+              shape="square"
+              className="border-0"
+              onClick={handleTempSave}
+            >
+              임시저장
+            </Button>
+            <Button
+              variant="solid"
+              size="sm"
+              shape="square"
+              disabled={!title.trim() || !content.trim()}
+              onClick={handleSubmit}
+            >
+              작성 완료
+            </Button>
           </div>
         </div>
 
-        {/* 모달 */}
-        {loadedNote && (
-          <LoadNoteModal
-            open={modalOpen}
-            setOpen={setModalOpen}
-            storedTitle={
-              loadedNote.title && loadedNote.title.trim() !== ""
-                ? loadedNote.title
-                : "제목 없음"
-            }
-            onLoad={() => handleLoadNote(loadedNote)}
+        <div className="mt-16">
+          {/* 임시 저장 노트 로드 토스트 */}
+          <LoadNoteToastManager onLoadNote={handleOpenLoadModal} />
+
+          {/* 목표 표시 */}
+          <Goal goalText={displayedGoalTitle || ""} />
+
+          {/* To do 항목 */}
+          <Todo todoText={displayedTodoTitle || ""} />
+
+          {/* 노트 제목 입력 */}
+          <div className="flex items-center gap-8 border-b border-t border-slate-200">
+            <input
+              type="text"
+              className="h-52 w-full text-lg placeholder:text-lg focus:outline-none"
+              placeholder="노트의 제목을 입력해주세요"
+              value={title}
+              onChange={handleTitleChange}
+            />
+            <Counting type="title" count={title.length} total={30} />
+          </div>
+
+          {/* 태그 입력 영역 */}
+          <TagInput tags={tags} setTags={setTags} />
+
+          {/* 에디터 영역 */}
+          <div className="mt-16">
+            <Counting
+              type="text"
+              count={countWithoutSpaces(content)}
+              total={countWithSpaces(content)}
+            />
+
+            {/* 링크 첨부 */}
+            <div className="mb-8 mt-12">
+              {showLink && (
+                <LinkAttached link={link} onRemove={handleRemoveLink} />
+              )}
+            </div>
+
+            {/* 본문 */}
+            <div className="mt-8">
+              <Tiptap
+                content={content}
+                setContents={setContent}
+                onLinkSubmit={handleAddLink}
+              />
+            </div>
+          </div>
+          <TempSaveManager
+            ref={tempSaveManagerRef}
+            title={title}
+            content={content}
+            link={showLink ? link : ""}
           />
-        )}
+        </div>
       </div>
+
+      {/* 모달 */}
+      {loadedNote && (
+        <LoadNoteModal
+          open={modalOpen}
+          setOpen={setModalOpen}
+          storedTitle={
+            loadedNote.title && loadedNote.title.trim() !== ""
+              ? loadedNote.title
+              : "제목 없음"
+          }
+          onLoad={() => handleLoadNote(loadedNote)}
+        />
+      )}
     </div>
   );
 }

@@ -54,7 +54,6 @@ export const useTodoDetail = (todoId: number, isEditMode: boolean) => {
   return useQuery<TodoResponse>({
     queryKey: todoKeys.detail(todoId),
     queryFn: () => {
-      if (!todoId) throw new Error("todoId가 필요합니다.");
       return getTodoDetail(todoId);
     },
     enabled: !isEditMode && Boolean(todoId),
