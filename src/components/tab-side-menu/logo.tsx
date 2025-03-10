@@ -5,11 +5,11 @@ import CompactLogo from "@/assets/logo/compact_logo.svg";
 import MainLogo from "@/assets/logo/main_logo_small.svg";
 import { IsTabMinimizedProps } from "@/types/tab-side-menu";
 
-const MainLogoStyle = cva("transition-all absolute duration-300 top-0", {
+const MainLogoStyle = cva("transition-all absolute duration-100 top-0", {
   variants: {
     open: {
-      true: "translate-x-0 opacity-100",
-      false: "-translate-x-full opacity-0",
+      true: "translate-y-0 opacity-100 md:translate-x-0",
+      false: "-translate-y-full opacity-0 md:-translate-x-full",
     },
   },
   defaultVariants: {
@@ -17,7 +17,7 @@ const MainLogoStyle = cva("transition-all absolute duration-300 top-0", {
   },
 });
 const CompactLogoStyle = cva(
-  "hidden md:block transition-all left-[50%] absolute duration-500 top-0",
+  "hidden md:block transition-all left-[50%] absolute duration-100 top-0",
   {
     variants: {
       open: {

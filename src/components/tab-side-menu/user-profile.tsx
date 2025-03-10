@@ -13,12 +13,12 @@ import TodoModal from "../@common/todo-modal/todo-modal";
 import CustomButton from "./custom-button";
 
 const containerStyle = cva(
-  "w-full md:block overflow-hidden transition-all duration-300",
+  "w-full md:block overflow-hidden transition-all duration-100",
   {
     variants: {
       open: {
-        true: "-translate-x-full opacity-0 h-0",
-        false: "translate-x-0 opacity-100 mt-16 md:m-0",
+        true: "-translate-y-full opacity-0 md:-translate-x-full-0 h-0",
+        false: "translate-y-0 opacity-100 md:translate-x-0 mt-16 md:m-0",
       },
     },
     defaultVariants: {

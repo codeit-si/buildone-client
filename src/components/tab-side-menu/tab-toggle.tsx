@@ -1,4 +1,7 @@
+import { useMemo } from "react";
+
 import { cva } from "class-variance-authority";
+import { usePathname } from "next/navigation";
 
 import Sandwich from "@/assets/icons-small/sandwich.svg";
 import TabOff from "@/assets/icons-small/tab_off.svg";
@@ -28,6 +31,13 @@ export default function TabToggle({
   isTabMinimized,
   setIsTabMinimized,
 }: IsTabMinimizedProps) {
+  const pathname = usePathname();
+  const title = useMemo(() => {
+    if (pathname.includes("/dashboard")) return "Dash Board";
+    if (pathname.includes("/todos")) return "";
+    if (pathname.includes("/goals")) return "Goals";
+    if (pathname.includes("/notes")) return "";
+  }, [pathname]);
   return (
     <div
       className={`item-center flex w-full ${!isTabMinimized && "justify-end"}`}
@@ -52,7 +62,7 @@ export default function TabToggle({
         )}
       </Button>
       <h2 className={mobileStatusTitleStyle({ open: !isTabMinimized })}>
-        대시보드
+        {title}
       </h2>
     </div>
   );

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { cva } from "class-variance-authority";
+import { usePathname } from "next/navigation";
 
 import GoalsMenu from "@/components/tab-side-menu/goals-menu";
 import { useCreateGoal } from "@/hooks/query/use-goal";
@@ -17,7 +18,7 @@ import TodosMenu from "./todos-menu";
 import UserProfile from "./user-profile";
 
 const containerStyle = cva(
-  "overflow-y-hidden fixed z-30 transition-all duration-200 bg-white border-b border-slate-100 md:border-r md:border-slate-200",
+  "overflow-y-hidden fixed z-30 transition-all duration-100 bg-white border-b border-slate-100 md:border-r md:border-slate-200",
   {
     variants: {
       open: {
@@ -68,6 +69,7 @@ export default function TabSideMenu() {
   const [isAdding, setIsAdding] = useState(false);
   const [newGoal, setNewGoal] = useState("");
   const { mutate } = useCreateGoal();
+  const pathname = usePathname();
   const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery(
     getInfiniteGoalsOptions({ size: 20 }),
   );
@@ -103,6 +105,10 @@ export default function TabSideMenu() {
     else document.body.style.overflow = "auto";
   }, [isTabMinimized]);
 
+  useEffect(() => {
+    setIsTabMinimized(true);
+  }, [pathname]);
+
   return (
     <>
       <div className={containerStyle({ open: !isTabMinimized })}>
@@ -121,10 +127,10 @@ export default function TabSideMenu() {
         </div>
         {/* 탭 열였을때 나타나는 bottom menus */}
         <div
-          className={`transition-all duration-300 ${
+          className={`transition-all duration-100 ${
             isTabMinimized
-              ? "-translate-x-full opacity-0"
-              : "translate-x-0 opacity-100"
+              ? "-translate-y-1000 opacity-0 md:-translate-x-full"
+              : "translate-y-0 opacity-100 md:translate-x-0"
           }`}
         >
           <TodosMenu />
