@@ -14,5 +14,6 @@ export const GET = async (request: NextRequest) => {
       },
     );
   }
+
   return Response.json({ progress: (Math.random() * 100).toFixed(0) });
 };

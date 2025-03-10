@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { createTodo, updateTodo } from "@/services/todos";
 import { refetchTodo } from "@/services/todos/query";
-import { Todo } from "@/types/todo";
+import { TodoResponse } from "@/types/todo";
 
 import LoadingSpinner from "../@common/loading-spinner";
 
@@ -13,7 +13,7 @@ export default function TodoModal({
   selectedTodo,
 }: {
   onClose: () => void;
-  selectedTodo?: Todo | null;
+  selectedTodo?: TodoResponse | null;
 }) {
   const [title, setTitle] = useState<string>("");
   const [isDone, setIsDone] = useState<boolean>(false);
@@ -27,7 +27,7 @@ export default function TodoModal({
   }, [selectedTodo]);
 
   const mutation = useMutation({
-    mutationFn: (newTodo: Todo) =>
+    mutationFn: (newTodo: TodoResponse) =>
       newTodo.id ? updateTodo(newTodo) : createTodo(newTodo),
     onSuccess: () => {
       refetchTodo();
@@ -37,7 +37,7 @@ export default function TodoModal({
 
   const handleSubmit = async () => {
     if (!title) return;
-    const newTodo: Todo = {
+    const newTodo: TodoResponse = {
       id: selectedTodo ? selectedTodo.id : 0,
       noteId: selectedTodo?.noteId ?? null,
       title,

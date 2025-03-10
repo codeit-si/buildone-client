@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-import { withSentryConfig } from "@sentry/nextjs";
 const nextConfig = {
   experimental: {
     forceSwcTransforms: true,
@@ -13,9 +12,4 @@ const nextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
-  org: "bigroot",
-  project: "javascript-react",
-  authToken: process.env.SENTRY_AUTH_TOKEN,
-  silent: false,
-});
+export default nextConfig;

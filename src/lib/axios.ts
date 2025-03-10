@@ -1,10 +1,12 @@
 import axios, { AxiosError } from "axios";
 
+import { storeAccessTokenInCookie } from "@/services/auth/route-handler";
 import {
   getConfigWithAuthorizationHeaders,
   reissueAccessToken,
   retryRequestWithNewToken,
 } from "@/services/auth/token";
+import { ENDPOINT } from "@/services/endpoint";
 import { useAuthStore } from "@/store/auth-store";
 
 import { ApiError } from "./error";
@@ -14,12 +16,25 @@ const api = axios.create({
   withCredentials: true,
 });
 
+const noAuthPaths: string[] = [ENDPOINT.AUTH.LOGIN, ENDPOINT.AUTH.SIGNUP];
+
 api.interceptors.request.use(
   async (config) => {
+    if (config.url && noAuthPaths.includes(config.url)) {
+      return config;
+    }
+
     const { accessToken } = useAuthStore.getState();
 
     if (accessToken) {
       return getConfigWithAuthorizationHeaders(config, accessToken);
+    }
+
+    const newAccessToken = await reissueAccessToken();
+
+    if (newAccessToken) {
+      await storeAccessTokenInCookie(newAccessToken);
+      return getConfigWithAuthorizationHeaders(config, newAccessToken);
     }
 
     return config;
@@ -42,7 +57,7 @@ api.interceptors.response.use(
 
         throw new Error("토큰 갱신에 실패했습니다.");
       } catch (reissueError) {
-        const { removeAccessToken } = useAuthStore.getState().actions;
+        const { removeAccessToken } = useAuthStore.getState();
         removeAccessToken();
 
         return Promise.reject(new ApiError("로그인이 필요합니다."));

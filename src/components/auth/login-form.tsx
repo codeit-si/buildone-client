@@ -13,8 +13,6 @@ import { LOGIN_ERROR_CODE } from "@/constants/error";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ApiError } from "@/lib/error";
 import { login } from "@/services/auth";
-import { useAuthActions } from "@/store/auth-store";
-import { useUserActions } from "@/store/user-store";
 
 const loginSchema = z.object({
   email: z
@@ -29,9 +27,6 @@ type LoginSchemaKey = keyof LoginSchema;
 
 export default function LoginForm() {
   const router = useRouter();
-
-  const { setAccessToken } = useAuthActions();
-  const { setUserInfo } = useUserActions();
 
   const {
     register,
@@ -60,19 +55,14 @@ export default function LoginForm() {
 
   const onSubmit = async (data: LoginSchema) => {
     try {
-      const response = await login(data.email, data.password);
-
-      const token = response.headers?.["access-token"];
-
-      setAccessToken(token);
-      setUserInfo(response.data.memberInformation);
+      await login(data.email, data.password);
 
       router.push("/dashboard");
     } catch (error: unknown) {
       if (error instanceof ApiError) {
         if (
           error.code === LOGIN_ERROR_CODE.INVALID_EMAIL_FORMAT ||
-          error.code === LOGIN_ERROR_CODE.NOT_FOUND_EXIST_MEMBER
+          error.code === LOGIN_ERROR_CODE.NOT_FOUND_MEMBER_WITH_EMAIL
         ) {
           setError("email", { type: "valid", message: error.message });
         }

@@ -132,6 +132,7 @@ function PopupOverlay({
           onClick={() => {
             if (closeOnOverlayClick) setOpen(false);
           }}
+          data-ignore-click
         />
       )}
     </AnimatePresence>
@@ -159,6 +160,7 @@ function PopupContent({ children, className }: ComponentProps<"div">) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 0.1 } }}
             exit={{ opacity: 0, transition: { duration: 0.1 } }}
+            data-ignore-click
           >
             <div />
             {nonContentChild}
@@ -166,7 +168,7 @@ function PopupContent({ children, className }: ComponentProps<"div">) {
           </motion.div>
         )}
       </AnimatePresence>
-      <PopupOverlay />
+      <PopupOverlay className="z-40" />
     </PopupPortal>
   );
 }

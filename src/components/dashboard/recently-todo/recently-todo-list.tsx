@@ -4,17 +4,14 @@ import { useEffect, useRef, useState } from "react";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import ListTodo from "@/components/@common/todo";
+import Todo from "@/components/@common/todo";
 import { cn } from "@/lib/cn";
-import getQueryClient from "@/lib/get-query-client";
 import { getDashboardOptions } from "@/services/dashboard/query";
-import { DashboardResponse } from "@/types/dashboard";
 
 export default function RecentlyTodoList() {
   const { data } = useSuspenseQuery(getDashboardOptions());
   const [isOverflowing, setIsOverflowing] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
-  const queryClient = getQueryClient();
 
   const { todos } = data;
 
@@ -23,19 +20,6 @@ export default function RecentlyTodoList() {
       setIsOverflowing(listRef.current.scrollHeight > 170);
     }
   }, [todos]);
-
-  const toggleStatus = (id: number) => {
-    queryClient.setQueryData<DashboardResponse>(["dashboard"], (oldData) => {
-      if (!oldData) return oldData;
-      const clonedData = {
-        ...oldData,
-        todos: oldData.todos.map((todo) =>
-          todo.id === id ? { ...todo, isDone: !todo.isDone } : todo,
-        ),
-      };
-      return clonedData;
-    });
-  };
 
   return (
     <div
@@ -46,18 +30,17 @@ export default function RecentlyTodoList() {
       {todos && (
         <ul className="flex flex-col gap-8 pr-8">
           {todos.map((todo, index) => (
-            <ListTodo
+            <Todo
               key={todo.id}
               todo={todo}
               index={index}
-              toggleStatus={toggleStatus}
               showGoal
               showDropdownOnHover
             />
           ))}
         </ul>
       )}
-      {!todos && (
+      {todos?.length === 0 && (
         <div className="flex h-full w-full items-center justify-center">
           <span className="h-40 text-sm text-slate-500">
             최근에 등록한 할 일이 없어요

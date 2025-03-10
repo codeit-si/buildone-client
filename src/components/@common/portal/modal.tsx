@@ -3,8 +3,10 @@
 import {
   ComponentProps,
   createContext,
+  Dispatch,
   ElementType,
   PropsWithChildren,
+  SetStateAction,
   useContext,
   useEffect,
   useMemo,
@@ -133,6 +135,7 @@ function ModalOverlay({
           onClick={() => {
             if (closeOnOverlayClick) setOpen(false);
           }}
+          data-ignore-click
         />
       )}
     </AnimatePresence>
@@ -144,12 +147,24 @@ function ModalContent({
   className,
   hasCloseIcon = true,
   closeOnOverlayClick = true,
-}: ComponentProps<"div"> & ModalOverlayProps & { hasCloseIcon?: boolean }) {
+  onBeforeClose,
+}: ComponentProps<"div"> &
+  ModalOverlayProps & {
+    hasCloseIcon?: boolean;
+    onBeforeClose?: Dispatch<SetStateAction<boolean>>;
+  }) {
   const { open, setOpen } = useModal();
   const [[title, footer], nonContentChild] = splitChildrenByComponents(
     [ModalTitle, ModalFooter],
     children,
   );
+
+  const handleClose = () => {
+    if (!onBeforeClose) setOpen(false);
+    else {
+      onBeforeClose(true);
+    }
+  };
 
   return (
     <ModalPortal>
@@ -167,13 +182,14 @@ function ModalContent({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 0.1 } }}
             exit={{ opacity: 0, transition: { duration: 0.1 } }}
+            data-ignore-click
           >
             <div className={cn("flex w-full justify-between")}>
               {title || <div className="grow" />}
               {hasCloseIcon && (
                 <button
                   className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"
-                  onClick={() => setOpen(false)}
+                  onClick={handleClose}
                 >
                   <IcClose />
                 </button>
@@ -184,7 +200,10 @@ function ModalContent({
           </motion.div>
         )}
       </AnimatePresence>
-      <ModalOverlay closeOnOverlayClick={closeOnOverlayClick} />
+      <ModalOverlay
+        className="z-30"
+        closeOnOverlayClick={closeOnOverlayClick}
+      />
     </ModalPortal>
   );
 }

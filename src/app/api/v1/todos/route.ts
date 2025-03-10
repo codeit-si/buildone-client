@@ -1,60 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { GoalInformation, Todo } from "@/types/todo";
+import { TodoResponse } from "@/types/todo";
 
-const getRandomDate = (daysAgo: number): string => {
-  const date = new Date();
-  date.setDate(date.getDate() - Math.floor(Math.random() * daysAgo));
-  return date.toISOString();
-};
-
-const getRandomTitle = (): string => {
-  const titles = [
-    "Complete the project report",
-    "Review the latest code changes",
-    "Update documentation",
-    "Fix UI bug in dashboard",
-    "Implement authentication feature",
-    "Optimize database queries",
-    "Write unit tests",
-    "Deploy new version to production",
-    "Refactor old codebase",
-    "Research new tech stack",
-  ];
-  return titles[Math.floor(Math.random() * titles.length)];
-};
-
-const getRandomGoal = (): GoalInformation => {
-  const goals = [
-    { id: 1, title: "Improve team productivity" },
-    { id: 2, title: "Enhance security measures" },
-    { id: 3, title: "Refactor core modules" },
-    { id: 4, title: "Reduce server downtime" },
-    { id: 5, title: "Increase test coverage" },
-  ];
-  return goals[Math.floor(Math.random() * goals.length)];
-};
-
-const generateRandomTodos = (count: number): Todo[] => {
-  return Array.from({ length: count }, (_, i) => {
-    const createdAt = getRandomDate(100);
-    const updatedAt = getRandomDate(10);
-
-    return {
-      id: i + 1,
-      noteId: Math.random() > 0.5 ? Math.floor(Math.random() * 100) + 1 : null,
-      title: getRandomTitle(),
-      goalInformation: Math.random() > 0.5 ? getRandomGoal() : null,
-      linkUrl: Math.random() > 0.5 ? "https://example.com/resource" : null,
-      fileUrl: Math.random() > 0.5 ? "https://example.com/file.pdf" : null,
-      isDone: Math.random() > 0.5,
-      createdAt,
-      updatedAt,
-    };
-  });
-};
-
-export const todos: Todo[] = generateRandomTodos(120);
+import { todos } from "./generate-random-todos";
 
 export const GET = async (request: NextRequest) => {
   const pageParam = Number(request.nextUrl.searchParams.get("page")) || 1;
@@ -80,7 +28,7 @@ export const POST = async (request: NextRequest) => {
   if (!body.title)
     return NextResponse.json({ error: "Title is required" }, { status: 400 });
 
-  const newTodo: Todo = {
+  const newTodo: TodoResponse = {
     id: Date.now(),
     noteId: body.noteId ?? null,
     title: body.title,

@@ -23,6 +23,7 @@ export default function AddGoalSection({
             onInputChange={(id, newValue) => setNewGoal(newValue)}
             onInputBlur={() => {}}
             tab={{ id: 0, text: newGoal }}
+            className="text-slate-500"
           />
         </form>
       )}

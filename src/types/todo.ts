@@ -1,13 +1,17 @@
-export interface GoalInformation {
-  id: number;
-  title: string;
+import { GoalSimpleResponse } from "./goal";
+
+export interface TodosByGoalParams {
+  goalId?: number;
+  cursor?: number;
+  size?: number;
+  done?: boolean;
 }
 
-export interface Todo {
+export interface TodoResponse {
   id: number;
   noteId: number | null;
   title: string;
-  goalInformation: GoalInformation | null;
+  goalInformation: GoalSimpleResponse | null;
   linkUrl: string | null;
   fileUrl: string | null;
   isDone: boolean;
@@ -21,5 +25,5 @@ export interface TodoListResponse {
     totalCount: number;
     hasNext: boolean;
   };
-  todos: Todo[];
+  todos: TodoResponse[];
 }

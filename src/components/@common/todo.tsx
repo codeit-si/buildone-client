@@ -6,18 +6,17 @@ import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
-import { cn } from "@/lib/cn";
-import { deleteTodo } from "@/services/todos";
-import { refetchTodo } from "@/services/todos/query";
-import { Todo } from "@/types/todo";
+import useInView from "@/hooks/use-in-view";
+import { TodoResponse } from "@/types/todo";
 
 import Goal from "../todo/goal";
-import TodoCreateModal from "../todo/todo-modal";
+import TodoDeletePopup from "../todo/todo-delete-popup";
 
-import Dropdown from "./dropdown";
+import FixedDropdown from "./dropdown/fixed-dropdown";
+import TodoModal from "./todo-modal/todo-modal";
 
 interface Props {
-  todo: Todo;
+  todo: TodoResponse;
   index: number;
   showGoal?: boolean;
   showDropdownOnHover?: boolean;
@@ -28,35 +27,29 @@ interface DropdownItem {
   onClick: () => void;
 }
 
-export default function ListTodo({
+export default function Todo({
   todo,
   showDropdownOnHover,
   index,
   showGoal,
 }: Props) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+  const [ref, isInView] = useInView();
 
-  const handleDelete = async (selectedTodoForDelete: Todo) => {
-    if (!selectedTodoForDelete.id) return;
-    await deleteTodo(selectedTodoForDelete);
-    refetchTodo();
-  };
-
-  const getDropdownItems = (selectedTodoItem: Todo): DropdownItem[] => {
+  const getDropdownItems = (selectedTodoItem: TodoResponse): DropdownItem[] => {
     const baseItems: DropdownItem[] = [
       {
         id: "edit",
         label: "수정하기",
         onClick: () => {
-          setSelectedTodo(selectedTodoItem);
-          setIsModalOpen(true); // 모달 열기
+          setIsEditModalOpen(true);
         },
       },
       {
         id: "delete",
         label: "삭제하기",
-        onClick: () => handleDelete(selectedTodoItem),
+        onClick: () => setIsDeletePopupOpen(true),
       },
     ];
 
@@ -70,7 +63,7 @@ export default function ListTodo({
     return baseItems;
   };
 
-  const iconSpread = (currentTodo: Todo) => {
+  const iconSpread = (currentTodo: TodoResponse) => {
     const icons = [
       { key: "file", url: currentTodo.fileUrl, Icon: FileIcon },
       { key: "link", url: currentTodo.linkUrl, Icon: LinkIcon },
@@ -87,6 +80,7 @@ export default function ListTodo({
         <Link
           key={key}
           href={url || "#"}
+          className="hover:drop-shadow"
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${key} 열기`}
@@ -99,8 +93,9 @@ export default function ListTodo({
   return (
     <>
       <li
+        ref={ref}
         aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
-        className="group flex flex-col text-slate-800 hover:text-dark-blue-700"
+        className={`group flex flex-col text-slate-800 transition-all duration-1000 ease-out hover:font-bold hover:text-dark-blue-700 ${isInView ? `translate-y-0 opacity-100` : "translate-y-4 opacity-0"}`}
       >
         <div className="flex items-center justify-between">
           <TodoTitleAndCheckBox index={index} todo={todo} />
@@ -110,15 +105,13 @@ export default function ListTodo({
             className="flex gap-5 text-slate-700"
           >
             {iconSpread(todo)}
-            <div
-              aria-label="추가 작업"
-              aria-expanded={showDropdownOnHover}
-              className={cn(
-                showDropdownOnHover && "hidden focus:block group-hover:block",
-              )}
-            >
-              <Dropdown items={getDropdownItems(todo)} />
-            </div>
+            {showDropdownOnHover && (
+              <FixedDropdown
+                items={getDropdownItems(todo)}
+                todoId={todo.id}
+                todoNoteId={todo.noteId}
+              />
+            )}
           </div>
         </div>
         {showGoal && (
@@ -127,10 +120,21 @@ export default function ListTodo({
           </div>
         )}
       </li>
-      {isModalOpen && (
-        <TodoCreateModal
-          onClose={() => setIsModalOpen(false)}
-          selectedTodo={selectedTodo}
+      {isEditModalOpen && (
+        <TodoModal
+          goalId={todo.goalInformation?.id}
+          todo={todo}
+          open={isEditModalOpen}
+          onOpenChange={setIsEditModalOpen}
+        />
+      )}
+      {isDeletePopupOpen && (
+        <TodoDeletePopup
+          todoId={todo.id}
+          todoTitle={todo.title}
+          isDeletePopupOpen={isDeletePopupOpen}
+          setIsDeletePopupOpen={setIsDeletePopupOpen}
+          goalId={todo.goalInformation?.id}
         />
       )}
     </>

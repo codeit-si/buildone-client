@@ -1,12 +1,12 @@
 import CheckBoxOffIcon from "@/assets/icons-small/checkbox/checkbox_off.svg";
 import CheckBoxOnIcon from "@/assets/icons-small/checkbox/checkbox_on.svg";
+import { useUpdateTodo } from "@/hooks/query/use-todo";
 import { cn } from "@/lib/cn";
-import { useToggleStatus } from "@/services/todos/query";
-import { Todo } from "@/types/todo";
+import { TodoResponse } from "@/types/todo";
 
 interface TodoTitleAndCheckBoxProps {
   index: number;
-  todo: Todo;
+  todo: TodoResponse;
 }
 
 export default function TodoTitleAndCheckBox({
@@ -14,11 +14,12 @@ export default function TodoTitleAndCheckBox({
   todo,
 }: TodoTitleAndCheckBoxProps) {
   const { isDone } = todo;
-  const { mutate: toggleStatus, isPending } = useToggleStatus();
+  const { mutate: toggleStatus, isPending } = useUpdateTodo();
+
   return (
     <div
       className={cn(
-        "flex h-24 w-full items-center gap-10",
+        "flex h-24 w-full items-center gap-10 hover:drop-shadow",
         isPending && "animate-pulse",
       )}
     >
@@ -32,12 +33,22 @@ export default function TodoTitleAndCheckBox({
           id={`todo-check-${index}`}
           checked={isDone}
           aria-checked={isDone}
-          onChange={() => toggleStatus && toggleStatus(todo.id)}
+          onChange={() =>
+            toggleStatus({
+              todoId: todo.id,
+              newTodo: {
+                ...todo,
+                isDone: !todo.isDone,
+              },
+            })
+          }
           className="peer absolute hidden"
         />
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
       </label>
-      <p className={`line-clamp-1 ${isDone && "line-through"}`}>{todo.title}</p>
+      <p className={`line-clamp-1 cursor-default ${isDone && "line-through"}`}>
+        {todo.title}
+      </p>
     </div>
   );
 }

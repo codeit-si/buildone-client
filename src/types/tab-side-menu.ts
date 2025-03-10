@@ -1,6 +1,11 @@
 import { ReactNode, SetStateAction } from "react";
 
-import { TabItem } from "@/components/tab-side-menu/tab-input";
+import {
+  FetchNextPageOptions,
+  InfiniteQueryObserverResult,
+} from "@tanstack/react-query";
+
+import { GoalResponse } from "./goal";
 
 export interface LinkProps {
   href: string;
@@ -29,9 +34,18 @@ export interface IsAddingProps {
 }
 
 export interface GoalsListProps {
-  goals: TabItem[];
-  handleInputChange: (id: number, newValue: string) => void;
+  goals: GoalResponse[];
+  hasNextPage: boolean;
   setIsAdding: (value: boolean) => void;
+  fetchNextPage: (options?: FetchNextPageOptions) => Promise<
+    InfiniteQueryObserverResult<
+      {
+        pages: GoalResponse[];
+        pageParams: number[];
+      },
+      Error
+    >
+  >;
 }
 
 export interface AddGoalSectionProps {
@@ -40,11 +54,5 @@ export interface AddGoalSectionProps {
   handleSubmit: (e: React.FormEvent) => void;
   setNewGoal: (value: string) => void;
   newGoal: string;
-  goals: TabItem[];
-}
-
-export interface UserInformations {
-  name: string;
-  email: string;
-  profileImage: string;
+  goals: GoalResponse[];
 }

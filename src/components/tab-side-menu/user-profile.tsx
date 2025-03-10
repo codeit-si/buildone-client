@@ -1,10 +1,31 @@
-// import Image from "next/image";
+import { useState } from "react";
+
+import { cva } from "class-variance-authority";
 
 import Profile from "@/assets/icons-big/profile.svg";
-import Button from "@/components/@common/button";
+import { logout } from "@/services/auth";
+import { useAuthStore } from "@/store/auth-store";
 import { useUserStore } from "@/store/user-store";
 
+import Skeleton from "../@common/skeleton";
+import TodoModal from "../@common/todo-modal/todo-modal";
+
 import CustomButton from "./custom-button";
+
+const containerStyle = cva(
+  "w-full md:block overflow-hidden transition-all duration-100",
+  {
+    variants: {
+      open: {
+        true: "-translate-y-full opacity-0 md:-translate-x-full-0 h-0",
+        false: "translate-y-0 opacity-100 md:translate-x-0 mt-16 md:m-0",
+      },
+    },
+    defaultVariants: {
+      open: true,
+    },
+  },
+);
 
 const logoutButtonStyle =
   "min-h-0 w-fit min-w-0 justify-normal bg-opacity-0 p-0 text-xs font-normal text-slate-400 hover:bg-opacity-0";
@@ -13,40 +34,55 @@ const profileInfoStyle =
   "flex w-full items-end justify-between text-sm md:flex-col md:items-baseline lg:flex-col lg:items-baseline";
 
 export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
-  const { name, email } = useUserStore();
-  if (isTabOpen) return null;
+  const { userInformation } = useUserStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { removeAccessToken } = useAuthStore();
+
+  const logoutHandler = async () => {
+    logout();
+    removeAccessToken();
+    window.location.href = "/login";
+  };
+
   return (
-    <>
-      <div className="flex w-full gap-12">
+    <div className={containerStyle({ open: isTabOpen })}>
+      <div className="mb-24 flex w-full gap-12">
         <div className="min-w-40 md:min-w-64 lg:min-w-64">
-          {/* {profile ? (
-            <Image
-              className="h-full w-full"
-              src={profile.profileImage}
-              alt={`${name||"체다치즈"}의 프로필 이미지`}
-              width={64}
-              height={64}
-              layout="responsive"
-            />
-          ) : ( */}
           <Profile />
-          {/* )} */}
         </div>
         <div className={profileInfoStyle}>
           <div>
-            <p className="text-sm font-semibold text-slate-800">
-              {name || "체다치즈"}
-            </p>
-            <p className="text-sm font-medium text-slate-600">
-              {email || "chedacheese@slid.kr"}
-            </p>
+            {userInformation ? (
+              <>
+                <p className="text-sm font-semibold text-slate-800">
+                  {userInformation.name || ""}
+                </p>
+                <p className="text-sm font-medium text-slate-600">
+                  {userInformation.email || ""}
+                </p>
+              </>
+            ) : (
+              <div className="flex flex-col gap-y-10 pt-4">
+                <Skeleton className="h-11 w-50" />
+                <Skeleton className="h-11 w-132" />
+              </div>
+            )}
           </div>
-          <Button className={logoutButtonStyle}>로그아웃</Button>
+          <button onClick={logoutHandler} className={logoutButtonStyle}>
+            로그아웃
+          </button>
         </div>
       </div>
-      <CustomButton isMobile={false} color="white">
+      <CustomButton
+        isMobile={false}
+        color="white"
+        onClick={() => setIsModalOpen(true)}
+      >
         새 할 일
       </CustomButton>
-    </>
+      {isModalOpen && (
+        <TodoModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+      )}
+    </div>
   );
 }

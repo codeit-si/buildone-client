@@ -2,17 +2,19 @@
 
 import { useState } from "react";
 
-import { useDeleteGoal } from "@/hooks/use-delete-goal";
+import { useDeleteGoal } from "@/hooks/query/use-goal";
 
-import Dropdown from "../@common/dropdown";
+import Dropdown from "../@common/dropdown/dropdown";
 import Popup from "../@common/portal/popup";
 
 interface GoalSummaryDropdownProps {
   goalId: string;
+  setTitleEditing: (edit: boolean) => void;
 }
 
 export default function GoalSummaryDropdown({
   goalId,
+  setTitleEditing,
 }: GoalSummaryDropdownProps) {
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
 
@@ -21,13 +23,11 @@ export default function GoalSummaryDropdown({
   const dropdownItems = [
     {
       label: "수정하기",
-      onClick: () => {},
+      onClick: () => setTitleEditing(true),
     },
     {
       label: "삭제하기",
-      onClick: () => {
-        setPopupOpen(true);
-      },
+      onClick: () => setPopupOpen(true),
     },
   ];
 
@@ -36,7 +36,7 @@ export default function GoalSummaryDropdown({
   };
 
   return (
-    <>
+    <div className="ml-auto">
       <Dropdown items={dropdownItems} />
       <Popup.Root open={popupOpen} onOpenChange={setPopupOpen}>
         <Popup.Trigger className="hidden">삭제하기</Popup.Trigger>
@@ -59,6 +59,6 @@ export default function GoalSummaryDropdown({
           </Popup.Footer>
         </Popup.Content>
       </Popup.Root>
-    </>
+    </div>
   );
 }
