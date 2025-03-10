@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
-import { TodoListResponse, TodoResponse } from "@/types/todo";
+import { TodoResponse } from "@/types/todo";
+import { getCookie } from "@/utils/cookie";
 
 import { ENDPOINT } from "../endpoint";
 
@@ -11,38 +12,37 @@ export interface TodoParams {
   isDone: TodoResponse["isDone"];
 }
 
-export const getTodos = async (
-  pageParam: number,
-): Promise<TodoListResponse> => {
-  const { data } = await api.get<TodoListResponse>(ENDPOINT.TODO.GET_ALL, {
-    params: { page: pageParam },
-  });
-
-  const hasNext = pageParam * 40 < data.paginationInformation.totalCount;
-
-  return {
-    ...data,
-    paginationInformation: {
-      ...data.paginationInformation,
-      hasNext,
-      nextCursor: hasNext ? pageParam + 1 : null,
-    },
-  };
-};
-
 export const createTodo = async (newTodo: TodoParams) => {
-  const { data } = await api.post<TodoResponse>(ENDPOINT.TODO.CREATE, newTodo);
+  const accessToken = await getCookie("ACCESS_TOKEN");
+
+  const { data } = await api.post<TodoResponse>(ENDPOINT.TODO.CREATE, newTodo, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
   return data;
 };
 
 export const updateTodo = async (todoId: number, updatedTodo: TodoParams) => {
+  const accessToken = await getCookie("ACCESS_TOKEN");
+
   const url = ENDPOINT.TODO.UPDATE(todoId);
-  const { data } = await api.put<TodoResponse>(url, updatedTodo);
+  const { data } = await api.put<TodoResponse>(url, updatedTodo, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
   return data;
 };
 
 export const deleteTodo = async (id: number) => {
-  const { data } = await api.delete(ENDPOINT.TODO.DELETE(id));
+  const accessToken = await getCookie("ACCESS_TOKEN");
+
+  const { data } = await api.delete(ENDPOINT.TODO.DELETE(id), {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
   return data;
 };
