@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
@@ -15,7 +15,6 @@ import TodoModal from "../@common/todo-modal/todo-modal";
 export default function AllListTodo() {
   const [filter, setFilter] = useState<"all" | "todo" | "done">("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [animatedTodoIds, setAnimatedTodoIds] = useState(new Set());
 
   const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery(
     getInfiniteTodosByGoalIdOptions({ size: 40 }),
@@ -36,16 +35,6 @@ export default function AllListTodo() {
     .sort((a, b) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
-
-  useEffect(() => {
-    const newIds = todos
-      .filter((todo) => !animatedTodoIds.has(todo.id))
-      .map((todo) => todo.id);
-
-    if (newIds.length > 0) {
-      setAnimatedTodoIds((prev) => new Set([...prev, ...newIds]));
-    }
-  }, [todos, animatedTodoIds]);
 
   return (
     <>
