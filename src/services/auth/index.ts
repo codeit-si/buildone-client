@@ -1,5 +1,6 @@
 import { AxiosResponse } from "axios";
 
+import { ACCESS_TOKEN_KEY } from "@/constants/cookie";
 import { api } from "@/lib/axios";
 import { LoginResponse, SignupResponse } from "@/types/auth";
 import { removeCookie, setCookie } from "@/utils/cookie";
@@ -18,7 +19,7 @@ export const login = async (
 
   const { accessToken } = res.data.credentials;
 
-  setCookie("ACCESS_TOKEN", accessToken, {
+  setCookie(ACCESS_TOKEN_KEY, accessToken, {
     httpOnly: true,
     sameSite: "strict",
     secure: true,
@@ -30,7 +31,7 @@ export const login = async (
 /** 로그아웃 API */
 export const logout = async (): Promise<AxiosResponse> => {
   const res = await api.post(ENDPOINT.AUTH.LOGOUT);
-  removeCookie("ACCESS_TOKEN");
+  removeCookie(ACCESS_TOKEN_KEY);
 
   return res;
 };
