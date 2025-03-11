@@ -106,7 +106,7 @@ export default function TabSideMenu() {
   }, [isTabMinimized]);
 
   useEffect(() => {
-    setIsTabMinimized(true);
+    setIsTabMinimized(window.innerWidth < 1200);
   }, [pathname]);
 
   return (
