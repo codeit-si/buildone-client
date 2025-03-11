@@ -186,7 +186,7 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
           <LoadNoteToastManager onLoadNote={handleOpenLoadModal} />
 
           {/* 목표 표시 */}
-          <Goal goalText={displayedGoalTitle || ""} />
+          {displayedGoalTitle ? <Goal goalText={displayedGoalTitle} /> : null}
 
           {/* To do 항목 */}
           <Todo todoText={displayedTodoTitle || ""} />

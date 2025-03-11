@@ -1,32 +1,33 @@
-"use client";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-import { useParams } from "next/navigation";
-
-import FlagGoalSmall from "@/assets/icons-big/flag_goal_small.svg";
-import Card from "@/components/note/card";
-import { useNotesByGoalId } from "@/hooks/query/use-notes";
+import NoteCollectionClient from "@/components/note/NoteCollectionClient";
+import getQueryClient from "@/lib/get-query-client";
+import { getNotesByGoalIdOptions } from "@/services/goal/note/query";
+import { getGoalOptions } from "@/services/goal/query";
 import "@/styles/note.css";
 
-export default function NoteCollection() {
-  const { goalId } = useParams();
-  const { data, isLoading, error } = useNotesByGoalId({
-    goalId: Number(goalId),
-    size: 10,
-  });
+interface NoteCollectionPageParams {
+  params: {
+    goalId: string;
+  };
+}
 
-  const goalTitle = data?.notes[0]?.goalInformation?.title || "노트 모아보기";
+export default async function NoteCollectionPage({
+  params,
+}: NoteCollectionPageParams) {
+  const goalId = Number(params.goalId);
+  const queryClient = getQueryClient();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading notes.</div>;
+  await Promise.all([
+    queryClient.prefetchQuery(getNotesByGoalIdOptions({ goalId, size: 10 })),
+    queryClient.prefetchQuery(getGoalOptions(goalId)),
+  ]);
+
+  const dehydratedState = dehydrate(queryClient);
 
   return (
-    <div className="container-width mt-24">
-      <div className="mb-16 text-lg font-semibold">노트 모아보기</div>
-      <div className="flex h-52 items-center rounded-12 bg-white pb-14 pl-24 pr-24 pt-14">
-        <FlagGoalSmall className="h-24 w-24" />
-        <span className="ml-8 text-sm font-semibold">{goalTitle}</span>
-      </div>
-      {data?.notes.map((note) => <Card key={note.id} note={note} />)}
-    </div>
+    <HydrationBoundary state={dehydratedState}>
+      <NoteCollectionClient goalId={goalId} />
+    </HydrationBoundary>
   );
 }

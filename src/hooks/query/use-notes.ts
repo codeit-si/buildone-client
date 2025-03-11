@@ -1,6 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
-import { getNotesByGoalIdOptions } from "@/services/goal/note/query";
+import { getNotesByGoalId } from "@/services/goal/note";
 import { createNote, deleteNote, getNote, updateNote } from "@/services/note";
 import { noteKeys } from "@/services/query-key";
 import {
@@ -10,9 +15,27 @@ import {
   NoteUpdateRequest,
 } from "@/types/note";
 
-export const useNotesByGoalId = (params: NoteListParams) => {
-  return useQuery({
-    ...getNotesByGoalIdOptions(params),
+export interface NoteListResponse {
+  notes: NoteResponse[];
+  paginationInformation: {
+    nextCursor?: number;
+  };
+}
+
+export const useInfiniteNotesByGoalId = (params: NoteListParams) => {
+  return useInfiniteQuery<NoteListResponse, Error>({
+    queryKey: noteKeys.list(params),
+    queryFn: (context) => {
+      const pageParam = (context.pageParam as number) ?? 1;
+      return getNotesByGoalId({ ...params, page: pageParam });
+    },
+    getNextPageParam: (lastPage: NoteListResponse) => {
+      if (lastPage.notes.length < params.size) {
+        return null;
+      }
+      return lastPage.paginationInformation.nextCursor || null;
+    },
+    initialPageParam: 1,
   });
 };
 

@@ -74,7 +74,7 @@ export default function TagInput({
         onKeyDown={handleKeyDown}
         placeholder={tags.length > 0 ? "" : "태그를 입력하세요."}
         aria-label="태그 입력"
-        className="container-width h-32 flex-grow text-base font-normal text-slate-700 outline-none"
+        className="h-32 flex-grow text-base font-normal text-slate-700 outline-none"
       />
     </div>
   );
