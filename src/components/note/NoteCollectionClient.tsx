@@ -42,7 +42,7 @@ export default function NoteCollectionClient({
   if (notesLoading || goalLoading) return <div>Loading...</div>;
   if (notesError || goalError) return <div>Error loading data.</div>;
 
-  const notes = notesData?.pages.flatMap((page) => page.notes) || [];
+  const notes = notesData?.pages?.flatMap((page) => page?.notes ?? []) ?? [];
 
   return (
     <div className="container-width mt-24">

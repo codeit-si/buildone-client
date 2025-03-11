@@ -19,7 +19,9 @@ export default async function NoteCollectionPage({
   const queryClient = getQueryClient();
 
   await Promise.all([
-    queryClient.prefetchQuery(getNotesByGoalIdOptions({ goalId, size: 10 })),
+    queryClient.prefetchInfiniteQuery(
+      getNotesByGoalIdOptions({ goalId, size: 10 }),
+    ),
     queryClient.prefetchQuery(getGoalOptions(goalId)),
   ]);
 
