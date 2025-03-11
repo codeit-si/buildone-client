@@ -1,10 +1,12 @@
 import { useState } from "react";
 
 import { cva } from "class-variance-authority";
+import { useRouter } from "next/navigation";
 
 import Profile from "@/assets/icons-big/profile.svg";
 import { logout } from "@/services/auth";
 import { useUserStore } from "@/store/user-store";
+import { successToast } from "@/utils/custom-toast";
 
 import Skeleton from "../@common/skeleton";
 import TodoModal from "../@common/todo-modal/todo-modal";
@@ -33,12 +35,16 @@ const profileInfoStyle =
   "flex w-full items-end justify-between text-sm md:flex-col md:items-baseline lg:flex-col lg:items-baseline";
 
 export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
+  const router = useRouter();
+
   const { userInformation } = useUserStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const logoutHandler = async () => {
     logout();
-    window.location.href = "/login";
+
+    successToast("logout", "로그아웃 되었습니다.");
+    router.push("/login");
   };
 
   return (
