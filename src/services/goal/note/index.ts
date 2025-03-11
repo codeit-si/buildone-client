@@ -1,4 +1,4 @@
-import api from "@/lib/axios";
+import { api } from "@/lib/axios";
 import { ENDPOINT } from "@/services/endpoint";
 import { NoteListResponse } from "@/types/note";
 
