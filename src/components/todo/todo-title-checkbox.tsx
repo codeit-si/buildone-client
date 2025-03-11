@@ -14,7 +14,7 @@ export default function TodoTitleAndCheckBox({
   todo,
 }: TodoTitleAndCheckBoxProps) {
   const { isDone } = todo;
-  const { mutate: toggleStatus, isPending } = useUpdateTodo();
+  const { mutate: toggleStatus, isPending } = useUpdateTodo({});
 
   return (
     <div
