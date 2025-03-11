@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
 
 import { ReissueAccessTokenResponse } from "@/types/auth";
 
@@ -37,14 +37,4 @@ export const reissueAccessToken = async (): Promise<string | null> => {
   } catch (error) {
     return null;
   }
-};
-
-/** 새 토큰으로 요청 재시도 */
-export const retryRequestWithNewToken = async (
-  config: InternalAxiosRequestConfig,
-  token: string,
-  api: AxiosInstance,
-) => {
-  const newConfig = getConfigWithAuthorizationHeaders(config, token);
-  return api(newConfig);
 };
