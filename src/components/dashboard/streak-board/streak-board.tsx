@@ -47,7 +47,7 @@ export default function StreakBoard(): JSX.Element {
         },
       );
       return (
-        <div key={colIndex} className="mr-5 flex flex-col">
+        <div key={colIndex} className="mr-5 flex w-full flex-col">
           {columnBoxes}
         </div>
       );

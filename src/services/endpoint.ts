@@ -25,6 +25,7 @@ export const ENDPOINT = {
   },
   DASHBOARD: {
     GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
+    PROGRESS: `${PREFIX}/dashboard/todos/progress`,
   },
   FILE: {
     GET: (prefix: string, fileName: string) =>
