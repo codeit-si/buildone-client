@@ -30,6 +30,12 @@ export const login = async (
   return res;
 };
 
+/** 로그아웃 API */
+export const logout = async (): Promise<AxiosResponse> => {
+  const res = await api.post(ENDPOINT.AUTH.LOGOUT);
+  return res;
+};
+
 /** 회원가입 API */
 export const signup = async (
   name: string,

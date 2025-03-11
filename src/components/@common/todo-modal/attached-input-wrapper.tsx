@@ -10,17 +10,10 @@ import FileInput from "./file-input";
 import LinkInput from "./link-input";
 import { SelectOptionType } from "./todo-form-provider";
 
-interface AttachedInputWrapperProps {
-  handleToggleInput: (value: SelectOptionType) => void;
-}
-
-export default function AttachedInputWrapper({
-  handleToggleInput,
-}: AttachedInputWrapperProps) {
+export default function AttachedInputWrapper() {
   const [selectOption, setSelectOption] = useState<SelectOptionType>("file");
 
   const handleChangeOption = (value: SelectOptionType) => {
-    handleToggleInput(value);
     setSelectOption(value);
   };
 
@@ -55,8 +48,8 @@ export default function AttachedInputWrapper({
           </button>
         </li>
       </ul>
-      {selectOption === "file" && <FileInput id={selectOption} />}
-      {selectOption === "link" && <LinkInput id={selectOption} />}
+      <FileInput id="file" selectOption={selectOption} />
+      <LinkInput id="link" selectOption={selectOption} />
     </div>
   );
 }

@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 import MyProgressContainer from "@/components/dashboard/my-progress/my-progress-container";
@@ -31,9 +29,7 @@ export default async function DashboardPage() {
         </h1>
         <RecentlyTodoContainer />
         <MyProgressContainer />
-        <Suspense fallback={<div>TodosByGoalContainer 로딩중 ...</div>}>
-          <TodosByGoalContainer />
-        </Suspense>
+        <TodosByGoalContainer />
       </div>
     </HydrationBoundary>
   );
