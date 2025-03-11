@@ -25,6 +25,7 @@ export const ENDPOINT = {
   },
   DASHBOARD: {
     GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
+    PROGRESS: `${PREFIX}/dashboard/todos/progress`,
     GET_TODO_STREAK: `${PREFIX}/dashboard/todos/streak`,
   },
   NOTES: {

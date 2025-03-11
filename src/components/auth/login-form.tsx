@@ -13,6 +13,7 @@ import { LOGIN_ERROR_CODE } from "@/constants/error";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ApiError } from "@/lib/error";
 import { login } from "@/services/auth";
+import { useUserStore } from "@/store/user-store";
 
 const loginSchema = z.object({
   email: z
@@ -27,6 +28,7 @@ type LoginSchemaKey = keyof LoginSchema;
 
 export default function LoginForm() {
   const router = useRouter();
+  const { setUserInfo } = useUserStore();
 
   const {
     register,
@@ -55,7 +57,9 @@ export default function LoginForm() {
 
   const onSubmit = async (data: LoginSchema) => {
     try {
-      await login(data.email, data.password);
+      const response = await login(data.email, data.password);
+
+      setUserInfo(response.data.memberInformation);
 
       router.push("/dashboard");
     } catch (error: unknown) {
@@ -79,7 +83,7 @@ export default function LoginForm() {
       {[
         {
           key: "email",
-          label: "아이디",
+          label: "이메일",
           placeholder: "이메일을 입력해주세요.",
         },
         {
