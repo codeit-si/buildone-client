@@ -1,10 +1,8 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
 
 import { ReissueAccessTokenResponse } from "@/types/auth";
 
 import { ENDPOINT } from "../endpoint";
-
-import { storeAccessTokenInCookie } from "./route-handler";
 
 /** 기존 config에 Authorization 헤더 추가 */
 export const getConfigWithAuthorizationHeaders = (
@@ -35,20 +33,8 @@ export const reissueAccessToken = async (): Promise<string | null> => {
       throw new Error("토큰이 응답에 포함되지 않았습니다.");
     }
 
-    await storeAccessTokenInCookie(token);
-
     return token;
   } catch (error) {
     return null;
   }
-};
-
-/** 새 토큰으로 요청 재시도 */
-export const retryRequestWithNewToken = async (
-  config: InternalAxiosRequestConfig,
-  token: string,
-  api: AxiosInstance,
-) => {
-  const newConfig = getConfigWithAuthorizationHeaders(config, token);
-  return api(newConfig);
 };

@@ -1,4 +1,4 @@
-import api from "@/lib/axios";
+import { api } from "@/lib/axios";
 import { GoalResponse } from "@/types/goal";
 
 import { ENDPOINT } from "../endpoint";
@@ -25,6 +25,7 @@ export const updateGoal = async (goalId: number, title: string) => {
 
 export const createGoal = async (newGoal: { title: string }) => {
   const { data } = await api.post<GoalResponse>(ENDPOINT.GOAL.CREATE, newGoal);
+
   return data;
 };
 
@@ -37,5 +38,6 @@ export const getProgressByGoalId = async (goalId: number) => {
       },
     },
   );
+
   return data;
 };
