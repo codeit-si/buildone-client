@@ -125,7 +125,7 @@ export default function SignUpForm() {
         },
         {
           key: "email",
-          label: "아이디",
+          label: "이메일",
           placeholder: "이메일을 입력해주세요.",
         },
         {
