@@ -84,7 +84,7 @@ export default function TodoList({ goalId, done }: TodoListProps) {
           <div className="relative">
             <div
               className={cn(
-                "pointer-events-none absolute left-0 top-0 h-50 w-full bg-gradient-to-b to-transparent transition-opacity duration-300",
+                "pointer-events-none absolute left-0 top-0 z-10 h-50 w-full bg-gradient-to-b to-transparent transition-opacity duration-300",
                 showTopGradient ? "opacity-100" : "opacity-0",
                 done ? "from-slate-200" : "from-white",
               )}
