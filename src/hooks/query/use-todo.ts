@@ -1,25 +1,30 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { invalidateTodoRelatedQueries } from "@/services/invalidate";
+import { todoKeys } from "@/services/query-key";
 import {
   createTodo,
   deleteTodo,
+  getTodoDetail,
   TodoParams,
   updateTodo,
 } from "@/services/todo";
+import { TodoResponse } from "@/types/todo";
+import { successToast } from "@/utils/custom-toast";
 
 export const useCreateTodo = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (newTodo: TodoParams) => createTodo(newTodo),
-    onSuccess: () => {
-      invalidateTodoRelatedQueries(queryClient);
+    onSuccess: (data) => {
+      invalidateTodoRelatedQueries(queryClient, data.goalInformation?.id);
+      successToast("create-todo", "할 일이 생성되었습니다.");
     },
   });
 };
 
-export const useUpdateTodo = () => {
+export const useUpdateTodo = ({ updateAll }: { updateAll?: boolean }) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -30,19 +35,34 @@ export const useUpdateTodo = () => {
       todoId: number;
       newTodo: TodoParams;
     }) => updateTodo(todoId, newTodo),
-    onSuccess: () => {
-      invalidateTodoRelatedQueries(queryClient);
+    onSuccess: (data) => {
+      invalidateTodoRelatedQueries(queryClient, data.goalInformation?.id);
+
+      if (updateAll) {
+        successToast("update-todo", "할 일이 수정되었습니다.");
+      }
     },
   });
 };
 
-export const useDeleteTodo = () => {
+export const useDeleteTodo = (goalId?: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (todoId: number) => deleteTodo(todoId),
     onSuccess: () => {
-      invalidateTodoRelatedQueries(queryClient);
+      invalidateTodoRelatedQueries(queryClient, goalId);
+      successToast("delete-todo", "할 일이 삭제되었습니다.");
     },
+  });
+};
+
+export const useTodoDetail = (todoId: number, isEditMode: boolean) => {
+  return useQuery<TodoResponse>({
+    queryKey: todoKeys.detail(todoId),
+    queryFn: () => {
+      return getTodoDetail(todoId);
+    },
+    enabled: !isEditMode && Boolean(todoId),
   });
 };

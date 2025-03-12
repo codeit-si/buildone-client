@@ -1,13 +1,11 @@
 import { AxiosResponse } from "axios";
 
-import api from "@/lib/axios";
-import { useAuthStore } from "@/store/auth-store";
-import { useUserStore } from "@/store/user-store";
+import { ACCESS_TOKEN_KEY } from "@/constants/cookie";
+import { api } from "@/lib/axios";
 import { LoginResponse, SignupResponse } from "@/types/auth";
+import { removeCookie, setCookie } from "@/utils/cookie";
 
 import { ENDPOINT } from "../endpoint";
-
-import { storeAccessTokenInCookie } from "./route-handler";
 
 /** 로그인 API */
 export const login = async (
@@ -20,12 +18,20 @@ export const login = async (
   });
 
   const { accessToken } = res.data.credentials;
-  const { memberInformation } = res.data;
 
-  useAuthStore.getState().actions.setAccessToken(accessToken);
-  useUserStore.getState().actions.setUserInfo(memberInformation);
+  setCookie(ACCESS_TOKEN_KEY, accessToken, {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: true,
+  });
 
-  await storeAccessTokenInCookie(accessToken);
+  return res;
+};
+
+/** 로그아웃 API */
+export const logout = async (): Promise<AxiosResponse> => {
+  const res = await api.post(ENDPOINT.AUTH.LOGOUT);
+  removeCookie(ACCESS_TOKEN_KEY);
 
   return res;
 };

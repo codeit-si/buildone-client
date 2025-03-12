@@ -1,24 +1,26 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
+
 import ProgressIcon from "@/assets/progress.svg";
+import { getTodoStreak } from "@/services/dashboard";
+import { DashboardStreakResponse } from "@/types/dashboard";
 
 export default function StreakBoard(): JSX.Element {
-  // 지난 52주(364일)
-  const pastDays = 364;
+  const { data, isLoading, error } = useQuery<DashboardStreakResponse, Error>({
+    queryKey: ["todoStreak"],
+    queryFn: getTodoStreak,
+  });
+
+  if (isLoading) return <div>Loading streak board...</div>;
+  if (error) return <div>Error loading streak board.</div>;
+
+  // historyStreaks: 지난 364일 데이터, weekStreaks: 이번 주 지난 요일 데이터
+  const historyStreaks = data?.historyStreaks || [];
+  const weekStreaks = data?.weekStreaks || [];
+
   const boxesPerColumn = 7;
-  const pastColumns = 52;
-
-  const today = new Date();
-  // 오늘 요일에 따라 이번 주의 박스 개수: 일요일이면 1, 월요일이면 2, ..., 토요일이면 7
-  const currentWeekBoxes = today.getDay() === 0 ? 1 : today.getDay() + 1;
-
-  // 백엔드에서 전달받은 데이터(임시 데이터로 대체)
-  const pastDailyCounts = Array.from({ length: pastDays }, () =>
-    Math.floor(Math.random() * 12),
-  );
-  const currentWeekDailyCounts = Array.from({ length: currentWeekBoxes }, () =>
-    Math.floor(Math.random() * 12),
-  );
+  const pastColumns = Math.floor(historyStreaks.length / boxesPerColumn);
 
   const getBoxColor = (count: number): string => {
     if (count === 0) return "bg-slate-300";
@@ -31,23 +33,29 @@ export default function StreakBoard(): JSX.Element {
   };
 
   const renderPastBoard = () => {
-    return Array.from({ length: pastColumns }, (_col, colIndex) => {
+    return Array.from({ length: pastColumns }, (dummyCol, colIndex) => {
       const columnBoxes = Array.from(
         { length: boxesPerColumn },
-        (_row, rowIndex) => {
+        (dummyRow, rowIndex) => {
           const boxIndex = colIndex * boxesPerColumn + rowIndex;
-          const count = pastDailyCounts[boxIndex];
+          const day = historyStreaks[boxIndex];
+          const count = day ? day.count : 0;
           const boxColor = getBoxColor(count);
           return (
             <div
-              key={boxIndex}
+              key={day?.date || `past-${colIndex}-${rowIndex}`}
               className={`mb-5 h-18 w-18 rounded-4 ${boxColor}`}
             />
           );
         },
       );
       return (
-        <div key={colIndex} className="mr-5 flex flex-col">
+        <div
+          key={
+            historyStreaks[colIndex * boxesPerColumn]?.date || `col-${colIndex}`
+          }
+          className="mr-5 flex flex-col"
+        >
           {columnBoxes}
         </div>
       );
@@ -56,13 +64,13 @@ export default function StreakBoard(): JSX.Element {
 
   const renderCurrentWeek = () => {
     const columnBoxes = Array.from(
-      { length: currentWeekBoxes },
-      (_row, rowIndex) => {
-        const count = currentWeekDailyCounts[rowIndex];
-        const boxColor = getBoxColor(count);
+      { length: weekStreaks.length },
+      (dummyRow, rowIndex) => {
+        const day = weekStreaks[rowIndex];
+        const boxColor = getBoxColor(day.count);
         return (
           <div
-            key={rowIndex}
+            key={day.date}
             className={`mb-5 h-18 w-18 rounded-4 ${boxColor}`}
           />
         );
@@ -72,7 +80,7 @@ export default function StreakBoard(): JSX.Element {
   };
 
   return (
-    <div className="mx-8 mb-24">
+    <div>
       {/* 진행 상황 헤더 */}
       <div className="mb-14 flex items-center">
         <ProgressIcon className="mr-11 h-40 w-40" aria-label="아이콘" />
@@ -85,7 +93,7 @@ export default function StreakBoard(): JSX.Element {
       </div>
 
       {/* 스트릭 보드 */}
-      <div className="scrollbar-horizontality flex overflow-x-auto">
+      <div className="scrollbar-horizontality flex overflow-x-auto pr-5">
         {renderPastBoard()}
         {renderCurrentWeek()}
       </div>

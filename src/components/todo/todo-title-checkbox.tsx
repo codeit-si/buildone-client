@@ -14,12 +14,12 @@ export default function TodoTitleAndCheckBox({
   todo,
 }: TodoTitleAndCheckBoxProps) {
   const { isDone } = todo;
-  const { mutate: toggleStatus, isPending } = useUpdateTodo();
+  const { mutate: toggleStatus, isPending } = useUpdateTodo({});
 
   return (
     <div
       className={cn(
-        "flex h-24 w-full items-center gap-10",
+        "flex h-24 w-full items-center gap-10 hover:drop-shadow",
         isPending && "animate-pulse",
       )}
     >
@@ -46,7 +46,9 @@ export default function TodoTitleAndCheckBox({
         />
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
       </label>
-      <p className={`line-clamp-1 ${isDone && "line-through"}`}>{todo.title}</p>
+      <p className={`line-clamp-1 cursor-default ${isDone && "line-through"}`}>
+        {todo.title}
+      </p>
     </div>
   );
 }

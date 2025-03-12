@@ -1,15 +1,18 @@
 import { useState } from "react";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
-import { useDeleteTodo } from "@/hooks/query/use-todo";
+import useInView from "@/hooks/use-in-view";
+import { cn } from "@/lib/cn";
 import { TodoResponse } from "@/types/todo";
 
 import Goal from "../todo/goal";
+import TodoDeletePopup from "../todo/todo-delete-popup";
 
 import FixedDropdown from "./dropdown/fixed-dropdown";
 import TodoModal from "./todo-modal/todo-modal";
@@ -26,21 +29,16 @@ interface DropdownItem {
   onClick: () => void;
 }
 
-export default function ListTodo({
+export default function Todo({
   todo,
   showDropdownOnHover,
   index,
   showGoal,
 }: Props) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  const { mutate } = useDeleteTodo();
-
-  const handleDelete = async (selectedTodoForDelete: TodoResponse) => {
-    if (!selectedTodoForDelete.id) return;
-
-    mutate(todo.id);
-  };
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+  const [ref, isInView] = useInView();
+  const pathname = usePathname();
 
   const getDropdownItems = (selectedTodoItem: TodoResponse): DropdownItem[] => {
     const baseItems: DropdownItem[] = [
@@ -48,13 +46,13 @@ export default function ListTodo({
         id: "edit",
         label: "수정하기",
         onClick: () => {
-          setIsEditModalOpen(true); // 모달 열기
+          setIsEditModalOpen(true);
         },
       },
       {
         id: "delete",
         label: "삭제하기",
-        onClick: () => handleDelete(selectedTodoItem),
+        onClick: () => setIsDeletePopupOpen(true),
       },
     ];
 
@@ -70,13 +68,13 @@ export default function ListTodo({
 
   const iconSpread = (currentTodo: TodoResponse) => {
     const icons = [
-      { key: "file", url: currentTodo.fileUrl, Icon: FileIcon },
-      { key: "link", url: currentTodo.linkUrl, Icon: LinkIcon },
       {
         key: "note",
         url: currentTodo.noteId ? `/notes/${currentTodo.noteId}` : null,
         Icon: NoteIcon,
       },
+      { key: "link", url: currentTodo.linkUrl, Icon: LinkIcon },
+      { key: "file", url: currentTodo.fileUrl, Icon: FileIcon },
     ];
 
     return icons
@@ -85,6 +83,7 @@ export default function ListTodo({
         <Link
           key={key}
           href={url || "#"}
+          className="ml-5 hover:drop-shadow"
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${key} 열기`}
@@ -97,15 +96,20 @@ export default function ListTodo({
   return (
     <>
       <li
+        ref={ref}
         aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
-        className="group flex flex-col text-slate-800 hover:text-dark-blue-700"
+        className={cn(
+          "group flex flex-col text-slate-800 transition-all hover:font-bold hover:text-dark-blue-700",
+          pathname.includes("todos") &&
+            `${isInView ? "animate-fadeIn" : "animate-fadeOut opacity-0"}`,
+        )}
       >
         <div className="flex items-center justify-between">
           <TodoTitleAndCheckBox index={index} todo={todo} />
           <div
             role="group"
             aria-label="할일 관련 작업"
-            className="flex gap-5 text-slate-700"
+            className="flex text-slate-700"
           >
             {iconSpread(todo)}
             {showDropdownOnHover && (
@@ -129,6 +133,15 @@ export default function ListTodo({
           todo={todo}
           open={isEditModalOpen}
           onOpenChange={setIsEditModalOpen}
+        />
+      )}
+      {isDeletePopupOpen && (
+        <TodoDeletePopup
+          todoId={todo.id}
+          todoTitle={todo.title}
+          isDeletePopupOpen={isDeletePopupOpen}
+          setIsDeletePopupOpen={setIsDeletePopupOpen}
+          goalId={todo.goalInformation?.id}
         />
       )}
     </>

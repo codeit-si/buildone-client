@@ -13,11 +13,7 @@ import Input from "../input";
 
 import AttachedInputWrapper from "./attached-input-wrapper";
 import GoalDropdown from "./goal-dropdown";
-import {
-  SelectOptionType,
-  TodoModalSchema,
-  useTodoFormContext,
-} from "./todo-form-provider";
+import { TodoModalSchema, useTodoFormContext } from "./todo-form-provider";
 
 interface TodoModalProps {
   goalId?: GoalResponse["id"];
@@ -40,13 +36,9 @@ export default function TodoModalForm({
     selectedGoalId,
   } = formContextValue;
   const { mutate: createMutate } = useCreateTodo();
-  const { mutate: updateMutate } = useUpdateTodo();
+  const { mutate: updateMutate } = useUpdateTodo({ updateAll: true });
 
   const isDone = watch("isDone");
-
-  const handleToggleInput = (value: SelectOptionType) => {
-    setValue(value === "file" ? "link" : "file", undefined);
-  };
 
   const onSubmit = async (data: TodoModalSchema) => {
     let fileUrl = todo?.fileUrl;
@@ -61,25 +53,20 @@ export default function TodoModalForm({
       [fileUrl] = presignedUrl.split("?");
     }
     const { title, link, isDone: done } = data;
+    const newData = {
+      goalId: selectedGoalId,
+      title,
+      fileUrl,
+      linkUrl: link || undefined,
+      isDone: done ?? false,
+    };
     if (todo && done !== undefined) {
       updateMutate({
         todoId: todo.id,
-        newTodo: {
-          goalId: selectedGoalId,
-          title,
-          fileUrl,
-          linkUrl: link,
-          isDone: done,
-        },
+        newTodo: newData,
       });
     } else {
-      createMutate({
-        goalId: selectedGoalId,
-        title,
-        fileUrl,
-        linkUrl: link,
-        isDone: false,
-      });
+      createMutate(newData);
     }
     onOpenChange(false);
   };
@@ -119,7 +106,7 @@ export default function TodoModalForm({
             </p>
           )}
         </div>
-        <AttachedInputWrapper handleToggleInput={handleToggleInput} />
+        <AttachedInputWrapper />
         <GoalDropdown goalId={goalId} />
       </div>
       <Button

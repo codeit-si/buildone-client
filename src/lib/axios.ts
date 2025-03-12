@@ -1,17 +1,16 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
-import { storeAccessTokenInCookie } from "@/services/auth/route-handler";
+import { ACCESS_TOKEN_KEY } from "@/constants/cookie";
 import {
   getConfigWithAuthorizationHeaders,
   reissueAccessToken,
-  retryRequestWithNewToken,
 } from "@/services/auth/token";
 import { ENDPOINT } from "@/services/endpoint";
-import { useAuthStore } from "@/store/auth-store";
+import { getCookie, setCookie } from "@/utils/cookie";
 
 import { ApiError } from "./error";
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER_ADDRESS,
   withCredentials: true,
 });
@@ -24,7 +23,7 @@ api.interceptors.request.use(
       return config;
     }
 
-    const { accessToken } = useAuthStore.getState();
+    const accessToken = await getCookie(ACCESS_TOKEN_KEY);
 
     if (accessToken) {
       return getConfigWithAuthorizationHeaders(config, accessToken);
@@ -33,7 +32,12 @@ api.interceptors.request.use(
     const newAccessToken = await reissueAccessToken();
 
     if (newAccessToken) {
-      await storeAccessTokenInCookie(newAccessToken);
+      setCookie(ACCESS_TOKEN_KEY, newAccessToken, {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: true,
+      });
+
       return getConfigWithAuthorizationHeaders(config, newAccessToken);
     }
 
@@ -46,26 +50,5 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => response,
-  async (error: unknown) => {
-    if (error instanceof AxiosError && error.response?.status === 401) {
-      try {
-        const newToken = await reissueAccessToken();
-
-        if (newToken) {
-          return await retryRequestWithNewToken(error.config!, newToken, api);
-        }
-
-        throw new Error("토큰 갱신에 실패했습니다.");
-      } catch (reissueError) {
-        const { removeAccessToken } = useAuthStore.getState().actions;
-        removeAccessToken();
-
-        return Promise.reject(new ApiError("로그인이 필요합니다."));
-      }
-    } else {
-      return Promise.reject(new ApiError(error));
-    }
-  },
+  (error: unknown) => Promise.reject(new ApiError(error)),
 );
-
-export default api;

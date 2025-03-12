@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
-import ListTodo from "@/components/@common/todo";
+import Todo from "@/components/@common/todo";
 import { getDashboardInfiniteTodosByGoalIdOptions } from "@/services/dashboard/query";
 
 export interface SetNextType {
@@ -43,7 +43,7 @@ export default function TodoListByDone({
       {data.todos.length > 0 && (
         <ul className="flex flex-col gap-8">
           {data.todos.map((todo) => (
-            <ListTodo
+            <Todo
               key={`todo-list-by-goal-${todo.id}`}
               index={todo.id}
               todo={todo}

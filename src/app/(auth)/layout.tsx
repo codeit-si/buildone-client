@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import MainLogo from "@/assets/logo/main_logo.svg";
 
 export default function Layout({
@@ -7,7 +9,9 @@ export default function Layout({
 }>) {
   return (
     <div className="mx-16 mt-65 flex flex-col items-center md:mt-81 lg:mt-137">
-      <MainLogo aria-label="BuilDone 로고" />
+      <Link href="/">
+        <MainLogo aria-label="BuilDone 로고" />
+      </Link>
       {children}
     </div>
   );

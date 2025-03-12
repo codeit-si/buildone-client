@@ -1,9 +1,9 @@
-import toast from "react-hot-toast";
-
 import { ApiError } from "@/lib/error";
+
+import { errorToast } from "./custom-toast";
 
 export const handleMutationError = (error: unknown) => {
   if (error instanceof ApiError) {
-    toast.error(error.message);
+    errorToast(error.code, error.message);
   }
 };
