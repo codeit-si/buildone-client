@@ -68,13 +68,13 @@ export default function Todo({
 
   const iconSpread = (currentTodo: TodoResponse) => {
     const icons = [
-      { key: "file", url: currentTodo.fileUrl, Icon: FileIcon },
-      { key: "link", url: currentTodo.linkUrl, Icon: LinkIcon },
       {
         key: "note",
         url: currentTodo.noteId ? `/notes/${currentTodo.noteId}` : null,
         Icon: NoteIcon,
       },
+      { key: "link", url: currentTodo.linkUrl, Icon: LinkIcon },
+      { key: "file", url: currentTodo.fileUrl, Icon: FileIcon },
     ];
 
     return icons

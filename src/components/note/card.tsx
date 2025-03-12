@@ -2,47 +2,70 @@
 
 import { useState } from "react";
 
-import NoteListIcon from "@/assets/icons-big/notelist.svg";
+import { useRouter } from "next/navigation";
+
 import Dropdown from "@/components/@common/dropdown/dropdown";
 import Modal from "@/components/@common/portal/modal";
 import Sheet from "@/components/@common/portal/sheet";
 import DetailSheet from "@/components/note/detail-sheet";
-import Todo from "@/components/note/todo";
+import { useDeleteNote, useNoteDetail } from "@/hooks/query/use-notes";
+import { NoteResponse } from "@/types/note";
 
-export default function NoteCard(): JSX.Element | null {
-  const [isDeleted, setIsDeleted] = useState(false);
+interface NoteCardProps {
+  note: NoteResponse;
+}
+
+export default function NoteCard({ note }: NoteCardProps): JSX.Element | null {
+  const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
 
-  if (isDeleted) return null;
+  const { mutate: deleteNote } = useDeleteNote();
+
+  const { data: detailedNote } = useNoteDetail(note.id);
 
   return (
     <Modal.Root open={modalOpen} onOpenChange={setModalOpen}>
       <div className="mt-16 h-164 w-full rounded-12 bg-white p-24">
         <div className="flex h-44 justify-between">
-          <NoteListIcon className="h-28 w-28" />
+          <div className="flex h-24 w-45 items-center justify-center rounded-16 border border-dark-blue-300 bg-dark-blue-100 px-3 py-2 text-xs font-medium">
+            To do
+          </div>
           <Dropdown
             items={[
-              { label: "수정하기", onClick: (): void => {} },
               {
-                label: "삭제하기",
-                onClick: (): void => setModalOpen(true),
+                label: "수정하기",
+                onClick: (): void =>
+                  router.push(`/todos/9/note/create?noteId=${note.id}`),
               },
+              { label: "삭제하기", onClick: (): void => setModalOpen(true) },
             ]}
           />
         </div>
 
         <Sheet.Root open={sheetOpen} onOpenChange={setSheetOpen}>
-          <DetailSheet />
+          <DetailSheet noteId={note.id} />
           <Sheet.Trigger className="h-40 w-full border-b border-b-slate-200 text-left font-medium">
-            자바스크립트를 배우기 전 알아두어야 할 것
+            {note.title}
           </Sheet.Trigger>
         </Sheet.Root>
 
-        <div className="h-32 pt-11">
-          <Todo todoText="자바스크립트 기초 챕터1 듣기" />
+        {/* 태그와 todo */}
+        <div className="mt-12 flex h-20 text-xs text-slate-700">
+          {(detailedNote?.tags || []).map((tag) => (
+            <span
+              key={tag}
+              className="mr-8 rounded-4 bg-slate-100 px-3 py-2 font-medium"
+            >
+              #{tag}
+            </span>
+          ))}
+          <span className="py-2 pr-3 font-normal">
+            {note.todoInformation.title}
+          </span>
         </div>
 
+        {/* 모달 */}
         <Modal.Content
           hasCloseIcon={false}
           className="h-216 w-300 rounded-lg md:w-450"
@@ -59,7 +82,7 @@ export default function NoteCard(): JSX.Element | null {
             <Modal.Close
               variant="solid"
               className="w-120 min-w-120"
-              onClick={(): void => setIsDeleted(true)}
+              onClick={(): void => deleteNote(note.id)}
             >
               삭제
             </Modal.Close>

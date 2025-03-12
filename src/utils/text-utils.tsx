@@ -13,12 +13,17 @@ export const stripMarkdown = (str: string): string => {
   // 3. Markdown 블록인용(>) 제거 (각 줄의 시작에서 >와 그 뒤의 공백)
   plainText = plainText.replace(/^\s*>+\s?/gm, "");
 
-  // 필요시, 기타 Markdown 구문(리스트 등) 제거 가능:
-  // 예: 순서 없는 리스트 기호 (-, *, +) 제거
+  // 4. 순서 없는 리스트 기호 (-, *, +) 제거
   plainText = plainText.replace(/^\s*[-*+]\s+/gm, "");
 
-  // 예: 순서 있는 리스트 기호 (1. , 2. , ...) 제거
+  // 5. 순서 있는 리스트 기호 (1. , 2. , ...) 제거
   plainText = plainText.replace(/^\s*\d+\.\s+/gm, "");
+
+  // 6. Bold 제거: **text** 또는 __text__ 에서 마커 제거
+  plainText = plainText.replace(/(\*\*|__)(.*?)\1/g, "$2");
+
+  // 7. Italic 제거: *text* 또는 _text_ 에서 마커 제거
+  plainText = plainText.replace(/(\*|_)(.*?)\1/g, "$2");
 
   return plainText;
 };

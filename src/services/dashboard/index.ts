@@ -1,6 +1,7 @@
 import { api } from "@/lib/axios";
 import {
   DashboardRecentTodoListResponse,
+  DashboardStreakResponse,
   DashboardTodoProgressResponse,
   TodosByGoalParams,
 } from "@/types/dashboard";
@@ -51,6 +52,13 @@ export const getInfiniteTodosByGoalId = async ({
 export const getDashboardProgress = async () => {
   const { data } = await api.get<DashboardTodoProgressResponse>(
     ENDPOINT.DASHBOARD.PROGRESS,
+  );
+  return data;
+};
+
+export const getTodoStreak = async (): Promise<DashboardStreakResponse> => {
+  const { data } = await api.get<DashboardStreakResponse>(
+    ENDPOINT.DASHBOARD.GET_TODO_STREAK,
   );
   return data;
 };
