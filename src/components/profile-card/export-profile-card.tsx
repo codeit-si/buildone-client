@@ -24,7 +24,7 @@ export default function ExportProfileCard() {
   };
 
   const tempGoals = [
-    "자바스킙트로 웹 서비스 만들기",
+    "자바스크립트로 웹 서비스 만들기",
     "디자인 시스템 강의 듣기",
   ];
   const tempTags = ["Javascript", "배우고있는"];
@@ -50,13 +50,13 @@ export default function ExportProfileCard() {
           hasCloseIcon={false}
         >
           <div className="flex flex-col items-center">
-            <div className="relative h-424 w-271 overflow-hidden rounded-18 border-none bg-dark-blue-500 !px-36 pt-40 text-white shadow-xl md:h-580 md:w-370 md:rounded-24">
+            <div className="relative h-424 w-271 overflow-hidden rounded-18 border-none bg-dark-blue-500 px-36 pt-30 text-white shadow-xl md:h-580 md:w-370 md:rounded-24 md:pt-40">
               <div className="flex w-full flex-col items-center">
                 <div className="size-36 rounded-full bg-red-300 md:size-48" />
                 <h3 className="mt-4 text-26 font-bold md:mt-8 md:text-36">
                   {userInfo?.name}
                 </h3>
-                <div className="mt-17 flex flex-col items-center gap-y-24 md:mt-24">
+                <div className="mt-17 flex flex-col items-center gap-y-18 md:mt-24 md:gap-y-24">
                   <div className="space-y-8 md:space-y-12">
                     <div className="flex items-center justify-center">
                       <p className="text-14 font-bold md:text-18">
