@@ -86,6 +86,8 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
       const goalId = data.goalInformation?.id;
       if (goalId) {
         router.push(`/goals/${goalId}/notes`);
+      } else {
+        router.push("/dashboard");
       }
     },
   });
