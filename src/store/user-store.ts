@@ -15,8 +15,8 @@ export const useUserStore = create<UserState>()(
     (set) => ({
       userInformation: null,
 
-      setUserInfo: ({ id, email, name }: MemberInformation) =>
-        set({ userInformation: { id, email, name } }),
+      setUserInfo: ({ id, email, name, streakGrade }: MemberInformation) =>
+        set({ userInformation: { id, email, name, streakGrade } }),
       removeUserInfo: () => set({ userInformation: null }),
     }),
     {
