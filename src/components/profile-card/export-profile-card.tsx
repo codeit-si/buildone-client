@@ -46,11 +46,11 @@ export default function ExportProfileCard() {
         onOpenChange={setShowProfileCardModal}
       >
         <Modal.Content
-          className="h-auto w-auto !gap-0 !rounded-24 !border-none !bg-transparent !p-0 !shadow-none"
+          className="!md:rounded-24 h-auto w-auto !gap-0 !rounded-18 !border-none !bg-transparent !p-0 !shadow-none"
           hasCloseIcon={false}
         >
           <div className="flex flex-col items-center">
-            <div className="relative h-424 w-271 overflow-hidden !rounded-24 !border-none bg-dark-blue-500 !px-36 pt-40 text-white shadow-xl md:h-580 md:w-370">
+            <div className="relative h-424 w-271 overflow-hidden rounded-18 border-none bg-dark-blue-500 !px-36 pt-40 text-white shadow-xl md:h-580 md:w-370 md:rounded-24">
               <div className="flex w-full flex-col items-center">
                 <div className="size-36 rounded-full bg-red-300 md:size-48" />
                 <h3 className="mt-4 text-26 font-bold md:mt-8 md:text-36">
