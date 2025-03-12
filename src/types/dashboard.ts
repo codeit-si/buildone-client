@@ -43,3 +43,8 @@ export interface TodosByGoalParams {
   size?: number;
   done?: boolean;
 }
+
+export interface DashboardStreakResponse {
+  historyStreaks: { date: string; count: number }[];
+  weekStreaks: { date: string; count: number }[];
+}
