@@ -66,7 +66,7 @@ export default function ExportProfileCard() {
                         째 목표 달성 도전 중
                       </p>
                     </div>
-                    <div className="text-center text-xs font-normal md:text-base">
+                    <div className="text-center text-xs font-normal leading-normal md:text-base md:leading-6">
                       <p>전체 완료된 목표 수: 150개</p>
                       <p>하루 평균 할 일 완료 개수: 6개</p>
                     </div>
@@ -78,7 +78,7 @@ export default function ExportProfileCard() {
                         최근 목표
                       </p>
                     </div>
-                    <ul className="text-center text-xs font-normal md:text-base">
+                    <ul className="text-center text-xs font-normal leading-normal md:text-base md:leading-6">
                       {tempGoals.map((goal) => (
                         <li key={goal}>· {goal}</li>
                       ))}
