@@ -9,6 +9,7 @@ import {
   TodoParams,
   updateTodo,
 } from "@/services/todo";
+import { TodoResponse } from "@/types/todo";
 import { successToast } from "@/utils/custom-toast";
 
 export const useCreateTodo = () => {
