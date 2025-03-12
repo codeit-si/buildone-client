@@ -26,3 +26,8 @@ export const deleteTodo = async (id: number) => {
   const { data } = await api.delete(ENDPOINT.TODO.DELETE(id));
   return data;
 };
+
+export const getTodoDetail = async (todoId: number): Promise<TodoResponse> => {
+  const { data } = await api.get<TodoResponse>(ENDPOINT.TODO.GET_BY_ID(todoId));
+  return data;
+};

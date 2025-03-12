@@ -5,7 +5,6 @@ export default function TempSaveToast() {
   return (
     <div
       className={cn(
-        "container-width",
         "h-44",
         "bg-dark-blue-50",
         "rounded-28",
@@ -15,6 +14,7 @@ export default function TempSaveToast() {
         "items-center",
         "fixed",
         "bottom-84",
+        "sticky",
       )}
       aria-label="노트 임시 저장 토스트"
     >

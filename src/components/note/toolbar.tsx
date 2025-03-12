@@ -135,7 +135,7 @@ export default function Toolbar({
 
   return (
     <div
-      className="container-width fixed bottom-24 flex h-44 items-center justify-center rounded-22 border-slate-200 bg-white p-2 pl-16 shadow"
+      className="sticky bottom-24 flex h-44 items-center justify-center rounded-22 border-slate-200 bg-white p-2 pl-16 shadow"
       style={{ justifyContent: "space-between" }}
     >
       <div style={{ display: "flex" }}>

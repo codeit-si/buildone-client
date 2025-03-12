@@ -26,7 +26,7 @@ export default function Tiptap({
     editorProps: {
       attributes: {
         class:
-          "prose prose-sm sm:prose lg:prose-lg focus:outline-none min-h-400",
+          "prose prose-sm sm:prose lg:prose-lg focus:outline-none min-h-400 w-full",
       },
     },
     extensions: [
@@ -70,8 +70,8 @@ export default function Tiptap({
 
   return (
     <div className="custom-editor relative">
-      {editor && <Toolbar editor={editor} onLinkSubmit={handleLinkSubmit} />}
       <EditorContent editor={editor} />
+      {editor && <Toolbar editor={editor} onLinkSubmit={handleLinkSubmit} />}
     </div>
   );
 }

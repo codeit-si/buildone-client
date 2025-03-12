@@ -15,7 +15,7 @@ export default function LinkAttached({
   return (
     <div
       className={cn(
-        "container-width flex items-center rounded-20 bg-slate-200 p-4 pl-2 pr-2",
+        "flex items-center rounded-20 bg-slate-200 p-4 pl-2 pr-2",
         "h-32 w-full",
       )}
     >
