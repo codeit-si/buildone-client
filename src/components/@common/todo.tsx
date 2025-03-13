@@ -7,6 +7,8 @@ import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
+import useInView from "@/hooks/use-in-view";
+import { cn } from "@/lib/cn";
 import { getNote } from "@/services/note";
 import { NoteResponse } from "@/types/note";
 import { TodoResponse } from "@/types/todo";
@@ -40,6 +42,7 @@ export default function Todo({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [ref, isInView] = useInView();
   const { data: note } = useQuery<NoteResponse, Error>({
     queryKey: ["noteDetail", todo.noteId],
     queryFn: () => getNote(todo.noteId!),
@@ -98,7 +101,7 @@ export default function Todo({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${key} 열기`}
-            className="ml-5"
+            className="ml-5 hover:drop-shadow"
           >
             <Icon />
           </Link>
@@ -108,7 +111,7 @@ export default function Todo({
             onClick={onClick}
             disabled={!onClick}
             aria-label={`${key} 열기`}
-            className="ml-5"
+            className="ml-5 hover:drop-shadow"
           >
             <Icon />
           </button>
@@ -119,8 +122,12 @@ export default function Todo({
   return (
     <>
       <li
+        ref={ref}
         aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
-        className="group flex flex-col text-slate-800 hover:text-dark-blue-700"
+        className={cn(
+          "group flex flex-col text-slate-800 transition-all hover:font-bold hover:text-dark-blue-700",
+          `${isInView ? "animate-fadeIn" : "animate-fadeOut opacity-0"}`,
+        )}
       >
         <div className="flex items-center justify-between">
           <TodoTitleAndCheckBox index={index} todo={todo} />

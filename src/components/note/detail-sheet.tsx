@@ -8,7 +8,6 @@ import "github-markdown-css";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 
-import DeleteIcon from "@/assets/icons-small/delete.svg";
 import Sheet from "@/components/@common/portal/sheet";
 import Goal from "@/components/note/goal";
 import Todo from "@/components/note/todo";
@@ -16,6 +15,8 @@ import { getNote } from "@/services/note";
 import { NoteResponse } from "@/types/note";
 
 import EmbeddedFrame from "../@common/embeded-frame";
+
+import LinkAttached from "./link-attached";
 
 interface DetailSheetProps {
   noteId: number;
@@ -51,13 +52,7 @@ export default function DetailSheet({
         {note.title}
       </div>
       {linkUrl && (
-        <button
-          onClick={() => setSheetOpen(!sheetOpen)}
-          className="mt-16 flex items-center justify-between gap-16 rounded-full bg-slate-200 py-4 pl-16 pr-6 text-16 text-slate-800"
-        >
-          <p className="line-clamp-1 w-full text-start">{linkUrl}</p>
-          <DeleteIcon />
-        </button>
+        <LinkAttached link={linkUrl} onClick={() => setSheetOpen(!sheetOpen)} />
       )}
       <div className="markdown-body scrollbar overflow-y-auto pt-16 text-base font-normal">
         <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>

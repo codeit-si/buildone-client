@@ -217,11 +217,9 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
             />
 
             {/* 링크 첨부 */}
-            <div className="mb-8 mt-12">
-              {showLink && (
-                <LinkAttached link={link} onRemove={handleRemoveLink} />
-              )}
-            </div>
+            {showLink && (
+              <LinkAttached link={link} onRemove={handleRemoveLink} />
+            )}
 
             {/* 본문 */}
             <div className="mt-8">
