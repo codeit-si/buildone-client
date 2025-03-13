@@ -41,8 +41,8 @@ export default function EmbeddedFrame({
     <div
       className={cn(
         fixed
-          ? "right-800 z-50 flex h-372 items-center justify-center bg-slate-200 lg:fixed lg:h-full lg:w-543"
-          : "right-800 top-0 z-50 mt-24 flex h-372 w-full items-center justify-center bg-slate-200 text-center lg:absolute lg:m-0 lg:h-full lg:w-543",
+          ? "right-800 z-40 flex h-372 items-center justify-center bg-slate-200 lg:fixed lg:h-full lg:w-543"
+          : "right-800 top-0 z-40 mt-24 flex h-372 w-full items-center justify-center bg-slate-200 text-center lg:absolute lg:m-0 lg:h-full lg:w-543",
       )}
     >
       <div className="flex h-full w-full items-center justify-center lg:h-[413.56px]">

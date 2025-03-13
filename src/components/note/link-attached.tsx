@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 import DeleteIcon from "@/assets/icons-small/delete.svg";
 import EmbedIcon from "@/assets/icons-small/embed.svg";
 import { cn } from "@/lib/cn";
@@ -7,13 +9,19 @@ interface LinkAttachedProps {
   link: string;
   onRemove?: () => void;
   onClick?: () => void;
+  setSheetOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function LinkAttached({
   link,
   onRemove,
   onClick,
+  setSheetOpen,
 }: LinkAttachedProps): JSX.Element {
+  const handleLinkRemoveButtonClick = () => {
+    if (onRemove) onRemove();
+    if (setSheetOpen) setSheetOpen((prev) => !prev);
+  };
   return (
     <div
       role="button"
@@ -42,8 +50,8 @@ export default function LinkAttached({
         <button
           type="button"
           onClick={(e) => {
-            e.stopPropagation(); // 부모 버튼 클릭 방지
-            onRemove();
+            e.stopPropagation();
+            handleLinkRemoveButtonClick();
           }}
           className="flex-shrink-0"
         >
