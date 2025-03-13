@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import DashBoard from "@/assets/icons-small/dashboard.svg";
 
-import TodoModal from "../@common/todo-modal/todo-modal";
+import TodoModal from "../todo-modal/todo-modal";
 
 import CustomButton from "./custom-button";
 import Menus from "./menus";

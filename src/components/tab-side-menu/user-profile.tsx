@@ -9,7 +9,7 @@ import { useUserStore } from "@/store/user-store";
 import { successToast } from "@/utils/custom-toast";
 
 import Skeleton from "../@common/skeleton";
-import TodoModal from "../@common/todo-modal/todo-modal";
+import TodoModal from "../todo-modal/todo-modal";
 
 import CustomButton from "./custom-button";
 

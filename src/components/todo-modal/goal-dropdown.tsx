@@ -8,8 +8,8 @@ import useSelector from "@/hooks/use-selector";
 import { cn } from "@/lib/cn";
 import { getInfiniteGoalsOptions } from "@/services/dashboard/query";
 
-import { BASE_CLASS } from "../input";
-import Label from "../label";
+import { BASE_CLASS } from "../@common/input";
+import Label from "../@common/label";
 
 import { useTodoFormContext } from "./todo-form-provider";
 

@@ -10,7 +10,7 @@ import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
 
 import Filter from "../@common/filter";
-import TodoModal from "../@common/todo-modal/todo-modal";
+import TodoModal from "../todo-modal/todo-modal";
 
 export default function AllListTodo() {
   const [filter, setFilter] = useState<"all" | "todo" | "done">("all");

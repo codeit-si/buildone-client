@@ -13,9 +13,9 @@ import { TodoResponse } from "@/types/todo";
 
 import Goal from "../todo/goal";
 import TodoDeletePopup from "../todo/todo-delete-popup";
+import TodoModal from "../todo-modal/todo-modal";
 
 import FixedDropdown from "./dropdown/fixed-dropdown";
-import TodoModal from "./todo-modal/todo-modal";
 
 interface Props {
   todo: TodoResponse;

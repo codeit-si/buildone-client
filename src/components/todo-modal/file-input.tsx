@@ -2,7 +2,7 @@ import PlusGrayIcon from "@/assets/icons-small/plus/plus_g.svg";
 import UploadedIcon from "@/assets/icons-small/uploaded.svg";
 import { cn } from "@/lib/cn";
 
-import { BASE_CLASS } from "../input";
+import { BASE_CLASS } from "../@common/input";
 
 import { TodoModalSchema, useTodoFormContext } from "./todo-form-provider";
 

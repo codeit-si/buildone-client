@@ -10,7 +10,7 @@ import { cn } from "@/lib/cn";
 import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
 
 import Todo from "../@common/todo";
-import TodoModal from "../@common/todo-modal/todo-modal";
+import TodoModal from "../todo-modal/todo-modal";
 
 interface TodoListProps {
   goalId: string;
