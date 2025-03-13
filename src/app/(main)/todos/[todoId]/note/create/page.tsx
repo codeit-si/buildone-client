@@ -6,9 +6,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import Button from "@/components/@common/button";
 import Counting from "@/components/@common/counting";
-import LoadNoteModal from "@/components/@common/load-modal";
 import Goal from "@/components/note/goal";
 import LinkAttached from "@/components/note/link-attached";
+import LoadNoteModal from "@/components/note/load-modal";
 import LoadNoteToastManager, {
   NoteData,
 } from "@/components/note/load-note-toast-manager";
