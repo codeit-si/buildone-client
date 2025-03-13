@@ -8,12 +8,13 @@ import { useRouter } from "next/navigation";
 import { z } from "zod";
 
 import Button from "@/components/@common/button";
-import Input from "@/components/@common/input";
 import { LOGIN_ERROR_CODE } from "@/constants/error";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ApiError } from "@/lib/error";
 import { login } from "@/services/auth";
 import { useUserStore } from "@/store/user-store";
+
+import LabeledInput from "../@common/input/labeled-input";
 
 const loginSchema = z.object({
   email: z
@@ -93,7 +94,7 @@ export default function LoginForm() {
         },
       ].map(({ key, label, placeholder }, index) => (
         <div className={index > 0 ? "mt-24" : ""} key={key}>
-          <Input
+          <LabeledInput
             id={key}
             label={label}
             type={key.includes("password") ? "password" : "text"}

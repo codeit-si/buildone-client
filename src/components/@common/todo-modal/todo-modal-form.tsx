@@ -9,7 +9,7 @@ import { GoalResponse } from "@/types/dashboard";
 import { TodoResponse } from "@/types/todo";
 
 import Button from "../button";
-import Input from "../input";
+import LabeledInput from "../input/labeled-input";
 
 import AttachedInputWrapper from "./attached-input-wrapper";
 import GoalDropdown from "./goal-dropdown";
@@ -88,7 +88,7 @@ export default function TodoModalForm({
           </button>
         )}
         <div>
-          <Input
+          <LabeledInput
             id="create-todo-title"
             type="text"
             label="제목"
