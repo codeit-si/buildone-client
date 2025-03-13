@@ -7,7 +7,7 @@ import {
 
 import { getNotesByGoalIdOptions } from "@/services/goal/note/query";
 import { createNote, deleteNote, getNote, updateNote } from "@/services/note";
-import { noteKeys } from "@/services/query-key";
+import { noteKeys, profileKeys } from "@/services/query-key";
 import {
   NoteCreateRequest,
   NoteListParams,
@@ -71,6 +71,8 @@ export const useCreateOrUpdateNote = ({
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: noteKeys.all });
+      queryClient.invalidateQueries({ queryKey: profileKeys.all });
+
       onSuccess?.(data);
     },
   });
@@ -83,6 +85,8 @@ export const useDeleteNote = (options?: { onSuccess?: () => void }) => {
     mutationFn: (noteId: number) => deleteNote(noteId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: noteKeys.all });
+      queryClient.invalidateQueries({ queryKey: profileKeys.all });
+
       options?.onSuccess?.();
     },
   });
