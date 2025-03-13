@@ -10,7 +10,7 @@ import GoalsMenu from "@/components/tab-side-menu/goals-menu";
 import { useCreateGoal } from "@/hooks/query/use-goal";
 import { getInfiniteGoalsOptions } from "@/services/dashboard/query";
 
-import ExportProfileCard from "../profile-card/export-profile-card";
+import ExportProfileCardButton from "../profile-card/export-profile-card-button";
 
 import AddGoalSection from "./add-goal-section";
 import GoalsList from "./goals-list";
@@ -156,7 +156,7 @@ export default function TabSideMenu() {
         </div>
         {!isTabMinimized && (
           <div className="absolute bottom-0 mb-36 flex w-full flex-col items-center gap-y-4">
-            <ExportProfileCard />
+            <ExportProfileCardButton />
             <div className="flex h-48 w-232 items-center justify-center rounded-12 border border-dark-blue-500">
               거북목 주의보 알림 버튼
             </div>
