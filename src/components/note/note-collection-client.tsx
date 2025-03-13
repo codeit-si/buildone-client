@@ -18,18 +18,12 @@ export default function NoteCollectionClient({
 }: NoteCollectionClientProps) {
   const {
     data: notesData,
-    isLoading: notesLoading,
-    error: notesError,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteNotesByGoalId({ goalId, size: 10 });
 
-  const {
-    data: goalData,
-    isLoading: goalLoading,
-    error: goalError,
-  } = useQuery(getGoalOptions(goalId));
+  const { data: goalData } = useQuery(getGoalOptions(goalId));
 
   const goalTitle = goalData?.title || "노트 모아보기";
 
@@ -38,9 +32,6 @@ export default function NoteCollectionClient({
     hasNextPage,
     fetchNextPage,
   });
-
-  if (notesLoading || goalLoading) return <div>Loading...</div>;
-  if (notesError || goalError) return <div>Error loading data.</div>;
 
   const notes = notesData?.pages?.flatMap((page) => page?.notes ?? []) ?? [];
 
