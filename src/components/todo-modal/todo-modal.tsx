@@ -5,8 +5,8 @@ import { Dispatch, PropsWithChildren, SetStateAction, useState } from "react";
 import { GoalResponse } from "@/types/goal";
 import { TodoResponse } from "@/types/todo";
 
-import Modal from "../portal/modal";
-import Popup from "../portal/popup";
+import Modal from "../@common/portal/modal";
+import Popup from "../@common/portal/popup";
 
 import TodoFormProvider from "./todo-form-provider";
 import TodoModalForm from "./todo-modal-form";

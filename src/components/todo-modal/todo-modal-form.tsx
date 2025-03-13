@@ -8,8 +8,8 @@ import { getPresignedUrl, putFileToPresignedUrl } from "@/services/file";
 import { GoalResponse } from "@/types/dashboard";
 import { TodoResponse } from "@/types/todo";
 
-import Button from "../button";
-import LabeledInput from "../input/labeled-input";
+import Button from "../@common/button";
+import LabeledInput from "../@common/input/labeled-input";
 
 import AttachedInputWrapper from "./attached-input-wrapper";
 import GoalDropdown from "./goal-dropdown";

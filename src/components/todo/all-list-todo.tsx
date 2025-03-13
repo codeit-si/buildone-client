@@ -5,12 +5,12 @@ import { useState } from "react";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 import PlusIcon from "@/assets/icons-small/plus/plus_db_sm.svg";
-import Todo from "@/components/@common/todo";
+import Todo from "@/components/todo/todo";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
 
 import Filter from "../@common/filter";
-import TodoModal from "../@common/todo-modal/todo-modal";
+import TodoModal from "../todo-modal/todo-modal";
 
 export default function AllListTodo() {
   const [filter, setFilter] = useState<"all" | "todo" | "done">("all");

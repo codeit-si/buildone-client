@@ -4,8 +4,8 @@ import * as motion from "motion/react-client";
 import { useRouter } from "next/navigation";
 
 import ArrowDown from "@/assets/icons-small/arrow/arrow_down.svg";
-import TodoModal from "@/components/@common/todo-modal/todo-modal";
 import PlusIcon from "@/components/@svgr/plus-icon";
+import TodoModal from "@/components/todo-modal/todo-modal";
 import { GoalResponse } from "@/types/dashboard";
 
 import GoalContainer from "./goal-container";

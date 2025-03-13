@@ -4,7 +4,7 @@ import CheckboxOff from "@/assets/icons-small/checkbox/checkbox_off.svg";
 import CheckboxOnReverse from "@/assets/icons-small/checkbox/checkbox_on_reverse.svg";
 import { cn } from "@/lib/cn";
 
-import Label from "../label";
+import Label from "../@common/label";
 
 import FileInput from "./file-input";
 import LinkInput from "./link-input";

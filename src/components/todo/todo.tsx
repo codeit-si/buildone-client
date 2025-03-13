@@ -13,13 +13,13 @@ import { getNote } from "@/services/note";
 import { NoteResponse } from "@/types/note";
 import { TodoResponse } from "@/types/todo";
 
+import FixedDropdown from "../@common/dropdown/fixed-dropdown";
+import Sheet from "../@common/portal/sheet";
 import DetailSheet from "../note/detail-sheet";
-import Goal from "../todo/goal";
-import TodoDeletePopup from "../todo/todo-delete-popup";
+import TodoModal from "../todo-modal/todo-modal";
 
-import FixedDropdown from "./dropdown/fixed-dropdown";
-import Sheet from "./portal/sheet";
-import TodoModal from "./todo-modal/todo-modal";
+import Goal from "./goal";
+import TodoDeletePopup from "./todo-delete-popup";
 
 interface Props {
   todo: TodoResponse;
