@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import DeleteIcon from "@/assets/icons-small/delete.svg";
 import EmbedIcon from "@/assets/icons-small/embed.svg";
 import { cn } from "@/lib/cn";
@@ -18,27 +16,37 @@ export default function LinkAttached({
 }: LinkAttachedProps): JSX.Element {
   return (
     <div
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          onClick?.();
+        }
+      }}
       className={cn(
-        "flex items-center rounded-20 bg-slate-200 px-6 py-4",
-        "mb-8 mt-12 h-32 w-full cursor-pointer",
+        "flex !w-full items-center justify-between rounded-20 bg-slate-200 px-6 py-4",
+        "mb-8 mt-12 h-32 cursor-pointer",
       )}
     >
-      <button onClick={onClick} className="flex-shrink-0">
-        <EmbedIcon className="mr-8 flex-shrink-0" width="24" height="24" />
-      </button>
-      <Link
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
+      <EmbedIcon className="mr-8 flex-shrink-0" width="24" height="24" />
+      <span
         className={cn(
           "w-full flex-grow truncate text-start text-slate-800",
-          "flex-shrink hover:underline",
+          "flex-shrink",
         )}
       >
         {link}
-      </Link>
+      </span>
       {onRemove && (
-        <button onClick={onRemove} className="flex-shrink-0">
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation(); // 부모 버튼 클릭 방지
+            onRemove();
+          }}
+          className="flex-shrink-0"
+        >
           <DeleteIcon width="24" height="24" />
         </button>
       )}
