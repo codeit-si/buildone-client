@@ -2,6 +2,7 @@ export interface MemberInformation {
   id: number;
   email: string;
   name: string;
+  streakGrade: number;
 }
 
 interface Credentials {
