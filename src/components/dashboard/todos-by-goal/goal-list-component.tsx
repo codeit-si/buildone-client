@@ -1,4 +1,4 @@
-import Goal from "@/components/@common/goal";
+import Goal from "@/components/dashboard/todos-by-goal/goal";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
 import { TodoResponse } from "@/types/todo";
 
