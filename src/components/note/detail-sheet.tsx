@@ -26,17 +26,12 @@ export default function DetailSheet({
   noteId,
   linkUrl,
 }: DetailSheetProps): JSX.Element {
-  const {
-    data: note,
-    isLoading,
-    error,
-  } = useQuery<NoteResponse, Error>({
+  const { data: note, error } = useQuery<NoteResponse, Error>({
     queryKey: ["noteDetail", noteId],
     queryFn: () => getNote(noteId),
   });
   const [sheetOpen, setSheetOpen] = useState(false);
 
-  if (isLoading) return <div>Loading detail...</div>;
   if (error || !note) return <div>Error loading detail.</div>;
 
   return (

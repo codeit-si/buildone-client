@@ -1,14 +1,32 @@
 import { useState } from "react";
 
+import { cva } from "class-variance-authority";
+import { useRouter } from "next/navigation";
+
 import Profile from "@/assets/icons-big/profile.svg";
 import { logout } from "@/services/auth";
-import { useAuthStore } from "@/store/auth-store";
 import { useUserStore } from "@/store/user-store";
+import { successToast } from "@/utils/custom-toast";
 
 import Skeleton from "../@common/skeleton";
 import TodoModal from "../@common/todo-modal/todo-modal";
 
 import CustomButton from "./custom-button";
+
+const containerStyle = cva(
+  "w-full md:block overflow-hidden transition-all duration-100",
+  {
+    variants: {
+      open: {
+        true: "-translate-y-full opacity-0 md:-translate-x-full-0 h-0",
+        false: "translate-y-0 opacity-100 md:translate-x-0 mt-16 md:m-0",
+      },
+    },
+    defaultVariants: {
+      open: true,
+    },
+  },
+);
 
 const logoutButtonStyle =
   "min-h-0 w-fit min-w-0 justify-normal bg-opacity-0 p-0 text-xs font-normal text-slate-400 hover:bg-opacity-0";
@@ -17,21 +35,21 @@ const profileInfoStyle =
   "flex w-full items-end justify-between text-sm md:flex-col md:items-baseline lg:flex-col lg:items-baseline";
 
 export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
+  const router = useRouter();
+
   const { userInformation } = useUserStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { removeAccessToken } = useAuthStore();
-
-  if (isTabOpen) return null;
 
   const logoutHandler = async () => {
     logout();
-    removeAccessToken();
-    window.location.href = "/login";
+
+    successToast("logout", "로그아웃 되었습니다.");
+    router.push("/login");
   };
 
   return (
-    <>
-      <div className="flex w-full gap-12">
+    <div className={containerStyle({ open: isTabOpen })}>
+      <div className="mb-24 flex w-full gap-12">
         <div className="min-w-40 md:min-w-64 lg:min-w-64">
           <Profile />
         </div>
@@ -68,6 +86,6 @@ export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
       {isModalOpen && (
         <TodoModal open={isModalOpen} onOpenChange={setIsModalOpen} />
       )}
-    </>
+    </div>
   );
 }

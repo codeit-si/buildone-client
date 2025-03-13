@@ -36,7 +36,7 @@ export default function TodoModalForm({
     selectedGoalId,
   } = formContextValue;
   const { mutate: createMutate } = useCreateTodo();
-  const { mutate: updateMutate } = useUpdateTodo();
+  const { mutate: updateMutate } = useUpdateTodo({ updateAll: true });
 
   const isDone = watch("isDone");
 

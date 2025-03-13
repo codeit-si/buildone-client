@@ -1,12 +1,8 @@
 import { GoalSimpleResponse } from "./goal";
 
-import { CommonPaginationInformationResponse } from ".";
-
 export interface NoteListParams {
   goalId: number;
-  cursor?: number;
-  size?: number;
-  done?: boolean;
+  size: number;
 }
 
 export interface NoteCreateRequest {
@@ -47,6 +43,8 @@ export interface NoteResponse {
 }
 
 export interface NoteListResponse {
-  paginationInformation: CommonPaginationInformationResponse;
   notes: NoteResponse[];
+  paginationInformation: {
+    nextCursor?: number;
+  };
 }

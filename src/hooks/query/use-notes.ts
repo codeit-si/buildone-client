@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 import { getNotesByGoalIdOptions } from "@/services/goal/note/query";
 import { createNote, deleteNote, getNote, updateNote } from "@/services/note";
@@ -10,10 +15,17 @@ import {
   NoteUpdateRequest,
 } from "@/types/note";
 
-export const useNotesByGoalId = (params: NoteListParams) => {
-  return useQuery({
-    ...getNotesByGoalIdOptions(params),
-  });
+export interface NoteListResponse {
+  notes: NoteResponse[];
+  paginationInformation: {
+    nextCursor?: number;
+  };
+}
+
+export const useInfiniteNotesByGoalId = (params: NoteListParams) => {
+  return useInfiniteQuery<NoteListResponse, Error>(
+    getNotesByGoalIdOptions(params),
+  );
 };
 
 export const useNoteDetail = (noteId: number) => {

@@ -1,11 +1,14 @@
 import { useState } from "react";
 
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
 import FileIcon from "@/assets/icons-small/file.svg";
 import LinkIcon from "@/assets/icons-small/link.svg";
 import NoteIcon from "@/assets/icons-small/note.svg";
 import TodoTitleAndCheckBox from "@/components/todo/todo-title-checkbox";
+import { getNote } from "@/services/note";
+import { NoteResponse } from "@/types/note";
 import { TodoResponse } from "@/types/todo";
 
 import DetailSheet from "../note/detail-sheet";
@@ -37,6 +40,10 @@ export default function Todo({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const { data: note } = useQuery<NoteResponse, Error>({
+    queryKey: ["noteDetail", todo.noteId],
+    queryFn: () => getNote(todo.noteId!),
+  });
 
   const getDropdownItems = (selectedTodoItem: TodoResponse): DropdownItem[] => {
     const baseItems: DropdownItem[] = [
@@ -91,6 +98,7 @@ export default function Todo({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${key} 열기`}
+            className="ml-5"
           >
             <Icon />
           </Link>
@@ -100,6 +108,7 @@ export default function Todo({
             onClick={onClick}
             disabled={!onClick}
             aria-label={`${key} 열기`}
+            className="ml-5"
           >
             <Icon />
           </button>
@@ -118,7 +127,7 @@ export default function Todo({
           <div
             role="group"
             aria-label="할일 관련 작업"
-            className="flex gap-5 text-slate-700"
+            className="flex text-slate-700"
           >
             {iconSpread(todo)}
             {showDropdownOnHover && (
@@ -138,7 +147,7 @@ export default function Todo({
       </li>
       {sheetOpen && todo.noteId !== null && (
         <Sheet.Root open={sheetOpen} onOpenChange={setSheetOpen}>
-          <DetailSheet noteId={todo.noteId} linkUrl={todo.linkUrl} />
+          <DetailSheet noteId={todo.noteId} linkUrl={note?.linkUrl} />
         </Sheet.Root>
       )}
       {isEditModalOpen && (

@@ -17,17 +17,12 @@ interface NoteCardProps {
 
 export default function NoteCard({ note }: NoteCardProps): JSX.Element | null {
   const router = useRouter();
-  const [isDeleted, setIsDeleted] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
 
-  const { mutate: deleteNote } = useDeleteNote({
-    onSuccess: () => setIsDeleted(true),
-  });
+  const { mutate: deleteNote } = useDeleteNote();
 
   const { data: detailedNote } = useNoteDetail(note.id);
-
-  if (isDeleted) return null;
 
   return (
     <Modal.Root open={modalOpen} onOpenChange={setModalOpen}>

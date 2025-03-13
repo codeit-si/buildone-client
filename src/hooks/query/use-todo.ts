@@ -10,6 +10,7 @@ import {
   updateTodo,
 } from "@/services/todo";
 import { TodoResponse } from "@/types/todo";
+import { successToast } from "@/utils/custom-toast";
 
 export const useCreateTodo = () => {
   const queryClient = useQueryClient();
@@ -18,11 +19,12 @@ export const useCreateTodo = () => {
     mutationFn: (newTodo: TodoParams) => createTodo(newTodo),
     onSuccess: (data) => {
       invalidateTodoRelatedQueries(queryClient, data.goalInformation?.id);
+      successToast("create-todo", "할 일이 생성되었습니다.");
     },
   });
 };
 
-export const useUpdateTodo = () => {
+export const useUpdateTodo = ({ updateAll }: { updateAll?: boolean }) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -35,6 +37,10 @@ export const useUpdateTodo = () => {
     }) => updateTodo(todoId, newTodo),
     onSuccess: (data) => {
       invalidateTodoRelatedQueries(queryClient, data.goalInformation?.id);
+
+      if (updateAll) {
+        successToast("update-todo", "할 일이 수정되었습니다.");
+      }
     },
   });
 };
@@ -46,6 +52,7 @@ export const useDeleteTodo = (goalId?: number) => {
     mutationFn: (todoId: number) => deleteTodo(todoId),
     onSuccess: () => {
       invalidateTodoRelatedQueries(queryClient, goalId);
+      successToast("delete-todo", "할 일이 삭제되었습니다.");
     },
   });
 };
@@ -54,7 +61,6 @@ export const useTodoDetail = (todoId: number, isEditMode: boolean) => {
   return useQuery<TodoResponse>({
     queryKey: todoKeys.detail(todoId),
     queryFn: () => {
-      if (!todoId) throw new Error("todoId가 필요합니다.");
       return getTodoDetail(todoId);
     },
     enabled: !isEditMode && Boolean(todoId),
