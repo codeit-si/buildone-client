@@ -105,17 +105,6 @@ export default function LoginForm() {
               "border-red-500 focus-within:border-red-500 hover:border-red-500"
             }
           />
-          {/* <Input
-            id={key}
-            label={label}
-            type={key.includes("password") ? "password" : "text"}
-            placeholder={placeholder}
-            {...register(key as LoginSchemaKey)}
-            className={
-              errors[key as LoginSchemaKey] &&
-              "border-red-500 focus-within:border-red-500 hover:border-red-500"
-            }
-          /> */}
           {errors[key as LoginSchemaKey] && (
             <p className="mt-8 inline-block text-sm font-normal text-red-500">
               {errors[key as LoginSchemaKey]?.message}
