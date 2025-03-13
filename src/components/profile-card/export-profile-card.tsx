@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+import { saveAs } from "file-saver";
+import { domToBlob } from "modern-screenshot";
 
 import ExportIcon from "@/assets/export.svg";
 import SaveIcon from "@/assets/profile-card/download.svg";
@@ -16,10 +19,11 @@ import TagItem from "./tag-item";
 
 export default function ExportProfileCard() {
   const [showProfileCardModal, setShowProfileCardModal] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const userInfo = useUserStore().userInformation;
 
-  const handleClick = () => {
+  const handleExportProfileCardClick = () => {
     setShowProfileCardModal((prev) => !prev);
   };
 
@@ -29,12 +33,20 @@ export default function ExportProfileCard() {
   ];
   const tempTags = ["Javascript", "배우고있는"];
 
+  const handleSave = () => {
+    if (cardRef.current) {
+      domToBlob(cardRef.current, { scale: 2 }).then((blob) => {
+        saveAs(blob, `${userInfo?.name}'s profile-card.png`);
+      });
+    }
+  };
+
   return (
     <>
       <button
         type="button"
         className="flex h-48 w-232 items-center justify-center gap-x-4"
-        onClick={handleClick}
+        onClick={handleExportProfileCardClick}
       >
         <ExportIcon />
         <p className="text-base font-semibold text-dark-blue-500">
@@ -50,8 +62,11 @@ export default function ExportProfileCard() {
           hasCloseIcon={false}
         >
           <div className="flex flex-col items-center">
-            <div className="relative h-424 w-271 overflow-hidden rounded-18 border-none bg-dark-blue-500 px-36 pt-30 text-white shadow-xl md:h-580 md:w-370 md:rounded-24 md:pt-40">
-              <div className="flex w-full flex-col items-center">
+            <div
+              ref={cardRef}
+              className="relative h-424 w-271 overflow-hidden rounded-18 border-none bg-dark-blue-500 px-36 pt-30 text-white shadow-xl md:h-580 md:w-370 md:rounded-24 md:pt-40"
+            >
+              <div className="flex w-full flex-col items-center whitespace-nowrap">
                 <div className="size-36 rounded-full bg-red-300 md:size-48" />
                 <h3 className="mt-4 text-26 font-bold md:mt-8 md:text-36">
                   {userInfo?.name}
@@ -72,7 +87,7 @@ export default function ExportProfileCard() {
                     </div>
                   </div>
                   <div className="space-y-8 md:space-y-12">
-                    <div className="flex -translate-x-10 items-center justify-center gap-x-8">
+                    <div className="flex -translate-x-10 items-center justify-center gap-x-5 md:gap-x-8">
                       <FlagIcon className="h-19 w-18 md:size-24" />
                       <p className="text-base font-bold md:text-xl">
                         최근 목표
@@ -85,7 +100,7 @@ export default function ExportProfileCard() {
                     </ul>
                   </div>
                   <div className="space-y-8 md:space-y-12">
-                    <div className="flex items-center justify-center gap-x-8">
+                    <div className="flex items-center justify-center gap-x-4 md:gap-x-8">
                       <HashIcon className="size-18 md:size-24" />
                       <p className="text-base font-bold md:text-xl">
                         많이 사용하는 태그
@@ -106,13 +121,14 @@ export default function ExportProfileCard() {
               <div className="flex gap-x-10 md:gap-x-12">
                 <button
                   type="button"
-                  className="flex size-52 items-center justify-center rounded-8 bg-white shadow-xl md:size-72"
+                  className="flex size-52 items-center justify-center rounded-8 bg-white shadow-xl transition-transform hover:-translate-y-3 md:size-72"
+                  onClick={handleSave}
                 >
                   <SaveIcon className="flex size-30 items-center justify-center md:size-40" />
                 </button>
                 <button
                   type="button"
-                  className="flex size-52 items-center justify-center rounded-8 bg-white shadow-xl md:size-72"
+                  className="flex size-52 items-center justify-center rounded-8 bg-white shadow-xl transition-transform hover:-translate-y-3 md:size-72"
                 >
                   <ShareIcon className="flex size-30 items-center justify-center md:size-40" />
                 </button>

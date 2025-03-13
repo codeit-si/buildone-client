@@ -32,7 +32,7 @@ export default function TodoModal({
       <Modal.Trigger asChild>{children}</Modal.Trigger>
       {/* 모달 상단의 X버튼을 누르면 팝업이 나오는데 이 부분은 따로 구현하겠습니다. (지금은은 바로 닫힙니다.) */}
       <Modal.Content
-        className="z-40 h-full"
+        className="z-50 h-full"
         data-ignore-click
         onBeforeClose={setIsPopupOpen}
         closeOnOverlayClick={false}
@@ -46,7 +46,7 @@ export default function TodoModal({
           />
         </TodoFormProvider>
         <Popup.Root open={isPopupOpen} onOpenChange={setIsPopupOpen}>
-          <Popup.Content className="z-50">
+          <Popup.Content className="z-[80]">
             <div className="text-base/19 flex flex-col items-center justify-center font-medium">
               <span>정말 나가시겠어요?</span>
               <span>작성된 내용이 모두 삭제됩니다.</span>
