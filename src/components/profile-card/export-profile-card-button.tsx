@@ -8,9 +8,11 @@ import ProfileCardModal from "./profile-card-modal";
 
 export default function ExportProfileCardButton() {
   const [showProfileCardModal, setShowProfileCardModal] = useState(false);
+  const [shouldFetch, setShouldFetch] = useState(false);
 
   const handleExportProfileCardClick = () => {
-    setShowProfileCardModal((prev) => !prev);
+    setShouldFetch(true);
+    setShowProfileCardModal(true);
   };
 
   return (
@@ -25,12 +27,11 @@ export default function ExportProfileCardButton() {
           내 카드 내보내기
         </p>
       </button>
-      {showProfileCardModal && (
-        <ProfileCardModal
-          open={showProfileCardModal}
-          onOpenChange={setShowProfileCardModal}
-        />
-      )}
+      <ProfileCardModal
+        open={showProfileCardModal}
+        onOpenChange={setShowProfileCardModal}
+        shouldFetch={shouldFetch}
+      />
     </>
   );
 }

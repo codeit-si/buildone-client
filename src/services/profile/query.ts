@@ -4,8 +4,9 @@ import { profileKeys } from "../query-key";
 
 import { getProfileCardInfo } from ".";
 
-export const getProfileCardInfoOptions = () =>
+export const getProfileCardInfoOptions = (enabled: boolean) =>
   queryOptions({
     queryKey: profileKeys.all,
     queryFn: () => getProfileCardInfo(),
+    enabled,
   });
