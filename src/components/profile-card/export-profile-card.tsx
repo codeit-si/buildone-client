@@ -2,8 +2,8 @@
 
 import { useRef, useState } from "react";
 
-import domToImage from "dom-to-image";
 import { saveAs } from "file-saver";
+import { domToBlob } from "modern-screenshot";
 
 import ExportIcon from "@/assets/export.svg";
 import SaveIcon from "@/assets/profile-card/download.svg";
@@ -35,7 +35,7 @@ export default function ExportProfileCard() {
 
   const handleSave = () => {
     if (cardRef.current) {
-      domToImage.toBlob(cardRef.current).then((blob) => {
+      domToBlob(cardRef.current, { scale: 2 }).then((blob) => {
         saveAs(blob, `${userInfo?.name}'s profile-card.png`);
       });
     }
