@@ -5,7 +5,12 @@ import { GoalListParams } from "@/types/goal";
 
 import { dashboardKeys, goalKeys, todoKeys } from "../query-key";
 
-import { getDashboard, getInfiniteGoals, getInfiniteTodosByGoalId } from ".";
+import {
+  getDashboard,
+  getDashboardProgress,
+  getInfiniteGoals,
+  getInfiniteTodosByGoalId,
+} from ".";
 
 export const getDashboardOptions = () =>
   queryOptions({
@@ -61,3 +66,9 @@ export const getDashboardInfiniteTodosByGoalIdOptions = ({
     }),
   });
 };
+
+export const getDashboardProgressOptions = () =>
+  queryOptions({
+    queryKey: ["dashboard", "progress"],
+    queryFn: () => getDashboardProgress(),
+  });

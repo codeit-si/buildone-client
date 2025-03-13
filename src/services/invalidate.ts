@@ -12,7 +12,8 @@ export const invalidateTodoRelatedQueries = (
   goalId?: number,
 ) => {
   queryClient.invalidateQueries({ queryKey: todoKeys.all });
-  queryClient.invalidateQueries({ queryKey: dashboardKeys.recent });
+  queryClient.invalidateQueries({ queryKey: dashboardKeys.recent() });
+  queryClient.invalidateQueries({ queryKey: dashboardKeys.progress() });
 
   if (goalId) {
     queryClient.invalidateQueries({ queryKey: goalKeys.progress(goalId) });

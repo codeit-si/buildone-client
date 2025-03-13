@@ -3,6 +3,7 @@ const PREFIX = `/api/v1`;
 export const ENDPOINT = {
   AUTH: {
     LOGIN: `${PREFIX}/auth/login`,
+    LOGOUT: `${PREFIX}/auth/logout`,
     SIGNUP: `${PREFIX}/auth/signup`,
     TOKEN_VALIDATION: `${PREFIX}/auth/token`,
   },
@@ -24,6 +25,15 @@ export const ENDPOINT = {
   },
   DASHBOARD: {
     GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
+    PROGRESS: `${PREFIX}/dashboard/todos/progress`,
+    GET_TODO_STREAK: `${PREFIX}/dashboard/todos/streak`,
+  },
+  NOTES: {
+    GET_BY_ID: (noteId: number) => `${PREFIX}/notes/${noteId}`,
+    UPDATE: (noteId: number) => `${PREFIX}/notes/${noteId}`,
+    DELETE: (noteId: number) => `${PREFIX}/notes/${noteId}`,
+    CREATE: `${PREFIX}/notes`,
+    LIST: `${PREFIX}/notes`,
   },
   FILE: {
     GET: (prefix: string, fileName: string) =>
