@@ -11,11 +11,11 @@ import useInView from "@/hooks/use-in-view";
 import { cn } from "@/lib/cn";
 import { TodoResponse } from "@/types/todo";
 
-import Goal from "../todo/goal";
-import TodoDeletePopup from "../todo/todo-delete-popup";
+import FixedDropdown from "../@common/dropdown/fixed-dropdown";
 import TodoModal from "../todo-modal/todo-modal";
 
-import FixedDropdown from "./dropdown/fixed-dropdown";
+import Goal from "./goal";
+import TodoDeletePopup from "./todo-delete-popup";
 
 interface Props {
   todo: TodoResponse;
