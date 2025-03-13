@@ -38,7 +38,7 @@ export default function EmbeddedFrame({ linkUrl }: { linkUrl: string }) {
           // 임베디드 차단
           <div className="flex h-full w-full flex-col items-center justify-center bg-white bg-opacity-30 lg:bg-opacity-100">
             <p className="mb-20 text-slate-500">
-              이 사이트는 임베디드할 수 없습니다.
+              이 링크는 임베드할 수 없습니다.
             </p>
             <a href={linkUrl} target="_blank" rel="noopener noreferrer">
               <Button className="px-20 py-10">새 창에서 열기 🔗</Button>
