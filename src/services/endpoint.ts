@@ -42,4 +42,7 @@ export const ENDPOINT = {
       GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
     },
   },
+  PROFILE_CARD: {
+    GET: `${PREFIX}/dashboard/shared/profile`,
+  },
 } as const;
