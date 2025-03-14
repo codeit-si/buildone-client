@@ -73,13 +73,7 @@ export default function AllListTodo() {
         <ul className="scrollbar flex h-[calc(831px-32px-32px-16px)] flex-col gap-8 overflow-y-auto md:h-[calc(871px-32px-48px-16px)]">
           {todos?.length !== 0 ? (
             todos?.map((todo, index) => (
-              <Todo
-                key={todo.id}
-                index={index}
-                todo={todo}
-                showDropdownOnHover // 드롭다운 호버 여부
-                showGoal // 목표 보여주기 여부
-              />
+              <Todo key={todo.id} index={index} todo={todo} showGoal />
             ))
           ) : (
             <div

@@ -25,7 +25,6 @@ interface Props {
   todo: TodoResponse;
   index: number;
   showGoal?: boolean;
-  showDropdownOnHover?: boolean;
 }
 interface DropdownItem {
   id: string;
@@ -33,12 +32,7 @@ interface DropdownItem {
   onClick: () => void;
 }
 
-export default function Todo({
-  todo,
-  showDropdownOnHover,
-  index,
-  showGoal,
-}: Props) {
+export default function Todo({ todo, index, showGoal }: Props) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -125,7 +119,7 @@ export default function Todo({
         ref={ref}
         aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
         className={cn(
-          "group flex flex-col text-slate-800 transition-all hover:font-bold hover:text-dark-blue-700",
+          "group flex flex-col text-slate-800 transition-all",
           `${isInView ? "animate-fadeIn" : "animate-fadeOut"}`,
         )}
       >
@@ -137,13 +131,11 @@ export default function Todo({
             className="flex text-slate-700"
           >
             {iconSpread(todo)}
-            {showDropdownOnHover && (
-              <FixedDropdown
-                items={getDropdownItems(todo)}
-                todoId={todo.id}
-                noteId={todo.noteId}
-              />
-            )}
+            <FixedDropdown
+              items={getDropdownItems(todo)}
+              todoId={todo.id}
+              noteId={todo.noteId}
+            />
           </div>
         </div>
         {showGoal && (
