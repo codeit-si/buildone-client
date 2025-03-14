@@ -15,7 +15,7 @@ export default function LoadingText() {
   };
 
   return (
-    <div className="flex items-center justify-center text-xl font-bold text-white">
+    <div className="flex items-center justify-center text-lg font-bold text-white md:text-xl">
       {text.split("").map((current, i) => (
         <motion.div
           key={`${current}-${i * 1}`}
