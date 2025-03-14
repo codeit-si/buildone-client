@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import EllipseIcon from "@/assets/icons-big/ellipse.svg";
+import LoadingSpinner from "@/components/@common/loading-spinner";
 import StreakBoard from "@/components/dashboard/streak-board/streak-board";
 import { cn } from "@/lib/cn";
 
 import SectionContainer from "../section-container";
 
 import MyProgress from "./my-progress";
+import MyProgressToggle from "./my-progress-toggle";
 
 export default function MyProgressContainer() {
   const [toggleStreak, setToggleStreak] = useState(false);
@@ -20,7 +22,6 @@ export default function MyProgressContainer() {
         toggleStreak && "bg-white",
       )}
     >
-      {toggleStreak && <StreakBoard />}
       {!toggleStreak && (
         <div className="relative h-full w-full">
           <MyProgress />
@@ -29,16 +30,21 @@ export default function MyProgressContainer() {
           </div>
         </div>
       )}
-      <button
-        className={cn(
-          "absolute right-15 top-15 text-sm text-white",
-          toggleStreak && "text-dark-blue-400",
-        )}
-        onClick={() => setToggleStreak(!toggleStreak)}
-        type="button"
-      >
-        {toggleStreak ? "통계 보기" : "스트릭 보기"} {">"}
-      </button>
+      {toggleStreak && (
+        <Suspense
+          fallback={
+            <div className="flex h-full w-full items-center justify-center">
+              <LoadingSpinner />
+            </div>
+          }
+        >
+          <StreakBoard />{" "}
+        </Suspense>
+      )}
+      <MyProgressToggle
+        toggle={toggleStreak}
+        setToggle={() => setToggleStreak((prev) => !prev)}
+      />
     </SectionContainer>
   );
 }

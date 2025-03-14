@@ -1,19 +1,16 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
-import ProgressIcon from "@/assets/progress.svg";
+import EllipseIcon from "@/assets/icons-small/ellipse.svg";
 import { getTodoStreak } from "@/services/dashboard";
 import { DashboardStreakResponse } from "@/types/dashboard";
 
-export default function StreakBoard(): JSX.Element {
-  const { data, isLoading, error } = useQuery<DashboardStreakResponse, Error>({
+export default function StreakBoard() {
+  const { data } = useSuspenseQuery<DashboardStreakResponse, Error>({
     queryKey: ["todoStreak"],
     queryFn: getTodoStreak,
   });
-
-  if (isLoading) return <div>Loading streak board...</div>;
-  if (error) return <div>Error loading streak board.</div>;
 
   // historyStreaks: 지난 364일 데이터, weekStreaks: 이번 주 지난 요일 데이터
   const historyStreaks = data?.historyStreaks || [];
@@ -80,16 +77,13 @@ export default function StreakBoard(): JSX.Element {
   };
 
   return (
-    <div>
+    <div className="w-full">
       {/* 진행 상황 헤더 */}
-      <div className="mb-14 flex items-center">
-        <ProgressIcon className="mr-11 h-40 w-40" aria-label="아이콘" />
-        <span
-          className="text-lg font-semibold"
-          style={{ fontWeight: 600, fontSize: "18px" }}
-        >
-          내 진행상황
-        </span>
+      <div className="mb-14 flex items-center gap-16">
+        <div className="flex h-40 w-40 items-center justify-center rounded-15 bg-[#0F172A]">
+          <EllipseIcon />
+        </div>
+        <span className="text-lg font-semibold">내 진행상황</span>
       </div>
 
       {/* 스트릭 보드 */}
