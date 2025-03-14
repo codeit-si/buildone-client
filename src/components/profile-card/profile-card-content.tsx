@@ -7,6 +7,8 @@ import HashIcon from "@/assets/profile-card/hash.svg";
 import BgIcon from "@/assets/profile-card/profile-card-bg-icon.svg";
 import { ProfileCardInfo } from "@/types/profile";
 
+import BadgeIcon from "../badge/badge-icon";
+
 import LoadingText from "./loading-text";
 import TagItem from "./tag-item";
 
@@ -14,6 +16,7 @@ interface ProfileCardContentProps {
   cardRef: RefObject<HTMLDivElement>;
   loading: boolean;
   userName: string;
+  streakGrade: number;
   data: ProfileCardInfo | undefined;
 }
 
@@ -21,6 +24,7 @@ export default function ProfileCardContent({
   cardRef,
   loading,
   userName,
+  streakGrade,
   data,
 }: ProfileCardContentProps) {
   return (
@@ -41,7 +45,7 @@ export default function ProfileCardContent({
         {!loading && (
           <div className="backface-hidden absolute inset-0">
             <div className="flex w-full flex-col items-center whitespace-nowrap pt-30 md:pt-40">
-              <div className="size-36 rounded-full bg-red-300 md:size-48" />
+              <BadgeIcon level={streakGrade} className="size-36 md:size-48" />
               <h3 className="mt-4 text-26 font-bold md:mt-8 md:text-36">
                 {userName}
               </h3>
