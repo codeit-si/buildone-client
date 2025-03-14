@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import FlagIcon from "@/assets/profile-card/flag.svg";
 import HashIcon from "@/assets/profile-card/hash.svg";
 import BgIcon from "@/assets/profile-card/profile-card-bg-icon.svg";
+import { cn } from "@/lib/cn";
 import { ProfileCardInfo } from "@/types/profile";
 
 import BadgeIcon from "../badge/badge-icon";
@@ -19,6 +20,24 @@ interface ProfileCardContentProps {
   streakGrade: number;
   data: ProfileCardInfo | undefined;
 }
+
+const cardBgColor = [
+  "bg-[#8B5E21]",
+  "bg-[#C15E08]",
+  "bg-[#647B81]",
+  "bg-[#9A8004]",
+  "bg-[#238C69]",
+  "bg-[#4860DD]",
+];
+
+const cardHighlightTextColor = [
+  "text-[#FCFF72]",
+  "text-[#DEF9BBFB]",
+  "text-[#B6F2FF]",
+  "text-[#FFF3B9]",
+  "text-[#FFD177]",
+  "text-[#FFC2FD]",
+];
 
 export default function ProfileCardContent({
   cardRef,
@@ -36,7 +55,10 @@ export default function ProfileCardContent({
       )}
       <motion.div
         ref={cardRef}
-        className="relative h-424 w-271 rounded-18 border-none bg-dark-blue-500 px-36 pt-30 text-white md:h-580 md:w-370 md:rounded-24 md:pt-40"
+        className={cn(
+          "relative h-424 w-271 rounded-18 border-none px-36 pt-30 text-white md:h-580 md:w-370 md:rounded-24 md:pt-40",
+          cardBgColor[streakGrade],
+        )}
         animate={{ rotateY: loading ? 180 : 0 }}
         initial={{ rotateY: 180 }}
         transition={{ duration: 0.6 }}
@@ -53,7 +75,12 @@ export default function ProfileCardContent({
                 <div className="space-y-8 md:space-y-12">
                   <div className="flex items-center justify-center">
                     <p className="text-14 font-bold md:text-18">
-                      <span className="pr-5 text-24 font-bold text-red-200 md:text-32">
+                      <span
+                        className={cn(
+                          "pr-5 text-24 font-bold md:text-32",
+                          cardHighlightTextColor[streakGrade],
+                        )}
+                      >
                         {data?.streakCount}일
                       </span>
                       째 목표 달성 도전 중
