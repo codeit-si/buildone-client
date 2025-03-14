@@ -1,11 +1,9 @@
-/* eslint-disable no-console */
-
 "use client";
 
 import { useEffect } from "react";
 
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 import { useUserStore } from "@/store/user-store";
 
@@ -39,8 +37,22 @@ export default function FcmProvider() {
           setFcmToken(token);
         })
         .catch((err: unknown) => {
+          // eslint-disable-next-line no-console
           console.log("An error occurred while retrieving token. ", err);
         });
+
+      onMessage(messaging, (payload) => {
+        const notificationTitle =
+          payload?.notification?.title || "거북목 주의보";
+        const notificationOptions = {
+          body: payload.notification?.body,
+        };
+
+        if (Notification.permission === "granted") {
+          // eslint-disable-next-line no-new
+          new Notification(notificationTitle, notificationOptions);
+        }
+      });
     };
 
     onMessageFCM();
