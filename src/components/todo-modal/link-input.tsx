@@ -1,6 +1,6 @@
 import { cn } from "@/lib/cn";
 
-import Input from "../input";
+import Input from "../@common/input";
 
 import { TodoModalSchema, useTodoFormContext } from "./todo-form-provider";
 

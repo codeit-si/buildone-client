@@ -19,13 +19,13 @@ export default function TodoTitleAndCheckBox({
   return (
     <div
       className={cn(
-        "flex h-24 w-full items-center gap-10 hover:drop-shadow",
+        "flex h-24 w-full items-center gap-10",
         isPending && "animate-pulse",
       )}
     >
       <label
         htmlFor={`todo-check-${index}`}
-        className="relative flex cursor-pointer items-center"
+        className="relative flex cursor-pointer items-center hover:drop-shadow"
         aria-label={`${todo.title} ${isDone ? "완료됨" : "미완료"}`}
       >
         <input
@@ -46,7 +46,9 @@ export default function TodoTitleAndCheckBox({
         />
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
       </label>
-      <p className={`line-clamp-1 cursor-default ${isDone && "line-through"}`}>
+      <p
+        className={`line-clamp-1 cursor-default hover:font-bold ${isDone && "line-through"}`}
+      >
         {todo.title}
       </p>
     </div>

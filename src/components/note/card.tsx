@@ -44,7 +44,7 @@ export default function NoteCard({ note }: NoteCardProps): JSX.Element | null {
         </div>
 
         <Sheet.Root open={sheetOpen} onOpenChange={setSheetOpen}>
-          <DetailSheet noteId={note.id} />
+          <DetailSheet noteId={note.id} linkUrl={detailedNote?.linkUrl} />
           <Sheet.Trigger className="h-40 w-full border-b border-b-slate-200 text-left font-medium">
             {note.title}
           </Sheet.Trigger>

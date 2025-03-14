@@ -15,7 +15,7 @@ import { registerToken } from "@/services/push-alert";
 import { useUserStore } from "@/store/user-store";
 
 import Button from "../@common/button";
-import Input from "../@common/input";
+import LabeledInput from "../@common/input/labeled-input";
 
 const signupSchema = z
   .object({
@@ -147,7 +147,7 @@ export default function SignUpForm() {
         },
       ].map(({ key, label, placeholder }, index) => (
         <div className={index > 0 ? "mt-24" : ""} key={key}>
-          <Input
+          <LabeledInput
             id={key}
             label={label}
             type={key.includes("password") ? "password" : "text"}
