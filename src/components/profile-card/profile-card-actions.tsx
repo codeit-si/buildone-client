@@ -26,28 +26,26 @@ export default function ProfileCardActions({
 
   return (
     <motion.div
-      className="pt-17 md:pt-27"
+      className="pt-17 md:pt-24"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="pt-17 md:pt-27">
-        <div className="flex gap-x-10 md:gap-x-12">
-          <button
-            type="button"
-            className="flex size-52 items-center justify-center rounded-8 bg-white shadow-xl transition-transform hover:-translate-y-3 md:size-72"
-            onClick={handleSave}
-          >
-            <SaveIcon className="flex size-30 items-center justify-center md:size-40" />
-          </button>
-          <button
-            type="button"
-            className="flex size-52 items-center justify-center rounded-8 bg-white shadow-xl transition-transform hover:-translate-y-3 md:size-72"
-          >
-            <ShareIcon className="flex size-30 items-center justify-center md:size-40" />
-          </button>
-        </div>
-      </div>{" "}
+      <div className="flex gap-x-10 md:gap-x-12">
+        <button
+          type="button"
+          className="flex size-52 items-center justify-center rounded-8 bg-white shadow-xl transition-transform hover:-translate-y-3 md:size-72"
+          onClick={handleSave}
+        >
+          <SaveIcon className="flex size-30 items-center justify-center md:size-40" />
+        </button>
+        <button
+          type="button"
+          className="flex size-52 items-center justify-center rounded-8 bg-white shadow-xl transition-transform hover:-translate-y-3 md:size-72"
+        >
+          <ShareIcon className="flex size-30 items-center justify-center md:size-40" />
+        </button>
+      </div>
     </motion.div>
   );
 }
