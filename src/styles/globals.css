@@ -53,6 +53,14 @@ body {
   .scrollbar-horizontality::-webkit-scrollbar-thumb {
     @apply rounded-full bg-slate-200;
   }
+
+  .backface-visible {
+    backface-visibility: visible;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
 }
 
 .markdown-body ol {

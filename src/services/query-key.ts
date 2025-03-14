@@ -27,3 +27,7 @@ export const noteKeys = {
     [...noteKeys.all, "list", params] as const,
   detail: (id: number) => [...noteKeys.all, "detail", { noteId: id }] as const,
 };
+
+export const profileKeys = {
+  all: ["profile"] as const,
+};

@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { invalidateTodoRelatedQueries } from "@/services/invalidate";
-import { todoKeys } from "@/services/query-key";
+import { profileKeys, todoKeys } from "@/services/query-key";
 import {
   createTodo,
   deleteTodo,
@@ -19,6 +19,8 @@ export const useCreateTodo = () => {
     mutationFn: (newTodo: TodoParams) => createTodo(newTodo),
     onSuccess: (data) => {
       invalidateTodoRelatedQueries(queryClient, data.goalInformation?.id);
+      queryClient.invalidateQueries({ queryKey: profileKeys.all });
+
       successToast("create-todo", "할 일이 생성되었습니다.");
     },
   });
@@ -37,6 +39,7 @@ export const useUpdateTodo = ({ updateAll }: { updateAll?: boolean }) => {
     }) => updateTodo(todoId, newTodo),
     onSuccess: (data) => {
       invalidateTodoRelatedQueries(queryClient, data.goalInformation?.id);
+      queryClient.invalidateQueries({ queryKey: profileKeys.all });
 
       if (updateAll) {
         successToast("update-todo", "할 일이 수정되었습니다.");
@@ -52,6 +55,8 @@ export const useDeleteTodo = (goalId?: number) => {
     mutationFn: (todoId: number) => deleteTodo(todoId),
     onSuccess: () => {
       invalidateTodoRelatedQueries(queryClient, goalId);
+      queryClient.invalidateQueries({ queryKey: profileKeys.all });
+
       successToast("delete-todo", "할 일이 삭제되었습니다.");
     },
   });
