@@ -48,6 +48,7 @@ export default function ProfileCardModal({
             cardRef={cardRef}
             loading={isLoading}
             userName={userInfo?.name || ""}
+            streakGrade={userInfo?.streakGrade || 0}
             data={data}
           />
           {!isLoading && (
