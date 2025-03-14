@@ -1,21 +1,35 @@
-"use client";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-import FlagGoalSmall from "@/assets/icons-big/flag_goal_small.svg";
-import Card from "@/components/note/card";
-
+import NoteCollectionClient from "@/components/note/note-collection-client";
+import getQueryClient from "@/lib/get-query-client";
+import { getNotesByGoalIdOptions } from "@/services/goal/note/query";
+import { getGoalOptions } from "@/services/goal/query";
 import "@/styles/note.css";
 
-export default function NoteCollection() {
+interface NoteCollectionPageParams {
+  params: {
+    goalId: string;
+  };
+}
+
+export default async function NoteCollectionPage({
+  params,
+}: NoteCollectionPageParams) {
+  const goalId = Number(params.goalId);
+  const queryClient = getQueryClient();
+
+  await Promise.all([
+    queryClient.prefetchInfiniteQuery(
+      getNotesByGoalIdOptions({ goalId, size: 10 }),
+    ),
+    queryClient.prefetchQuery(getGoalOptions(goalId)),
+  ]);
+
+  const dehydratedState = dehydrate(queryClient);
+
   return (
-    <div className="container-width ml-80 mt-24">
-      <div className="mb-16 text-lg font-semibold">노트 모아보기</div>
-      <div className="flex h-52 items-center rounded-12 bg-white pb-14 pl-24 pr-24 pt-14">
-        <FlagGoalSmall className="h-24 w-24" />
-        <span className="ml-8 text-sm font-semibold">
-          자바스크립트로 웹 서비스 만들기
-        </span>
-      </div>
-      <Card />
-    </div>
+    <HydrationBoundary state={dehydratedState}>
+      <NoteCollectionClient goalId={goalId} />
+    </HydrationBoundary>
   );
 }

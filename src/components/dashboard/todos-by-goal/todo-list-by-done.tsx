@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
-import Todo from "@/components/@common/todo";
+import Todo from "@/components/todo/todo";
 import { getDashboardInfiniteTodosByGoalIdOptions } from "@/services/dashboard/query";
 
 export interface SetNextType {

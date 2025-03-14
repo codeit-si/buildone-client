@@ -1,12 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { invalidateTodoRelatedQueries } from "@/services/invalidate";
+import { todoKeys } from "@/services/query-key";
 import {
   createTodo,
   deleteTodo,
+  getTodoDetail,
   TodoParams,
   updateTodo,
 } from "@/services/todo";
+import { TodoResponse } from "@/types/todo";
 import { successToast } from "@/utils/custom-toast";
 
 export const useCreateTodo = () => {
@@ -51,5 +54,15 @@ export const useDeleteTodo = (goalId?: number) => {
       invalidateTodoRelatedQueries(queryClient, goalId);
       successToast("delete-todo", "할 일이 삭제되었습니다.");
     },
+  });
+};
+
+export const useTodoDetail = (todoId: number, isEditMode: boolean) => {
+  return useQuery<TodoResponse>({
+    queryKey: todoKeys.detail(todoId),
+    queryFn: () => {
+      return getTodoDetail(todoId);
+    },
+    enabled: !isEditMode && Boolean(todoId),
   });
 };

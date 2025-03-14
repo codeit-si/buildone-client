@@ -37,6 +37,10 @@ body {
     @apply rounded-full bg-slate-200;
   }
 
+  .scrollbar.white::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-slate-100;
+  }
+
   /* 수평 스크롤바 유틸리티 */
   .scrollbar-horizontality::-webkit-scrollbar {
     height: 4px;
@@ -49,4 +53,25 @@ body {
   .scrollbar-horizontality::-webkit-scrollbar-thumb {
     @apply rounded-full bg-slate-200;
   }
+}
+
+.markdown-body ol {
+  list-style-type: decimal !important;
+  list-style-position: outside;
+  padding-left: 1.5rem;
+  line-height: 2;
+}
+.markdown-body ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  line-height: 2;
+}
+
+h1,
+h2 {
+  border-bottom: none !important;
+}
+
+.prose {
+  max-width: 100%;
 }

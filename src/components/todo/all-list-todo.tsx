@@ -5,12 +5,12 @@ import { useState } from "react";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 import PlusIcon from "@/assets/icons-small/plus/plus_db_sm.svg";
-import Todo from "@/components/@common/todo";
+import Todo from "@/components/todo/todo";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
 
 import Filter from "../@common/filter";
-import TodoModal from "../@common/todo-modal/todo-modal";
+import TodoModal from "../todo-modal/todo-modal";
 
 export default function AllListTodo() {
   const [filter, setFilter] = useState<"all" | "todo" | "done">("all");
@@ -48,9 +48,9 @@ export default function AllListTodo() {
           <span className="text-14/3">할일 추가</span>
         </button>
       </div>
-      <div className="mb-16 min-h-[calc(100vh-131px)] w-full rounded-xl border-slate-300 bg-white p-16 text-sm text-slate-800 md:min-h-[calc(100vh-91px)] md:p-24 lg:mb-24 lg:p-24">
+      <div className="mb-16 h-[calc(100vh-131px)] w-full overflow-hidden rounded-xl border-slate-300 bg-white p-16 text-sm text-slate-800 md:h-[calc(100vh-91px)] md:p-24 lg:mb-24 lg:p-24">
         <Filter filter={filter} setFilter={setFilter} />
-        <ul className="flex flex-col gap-8">
+        <ul className="scrollbar flex h-[calc(831px-32px-32px-16px)] flex-col gap-8 overflow-y-auto md:h-[calc(871px-32px-48px-16px)]">
           {todos?.length !== 0 ? (
             todos?.map((todo, index) => (
               <Todo
