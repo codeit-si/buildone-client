@@ -94,7 +94,7 @@ export default function ProfileCardContent({
                 </div>
               </div>
             </div>
-            <BgIcon className="absolute bottom-0 left-0 h-153 w-98 rounded-18 md:h-209 md:w-134 md:rounded-24" />
+            <BgIcon className="absolute bottom-0 left-0 h-153 w-98 rounded-bl-18 md:h-209 md:w-134 md:rounded-bl-24" />
           </div>
         )}
       </motion.div>
