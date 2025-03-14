@@ -42,4 +42,8 @@ export const ENDPOINT = {
       GET_TODOS: `${PREFIX}/dashboard/todos/recent`,
     },
   },
+  PUSH: {
+    REGISTER_TOKEN: `${PREFIX}/push/token`,
+    SEND: `${PREFIX}/push/send`,
+  },
 } as const;
