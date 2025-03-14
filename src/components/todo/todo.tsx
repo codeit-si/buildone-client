@@ -120,7 +120,7 @@ export default function Todo({ todo, index, showGoal }: Props) {
         aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
         className={cn(
           "group flex flex-col text-slate-800 transition-all",
-          `${isInView ? "animate-fadeIn" : "animate-fadeOut"}`,
+          `${isInView ? "animate-fadeIn opacity-100" : "animate-fadeOut opacity-0"}`,
         )}
       >
         <div className="flex items-center justify-between">

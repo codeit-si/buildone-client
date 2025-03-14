@@ -103,7 +103,6 @@ export default function TodoList({ goalId, done }: TodoListProps) {
                       key={`todo-list-by-goal-${todo.id}`}
                       index={todo.id}
                       todo={todo}
-                      showDropdownOnHover
                     />
                   ))}
                 </ul>
