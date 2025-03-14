@@ -14,6 +14,8 @@ const nextConfig = {
   },
 };
 
+// module.exports = nextConfig;
+
 const { withSentryConfig } = require("@sentry/nextjs");
 
 module.exports = withSentryConfig(nextConfig, {
@@ -21,8 +23,9 @@ module.exports = withSentryConfig(nextConfig, {
   project: "buildone",
   silent: !process.env.CI,
   widenClientFileUpload: true,
-  reactComponentAnnotation: { enabled: true },
+  reactComponentAnnotation: {
+    enabled: process.env.NODE_ENV === "development",
+  },
   tunnelRoute: "/monitoring",
   disableLogger: true,
-  automaticVercelMonitors: true,
 });
