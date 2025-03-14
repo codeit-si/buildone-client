@@ -31,3 +31,8 @@ export const getTodoDetail = async (todoId: number): Promise<TodoResponse> => {
   const { data } = await api.get<TodoResponse>(ENDPOINT.TODO.GET_BY_ID(todoId));
   return data;
 };
+
+export const getTodosLengths = async () => {
+  const { data } = await api.get(ENDPOINT.TODO.GET);
+  return data;
+};
