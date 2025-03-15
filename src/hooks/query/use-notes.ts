@@ -7,13 +7,14 @@ import {
 
 import { getNotesByGoalIdOptions } from "@/services/goal/note/query";
 import { createNote, deleteNote, getNote, updateNote } from "@/services/note";
-import { noteKeys, profileKeys } from "@/services/query-key";
+import { noteKeys, profileKeys, todoKeys } from "@/services/query-key";
 import {
   NoteCreateRequest,
   NoteListParams,
   NoteResponse,
   NoteUpdateRequest,
 } from "@/types/note";
+import { successToast } from "@/utils/custom-toast";
 
 export interface NoteListResponse {
   notes: NoteResponse[];
@@ -51,7 +52,6 @@ export const useCreateOrUpdateNote = ({
   noteId,
   todoId,
   isEditMode,
-  onSuccess,
 }: UseCreateOrUpdateNoteParams) => {
   const queryClient = useQueryClient();
 
@@ -69,16 +69,14 @@ export const useCreateOrUpdateNote = ({
       }
       return createNote({ todoId, ...data } as NoteCreateRequest);
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: noteKeys.all });
-      queryClient.invalidateQueries({ queryKey: profileKeys.all });
-
-      onSuccess?.(data);
+      queryClient.invalidateQueries({ queryKey: todoKeys.all });
     },
   });
 };
 
-export const useDeleteNote = (options?: { onSuccess?: () => void }) => {
+export const useDeleteNote = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -87,7 +85,7 @@ export const useDeleteNote = (options?: { onSuccess?: () => void }) => {
       queryClient.invalidateQueries({ queryKey: noteKeys.all });
       queryClient.invalidateQueries({ queryKey: profileKeys.all });
 
-      options?.onSuccess?.();
+      successToast("delete-note", "노트가 삭제되었습니다.");
     },
   });
 };

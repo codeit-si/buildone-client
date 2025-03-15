@@ -17,6 +17,7 @@ import Button from "@/components/@common/button";
 import Modal from "@/components/@common/portal/modal";
 import ToolbarButton from "@/components/note/toolbar-btn";
 import "@/styles/note.css";
+import { errorToast } from "@/utils/custom-toast";
 
 interface ToolbarProps {
   editor: Editor | null;
@@ -36,11 +37,13 @@ export default function Toolbar({
   const closeLinkModal = () => {
     setLinkModalOpen(false);
     const urlPattern =
-      /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\w .-]*)*\/?$/;
+      /^(https?:\/\/)?([\w.-]+\.[a-z]{2,10})(\/[\w\-./?=&%+#]*)?$/i;
     const trimmedInput = inputLink.trim();
 
     if (trimmedInput && urlPattern.test(trimmedInput)) {
       onLinkSubmit(trimmedInput);
+    } else {
+      errorToast("no-http", "올바른 url 형식으로 입력해 주세요.");
     }
   };
 

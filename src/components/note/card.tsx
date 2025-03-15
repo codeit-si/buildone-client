@@ -36,7 +36,7 @@ export default function NoteCard({ note }: NoteCardProps): JSX.Element | null {
               {
                 label: "수정하기",
                 onClick: (): void =>
-                  router.push(`/todos/9/note/create?noteId=${note.id}`),
+                  router.push(`/todos/9/note/write?noteId=${note.id}`),
               },
               { label: "삭제하기", onClick: (): void => setModalOpen(true) },
             ]}
