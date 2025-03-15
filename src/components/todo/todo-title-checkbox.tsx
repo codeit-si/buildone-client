@@ -47,7 +47,7 @@ export default function TodoTitleAndCheckBox({
         {isDone ? <CheckBoxOnIcon /> : <CheckBoxOffIcon />}
       </label>
       <p
-        className={`line-clamp-1 cursor-default hover:font-bold ${isDone && "line-through"}`}
+        className={`line-clamp-1 cursor-default hover:font-bold hover:text-dark-blue-700 ${isDone && "line-through"}`}
       >
         {todo.title}
       </p>
