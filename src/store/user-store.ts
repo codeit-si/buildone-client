@@ -5,8 +5,10 @@ import { MemberInformation } from "@/types/auth";
 
 interface UserState {
   userInformation: MemberInformation | null;
+  fcmToken?: string;
 
   setUserInfo: (userInfo: MemberInformation) => void;
+  setFcmToken: (token: string) => void;
   removeUserInfo: () => void;
 }
 
@@ -17,6 +19,7 @@ export const useUserStore = create<UserState>()(
 
       setUserInfo: ({ id, email, name, streakGrade }: MemberInformation) =>
         set({ userInformation: { id, email, name, streakGrade } }),
+      setFcmToken: (token: string) => set({ fcmToken: token }),
       removeUserInfo: () => set({ userInformation: null }),
     }),
     {
