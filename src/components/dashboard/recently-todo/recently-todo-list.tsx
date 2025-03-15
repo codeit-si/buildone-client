@@ -1,65 +1,41 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
 import { useSuspenseQuery } from "@tanstack/react-query";
 
+import GradientProvider from "@/components/goal-detail/gradient-provider";
 import Todo from "@/components/todo/todo";
-import { cn } from "@/lib/cn";
+import useInView from "@/hooks/use-in-view";
 import { getDashboardOptions } from "@/services/dashboard/query";
 
 export default function RecentlyTodoList() {
   const { data } = useSuspenseQuery(getDashboardOptions());
-  const scrollRef = useRef<HTMLUListElement>(null);
-  const [showTopGradient, setShowTopGradient] = useState(false);
-  const [showBottomGradient, setShowBottomGradient] = useState(false);
+
+  const [topRef, isTopInView] = useInView();
+  const [bottomRef, isBottomInView] = useInView();
 
   const { todos } = data;
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!scrollRef.current) {
-        return;
-      }
-
-      setShowTopGradient(scrollRef.current.scrollTop > 0);
-      setShowBottomGradient(
-        scrollRef.current.scrollHeight - scrollRef.current.scrollTop >
-          scrollRef.current.clientHeight + 5,
-      );
-    };
-
-    const element = scrollRef.current;
-    element?.addEventListener("scroll", handleScroll);
-    handleScroll();
-
-    return () => element?.removeEventListener("scroll", handleScroll);
-  }, [data]);
-
   return (
     <div className="relative" role="region">
-      <div
-        className={cn(
-          "pointer-events-none absolute left-0 top-0 z-10 h-50 w-full bg-gradient-to-b from-white to-transparent transition-opacity duration-300",
-          showTopGradient ? "opacity-100" : "opacity-0",
+      <GradientProvider topInView={isTopInView} bottomInView={isBottomInView}>
+        {todos && (
+          <div className="scrollbar max-h-152 overflow-y-scroll">
+            <div ref={topRef} className="h-1 w-full" />
+            <ul className="flex flex-col gap-8 pr-8">
+              {todos.map((todo, index) => (
+                <Todo
+                  key={todo.id}
+                  todo={todo}
+                  index={index}
+                  showGoal
+                  showDropdownOnHover
+                />
+              ))}
+            </ul>
+            <div ref={bottomRef} className="h-1 w-full" />
+          </div>
         )}
-      />
-      {todos && (
-        <ul
-          ref={scrollRef}
-          className="scrollbar flex max-h-152 flex-col gap-8 overflow-y-scroll pr-8"
-        >
-          {todos.map((todo, index) => (
-            <Todo
-              key={todo.id}
-              todo={todo}
-              index={index}
-              showGoal
-              showDropdownOnHover
-            />
-          ))}
-        </ul>
-      )}
+      </GradientProvider>
       {todos?.length === 0 && (
         <div className="flex h-full w-full items-center justify-center">
           <span className="h-40 text-sm text-slate-500">
@@ -67,12 +43,6 @@ export default function RecentlyTodoList() {
           </span>
         </div>
       )}
-      <div
-        className={cn(
-          "pointer-events-none absolute bottom-0 left-0 z-10 h-50 w-full bg-gradient-to-t from-white to-transparent transition-opacity duration-300",
-          showBottomGradient ? "opacity-100" : "opacity-0",
-        )}
-      />
     </div>
   );
 }

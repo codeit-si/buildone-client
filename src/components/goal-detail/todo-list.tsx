@@ -1,16 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 import PlusIcon from "@/assets/icons-small/plus/plus_db_sm.svg";
+import useInView from "@/hooks/use-in-view";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { cn } from "@/lib/cn";
 import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
 
 import Todo from "../todo/todo";
 import TodoModal from "../todo-modal/todo-modal";
+
+import GradientProvider from "./gradient-provider";
 
 interface TodoListProps {
   goalId: string;
@@ -19,9 +22,9 @@ interface TodoListProps {
 
 export default function TodoList({ goalId, done }: TodoListProps) {
   const [showCreateTodoModal, setShowCreateTodoModal] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [showTopGradient, setShowTopGradient] = useState(false);
-  const [showBottomGradient, setShowBottomGradient] = useState(false);
+
+  const [topRef, isTopInView] = useInView();
+  const [bottomRef, isBottomInView] = useInView();
 
   const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery(
     getInfiniteTodosByGoalIdOptions({
@@ -35,26 +38,6 @@ export default function TodoList({ goalId, done }: TodoListProps) {
     hasNextPage,
     fetchNextPage,
   });
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!scrollRef.current) {
-        return;
-      }
-
-      setShowTopGradient(scrollRef.current.scrollTop > 0);
-      setShowBottomGradient(
-        scrollRef.current.scrollHeight - scrollRef.current.scrollTop >
-          scrollRef.current.clientHeight + 5,
-      );
-    };
-
-    const element = scrollRef.current;
-    element?.addEventListener("scroll", handleScroll);
-    handleScroll();
-
-    return () => element?.removeEventListener("scroll", handleScroll);
-  }, [data]);
 
   return (
     <>
@@ -81,45 +64,36 @@ export default function TodoList({ goalId, done }: TodoListProps) {
           )}
         </div>
         {data.todos.length > 0 ? (
-          <div className="relative">
-            <div
-              className={cn(
-                "pointer-events-none absolute left-0 top-0 z-10 h-50 w-full bg-gradient-to-b to-transparent transition-opacity duration-300",
-                showTopGradient ? "opacity-100" : "opacity-0",
-                done ? "from-slate-200" : "from-white",
-              )}
-            />
+          <GradientProvider
+            className={done ? "from-slate-200" : ""}
+            topInView={isTopInView}
+            bottomInView={isBottomInView}
+          >
             <div
               className={cn(
                 "scrollbar mt-16 max-h-152 overflow-y-scroll",
                 done && "white",
               )}
-              ref={scrollRef}
             >
-              {data.todos.length > 0 && (
-                <ul className="flex flex-col gap-8 pr-5">
-                  {data.todos.map((todo) => (
-                    <Todo
-                      key={`todo-list-by-goal-${todo.id}`}
-                      index={todo.id}
-                      todo={todo}
-                      showDropdownOnHover
-                    />
-                  ))}
-                </ul>
-              )}
+              <div ref={topRef} className="h-1 w-full" />
+
+              <ul className="flex flex-col gap-8 pr-5">
+                {data.todos.map((todo) => (
+                  <Todo
+                    key={`todo-list-by-goal-${todo.id}`}
+                    index={todo.id}
+                    todo={todo}
+                    showDropdownOnHover
+                  />
+                ))}
+              </ul>
               {hasNextPage && (
                 <div ref={ref} className="flex justify-center pb-15 pt-20" />
               )}
+
+              <div ref={bottomRef} className="h-1 w-full" />
             </div>
-            <div
-              className={cn(
-                "pointer-events-none absolute bottom-0 left-0 h-50 w-full bg-gradient-to-t to-transparent transition-opacity duration-300",
-                showBottomGradient ? "opacity-100" : "opacity-0",
-                done ? "from-slate-200" : "from-white",
-              )}
-            />
-          </div>
+          </GradientProvider>
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="text-sm font-normal text-slate-500">
