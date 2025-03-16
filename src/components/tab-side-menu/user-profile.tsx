@@ -51,7 +51,7 @@ export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
   return (
     <div className={containerStyle({ open: isTabOpen })}>
       <div className="mb-24 flex w-full gap-12">
-        <div className="min-w-40 md:min-w-64 lg:min-w-64">
+        <div className="min-w-44 md:min-w-64 lg:min-w-64">
           <Profile />
         </div>
         <div className={profileInfoStyle}>
