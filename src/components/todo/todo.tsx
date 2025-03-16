@@ -88,12 +88,13 @@ export default function Todo({ todo, index, showGoal }: Props) {
         key: "note",
         url: null,
         Icon: NoteIcon,
-        onClick: () => {
-          if (currentTodo.noteId !== null) {
-            setSelectedNoteId(currentTodo.noteId);
-            setSheetOpen(true);
-          }
-        },
+        onClick:
+          currentTodo.noteId !== null
+            ? () => {
+                setSelectedNoteId(currentTodo.noteId);
+                setSheetOpen(true);
+              }
+            : undefined,
       },
     ];
 
