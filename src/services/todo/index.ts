@@ -33,6 +33,6 @@ export const getTodoDetail = async (todoId: number): Promise<TodoResponse> => {
 };
 
 export const getTodosLengths = async () => {
-  const { data } = await api.get(ENDPOINT.TODO.GET);
+  const { data } = await api.get(ENDPOINT.TODO.GET_INFO);
   return data;
 };
