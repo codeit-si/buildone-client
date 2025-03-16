@@ -18,7 +18,7 @@ export default function LinkAttached({
   onClick,
   setSheetOpen,
 }: LinkAttachedProps): JSX.Element {
-  const removeLinkButtonClickhandler = () => {
+  const handleLinkRemoveButtonClick = () => {
     if (onRemove) onRemove();
     if (setSheetOpen) setSheetOpen(false);
   };
@@ -51,7 +51,7 @@ export default function LinkAttached({
           type="button"
           onClick={(e) => {
             e.stopPropagation();
-            removeLinkButtonClickhandler();
+            handleLinkRemoveButtonClick();
           }}
           className="flex-shrink-0"
         >
