@@ -37,9 +37,12 @@ export default function Todo({ todo, index, showGoal }: Props) {
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [ref, isInView] = useInView();
+  const [selectedNoteId, setSelectedNoteId] = useState<number | null>(null);
+
   const { data: note } = useQuery<NoteResponse, Error>({
-    queryKey: ["noteDetail", todo.noteId],
-    queryFn: () => getNote(todo.noteId!),
+    queryKey: ["noteDetail", selectedNoteId],
+    queryFn: () => getNote(selectedNoteId as number),
+    enabled: selectedNoteId !== null,
   });
 
   const getDropdownItems = (selectedTodoItem: TodoResponse): DropdownItem[] => {
@@ -63,7 +66,12 @@ export default function Todo({ todo, index, showGoal }: Props) {
         {
           id: "note",
           label: "노트보기",
-          onClick: () => setSheetOpen(true),
+          onClick: () => {
+            if (selectedTodoItem.noteId !== null) {
+              setSelectedNoteId(selectedTodoItem.noteId);
+              setSheetOpen(true);
+            }
+          },
         },
         ...baseItems,
       ];
@@ -80,8 +88,12 @@ export default function Todo({ todo, index, showGoal }: Props) {
         key: "note",
         url: null,
         Icon: NoteIcon,
-        onClick:
-          currentTodo.noteId !== null ? () => setSheetOpen(true) : undefined,
+        onClick: () => {
+          if (currentTodo.noteId !== null) {
+            setSelectedNoteId(currentTodo.noteId);
+            setSheetOpen(true);
+          }
+        },
       },
     ];
 
@@ -144,8 +156,14 @@ export default function Todo({ todo, index, showGoal }: Props) {
           </div>
         )}
       </li>
-      {sheetOpen && todo.noteId !== null && (
-        <Sheet.Root open={sheetOpen} onOpenChange={setSheetOpen}>
+      {sheetOpen && todo.noteId !== null && note !== undefined && (
+        <Sheet.Root
+          open={sheetOpen}
+          onOpenChange={(open) => {
+            setSheetOpen(open);
+            if (!open) setSelectedNoteId(null);
+          }}
+        >
           <DetailSheet noteId={todo.noteId} linkUrl={note?.linkUrl} />
         </Sheet.Root>
       )}
