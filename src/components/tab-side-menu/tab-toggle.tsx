@@ -33,9 +33,10 @@ export default function TabToggle({
 }: IsTabMinimizedProps) {
   const pathname = usePathname();
   const title = useMemo(() => {
-    if (pathname.includes("/dashboard")) return "Dash Board";
+    if (pathname.includes("/goals") && pathname.includes("/notes")) return "";
+    if (pathname.includes("/dashboard")) return "대시보드";
     if (pathname.includes("/todos")) return "";
-    if (pathname.includes("/goals")) return "Goals";
+    if (pathname.includes("/goals")) return "목표";
     if (pathname.includes("/notes")) return "";
   }, [pathname]);
   return (
