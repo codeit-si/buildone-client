@@ -237,11 +237,7 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
                 }}
                 onClick={() => setSheetOpen(!sheetOpen)}
               >
-                <LinkAttached
-                  link={link}
-                  onRemove={handleRemoveLink}
-                  setSheetOpen={setSheetOpen}
-                />
+                <LinkAttached link={link} onRemove={handleRemoveLink} />
               </div>
             )}
 
