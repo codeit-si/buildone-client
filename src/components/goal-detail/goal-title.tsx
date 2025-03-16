@@ -29,6 +29,10 @@ export default function GoalTitle({
     if (inputRef.current) {
       setEditing(false);
 
+      if (title === previousTitle) {
+        return;
+      }
+
       try {
         await mutateAsync({ goalId: Number(goalId), title });
       } catch {
