@@ -59,6 +59,10 @@ const config: Config = {
       animation: {
         fadeIn: "fadeIn .4s ease-in",
         fadeOut: "fadeOut .4s ease-out",
+        landingFadeInA: "landingFadeInA .7s ease-in",
+        landingFadeOutA: "landingFadeOutA .7s ease-out",
+        landingFadeInB: "landingFadeInB .7s ease-in",
+        landingFadeOutB: "landingFadeOutB .7s ease-out",
       },
       keyframes: {
         fadeIn: {
@@ -70,6 +74,26 @@ const config: Config = {
           "0%": { transform: "translateY(0)", opacity: "1" },
           "50%": { transform: "translateY(5px)", opacity: ".5" },
           "100%": { transform: "translateY(10px)", opacity: "0" },
+        },
+        landingFadeInA: {
+          "0%": { transform: "translateX(-20px)", opacity: "0" },
+          "50%": { transform: "translateX(-10px)", opacity: ".5" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
+        landingFadeOutA: {
+          "0%": { transform: "translateX(0)", opacity: "1" },
+          "50%": { transform: "translateX(-10px)", opacity: ".5" },
+          "100%": { transform: "translateX(-20px)", opacity: "0" },
+        },
+        landingFadeInB: {
+          "0%": { transform: "translateX(20px)", opacity: "0" },
+          "50%": { transform: "translateX(10px)", opacity: ".5" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
+        landingFadeOutB: {
+          "0%": { transform: "translateX(0)", opacity: "1" },
+          "50%": { transform: "translateX(10px)", opacity: ".5" },
+          "100%": { transform: "translateX(20px)", opacity: "0" },
         },
       },
     },
