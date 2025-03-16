@@ -40,7 +40,7 @@ export default function TabToggle({
   }, [pathname]);
   return (
     <div
-      className={`item-center flex w-full ${!isTabMinimized && "justify-end"}`}
+      className={`item-center flex ${!isTabMinimized ? "w-full justify-end" : ""}`}
     >
       <Button
         onClick={() => setIsTabMinimized(!isTabMinimized)}
