@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 import PlusIcon from "@/assets/icons-small/plus/plus_db_sm.svg";
-import useInView from "@/hooks/use-in-view";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { cn } from "@/lib/cn";
 import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
@@ -13,7 +12,7 @@ import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
 import Todo from "../todo/todo";
 import TodoModal from "../todo-modal/todo-modal";
 
-import GradientProvider from "./gradient-provider";
+import ScrollListGradientProvider from "./scroll-list-gradient-provider";
 
 interface TodoListProps {
   goalId: string;
@@ -22,9 +21,6 @@ interface TodoListProps {
 
 export default function TodoList({ goalId, done }: TodoListProps) {
   const [showCreateTodoModal, setShowCreateTodoModal] = useState(false);
-
-  const [topRef, isTopInView] = useInView();
-  const [bottomRef, isBottomInView] = useInView();
 
   const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery(
     getInfiniteTodosByGoalIdOptions({
@@ -64,36 +60,24 @@ export default function TodoList({ goalId, done }: TodoListProps) {
           )}
         </div>
         {data.todos.length > 0 ? (
-          <GradientProvider
-            className={done ? "from-slate-200" : ""}
-            topInView={isTopInView}
-            bottomInView={isBottomInView}
+          <ScrollListGradientProvider
+            scrollListStyle={cn("mt-16 max-h-152", done && "white")}
+            gradientStyle={done ? "from-slate-200" : ""}
           >
-            <div
-              className={cn(
-                "scrollbar mt-16 max-h-152 overflow-y-scroll",
-                done && "white",
-              )}
-            >
-              <div ref={topRef} className="h-1 w-full" />
-
-              <ul className="flex flex-col gap-8 pr-5">
-                {data.todos.map((todo) => (
-                  <Todo
-                    key={`todo-list-by-goal-${todo.id}`}
-                    index={todo.id}
-                    todo={todo}
-                    showDropdownOnHover
-                  />
-                ))}
-              </ul>
-              {hasNextPage && (
-                <div ref={ref} className="flex justify-center pb-15 pt-20" />
-              )}
-
-              <div ref={bottomRef} className="h-1 w-full" />
-            </div>
-          </GradientProvider>
+            <ul className="flex flex-col gap-8 pr-5">
+              {data.todos.map((todo) => (
+                <Todo
+                  key={`todo-list-by-goal-${todo.id}`}
+                  index={todo.id}
+                  todo={todo}
+                  showDropdownOnHover
+                />
+              ))}
+            </ul>
+            {hasNextPage && (
+              <div ref={ref} className="flex justify-center pb-15 pt-20" />
+            )}
+          </ScrollListGradientProvider>
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="text-sm font-normal text-slate-500">
