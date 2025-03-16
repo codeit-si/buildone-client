@@ -31,3 +31,7 @@ export const noteKeys = {
 export const profileKeys = {
   all: ["profile"] as const,
 };
+
+export const settingKeys = {
+  all: ["setting"] as const,
+};
