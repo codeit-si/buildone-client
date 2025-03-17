@@ -49,5 +49,7 @@ export const ENDPOINT = {
   PUSH: {
     REGISTER_TOKEN: `${PREFIX}/push/token`,
     SEND: `${PREFIX}/push/send`,
+    SETTING: `${PREFIX}/push`,
+    GET_SETTING: `${PREFIX}/member/push/settings`,
   },
 } as const;
