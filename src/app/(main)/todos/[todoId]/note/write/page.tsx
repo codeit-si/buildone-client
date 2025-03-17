@@ -200,7 +200,7 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
               disabled={!title.trim() || !content.trim()}
               onClick={handleSubmit}
             >
-              작성 완료
+              {noteId ? "수정하기" : "노트 작성"}
             </Button>
           </div>
         </div>

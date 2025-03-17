@@ -164,7 +164,7 @@ export default function Toolbar({
       </div>
       {isLinkModalOpen && (
         <Modal.Root open={isLinkModalOpen} onOpenChange={setLinkModalOpen}>
-          <Modal.Content className="w-311 md:w-520">
+          <Modal.Content className="h-268 w-311 md:h-272 md:w-520">
             <Modal.Title className="text-bold text-lg">링크 업로드</Modal.Title>
             <div className="mb-12 font-semibold">링크</div>
             {linkInput}
