@@ -25,7 +25,6 @@ interface Props {
   todo: TodoResponse;
   index: number;
   showGoal?: boolean;
-  showDropdownOnHover?: boolean;
 }
 interface DropdownItem {
   id: string;
@@ -33,19 +32,17 @@ interface DropdownItem {
   onClick: () => void;
 }
 
-export default function Todo({
-  todo,
-  showDropdownOnHover,
-  index,
-  showGoal,
-}: Props) {
+export default function Todo({ todo, index, showGoal }: Props) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [ref, isInView] = useInView();
+  const [selectedNoteId, setSelectedNoteId] = useState<number | null>(null);
+
   const { data: note } = useQuery<NoteResponse, Error>({
-    queryKey: ["noteDetail", todo.noteId],
-    queryFn: () => getNote(todo.noteId!),
+    queryKey: ["noteDetail", selectedNoteId],
+    queryFn: () => getNote(selectedNoteId as number),
+    enabled: selectedNoteId !== null,
   });
 
   const getDropdownItems = (selectedTodoItem: TodoResponse): DropdownItem[] => {
@@ -69,7 +66,12 @@ export default function Todo({
         {
           id: "note",
           label: "노트보기",
-          onClick: () => setSheetOpen(true),
+          onClick: () => {
+            if (selectedTodoItem.noteId !== null) {
+              setSelectedNoteId(selectedTodoItem.noteId);
+              setSheetOpen(true);
+            }
+          },
         },
         ...baseItems,
       ];
@@ -87,7 +89,12 @@ export default function Todo({
         url: null,
         Icon: NoteIcon,
         onClick:
-          currentTodo.noteId !== null ? () => setSheetOpen(true) : undefined,
+          currentTodo.noteId !== null
+            ? () => {
+                setSelectedNoteId(currentTodo.noteId);
+                setSheetOpen(true);
+              }
+            : undefined,
       },
     ];
 
@@ -125,8 +132,8 @@ export default function Todo({
         ref={ref}
         aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
         className={cn(
-          "group flex flex-col text-slate-800 transition-all hover:font-bold hover:text-dark-blue-700",
-          `${isInView ? "animate-fadeIn" : "animate-fadeOut"}`,
+          "group flex flex-col text-slate-800 transition-opacity duration-500",
+          `${isInView ? "animate-fadeIn opacity-100" : "animate-fadeOut opacity-0"}`,
         )}
       >
         <div className="flex items-center justify-between">
@@ -137,13 +144,11 @@ export default function Todo({
             className="flex text-slate-700"
           >
             {iconSpread(todo)}
-            {showDropdownOnHover && (
-              <FixedDropdown
-                items={getDropdownItems(todo)}
-                todoId={todo.id}
-                noteId={todo.noteId}
-              />
-            )}
+            <FixedDropdown
+              items={getDropdownItems(todo)}
+              todoId={todo.id}
+              noteId={todo.noteId}
+            />
           </div>
         </div>
         {showGoal && (
@@ -152,8 +157,14 @@ export default function Todo({
           </div>
         )}
       </li>
-      {todo.noteId !== null && (
-        <Sheet.Root open={sheetOpen} onOpenChange={setSheetOpen}>
+      {sheetOpen && todo.noteId !== null && note !== undefined && (
+        <Sheet.Root
+          open={sheetOpen}
+          onOpenChange={(open) => {
+            setSheetOpen(open);
+            if (!open) setSelectedNoteId(null);
+          }}
+        >
           <DetailSheet noteId={todo.noteId} linkUrl={note?.linkUrl} />
         </Sheet.Root>
       )}
