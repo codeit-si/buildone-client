@@ -160,7 +160,7 @@ function SheetContent({
             exit={{ x: "100%" }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
-            <div className={cn("flex justify-between")}>
+            <div className={cn("flex justify-end")}>
               {hasCloseIcon && (
                 <button
                   className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"
