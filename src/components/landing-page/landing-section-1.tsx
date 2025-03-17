@@ -13,7 +13,7 @@ export default function LandingSection1() {
   return (
     <section
       ref={ref}
-      className="flex h-673 items-center justify-center bg-dark-blue-100 pt-80 text-slate-800 md:h-520 lg:h-816"
+      className="flex h-673 items-center justify-center overflow-hidden bg-dark-blue-100 pt-80 text-slate-800 md:h-520 lg:h-816"
     >
       <div className="flex flex-col items-center transition-all duration-200 md:flex-row md:gap-94 lg:gap-154">
         <div

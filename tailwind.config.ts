@@ -67,33 +67,27 @@ const config: Config = {
       keyframes: {
         fadeIn: {
           "0%": { transform: "translateY(10px)" },
-          "50%": { transform: "translateY(5px)" },
           "100%": { transform: "translateY(0)" },
         },
         fadeOut: {
           "0%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(5px)" },
           "100%": { transform: "translateY(10px)" },
         },
         landingFadeInA: {
-          "0%": { transform: "translateX(-20px)", opacity: "0" },
-          "50%": { transform: "translateX(-10px)", opacity: ".5" },
-          "100%": { transform: "translateX(0)", opacity: "1" },
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
         },
         landingFadeOutA: {
-          "0%": { transform: "translateX(0)", opacity: "1" },
-          "50%": { transform: "translateX(-10px)", opacity: ".5" },
-          "100%": { transform: "translateX(-20px)", opacity: "0" },
+          "0%": { transform: "translateY(0)", opacity: "1" },
+          "100%": { transform: "translateY(20px)", opacity: "0" },
         },
         landingFadeInB: {
-          "0%": { transform: "translateX(20px)", opacity: "0" },
-          "50%": { transform: "translateX(10px)", opacity: ".5" },
-          "100%": { transform: "translateX(0)", opacity: "1" },
+          "0%": { transform: "translateY(-20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
         },
         landingFadeOutB: {
-          "0%": { transform: "translateX(0)", opacity: "1" },
-          "50%": { transform: "translateX(10px)", opacity: ".5" },
-          "100%": { transform: "translateX(20px)", opacity: "0" },
+          "0%": { transform: "translateY(0)", opacity: "1" },
+          "100%": { transform: "translateY(-20px)", opacity: "0" },
         },
       },
     },

@@ -1,6 +1,8 @@
 "use client";
 
 import ShowExam3 from "@/assets/landing-page/show_exam_3.svg";
+import ShowExam3to1 from "@/assets/landing-page/show_exam_3_1.svg";
+import ShowExam3to2 from "@/assets/landing-page/show_exam_3_2.svg";
 import ShowExam9 from "@/assets/landing-page/show_exam_9.svg";
 import useInView from "@/hooks/use-in-view";
 import { cn } from "@/lib/cn";
@@ -10,8 +12,9 @@ export default function LandingSection2() {
   const [ref2, isInView2] = useInView();
   const [ref3, isInView3] = useInView();
   const [ref4, isInView4] = useInView();
+  const [ref5, isInView5] = useInView();
   return (
-    <section className="flex flex-col items-center justify-end bg-white pt-48 text-center md:h-fit lg:h-816 lg:p-0">
+    <section className="flex flex-col items-center justify-end overflow-hidden bg-white pt-48 text-center md:h-fit lg:h-816 lg:p-0 lg:px-24">
       <h3
         ref={ref1}
         className={cn(
@@ -26,26 +29,40 @@ export default function LandingSection2() {
         ref={ref2}
         className={cn(
           "text-24 font-bold text-slate-800 lg:text-40",
-          isInView2 ? "animate-landingFadeInB" : "animate-landingFadeOutB",
+          isInView2 ? "animate-landingFadeInA" : "animate-landingFadeOutA",
         )}
       >
         개발 목표, 학습, 생산성
         <br className="block md:hidden" /> 한번에 관리
       </h2>
-      <div
-        ref={ref3}
-        className={cn(
-          "hidden md:block md:w-full md:px-40 lg:h-570 lg:w-1370 lg:p-0",
-          isInView3 ? "animate-landingFadeInA" : "animate-landingFadeOutA",
-        )}
-      >
-        <ShowExam3 />
+      <div className="relative mt-24 hidden md:block md:h-295 md:w-662 md:px-40 lg:h-570 lg:w-1090 lg:p-0">
+        <div className="absolute -left-[50%] bottom-0 w-full translate-x-[50%] drop-shadow-xl">
+          <ShowExam3 />
+        </div>
+        <div
+          ref={ref3}
+          className={cn(
+            "absolute top-20 md:-right-80 md:w-206 lg:-right-120 lg:w-440",
+            isInView3 ? "animate-landingFadeInA" : "animate-landingFadeOutA",
+          )}
+        >
+          <ShowExam3to1 />
+        </div>
+        <div
+          ref={ref4}
+          className={cn(
+            "absolute bottom-40 md:-left-70 md:w-206 lg:-left-110 lg:w-440",
+            isInView4 ? "animate-landingFadeInA" : "animate-landingFadeOutA",
+          )}
+        >
+          <ShowExam3to2 />
+        </div>
       </div>
       <div
-        ref={ref4}
+        ref={ref5}
         className={cn(
           "block w-full md:hidden",
-          isInView4 ? "animate-landingFadeInA" : "animate-landingFadeOutA",
+          isInView5 ? "animate-landingFadeInA" : "animate-landingFadeOutA",
         )}
       >
         <ShowExam9 />

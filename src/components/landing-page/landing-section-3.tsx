@@ -10,12 +10,12 @@ export default function LandingSection3() {
   return (
     <section
       ref={ref}
-      className="flex h-auto items-center justify-center bg-dark-blue-100 md:py-58 lg:py-150"
+      className="flex h-auto items-center justify-center overflow-hidden bg-dark-blue-100 md:py-58 lg:py-150"
     >
       <div className="flex w-full flex-col items-center gap-24 py-40 md:w-auto md:flex-row md:gap-116 md:p-0">
         <div
           className={cn(
-            "flex flex-col gap-4 text-center md:gap-7 md:text-start lg:gap-18",
+            "flex flex-col gap-4 text-nowrap text-center md:gap-7 md:text-start lg:gap-18",
             isInView ? "animate-landingFadeInA" : "animate-landingFadeOutA",
           )}
         >

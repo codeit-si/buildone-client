@@ -4,7 +4,7 @@ import BuilDoneLogo from "@/assets/logo/main_logo_small.svg";
 
 export default function LandingHeader() {
   return (
-    <header className="fixed h-80 w-full border-b bg-white">
+    <header className="fixed z-50 h-80 w-full border-b bg-white">
       <div className="mx-auto flex h-full max-w-1248 items-center justify-between px-24">
         <BuilDoneLogo />
         <Link

@@ -9,7 +9,7 @@ export default function LandingFooter() {
           <span>|</span>
           <b className="text-slate-800">사이트 소개</b>
         </div>
-        <span>개발자의 성장을 돕는 플래너</span>
+        <span>개발자의 성장을 돕는 투두리스트</span>
       </div>
       <div className="flex flex-col items-center gap-12 md:flex-row">
         <div className="flex gap-8">

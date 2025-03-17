@@ -9,7 +9,7 @@ export default function LandingSection6() {
   return (
     <section
       ref={ref}
-      className="flex items-center justify-center gap-75 bg-white"
+      className="flex items-center justify-center gap-75 overflow-hidden bg-white"
     >
       <div className="flex flex-col-reverse items-center justify-center gap-24 px-24 py-40 md:flex-row md:gap-116 md:py-58 lg:gap-243 lg:py-150">
         <div
@@ -22,7 +22,7 @@ export default function LandingSection6() {
         </div>
         <div
           className={cn(
-            "flex flex-col gap-4 text-center md:w-[238.47px] md:gap-7 md:text-start lg:w-auto lg:gap-18",
+            "flex flex-col gap-4 text-nowrap text-center md:w-[238.47px] md:gap-7 md:text-start lg:w-auto lg:gap-18",
             isInView ? "animate-landingFadeInB" : "animate-landingFadeOutB",
           )}
         >
