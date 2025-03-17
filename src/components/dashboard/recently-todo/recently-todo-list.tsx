@@ -17,13 +17,7 @@ export default function RecentlyTodoList() {
         <ScrollListGradientProvider scrollListStyle="max-h-152">
           <ul className="flex flex-col gap-8 pr-8">
             {todos.map((todo, index) => (
-              <Todo
-                key={todo.id}
-                todo={todo}
-                index={index}
-                showGoal
-                showDropdownOnHover
-              />
+              <Todo key={todo.id} todo={todo} index={index} showGoal />
             ))}
           </ul>
         </ScrollListGradientProvider>
