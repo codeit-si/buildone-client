@@ -12,6 +12,7 @@ import Sheet from "@/components/@common/portal/sheet";
 import Goal from "@/components/note/goal";
 import Todo from "@/components/note/todo";
 import { getNote } from "@/services/note";
+import { noteKeys } from "@/services/query-key";
 import { NoteResponse } from "@/types/note";
 
 import EmbeddedFrame from "../@common/embeded-frame";
@@ -28,7 +29,7 @@ export default function DetailSheet({
   linkUrl,
 }: DetailSheetProps): JSX.Element {
   const { data: note, error } = useQuery<NoteResponse, Error>({
-    queryKey: ["noteDetail", noteId],
+    queryKey: noteKeys.detail(noteId),
     queryFn: () => getNote(noteId),
   });
   const [sheetOpen, setSheetOpen] = useState(false);
