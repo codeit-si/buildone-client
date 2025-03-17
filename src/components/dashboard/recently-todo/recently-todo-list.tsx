@@ -12,29 +12,23 @@ export default function RecentlyTodoList() {
   const { todos } = data;
 
   return (
-    <div className="relative" role="region">
-      {todos && (
+    <>
+      {todos?.length > 0 && (
         <ScrollListGradientProvider scrollListStyle="max-h-152">
           <ul className="flex flex-col gap-8 pr-8">
             {todos.map((todo, index) => (
-              <Todo
-                key={todo.id}
-                todo={todo}
-                index={index}
-                showGoal
-                showDropdownOnHover
-              />
+              <Todo key={todo.id} todo={todo} index={index} showGoal />
             ))}
           </ul>
         </ScrollListGradientProvider>
       )}
       {todos?.length === 0 && (
         <div className="flex h-full w-full items-center justify-center">
-          <span className="h-40 text-sm text-slate-500">
+          <span className="text-sm text-slate-500">
             최근에 등록한 할 일이 없어요
           </span>
         </div>
       )}
-    </div>
+    </>
   );
 }
