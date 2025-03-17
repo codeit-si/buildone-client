@@ -19,7 +19,7 @@ export default function LandingSection1() {
         <div
           className={cn(
             "flex flex-col gap-40",
-            isInView ? "animate-landingFadeInA" : "animate-landingFadeOutA",
+            isInView ? "animate-landingFadeIn" : "animate-landingFadeOut",
           )}
         >
           <div className="flex flex-col gap-12 text-center md:text-start">
@@ -42,7 +42,7 @@ export default function LandingSection1() {
         <div
           className={cn(
             "my-8 flex w-327 flex-col md:m-0 md:w-270 lg:w-443",
-            isInView ? "animate-landingFadeInA" : "animate-landingFadeOutA",
+            isInView ? "animate-landingFadeIn" : "animate-landingFadeOut",
           )}
         >
           <ShowExam1 />
@@ -52,7 +52,7 @@ export default function LandingSection1() {
           href="/login"
           className={cn(
             "flex h-52 w-138 items-center justify-center rounded-8 bg-dark-blue-500 text-18 font-bold text-white hover:bg-dark-blue-600 md:hidden md:h-35 md:w-113 md:text-12 lg:h-52 lg:w-138 lg:text-18",
-            isInView ? "animate-landingFadeInB" : "animate-landingFadeOutB",
+            isInView ? "animate-landingFadeIn" : "animate-landingFadeOut",
           )}
         >
           지금 시작하기

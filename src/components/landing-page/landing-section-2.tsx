@@ -19,7 +19,7 @@ export default function LandingSection2() {
         ref={ref1}
         className={cn(
           "mb-8 text-18 font-medium text-slate-600 lg:text-32",
-          isInView1 ? "animate-landingFadeInA" : "animate-landingFadeOutA",
+          isInView1 ? "animate-landingFadeIn" : "animate-landingFadeOut",
         )}
       >
         목표, 학습, 생산성을
@@ -29,7 +29,7 @@ export default function LandingSection2() {
         ref={ref2}
         className={cn(
           "text-24 font-bold text-slate-800 lg:text-40",
-          isInView2 ? "animate-landingFadeInA" : "animate-landingFadeOutA",
+          isInView2 ? "animate-landingFadeIn" : "animate-landingFadeOut",
         )}
       >
         개발 목표, 학습, 생산성
@@ -43,7 +43,7 @@ export default function LandingSection2() {
           ref={ref3}
           className={cn(
             "absolute top-20 md:-right-80 md:w-206 lg:-right-120 lg:w-440",
-            isInView3 ? "animate-landingFadeInA" : "animate-landingFadeOutA",
+            isInView3 ? "animate-landingFadeIn" : "animate-landingFadeOut",
           )}
         >
           <ShowExam3to1 />
@@ -52,7 +52,7 @@ export default function LandingSection2() {
           ref={ref4}
           className={cn(
             "absolute bottom-40 md:-left-70 md:w-206 lg:-left-110 lg:w-440",
-            isInView4 ? "animate-landingFadeInA" : "animate-landingFadeOutA",
+            isInView4 ? "animate-landingFadeIn" : "animate-landingFadeOut",
           )}
         >
           <ShowExam3to2 />
@@ -62,7 +62,7 @@ export default function LandingSection2() {
         ref={ref5}
         className={cn(
           "block w-full md:hidden",
-          isInView5 ? "animate-landingFadeInA" : "animate-landingFadeOutA",
+          isInView5 ? "animate-landingFadeIn" : "animate-landingFadeOut",
         )}
       >
         <ShowExam9 />

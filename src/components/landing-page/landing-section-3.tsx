@@ -16,7 +16,7 @@ export default function LandingSection3() {
         <div
           className={cn(
             "flex flex-col gap-4 text-nowrap text-center md:gap-7 md:text-start lg:gap-18",
-            isInView ? "animate-landingFadeInA" : "animate-landingFadeOutA",
+            isInView ? "animate-landingFadeIn" : "animate-landingFadeOut",
           )}
         >
           <span className="font-bold text-dark-blue-500 md:text-16 lg:text-30">
@@ -36,7 +36,7 @@ export default function LandingSection3() {
         <div
           className={cn(
             "flex w-full flex-col px-24 md:w-228 md:p-0 lg:w-588",
-            isInView ? "animate-landingFadeInA" : "animate-landingFadeOutA",
+            isInView ? "animate-landingFadeIn" : "animate-landingFadeOut",
           )}
         >
           <ShowExam4 />
