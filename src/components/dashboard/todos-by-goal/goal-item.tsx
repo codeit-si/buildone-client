@@ -4,8 +4,8 @@ import * as motion from "motion/react-client";
 import { useRouter } from "next/navigation";
 
 import ArrowDown from "@/assets/icons-small/arrow/arrow_down.svg";
-import PlusIcon from "@/components/@svgr/plus-icon";
 import TodoModal from "@/components/todo-modal/todo-modal";
+import TodoModalOpenButton from "@/components/todo-modal/todo-modal-open-button";
 import { GoalResponse } from "@/types/dashboard";
 
 import GoalContainer from "./goal-container";
@@ -57,13 +57,7 @@ export default function GoalItem({ goal }: GoalItemProps) {
       >
         <div className="flex justify-between">
           <GoalTitle>{goal.title}</GoalTitle>
-          <button
-            className="flex items-center gap-5 text-sm font-semibold text-dark-blue-500"
-            onClick={() => setIsModalOpen(true)}
-          >
-            <PlusIcon stroke="dark-blue" />
-            할일 추가
-          </button>
+          <TodoModalOpenButton onClick={() => setIsModalOpen(true)} />
         </div>
         <GoalItemProgressBar goalId={goal.id} />
         <div className="grid grid-rows-[repeat(2,_minmax(112px,_auto))] gap-24 md:grid-cols-2 md:grid-rows-[minmax(164px,_auto)]">

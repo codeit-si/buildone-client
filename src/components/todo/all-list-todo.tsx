@@ -4,13 +4,13 @@ import { useState } from "react";
 
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
-import PlusIcon from "@/assets/icons-small/plus/plus_db_sm.svg";
 import Todo from "@/components/todo/todo";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
 
 import Filter from "../@common/filter";
 import TodoModal from "../todo-modal/todo-modal";
+import TodoModalOpenButton from "../todo-modal/todo-modal-open-button";
 
 export default function AllListTodo() {
   const [filter, setFilter] = useState<"all" | "todo" | "done">("all");
@@ -40,13 +40,7 @@ export default function AllListTodo() {
     <>
       <div className="mb-16 mt-24 flex items-center justify-between">
         <h2 className="text-18 font-semibold text-slate-900">{`모든 할 일 (${todos?.length})`}</h2>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-3 font-semibold text-dark-blue-600"
-        >
-          <PlusIcon />
-          <span className="text-14/3">할일 추가</span>
-        </button>
+        <TodoModalOpenButton onClick={() => setIsModalOpen(true)} />
       </div>
       <div className="mb-16 h-[calc(100vh-131px)] w-full overflow-hidden rounded-xl border-slate-300 bg-white p-16 text-sm text-slate-800 md:h-[calc(100vh-91px)] md:p-24 lg:mb-24 lg:p-24">
         <Filter filter={filter} setFilter={setFilter} />
