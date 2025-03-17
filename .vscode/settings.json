@@ -2,8 +2,6 @@
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"']([^\"']*).*?[\"'`]"],
     ["cx\\(([^)]*)\\)", "(?:'|\"|)([^']*)(?:'|\"|)"]
-	],
-	"cSpell.words": [
-		"embeded"
-	]
+  ],
+  "cSpell.words": ["embeded"]
 }
