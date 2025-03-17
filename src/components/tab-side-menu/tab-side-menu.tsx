@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 
 import GoalsMenu from "@/components/tab-side-menu/goals-menu";
 import { useCreateGoal } from "@/hooks/query/use-goal";
+import { cn } from "@/lib/cn";
 import { getInfiniteGoalsOptions } from "@/services/dashboard/query";
 
 import ExportProfileCardButton from "../profile-card/export-profile-card-button";
@@ -15,12 +16,13 @@ import ExportProfileCardButton from "../profile-card/export-profile-card-button"
 import AddGoalSection from "./add-goal-section";
 import GoalsList from "./goals-list";
 import Logo from "./logo";
+import PushNotificationSettingButton from "./push-notification-setting-button";
 import TabToggle from "./tab-toggle";
 import TodosMenu from "./todos-menu";
 import UserProfile from "./user-profile";
 
 const containerStyle = cva(
-  "overflow-y-hidden fixed z-30 transition-all duration-100 bg-white border-b border-slate-100 md:border-r md:border-slate-200",
+  "overflow-y-hidden fixed z-30 transition-all duration-200 bg-white border-b border-slate-100 md:border-r md:border-slate-200",
   {
     variants: {
       open: {
@@ -41,7 +43,7 @@ const topSectionStyle = cva(
     variants: {
       open: {
         true: "px-24 pt-0 md:p-20",
-        false: "h-full p-0",
+        false: "h-full p-0 z-50",
       },
     },
     defaultVariants: {
@@ -57,7 +59,7 @@ const topHeaderStyle = cva(
       open: {
         true: "mt-16 md:m-0",
         false:
-          "h-full md:border-none flex-row px-16 md:gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
+          "h-full z-50 md:border-none flex-row px-16 md:gap-16 md:h-fit md:min-h-full md:w-fit md:flex-col md:items-center md:justify-normal md:border-b lg:h-fit lg:min-h-full lg:w-fit lg:flex-col lg:items-center lg:justify-normal lg:border-b",
       },
     },
     defaultVariants: {
@@ -129,15 +131,16 @@ export default function TabSideMenu() {
         </div>
         {/* 탭 열였을때 나타나는 bottom menus */}
         <div
-          className={`transition-all duration-100 ${
+          className={cn(
+            "transition-all duration-200",
             isTabMinimized
-              ? "-translate-y-1000 opacity-0 md:-translate-x-full"
-              : "translate-y-0 opacity-100 md:translate-x-0"
-          }`}
+              ? "z-0 -translate-y-full opacity-0 md:-translate-x-full md:translate-y-0"
+              : "translate-y-0 opacity-100 md:translate-x-0",
+          )}
         >
           <TodosMenu />
           <GoalsMenu isAdding={isAdding} setIsAdding={setIsAdding} />
-          <div className="px-32 md:px-24">
+          <div className={cn("px-32 md:px-24", isTabMinimized && "z-0")}>
             <GoalsList
               goals={data?.pages}
               hasNextPage={hasNextPage}
@@ -157,9 +160,7 @@ export default function TabSideMenu() {
         {!isTabMinimized && (
           <div className="absolute bottom-0 mb-36 flex w-full flex-col items-center gap-y-4">
             <ExportProfileCardButton />
-            <div className="flex h-48 w-232 items-center justify-center rounded-12 border border-dark-blue-500">
-              거북목 주의보 알림 버튼
-            </div>
+            <PushNotificationSettingButton />
           </div>
         )}
       </div>
