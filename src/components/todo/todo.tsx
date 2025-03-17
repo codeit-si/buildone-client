@@ -152,7 +152,7 @@ export default function Todo({
           </div>
         )}
       </li>
-      {sheetOpen && todo.noteId !== null && (
+      {todo.noteId !== null && (
         <Sheet.Root open={sheetOpen} onOpenChange={setSheetOpen}>
           <DetailSheet noteId={todo.noteId} linkUrl={note?.linkUrl} />
         </Sheet.Root>
