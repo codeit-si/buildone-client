@@ -11,7 +11,7 @@ import { SIGNUP_ERROR_CODE } from "@/constants/error";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ApiError } from "@/lib/error";
 import { signup } from "@/services/auth";
-import { registerToken } from "@/services/push-alert";
+import { registerFcmToken } from "@/services/push-notification";
 import { useUserStore } from "@/store/user-store";
 
 import Button from "../@common/button";
@@ -96,10 +96,10 @@ export default function SignUpForm() {
 
   const onSubmit = async (data: SignupSchema) => {
     try {
-      await signup(data.name, data.email, data.password);
+      const response = await signup(data.name, data.email, data.password);
 
       if (fcmToken) {
-        await registerToken(fcmToken);
+        await registerFcmToken(fcmToken, response.data.id);
       }
 
       router.push("/login");
