@@ -6,14 +6,30 @@ import CheckBoxOffIcon from "@/assets/icons-small/checkbox/checkbox_off.svg";
 import CheckBoxOnIcon from "@/assets/icons-small/checkbox/checkbox_on.svg";
 import { useUpdatePushNotificationSetting } from "@/hooks/query/use-setting";
 import { getPushNotificationSettingOptions } from "@/services/push-notification/query";
+import { errorToast } from "@/utils/custom-toast";
 
 export default function PushNotificationSettingButton() {
   const { data } = useSuspenseQuery(getPushNotificationSettingOptions());
 
   const { mutate } = useUpdatePushNotificationSetting();
 
-  const handleSettingCheckBox = (isActive: boolean) => {
-    mutate(isActive);
+  const handleSettingCheckBox = async (isActive: boolean) => {
+    if (isActive) {
+      const permission = await Notification.requestPermission();
+
+      if (permission === "denied") {
+        errorToast(
+          "request-permission",
+          "브라우저 설정에서 알림을 허용해주세요.",
+        );
+      }
+
+      if (permission === "granted") {
+        mutate(isActive);
+      }
+    } else {
+      mutate(isActive);
+    }
   };
 
   return (
