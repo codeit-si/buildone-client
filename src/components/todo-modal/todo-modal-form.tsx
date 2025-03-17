@@ -79,7 +79,7 @@ export default function TodoModalForm({
       <div className="flex flex-col gap-24">
         {todo && (
           <button
-            className="flex h-40 w-100 items-center justify-center gap-6 rounded-xl px-12 hover:bg-slate-100"
+            className="flex items-center gap-6 self-start rounded-xl pr-7 transition duration-200 hover:font-bold hover:text-dark-blue-700"
             onClick={() => setValue("isDone", !isDone)}
             type="button"
           >

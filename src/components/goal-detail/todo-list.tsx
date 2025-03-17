@@ -4,13 +4,13 @@ import { useState } from "react";
 
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
-import PlusIcon from "@/assets/icons-small/plus/plus_db_sm.svg";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
 import { cn } from "@/lib/cn";
 import { getInfiniteTodosByGoalIdOptions } from "@/services/todo/query";
 
 import Todo from "../todo/todo";
 import TodoModal from "../todo-modal/todo-modal";
+import TodoModalOpenButton from "../todo-modal/todo-modal-open-button";
 
 import ScrollListGradientProvider from "./scroll-list-gradient-provider";
 
@@ -48,15 +48,7 @@ export default function TodoList({ goalId, done }: TodoListProps) {
             {done ? "Done" : "To do"}
           </h3>
           {!done && (
-            <button
-              type="button"
-              className="z-10 flex cursor-pointer items-center gap-x-4 text-sm font-semibold text-dark-blue-500"
-              aria-label="할일 추가하기"
-              onClick={() => setShowCreateTodoModal(true)}
-            >
-              <PlusIcon />
-              <p>할일 추가</p>
-            </button>
+            <TodoModalOpenButton onClick={() => setShowCreateTodoModal(true)} />
           )}
         </div>
         {data.todos.length > 0 ? (
