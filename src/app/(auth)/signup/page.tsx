@@ -10,7 +10,7 @@ export default function SignUpPage() {
   return (
     <div className="mt-57 space-y-40">
       <SignUpForm />
-      <AuthSwitch isLoginPage={false} />
+      <AuthSwitch />
     </div>
   );
 }

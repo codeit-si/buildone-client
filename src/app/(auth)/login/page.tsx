@@ -11,7 +11,7 @@ export default function LoginPage() {
   return (
     <div className="mt-57 space-y-40">
       <LoginForm />
-      <AuthSwitch isLoginPage />
+      <AuthSwitch loginPage />
     </div>
   );
 }
