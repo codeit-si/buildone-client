@@ -102,8 +102,8 @@ export default function FixedDropdown({
       <div className="flex">
         {noteId === null ? (
           <Link
-            className="ml-5 h-24 w-24 items-center hover:drop-shadow group-focus-within:flex group-hover:flex md:hidden"
-            href={`/todos/${todoId}/note/create`}
+            className="ml-5 hidden h-24 w-24 items-center hover:drop-shadow group-focus-within:flex group-hover:flex"
+            href={`/todos/${todoId}/note/write`}
           >
             <NoteWriteIcon />
           </Link>

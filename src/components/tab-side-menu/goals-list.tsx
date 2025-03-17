@@ -42,11 +42,13 @@ export default function GoalsList({
         .slice()
         .reverse()
         .map((goal) => (
-          <li
-            key={goal.id}
-            className="hover:text-dark-blue-700 hover:underline"
-          >
-            <Link href={`/goals/${goal.id}`}>{goal.title}</Link>
+          <li key={goal.id}>
+            <Link
+              className="hover:text-dark-blue-700 hover:underline"
+              href={`/goals/${goal.id}`}
+            >
+              {goal.title}
+            </Link>
           </li>
         ))}
       {hasNextPage && <div ref={ref} className="h-1" />}

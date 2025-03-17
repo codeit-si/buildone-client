@@ -19,6 +19,13 @@ export default function StreakBoard() {
   const boxesPerColumn = 7;
   const pastColumns = Math.floor(historyStreaks.length / boxesPerColumn);
 
+  // 제일 최신 스트릭으로(오른쪽으로) 이동
+  const setScrollRef = (element: HTMLDivElement | null) => {
+    if (element) {
+      element.scrollTo({ left: element.scrollWidth, behavior: "smooth" });
+    }
+  };
+
   const getBoxColor = (count: number): string => {
     if (count === 0) return "bg-slate-300";
     if (count >= 1 && count <= 2) return "bg-dark-blue-200";
@@ -87,7 +94,10 @@ export default function StreakBoard() {
       </div>
 
       {/* 스트릭 보드 */}
-      <div className="scrollbar-horizontality flex overflow-x-auto pr-5">
+      <div
+        ref={setScrollRef}
+        className="scrollbar-horizontality flex overflow-x-auto pr-5"
+      >
         {renderPastBoard()}
         {renderCurrentWeek()}
       </div>

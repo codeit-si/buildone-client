@@ -132,7 +132,7 @@ export default function Todo({ todo, index, showGoal }: Props) {
         ref={ref}
         aria-label={`할일: ${todo.title}, ${todo.isDone ? "완료됨" : "미완료"}`}
         className={cn(
-          "group flex flex-col text-slate-800 transition-all",
+          "group flex flex-col text-slate-800 transition-opacity duration-500",
           `${isInView ? "animate-fadeIn opacity-100" : "animate-fadeOut opacity-0"}`,
         )}
       >

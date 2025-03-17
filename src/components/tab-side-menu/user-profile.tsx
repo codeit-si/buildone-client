@@ -15,11 +15,11 @@ import Badge from "./badge";
 import CustomButton from "./custom-button";
 
 const containerStyle = cva(
-  "w-full md:block overflow-hidden transition-all duration-100",
+  "w-full md:block overflow-hidden transition-all duration-200",
   {
     variants: {
       open: {
-        true: "-translate-y-full opacity-0 md:-translate-x-full-0 h-0",
+        true: "-translate-y-full opacity-0 md:-translate-x-full md:translate-y-0 h-0",
         false: "translate-y-0 opacity-100 md:translate-x-0 mt-16 md:m-0",
       },
     },
@@ -51,7 +51,7 @@ export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
   return (
     <div className={containerStyle({ open: isTabOpen })}>
       <div className="mb-24 flex w-full gap-12">
-        <div className="min-w-40 md:min-w-64 lg:min-w-64">
+        <div className="min-w-44 md:min-w-64 lg:min-w-64">
           <Profile />
         </div>
         <div className={profileInfoStyle}>

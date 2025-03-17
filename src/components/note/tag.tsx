@@ -20,7 +20,6 @@ export default function TagInput({
 }: TagInputProps): JSX.Element {
   const [inputValue, setInputValue] = useState("");
 
-  // 화살표 함수로 새 태그 생성
   const createNewTag = (text: string): Tag => ({
     id: text, // 텍스트 자체를 key로 사용
     text,
@@ -51,11 +50,11 @@ export default function TagInput({
   };
 
   return (
-    <div className="flex flex-nowrap overflow-hidden border-b py-8">
+    <div className="flex flex-wrap gap-4 border-b py-8">
       {tags.map((tag) => (
         <div
           key={tag.id}
-          className="mr-4 inline-flex w-fit items-center whitespace-nowrap rounded-100 border border-dark-blue-300 bg-dark-blue-100 px-8 py-2"
+          className="inline-flex h-24 w-fit items-center whitespace-nowrap rounded-100 border border-dark-blue-300 bg-dark-blue-100 px-8 py-2"
         >
           <span className="text-sm font-normal">{tag.text}</span>
           <button
@@ -74,7 +73,7 @@ export default function TagInput({
         onKeyDown={handleKeyDown}
         placeholder={tags.length > 0 ? "" : "태그를 입력하세요."}
         aria-label="태그 입력"
-        className="h-32 flex-grow text-base font-normal text-slate-700 outline-none"
+        className="flex-grow text-base font-normal text-slate-700 outline-none"
       />
     </div>
   );
