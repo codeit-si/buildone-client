@@ -20,7 +20,7 @@ export default function LinkAttached({
 }: LinkAttachedProps): JSX.Element {
   const handleLinkRemoveButtonClick = () => {
     if (onRemove) onRemove();
-    if (setSheetOpen) setSheetOpen((prev) => !prev);
+    if (setSheetOpen) setSheetOpen(false);
   };
   return (
     <div
