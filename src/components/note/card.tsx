@@ -26,7 +26,7 @@ export default function NoteCard({ note }: NoteCardProps): JSX.Element | null {
 
   return (
     <Modal.Root open={modalOpen} onOpenChange={setModalOpen}>
-      <div className="mt-16 h-164 w-full rounded-12 bg-white p-24">
+      <div className="mt-16 min-h-164 w-full rounded-12 bg-white p-24">
         <div className="flex h-44 justify-between">
           <div className="flex h-24 w-45 items-center justify-center rounded-16 border border-dark-blue-300 bg-dark-blue-100 px-3 py-2 text-xs font-medium">
             To do
@@ -51,16 +51,16 @@ export default function NoteCard({ note }: NoteCardProps): JSX.Element | null {
         </Sheet.Root>
 
         {/* 태그와 todo */}
-        <div className="mt-12 flex h-20 text-xs text-slate-700">
+        <div className="mt-12 flex flex-wrap gap-8 text-xs text-slate-700">
           {(detailedNote?.tags || []).map((tag) => (
             <span
               key={tag}
-              className="mr-8 rounded-4 bg-slate-100 px-3 py-2 font-medium"
+              className="truncate rounded-4 bg-slate-100 px-3 py-2 font-medium"
             >
               #{tag}
             </span>
           ))}
-          <span className="py-2 pr-3 font-normal">
+          <span className="truncate py-2 pr-3 font-normal">
             {note.todoInformation.title}
           </span>
         </div>
