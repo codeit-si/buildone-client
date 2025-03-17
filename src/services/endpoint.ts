@@ -45,4 +45,8 @@ export const ENDPOINT = {
   PROFILE_CARD: {
     GET: `${PREFIX}/dashboard/shared/profile`,
   },
+  PUSH: {
+    REGISTER_TOKEN: `${PREFIX}/push/token`,
+    SEND: `${PREFIX}/push/send`,
+  },
 } as const;

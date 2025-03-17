@@ -11,6 +11,8 @@ import { SIGNUP_ERROR_CODE } from "@/constants/error";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ApiError } from "@/lib/error";
 import { signup } from "@/services/auth";
+import { registerFcmToken } from "@/services/push-notification";
+import { useUserStore } from "@/store/user-store";
 
 import Button from "../@common/button";
 import LabeledInput from "../@common/input/labeled-input";
@@ -41,6 +43,7 @@ type SignupSchemaKey = keyof SignupSchema;
 
 export default function SignUpForm() {
   const router = useRouter();
+  const fcmToken = useUserStore((state) => state.fcmToken);
 
   const {
     register,
@@ -93,7 +96,11 @@ export default function SignUpForm() {
 
   const onSubmit = async (data: SignupSchema) => {
     try {
-      await signup(data.name, data.email, data.password);
+      const response = await signup(data.name, data.email, data.password);
+
+      if (fcmToken) {
+        await registerFcmToken(fcmToken, response.data.id);
+      }
 
       router.push("/login");
     } catch (error: unknown) {

@@ -42,6 +42,7 @@ export default function ProfileCardActions({
         <button
           type="button"
           className="flex size-52 items-center justify-center rounded-8 bg-white shadow-xl transition-transform hover:-translate-y-3 md:size-72"
+          title="🚧 준비 중인 기능입니다."
         >
           <ShareIcon className="flex size-30 items-center justify-center md:size-40" />
         </button>
