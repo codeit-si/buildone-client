@@ -16,6 +16,7 @@ import ExportProfileCardButton from "../profile-card/export-profile-card-button"
 import AddGoalSection from "./add-goal-section";
 import GoalsList from "./goals-list";
 import Logo from "./logo";
+import PushNotificationSettingButton from "./push-notification-setting-button";
 import TabToggle from "./tab-toggle";
 import TodosMenu from "./todos-menu";
 import UserProfile from "./user-profile";
@@ -159,9 +160,7 @@ export default function TabSideMenu() {
         {!isTabMinimized && (
           <div className="absolute bottom-0 mb-36 flex w-full flex-col items-center gap-y-4">
             <ExportProfileCardButton />
-            <div className="flex h-48 w-232 items-center justify-center rounded-12 border border-dark-blue-500">
-              거북목 주의보 알림 버튼
-            </div>
+            <PushNotificationSettingButton />
           </div>
         )}
       </div>

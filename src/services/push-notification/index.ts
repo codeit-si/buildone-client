@@ -19,3 +19,19 @@ export const sendPushNotification = async (
 
   return res;
 };
+
+/** 푸시 알림 설정 조회 API */
+export const getPushNotificationSetting = async () => {
+  const { data } = await api.get<{ webPushIsActive: boolean }>(
+    ENDPOINT.PUSH.GET_SETTING,
+  );
+
+  return data;
+};
+
+/** 푸시 알림 설정(알림 수신 여부) 변경 API */
+export const updatePushNotificationSetting = async (isActive: boolean) => {
+  const res = await api.put(ENDPOINT.PUSH.SETTING, { isActive });
+
+  return res;
+};

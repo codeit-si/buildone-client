@@ -16,7 +16,7 @@ export default function Goal({
     <Link
       href={`/goals/${goalInformation.id}`}
       key={goalInformation.id}
-      className="ml-27 mt-8 flex items-center gap-10 hover:font-bold hover:underline"
+      className="ml-27 mt-8 flex items-center gap-10 hover:font-bold hover:text-dark-blue-700 hover:underline"
     >
       <div className="relative">
         <GoalIcon />
