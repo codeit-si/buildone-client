@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function LandingFooter() {
   return (
-    <footer className="flex h-180 flex-col items-center justify-center gap-16 bg-white text-14 text-slate-600 lg:text-16">
+    <footer className="flex h-180 flex-col items-center justify-center gap-16 text-nowrap bg-white text-14 text-slate-600 lg:text-16">
       <div className="flex gap-12">
         <div className="flex gap-8">
           <b className="text-slate-800">builDone</b>

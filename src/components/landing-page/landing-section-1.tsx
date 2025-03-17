@@ -16,12 +16,7 @@ export default function LandingSection1() {
       className="flex h-673 items-center justify-center overflow-hidden bg-dark-blue-100 pt-80 text-slate-800 md:h-520 lg:h-816"
     >
       <div className="flex flex-col items-center transition-all duration-200 md:flex-row md:gap-94 lg:gap-154">
-        <div
-          className={cn(
-            "flex flex-col gap-40",
-            isInView ? "animate-landingFadeIn" : "animate-landingFadeOut",
-          )}
-        >
+        <div className="flex flex-col gap-40">
           <div className="flex flex-col gap-12 text-center md:text-start">
             <h1 className="text-22 font-bold lg:text-36">
               개발자를 위한 목표 &<br className="block md:hidden" /> 학습{" "}

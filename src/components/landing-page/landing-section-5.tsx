@@ -12,12 +12,7 @@ export default function LandingSection5() {
       className="flex items-center justify-center gap-75 overflow-hidden bg-dark-blue-100"
     >
       <div className="flex flex-col items-center justify-center gap-24 px-24 py-40 md:flex-row md:gap-116 md:py-58 lg:gap-243 lg:py-150">
-        <div
-          className={cn(
-            "flex flex-col gap-4 text-nowrap text-center md:w-[238.47px] md:gap-7 md:text-start lg:w-auto lg:gap-18",
-            isInView ? "animate-landingFadeIn" : "animate-landingFadeOut",
-          )}
-        >
+        <div className="flex flex-col gap-4 text-nowrap text-center md:w-[238.47px] md:gap-7 md:text-start lg:w-auto lg:gap-18">
           <span className="font-bold text-dark-blue-500 md:text-16 lg:text-30">
             03
           </span>

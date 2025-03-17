@@ -20,12 +20,7 @@ export default function LandingSection4() {
         >
           <ShowExam6 />
         </div>
-        <div
-          className={cn(
-            "flex flex-col gap-4 text-nowrap text-center md:w-[238.47px] md:gap-7 md:text-start lg:w-auto lg:gap-18",
-            isInView ? "animate-landingFadeIn" : "animate-landingFadeOut",
-          )}
-        >
+        <div className="flex flex-col gap-4 text-nowrap text-center md:w-[238.47px] md:gap-7 md:text-start lg:w-auto lg:gap-18">
           <span className="font-bold text-dark-blue-500 md:text-16 lg:text-30">
             02
           </span>

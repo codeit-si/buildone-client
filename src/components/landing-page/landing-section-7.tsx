@@ -10,15 +10,10 @@ export default function LandingSection7() {
   return (
     <section
       ref={ref}
-      className="relative flex items-center justify-center overflow-hidden bg-white"
+      className="relative flex items-center justify-center overflow-hidden bg-white py-40 md:py-32 lg:py-120"
     >
-      <div className="z-10 my-40 flex flex-col items-center gap-30 text-nowrap text-center">
-        <h2
-          className={cn(
-            "font-bold text-slate-800 md:text-20 lg:text-40",
-            isInView ? "animate-landingFadeIn" : "animate-landingFadeOut",
-          )}
-        >
+      <div className="z-10 flex flex-col items-center gap-30 text-nowrap text-center">
+        <h2 className="font-bold text-slate-800 md:text-20 lg:text-40">
           목표를 정하고,
           <br />
           꾸준히 성장하세요!

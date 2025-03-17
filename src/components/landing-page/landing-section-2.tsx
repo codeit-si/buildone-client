@@ -8,30 +8,16 @@ import useInView from "@/hooks/use-in-view";
 import { cn } from "@/lib/cn";
 
 export default function LandingSection2() {
-  const [ref1, isInView1] = useInView();
-  const [ref2, isInView2] = useInView();
   const [ref3, isInView3] = useInView();
   const [ref4, isInView4] = useInView();
   const [ref5, isInView5] = useInView();
   return (
     <section className="flex flex-col items-center justify-end overflow-hidden bg-white pt-48 text-center md:h-fit lg:h-816 lg:p-0 lg:px-24">
-      <h3
-        ref={ref1}
-        className={cn(
-          "mb-8 text-18 font-medium text-slate-600 lg:text-32",
-          isInView1 ? "animate-landingFadeIn" : "animate-landingFadeOut",
-        )}
-      >
+      <h3 className="mb-8 text-18 font-medium text-slate-600 lg:text-32">
         목표, 학습, 생산성을
         <br />한 곳에서 관리하세요!
       </h3>
-      <h2
-        ref={ref2}
-        className={cn(
-          "text-24 font-bold text-slate-800 lg:text-40",
-          isInView2 ? "animate-landingFadeIn" : "animate-landingFadeOut",
-        )}
-      >
+      <h2 className="text-24 font-bold text-slate-800 lg:text-40">
         개발 목표, 학습, 생산성
         <br className="block md:hidden" /> 한번에 관리
       </h2>
@@ -51,8 +37,10 @@ export default function LandingSection2() {
         <div
           ref={ref4}
           className={cn(
-            "absolute bottom-40 md:-left-70 md:w-206 lg:-left-110 lg:w-440",
-            isInView4 ? "animate-landingFadeIn" : "animate-landingFadeOut",
+            "absolute bottom-40 transition-all duration-1000 md:-left-70 md:w-206 lg:-left-110 lg:w-440",
+            isInView4
+              ? "translate-y-0 opacity-100 delay-500"
+              : "translate-y-20 opacity-0",
           )}
         >
           <ShowExam3to2 />

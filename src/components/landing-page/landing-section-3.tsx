@@ -13,12 +13,7 @@ export default function LandingSection3() {
       className="flex h-auto items-center justify-center overflow-hidden bg-dark-blue-100 md:py-58 lg:py-150"
     >
       <div className="flex w-full flex-col items-center gap-24 py-40 md:w-auto md:flex-row md:gap-116 md:p-0">
-        <div
-          className={cn(
-            "flex flex-col gap-4 text-nowrap text-center md:gap-7 md:text-start lg:gap-18",
-            isInView ? "animate-landingFadeIn" : "animate-landingFadeOut",
-          )}
-        >
+        <div className="flex flex-col gap-4 text-nowrap text-center md:gap-7 md:text-start lg:gap-18">
           <span className="font-bold text-dark-blue-500 md:text-16 lg:text-30">
             01
           </span>
