@@ -22,6 +22,7 @@ export const ENDPOINT = {
     UPDATE: (id: number) => `${PREFIX}/todos/${id}`,
     POST: `${PREFIX}/todos`,
     DELETE: (id: number) => `${PREFIX}/todos/${id}`,
+    GET_INFO: `${PREFIX}/todos/info/status`,
   },
   DASHBOARD: {
     GET_TODOS: `${PREFIX}/dashboard/todos/recent`,

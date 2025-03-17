@@ -113,7 +113,7 @@ export default function FixedDropdown({
           aria-expanded={isOpen}
           aria-label="메뉴 열기"
           onClick={toggleDropdown}
-          className="ml-5 hidden items-center justify-center rounded-full bg-white hover:drop-shadow group-focus-within:flex group-hover:flex"
+          className="ml-5 items-center justify-center rounded-full bg-white hover:drop-shadow group-focus-within:flex group-hover:flex md:hidden"
         >
           <div ref={kebabRef} className="flex flex-col items-center">
             <KebabIcon />

@@ -10,6 +10,7 @@ export const goalKeys = {
 
 export const todoKeys = {
   all: ["todos"] as const,
+  counts: ["todosLengths"] as const,
   list: ({ size, goalId, done }: TodosByGoalParams) =>
     [...todoKeys.all, "list", { size, goalId, done }] as const,
   detail: (id: number) => [...todoKeys.all, "detail", { todoId: id }] as const,

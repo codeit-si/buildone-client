@@ -20,6 +20,7 @@ export const useCreateTodo = () => {
     onSuccess: (data) => {
       invalidateTodoRelatedQueries(queryClient, data.goalInformation?.id);
       queryClient.invalidateQueries({ queryKey: profileKeys.all });
+      queryClient.invalidateQueries({ queryKey: todoKeys.counts });
 
       successToast("create-todo", "할 일이 생성되었습니다.");
     },
@@ -56,6 +57,7 @@ export const useDeleteTodo = (goalId?: number) => {
     onSuccess: () => {
       invalidateTodoRelatedQueries(queryClient, goalId);
       queryClient.invalidateQueries({ queryKey: profileKeys.all });
+      queryClient.invalidateQueries({ queryKey: todoKeys.counts });
 
       successToast("delete-todo", "할 일이 삭제되었습니다.");
     },
