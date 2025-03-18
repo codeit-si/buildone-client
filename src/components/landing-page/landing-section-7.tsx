@@ -8,10 +8,7 @@ import { cn } from "@/lib/cn";
 export default function LandingSection7() {
   const [ref, isInView] = useInView();
   return (
-    <section
-      ref={ref}
-      className="relative flex items-center justify-center overflow-hidden bg-white py-40 md:py-32 lg:py-120"
-    >
+    <section className="relative flex items-center justify-center overflow-hidden bg-white py-40 md:py-32 lg:py-120">
       <div className="z-10 flex flex-col items-center gap-30 text-nowrap text-center">
         <h2 className="font-bold text-slate-800 md:text-20 lg:text-40">
           목표를 정하고,
@@ -29,6 +26,7 @@ export default function LandingSection7() {
         </Link>
       </div>
       <div
+        ref={ref}
         className={cn(
           "absolute -left-[50%] top-0 h-full w-full translate-x-[50%] bg-dark-blue-200 transition-transform duration-1000",
           isInView ? "scale-x-100" : "scale-x-50",

@@ -8,9 +8,9 @@ import useInView from "@/hooks/use-in-view";
 import { cn } from "@/lib/cn";
 
 export default function LandingSection2() {
+  const [ref1, isInView1] = useInView();
+  const [ref2, isInView2] = useInView();
   const [ref3, isInView3] = useInView();
-  const [ref4, isInView4] = useInView();
-  const [ref5, isInView5] = useInView();
   return (
     <section className="flex flex-col items-center justify-end overflow-hidden bg-white pt-48 text-center md:h-fit lg:h-816 lg:p-0 lg:px-24">
       <h3 className="mb-8 text-18 font-medium text-slate-600 lg:text-32">
@@ -26,19 +26,19 @@ export default function LandingSection2() {
           <ShowExam3 />
         </div>
         <div
-          ref={ref3}
+          ref={ref1}
           className={cn(
             "absolute top-20 md:-right-80 md:w-206 lg:-right-120 lg:w-440",
-            isInView3 ? "animate-landingFadeIn" : "animate-landingFadeOut",
+            isInView1 ? "animate-landingFadeIn" : "animate-landingFadeOut",
           )}
         >
           <ShowExam3to1 />
         </div>
         <div
-          ref={ref4}
+          ref={ref2}
           className={cn(
             "absolute bottom-40 transition-all duration-1000 md:-left-70 md:w-206 lg:-left-110 lg:w-440",
-            isInView4
+            isInView2
               ? "translate-y-0 opacity-100 delay-500"
               : "translate-y-20 opacity-0",
           )}
@@ -47,10 +47,10 @@ export default function LandingSection2() {
         </div>
       </div>
       <div
-        ref={ref5}
+        ref={ref3}
         className={cn(
           "block w-full md:hidden",
-          isInView5 ? "animate-landingFadeIn" : "animate-landingFadeOut",
+          isInView3 ? "animate-landingFadeIn" : "animate-landingFadeOut",
         )}
       >
         <ShowExam9 />

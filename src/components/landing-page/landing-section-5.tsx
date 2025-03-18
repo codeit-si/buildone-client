@@ -7,10 +7,7 @@ import { cn } from "@/lib/cn";
 export default function LandingSection5() {
   const [ref, isInView] = useInView();
   return (
-    <section
-      ref={ref}
-      className="flex items-center justify-center gap-75 overflow-hidden bg-dark-blue-100"
-    >
+    <section className="flex items-center justify-center gap-75 overflow-hidden bg-dark-blue-100">
       <div className="flex flex-col items-center justify-center gap-24 px-24 py-40 md:flex-row md:gap-116 md:py-58 lg:gap-243 lg:py-150">
         <div className="flex flex-col gap-4 text-nowrap text-center md:w-[238.47px] md:gap-7 md:text-start lg:w-auto lg:gap-18">
           <span className="font-bold text-dark-blue-500 md:text-16 lg:text-30">
@@ -26,6 +23,7 @@ export default function LandingSection5() {
           </h3>
         </div>
         <div
+          ref={ref}
           className={cn(
             "w-full md:w-228 md:p-0 lg:w-588",
             isInView ? "animate-landingFadeIn" : "animate-landingFadeOut",
