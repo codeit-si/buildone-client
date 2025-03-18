@@ -8,7 +8,7 @@ import "@/styles/note.css";
 interface LinkAttachedProps {
   link: string;
   onRemove?: () => void;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   setSheetOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -20,7 +20,7 @@ export default function LinkAttached({
 }: LinkAttachedProps): JSX.Element {
   const handleLinkRemoveButtonClick = () => {
     if (onRemove) onRemove();
-    if (setSheetOpen) setSheetOpen((prev) => !prev);
+    if (setSheetOpen) setSheetOpen(false);
   };
   return (
     <div
@@ -29,7 +29,9 @@ export default function LinkAttached({
       onClick={onClick}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
-          onClick?.();
+          e.preventDefault();
+          e.stopPropagation();
+          onClick?.(e as unknown as React.MouseEvent<HTMLElement>);
         }
       }}
       className={cn(

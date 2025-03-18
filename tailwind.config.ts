@@ -59,17 +59,25 @@ const config: Config = {
       animation: {
         fadeIn: "fadeIn .4s ease-in",
         fadeOut: "fadeOut .4s ease-out",
+        landingFadeIn: "landingFadeIn .7s ease-in",
+        landingFadeOut: "landingFadeOut .7s ease-out",
       },
       keyframes: {
         fadeIn: {
-          "0%": { transform: "translateY(10px)", opacity: "0" },
-          "50%": { transform: "translateY(5px)", opacity: ".5" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
+          "0%": { transform: "translateY(10px)" },
+          "100%": { transform: "translateY(0)" },
         },
         fadeOut: {
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(10px)" },
+        },
+        landingFadeIn: {
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        landingFadeOut: {
           "0%": { transform: "translateY(0)", opacity: "1" },
-          "50%": { transform: "translateY(5px)", opacity: ".5" },
-          "100%": { transform: "translateY(10px)", opacity: "0" },
+          "100%": { transform: "translateY(20px)", opacity: "0" },
         },
       },
     },

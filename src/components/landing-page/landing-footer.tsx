@@ -2,16 +2,16 @@ import Link from "next/link";
 
 export default function LandingFooter() {
   return (
-    <footer className="flex h-180 flex-col items-center justify-center gap-16 bg-white text-16 text-slate-600">
+    <footer className="flex h-180 flex-col items-center justify-center gap-16 text-nowrap bg-white text-14 text-slate-600 lg:text-16">
       <div className="flex gap-12">
         <div className="flex gap-8">
           <b className="text-slate-800">builDone</b>
           <span>|</span>
           <b className="text-slate-800">사이트 소개</b>
         </div>
-        <span>개발자의 성장을 돕는 플래너</span>
+        <span>개발자의 성장을 돕는 투두리스트</span>
       </div>
-      <div className="flex gap-12">
+      <div className="flex flex-col items-center gap-12 md:flex-row">
         <div className="flex gap-8">
           <b className="text-slate-800">깃허브 링크</b>
           <a

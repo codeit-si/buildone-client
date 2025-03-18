@@ -24,6 +24,8 @@ import "@/styles/note.css";
 // 단일 Todo 상세 정보를 가져오는 API 함수
 import { useTodoDetail } from "@/hooks/query/use-todo";
 import { cn } from "@/lib/cn";
+import { dashboardKeys } from "@/services/query-key";
+import { successToast } from "@/utils/custom-toast";
 import { countWithoutSpaces, countWithSpaces } from "@/utils/text-utils";
 
 export default function NotesPage({ params }: { params: { todoId: string } }) {
@@ -85,14 +87,6 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
     noteId,
     todoId,
     isEditMode,
-    onSuccess: (data) => {
-      const goalId = data.goalInformation?.id;
-      if (goalId) {
-        router.push(`/goals/${goalId}/notes`);
-      } else {
-        router.push("/dashboard");
-      }
-    },
   });
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -138,12 +132,31 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
   };
 
   const handleSubmit = () => {
-    mutation.mutate({
-      title,
-      content,
-      linkUrl: link,
-      tags: tags.map((tag) => tag.text),
-    });
+    mutation.mutate(
+      {
+        title,
+        content,
+        linkUrl: link,
+        tags: tags.map((tag) => tag.text),
+      },
+      {
+        onSuccess: (data) => {
+          const goalId = data.goalInformation?.id;
+          if (goalId) {
+            router.push(`/goals/${goalId}/notes`);
+          } else {
+            router.push("/dashboard");
+            dashboardKeys.recent();
+          }
+
+          if (noteId) {
+            successToast("note-modified", "노트가 수정되었습니다.");
+          } else {
+            successToast("note-created", "노트가 생성되었습니다.");
+          }
+        },
+      },
+    );
   };
 
   if ((isEditMode && noteLoading) || (!isEditMode && todoLoading))
@@ -187,7 +200,7 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
               disabled={!title.trim() || !content.trim()}
               onClick={handleSubmit}
             >
-              작성 완료
+              {noteId ? "수정하기" : "작성 완료"}
             </Button>
           </div>
         </div>

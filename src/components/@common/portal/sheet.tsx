@@ -152,7 +152,7 @@ function SheetContent({
             role="dialog"
             aria-modal="true"
             className={cn(
-              "fixed bottom-0 right-0 top-0 z-50 flex h-full w-full max-w-512 flex-col gap-24 border bg-white px-16 py-24 shadow-xl md:px-24 lg:max-w-800",
+              "fixed bottom-0 right-0 top-0 z-50 flex h-full w-full flex-col gap-24 border bg-white px-16 py-24 shadow-xl md:max-w-512 md:px-24 lg:max-w-800",
               className,
             )}
             initial={{ x: "100%" }}
@@ -160,7 +160,7 @@ function SheetContent({
             exit={{ x: "100%" }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
-            <div className={cn("flex justify-between")}>
+            <div className={cn("flex justify-end")}>
               {hasCloseIcon && (
                 <button
                   className="flex h-28 w-28 transform items-center justify-center rounded-full duration-100 hover:bg-slate-300"

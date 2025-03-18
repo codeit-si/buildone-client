@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { PushNotificationSetting } from "@/types/setting";
 
 import { ENDPOINT } from "../endpoint";
 
@@ -16,6 +17,22 @@ export const sendPushNotification = async (
   body: string,
 ) => {
   const res = await api.post(ENDPOINT.PUSH.SEND, { memberId, title, body });
+
+  return res;
+};
+
+/** 푸시 알림 설정 조회 API */
+export const getPushNotificationSetting = async () => {
+  const { data } = await api.get<PushNotificationSetting>(
+    ENDPOINT.PUSH.GET_SETTING,
+  );
+
+  return data;
+};
+
+/** 푸시 알림 설정(알림 수신 여부) 변경 API */
+export const updatePushNotificationSetting = async (isActive: boolean) => {
+  const res = await api.put(ENDPOINT.PUSH.SETTING, { isActive });
 
   return res;
 };

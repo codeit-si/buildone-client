@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 
 import SaveIcon from "@/assets/profile-card/download.svg";
 import ShareIcon from "@/assets/profile-card/share.svg";
+import { errorToast } from "@/utils/custom-toast";
 
 interface ProfileCardActionsProps {
   cardRef: RefObject<HTMLDivElement>;
@@ -22,6 +23,10 @@ export default function ProfileCardActions({
         saveAs(blob, `${userName}'s profile-card.png`);
       });
     }
+  };
+
+  const handleShare = () => {
+    errorToast("in-progress-guide", "🚧 준비 중인 기능입니다.");
   };
 
   return (
@@ -43,6 +48,7 @@ export default function ProfileCardActions({
           type="button"
           className="flex size-52 items-center justify-center rounded-8 bg-white shadow-xl transition-transform hover:-translate-y-3 md:size-72"
           title="🚧 준비 중인 기능입니다."
+          onClick={handleShare}
         >
           <ShareIcon className="flex size-30 items-center justify-center md:size-40" />
         </button>

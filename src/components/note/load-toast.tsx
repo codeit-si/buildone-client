@@ -16,10 +16,10 @@ export default function LoadNoteToast({ onClose, onLoad }: LoadNoteToastProps) {
         <div className="flex items-center">
           <DeleteBlue
             onClick={onClose}
-            className="ml-4 mr-16 h-24 w-24 cursor-pointer"
+            className="ml-4 h-24 w-24 cursor-pointer"
             aria-label="삭제 아이콘 (토스트 닫기)"
           />
-          <span className="ml-12 flex-1 text-sm font-semibold text-dark-blue-500 md:flex-none">
+          <span className="mx-16 flex-1 text-sm font-semibold text-dark-blue-500 md:flex-none">
             임시 저장된 노트가 있어요. 저장된 노트를 불러오시겠어요?
           </span>
         </div>
