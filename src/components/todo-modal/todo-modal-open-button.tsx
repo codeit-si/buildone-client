@@ -15,7 +15,7 @@ export default function TodoModalOpenButton({
       type="button"
       aria-label="할일 추가하기"
       className={cn(
-        "flex cursor-pointer items-center gap-4 text-sm font-semibold text-dark-blue-500 transition duration-200 hover:font-bold",
+        "z-10 flex cursor-pointer items-center gap-4 text-sm font-semibold text-dark-blue-500 transition duration-200 hover:font-bold",
         className,
       )}
       {...props}
