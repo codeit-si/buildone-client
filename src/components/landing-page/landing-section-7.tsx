@@ -1,21 +1,37 @@
+"use client";
+
 import Link from "next/link";
 
+import useInView from "@/hooks/use-in-view";
+import { cn } from "@/lib/cn";
+
 export default function LandingSection7() {
+  const [ref, isInView] = useInView();
   return (
-    <section className="flex h-442 items-center justify-center bg-dark-blue-200">
-      <div className="flex flex-col items-center gap-30 text-center">
-        <h2 className="text-40 font-bold text-slate-800">
+    <section className="relative flex items-center justify-center overflow-hidden bg-white py-40 md:py-32 lg:py-120">
+      <div className="z-10 flex flex-col items-center gap-30 text-nowrap text-center">
+        <h2 className="font-bold text-slate-800 md:text-20 lg:text-40">
           목표를 정하고,
           <br />
           꾸준히 성장하세요!
         </h2>
         <Link
           href="login"
-          className="flex h-52 w-138 items-center justify-center rounded-8 bg-dark-blue-500 text-18 font-bold text-white hover:bg-dark-blue-600"
+          className={cn(
+            "flex h-52 w-138 items-center justify-center rounded-8 bg-dark-blue-500 text-18 font-bold text-white hover:bg-dark-blue-600 md:h-35 md:w-133 md:text-12 lg:h-52 lg:w-138 lg:text-18",
+            isInView ? "animate-landingFadeIn" : "animate-landingFadeOut",
+          )}
         >
           지금 시작하기
         </Link>
       </div>
+      <div
+        ref={ref}
+        className={cn(
+          "absolute -left-[50%] top-0 h-full w-full translate-x-[50%] bg-dark-blue-200 transition-transform duration-1000",
+          isInView ? "scale-x-100" : "scale-x-50",
+        )}
+      />
     </section>
   );
 }
