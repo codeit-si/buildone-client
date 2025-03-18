@@ -40,13 +40,18 @@ export default function EmbeddedFrame({
   return (
     <div
       className={cn(
-        "w-full lg:h-full",
+        "right-800 z-40 flex w-full items-center justify-center bg-slate-200 text-center lg:h-full lg:w-[calc(100vw-793px)]",
         fixed
-          ? "right-800 z-40 flex h-358 items-center justify-center md:h-522 md:w-full md:border-b md:bg-white lg:fixed lg:max-w-543 lg:bg-slate-200"
-          : "right-800 top-0 z-40 mt-24 flex items-center justify-center bg-slate-200 text-center lg:absolute lg:m-0",
+          ? "h-358 md:h-522 md:w-full md:border-b lg:fixed"
+          : "top-0 mt-24 h-413 lg:absolute lg:m-0",
       )}
     >
-      <div className="flex h-385 w-full items-center justify-center md:h-522">
+      <div
+        className={cn(
+          "flex w-full items-center justify-center",
+          fixed ? "h-full lg:h-385" : "h-413 md:h-372 lg:h-385",
+        )}
+      >
         {isLoading ? (
           <LoadingSpinner />
         ) : isBlocked ? (
