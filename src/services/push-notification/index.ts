@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { PushNotificationSetting } from "@/types/setting";
 
 import { ENDPOINT } from "../endpoint";
 
@@ -22,7 +23,7 @@ export const sendPushNotification = async (
 
 /** 푸시 알림 설정 조회 API */
 export const getPushNotificationSetting = async () => {
-  const { data } = await api.get<{ webPushIsActive: boolean }>(
+  const { data } = await api.get<PushNotificationSetting>(
     ENDPOINT.PUSH.GET_SETTING,
   );
 
