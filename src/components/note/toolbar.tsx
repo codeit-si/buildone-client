@@ -13,11 +13,12 @@ import H5Icon from "@/assets/editor/h5.svg";
 import ItalicIcon from "@/assets/editor/italic.svg";
 import LinkIcon from "@/assets/editor/link.svg";
 import UnderlineIcon from "@/assets/editor/underline.svg";
-import Button from "@/components/@common/button";
-import Modal from "@/components/@common/portal/modal";
+import Popup from "@/components/@common/portal/popup";
 import ToolbarButton from "@/components/note/toolbar-btn";
 import "@/styles/note.css";
 import { errorToast } from "@/utils/custom-toast";
+
+import Button from "../@common/button";
 
 interface ToolbarProps {
   editor: Editor | null;
@@ -28,14 +29,14 @@ export default function Toolbar({
   editor,
   onLinkSubmit,
 }: ToolbarProps): JSX.Element | null {
-  const [isLinkModalOpen, setLinkModalOpen] = useState(false);
+  const [isLinkPopupOpen, setLinkPopupOpen] = useState(false);
   const [inputLink, setInputLink] = useState("");
 
   if (!editor) return null;
 
-  const openLinkModal = () => setLinkModalOpen(true);
-  const closeLinkModal = () => {
-    setLinkModalOpen(false);
+  const openLinkPopup = () => setLinkPopupOpen(true);
+  const closeLinkPopup = () => {
+    setLinkPopupOpen(false);
     const urlPattern =
       /^(https?:\/\/)?([\w.-]+\.[a-z]{2,10})(\/[\w\-./?=&%+#]*)?$/i;
     const trimmedInput = inputLink.trim();
@@ -102,7 +103,7 @@ export default function Toolbar({
     },
     // 링크 버튼
     {
-      onClick: openLinkModal,
+      onClick: openLinkPopup,
       IconComponent: LinkIcon,
       ariaLabel: "Link",
       isActive: false,
@@ -116,24 +117,12 @@ export default function Toolbar({
       onChange={handleInputChange}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
-          closeLinkModal();
+          closeLinkPopup();
         }
       }}
       placeholder="https://"
       className="h-44 w-full truncate rounded-12 bg-slate-50 px-24 py-12 text-sm outline-none md:h-48 md:text-base"
     />
-  );
-
-  const confirmButton = (
-    <Button
-      variant="solid"
-      shape="square"
-      size="lg"
-      className="w-full"
-      onClick={closeLinkModal}
-    >
-      확인
-    </Button>
   );
 
   return (
@@ -162,15 +151,24 @@ export default function Toolbar({
           isActive={buttonConfigs[buttonConfigs.length - 1].isActive}
         />
       </div>
-      {isLinkModalOpen && (
-        <Modal.Root open={isLinkModalOpen} onOpenChange={setLinkModalOpen}>
-          <Modal.Content className="w-311 md:w-520">
-            <Modal.Title className="text-bold text-lg">링크 업로드</Modal.Title>
-            <div className="mb-12 font-semibold">링크</div>
-            {linkInput}
-            <Modal.Footer>{confirmButton}</Modal.Footer>
-          </Modal.Content>
-        </Modal.Root>
+      {isLinkPopupOpen && (
+        <Popup.Root open={isLinkPopupOpen} onOpenChange={setLinkPopupOpen}>
+          <Popup.Content className="w-311 gap-0 rounded-12 md:w-520">
+            <div className="text-lg font-bold">링크 업로드</div>
+            <div className="flex flex-col gap-12">
+              <div className="mt-24 font-semibold">링크</div>
+              {linkInput}
+            </div>
+            <Button
+              variant="solid"
+              shape="square"
+              className="mt-40 w-full"
+              onClick={closeLinkPopup}
+            >
+              확인
+            </Button>
+          </Popup.Content>
+        </Popup.Root>
       )}
     </div>
   );
