@@ -65,7 +65,14 @@ export default function DetailSheet({
         {note.title}
       </div>
       {linkUrl && (
-        <LinkAttached link={linkUrl} onClick={() => setSheetOpen(!sheetOpen)} />
+        <LinkAttached
+          link={linkUrl}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setSheetOpen(!sheetOpen);
+          }}
+        />
       )}
       <div className="markdown-body scrollbar h-full overflow-y-auto pt-16 text-base font-normal">
         <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>

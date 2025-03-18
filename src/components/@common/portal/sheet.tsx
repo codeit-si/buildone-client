@@ -152,7 +152,7 @@ function SheetContent({
             role="dialog"
             aria-modal="true"
             className={cn(
-              "fixed bottom-0 right-0 top-0 z-50 flex h-full w-full max-w-512 flex-col gap-24 border bg-white px-16 py-24 shadow-xl md:px-24 lg:max-w-800",
+              "fixed bottom-0 right-0 top-0 z-50 flex h-full w-full flex-col gap-24 border bg-white px-16 py-24 shadow-xl md:max-w-512 md:px-24 lg:max-w-800",
               className,
             )}
             initial={{ x: "100%" }}
