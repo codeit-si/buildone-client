@@ -40,9 +40,9 @@ export default function EmbeddedFrame({
   return (
     <div
       className={cn(
-        "h-full w-full",
+        "w-full lg:h-full",
         fixed
-          ? "right-800 z-40 flex items-center justify-center bg-slate-200 lg:fixed"
+          ? "right-800 z-40 flex h-358 items-center justify-center md:h-522 md:w-full md:border-b md:bg-white lg:fixed lg:max-w-543 lg:bg-slate-200"
           : "right-800 top-0 z-40 mt-24 flex items-center justify-center bg-slate-200 text-center lg:absolute lg:m-0",
       )}
     >
