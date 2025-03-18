@@ -9,8 +9,9 @@ import { useUserStore } from "@/store/user-store";
 import { successToast } from "@/utils/custom-toast";
 
 import Skeleton from "../@common/skeleton";
-import TodoModal from "../@common/todo-modal/todo-modal";
+import TodoModal from "../todo-modal/todo-modal";
 
+import Badge from "./badge";
 import CustomButton from "./custom-button";
 
 const containerStyle = cva(
@@ -57,9 +58,12 @@ export default function UserProfile({ isTabOpen }: { isTabOpen: boolean }) {
           <div>
             {userInformation ? (
               <>
-                <p className="text-sm font-semibold text-slate-800">
-                  {userInformation.name || ""}
-                </p>
+                <div className="flex items-center">
+                  <p className="mr-4 text-sm font-semibold text-slate-800">
+                    {userInformation.name || ""}
+                  </p>
+                  <Badge streakGrade={userInformation.streakGrade ?? 0} />
+                </div>
                 <p className="text-sm font-medium text-slate-600">
                   {userInformation.email || ""}
                 </p>

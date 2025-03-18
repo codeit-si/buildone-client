@@ -1,0 +1,18 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="path-2-inside-1_1286_10593" fill="white">
+<rect width="9.03226" height="9.03226" rx="0.872727" transform="matrix(1 0 0 -1 0 20)"/>
+</mask>
+<rect width="9.03226" height="9.03226" rx="0.872727" transform="matrix(1 0 0 -1 0 20)" stroke="white" stroke-width="2" mask="url(#path-2-inside-1_1286_10593)"/>
+<mask id="path-3-inside-2_1286_10593" fill="white">
+<rect width="9.03226" height="9.03226" rx="0.872727" transform="matrix(1 0 0 -1 10.9674 20)"/>
+</mask>
+<rect width="9.03226" height="9.03226" rx="0.872727" transform="matrix(1 0 0 -1 10.9674 20)" stroke="white" stroke-width="2" mask="url(#path-3-inside-2_1286_10593)"/>
+<mask id="path-4-inside-3_1286_10593" fill="white">
+<rect width="9.03226" height="9.03226" rx="0.872727" transform="matrix(1 0 0 -1 -0.000183105 9.03226)"/>
+</mask>
+<rect width="9.03226" height="9.03226" rx="0.872727" transform="matrix(1 0 0 -1 -0.000183105 9.03226)" stroke="white" stroke-width="2" mask="url(#path-4-inside-3_1286_10593)"/>
+<mask id="path-5-inside-4_1286_10593" fill="white">
+<rect width="9.03226" height="9.03226" rx="0.872727" transform="matrix(1 0 0 -1 10.9674 9.03226)"/>
+</mask>
+<rect width="9.03226" height="9.03226" rx="0.872727" transform="matrix(1 0 0 -1 10.9674 9.03226)" stroke="white" stroke-width="2" mask="url(#path-5-inside-4_1286_10593)"/>
+</svg>

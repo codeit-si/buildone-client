@@ -4,31 +4,51 @@ import { useEffect, useRef, useState } from "react";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import Todo from "@/components/@common/todo";
+import Todo from "@/components/todo/todo";
 import { cn } from "@/lib/cn";
 import { getDashboardOptions } from "@/services/dashboard/query";
 
 export default function RecentlyTodoList() {
   const { data } = useSuspenseQuery(getDashboardOptions());
-  const [isOverflowing, setIsOverflowing] = useState(false);
-  const listRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLUListElement>(null);
+  const [showTopGradient, setShowTopGradient] = useState(false);
+  const [showBottomGradient, setShowBottomGradient] = useState(false);
 
   const { todos } = data;
 
   useEffect(() => {
-    if (listRef.current) {
-      setIsOverflowing(listRef.current.scrollHeight > 170);
-    }
-  }, [todos]);
+    const handleScroll = () => {
+      if (!scrollRef.current) {
+        return;
+      }
+
+      setShowTopGradient(scrollRef.current.scrollTop > 0);
+      setShowBottomGradient(
+        scrollRef.current.scrollHeight - scrollRef.current.scrollTop >
+          scrollRef.current.clientHeight + 5,
+      );
+    };
+
+    const element = scrollRef.current;
+    element?.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => element?.removeEventListener("scroll", handleScroll);
+  }, [data]);
 
   return (
-    <div
-      ref={listRef}
-      className="scrollbar h-full overflow-y-auto"
-      role="region"
-    >
+    <div className="relative" role="region">
+      <div
+        className={cn(
+          "pointer-events-none absolute left-0 top-0 z-10 h-50 w-full bg-gradient-to-b from-white to-transparent transition-opacity duration-300",
+          showTopGradient ? "opacity-100" : "opacity-0",
+        )}
+      />
       {todos && (
-        <ul className="flex flex-col gap-8 pr-8">
+        <ul
+          ref={scrollRef}
+          className="scrollbar flex max-h-152 flex-col gap-8 overflow-y-scroll pr-8"
+        >
           {todos.map((todo, index) => (
             <Todo
               key={todo.id}
@@ -49,8 +69,8 @@ export default function RecentlyTodoList() {
       )}
       <div
         className={cn(
-          "pointer-events-none bottom-0 -mt-10 h-30 w-full bg-gradient-to-t from-white from-10% to-white/0 to-70%",
-          isOverflowing ? "sticky" : "hidden",
+          "pointer-events-none absolute bottom-0 left-0 z-10 h-50 w-full bg-gradient-to-t from-white to-transparent transition-opacity duration-300",
+          showBottomGradient ? "opacity-100" : "opacity-0",
         )}
       />
     </div>

@@ -1,6 +1,6 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-import NoteCollectionClient from "@/components/note/NoteCollectionClient";
+import NoteCollectionClient from "@/components/note/note-collection-client";
 import getQueryClient from "@/lib/get-query-client";
 import { getNotesByGoalIdOptions } from "@/services/goal/note/query";
 import { getGoalOptions } from "@/services/goal/query";

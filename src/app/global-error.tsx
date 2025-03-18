@@ -13,6 +13,5 @@ export default function GlobalError({ error }: GlobalErrorProps) {
   useEffect(() => {
     Sentry.captureException(error);
   }, [error]);
-
   return <Error statusCode={500} />;
 }

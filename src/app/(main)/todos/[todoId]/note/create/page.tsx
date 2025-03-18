@@ -6,9 +6,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import Button from "@/components/@common/button";
 import Counting from "@/components/@common/counting";
-import LoadNoteModal from "@/components/@common/load-modal";
+import EmbeddedFrame from "@/components/@common/embeded-frame";
 import Goal from "@/components/note/goal";
 import LinkAttached from "@/components/note/link-attached";
+import LoadNoteModal from "@/components/note/load-modal";
 import LoadNoteToastManager, {
   NoteData,
 } from "@/components/note/load-note-toast-manager";
@@ -22,6 +23,7 @@ import { useCreateOrUpdateNote, useNoteDetail } from "@/hooks/query/use-notes";
 import "@/styles/note.css";
 // 단일 Todo 상세 정보를 가져오는 API 함수
 import { useTodoDetail } from "@/hooks/query/use-todo";
+import { cn } from "@/lib/cn";
 import { countWithoutSpaces, countWithSpaces } from "@/utils/text-utils";
 
 export default function NotesPage({ params }: { params: { todoId: string } }) {
@@ -41,6 +43,7 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [loadedNote, setLoadedNote] = useState<NoteData | null>(null);
   const [tags, setTags] = useState<Tag[]>([]);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   const tempSaveManagerRef = useRef<TempSaveManagerRef>(null);
 
@@ -154,8 +157,14 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
     ?.title;
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container-width pt-24">
+    <div className="relative h-full bg-white">
+      {sheetOpen && link && <EmbeddedFrame linkUrl={link} fixed />}
+      <div
+        className={cn(
+          "container-width",
+          sheetOpen ? "absolute right-0 h-full pt-24" : "h-full pt-24",
+        )}
+      >
         {/* 헤더 */}
         <div className="grid h-44 grid-cols-[162px_auto] items-center">
           <h1 className="truncate font-semibold text-slate-900 md:text-lg">
@@ -217,11 +226,24 @@ export default function NotesPage({ params }: { params: { todoId: string } }) {
             />
 
             {/* 링크 첨부 */}
-            <div className="mb-8 mt-12">
-              {showLink && (
-                <LinkAttached link={link} onRemove={handleRemoveLink} />
-              )}
-            </div>
+            {showLink && (
+              <div
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    setSheetOpen(!sheetOpen);
+                  }
+                }}
+                onClick={() => setSheetOpen(!sheetOpen)}
+              >
+                <LinkAttached
+                  link={link}
+                  onRemove={handleRemoveLink}
+                  setSheetOpen={setSheetOpen}
+                />
+              </div>
+            )}
 
             {/* 본문 */}
             <div className="mt-8">

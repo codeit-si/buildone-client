@@ -40,7 +40,7 @@ export default function MyProgress() {
           <span className="text-base font-semibold">%</span>
         </div>
       </div>
-      <div className="z-10 mb-6 mr-16 mt-26 self-end md:mr-8 md:self-start lg:mr-76">
+      <div className="z-10 mb-6 mr-16 mt-26 self-end md:mr-8 lg:mr-76 lg:self-start">
         <svg width="166" height="166" viewBox="0 0 100 100">
           <circle
             cx="50"
