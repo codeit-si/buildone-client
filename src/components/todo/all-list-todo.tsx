@@ -68,16 +68,16 @@ export default function AllListTodo() {
           <span className="text-14/3">할일 추가</span>
         </button>
       </div>
-      <div className="mb-16 h-[calc(100vh-131px)] w-full overflow-hidden rounded-xl border-slate-300 bg-white p-16 text-sm text-slate-800 md:h-[calc(100vh-91px)] md:p-24 lg:mb-24 lg:p-24">
+      <div className="mb-16 w-full rounded-xl border-slate-300 bg-white p-16 text-sm text-slate-800 md:p-24 lg:mb-24 lg:p-24">
         <Filter filter={filter} setFilter={setFilter} />
-        <ul className="scrollbar flex h-[calc(831px-32px-32px-16px)] flex-col gap-8 overflow-y-auto md:h-[calc(871px-32px-48px-16px)]">
+        <ul className="flex flex-col gap-8">
           {todos?.length !== 0 ? (
             todos?.map((todo, index) => (
               <Todo key={todo.id} index={index} todo={todo} showGoal />
             ))
           ) : (
             <div
-              className="flex min-h-[calc(100vh-220px)] w-full items-center justify-center text-center md:min-h-[calc(100vh-200px)]"
+              className="flex w-full items-center justify-center text-center"
               key="no-todos"
             >
               <p>
