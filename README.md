@@ -45,7 +45,7 @@ cva를 활용하여 반응형 디자인 및 열림/닫힘 상태 구현|
 |:---:|
 |<img src="./docs/images/dashboard.gif" width="600"/>|
 |스트릭 보드 및 통계 기능으로 학습 진행 상황 시각화
-React Suspense와 Tanstack Query의 useSuspenseQuery를 사용한 로딩 최적화로 사용자 경험 개선
+React Suspense와 Tanstack Query의 useSuspenseQuery를 사용한 로딩 최적화로 <br> 사용자 경험 개선
 prefetchQuery를 사용하여 렌더링 지연 시간 단축|
 
 |📖모든 할 일 및 목표별 할 일 페이지📖|
@@ -54,7 +54,7 @@ prefetchQuery를 사용하여 렌더링 지연 시간 단축|
 |할 일 상태별 필터링 제공 및 무한 스크롤 지원
 Intersection Observer를 활용하여 성능 최적화|
 
-|➕목표 및 할 일 생성, 수정, 삭제 기능➕|
+|✅목표 및 할 일 생성, 수정, 삭제 기능✅|
 |:---:|
 |<img src="./docs/images/goal_todo_crud.gif" width="600"/>|
 |내비게이션 사이드 바에서 목표 생성 가능
@@ -68,7 +68,7 @@ Intersection Observer를 활용하여 성능 최적화|
 TipTp 기반의 리치 텍스트 에디터 제공
 개발자 친화적인 마크다운 변환 기능 및 커스텀 툴바 적용|
 
-|✅노트 임시 저장 기능✅|
+|💾노트 임시 저장 기능💾|
 |:---:|
 |<img src="./docs/images/note_draft.gif" width="600"/>|
 |로컬 스토리지를 활용한 임시 저장 기능 제공
