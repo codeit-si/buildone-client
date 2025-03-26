@@ -3,6 +3,19 @@
 > 개발자를 위한 할 일 목록 관리 서비스  
 > 개발 기간: 2025.01.23 ~ 2025.03.18 (약 8주)
 
+<br>
+
+## 목차
+
+1. [팀 구성 및 역할](#팀-구성-및-역할)  
+2. [기능](#기능)  
+3. [설치 및 실행 방법](#설치-및-실행-방법)  
+4. [배포 주소](#배포-주소)  
+5. [기술 스택](#기술-스택)  
+6. [프로젝트 구조](#프로젝트-구조)  
+
+<br>
+
 ## 팀 구성 및 역할
 
 | 이름    | 담당 업무 |
@@ -12,6 +25,7 @@
 | 유하임  | - 노트 모아보기, 노트 작성 페이지<br>- Dropdown, TapMenu, Chip, Filter, Counting 컴포넌트 개발<br>- 스트릭 보드, 태그 기능 구현 |
 | 채유빈  | - 로그인/회원가입, 목표 상세 페이지<br>- Input, Button, Progress Bar 컴포넌트 개발<br>- 웹 푸시 알림, 프로필 카드 저장 기능 구현 |
 
+<br>
 
 ## 기능
 
@@ -86,6 +100,8 @@ useCallback을 활용하여 임시 저장 로직 메모이제이션, 성능 최�
 |motion을 활용한 카드 플립 애니메이션 효과 적용
 scale 조정으로 보다 선명한 화질로 이미지 저장|
 
+<br>
+
 ## 설치 및 실행 방법
 
 ```
@@ -116,9 +132,13 @@ npm run dev
 
 4. 브라우저에서 http://localhost:3000 페이지에 접속합니다.
 
+<br>
+
 ## 배포 주소
 
 https://buildone.me
+
+<br>
 
 ## 기술 스택
 
@@ -132,6 +152,8 @@ https://buildone.me
 - 테스트 & 모니터링: <img src="https://img.shields.io/badge/Sentry-362D59?style=flat-square&logo=sentry&logoColor=white"> <img src="https://img.shields.io/badge/Jest-C21325?style=flat-square&logo=jest&logoColor=white">
 - 텍스트 편집기: <img src="https://img.shields.io/badge/Tiptap-5D4F85?style=flat-square&logoColor=white"/>
 - 배포: <img src="https://img.shields.io/badge/AWS Amplify-FF9900?style=flat-square&logo=aws amplify&logoColor=white">
+
+<br>
 
 ## 프로젝트 구조
 
