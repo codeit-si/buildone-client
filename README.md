@@ -104,31 +104,33 @@ scale 조정으로 보다 선명한 화질로 이미지 저장|
 
 ## 설치 및 실행 방법
 
-```
-node version: v22.14.0
-npm version: v10.9.2
-```
+0. 다음과 같은 환경을 준비합니다.
+
+    ```
+    node version: v22.14.0
+    npm version: v10.9.2
+    ```
 
 1. 레포지토리를 클론합니다.
 
-```shell
-git clone https://github.com/codeit-si/buildone-client.git
+    ```shell
+    git clone https://github.com/codeit-si/buildone-client.git
 
-cd buildone-client
-```
+    cd buildone-client
+    ```
 
 2. `buildone-client` 디렉토리의 최상위에 `.env.local` 파일 생성 후 아래와 같이 작성합니다.
 
-```
-NEXT_PUBLIC_SERVER_ADDRESS=http://localhost:3000
-```
+    ```
+    NEXT_PUBLIC_SERVER_ADDRESS=http://localhost:3000
+    ```
 
 3. 터미널에서 아래 명령어를 차례대로 입력합니다.
 
-```shell
-npm install
-npm run dev
-```
+    ```shell
+    npm install
+    npm run dev
+    ```
 
 4. 브라우저에서 http://localhost:3000 페이지에 접속합니다.
 
