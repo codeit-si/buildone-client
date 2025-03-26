@@ -17,72 +17,72 @@
 
 |🚨웹 푸시 알림 (거북목 주의보)🚨|
 |:---:|
-|<img src="./docs/images/push_notification.gif" width="600"/>|
+|<img src="./docs/images/push_notification.gif" width="800"/>|
 |06:00 ~ 24:00 매시 정각 스트레칭 알림 발송
 FCM을 활용하여 여러 플랫폼에서 일관된 푸시 알림 기능 제공
 앱 상태(포그라운드/백그라운드)에 따라 적절한 방식으로 푸시 알림 창 노출|
 
 |⚒️크롬 익스텐션⚒️|
 |:---:|
-|<img src="./docs/images/chrome_extension.gif" width="600"/>|
+|<img src="./docs/images/chrome_extension.gif" width="800"/>|
 |익스텐션으로 링크를 첨부한 할 일 생성 지원
 한 번 로그인하면 브라우저를 닫을 때까지 인증 유지|
 
 |🔒회원가입/로그인(인증) 기능🔒|
 |:---:|
-|<img src="./docs/images/signup.gif" width="600"/>|
+|<img src="./docs/images/signup.gif" width="800"/>|
 |Next.js Middleware, Server Action, Axios Interceptor로 인증 처리 
 중복 코드 최소화, 글로벌 에러 처리 및 토큰 만료 시 자동 로그인 연장
 react-hook-form과 zod를 사용하여 다양한 시점의 유효성 검사 기능 구현, <br> 불필요한 리렌더링 최소화 및 타입 안정성 보장|
 
 |🔍내비게이션 사이드바🔍|
 |:---:|
-|<img src="./docs/images/navigation.gif" width="600"/>|
+|<img src="./docs/images/navigation.gif" width="800"/>|
 |서비스 내 다양한 페이지 탐색 가능
 cva를 활용하여 반응형 디자인 및 열림/닫힘 상태 구현|
 
 |💻대시보드 페이지💻|
 |:---:|
-|<img src="./docs/images/dashboard.gif" width="600"/>|
+|<img src="./docs/images/dashboard.gif" width="800"/>|
 |스트릭 보드 및 통계 기능으로 학습 진행 상황 시각화
 React Suspense와 Tanstack Query의 useSuspenseQuery를 사용한 로딩 최적화로 <br> 사용자 경험 개선
 prefetchQuery를 사용하여 렌더링 지연 시간 단축|
 
 |📖모든 할 일 및 목표별 할 일 페이지📖|
 |:---:|
-|<img src="./docs/images/todo.gif" width="600"/>|
+|<img src="./docs/images/todo.gif" width="800"/>|
 |할 일 상태별 필터링 제공 및 무한 스크롤 지원
 Intersection Observer를 활용하여 성능 최적화|
 
 |✅목표 및 할 일 생성, 수정, 삭제 기능✅|
 |:---:|
-|<img src="./docs/images/goal_todo_crud.gif" width="600"/>|
+|<img src="./docs/images/goal_todo_crud.gif" width="800"/>|
 |내비게이션 사이드 바에서 목표 생성 가능
 할 일 생성 시 파일, 링크 첨부 가능
 생성, 수정, 삭제 성공/실패 시 토스트 메시지로 사용자에게 적절한 피드백 제공|
 
 |📒노트 작성 및 수정 기능📒|
 |:---:|
-|<img src="./docs/images/note_crud.gif" width="600"/>|
+|<img src="./docs/images/note_crud.gif" width="800"/>|
 |할일에 대한 노트 작성 및 수정 지원
 TipTp 기반의 리치 텍스트 에디터 제공
 개발자 친화적인 마크다운 변환 기능 및 커스텀 툴바 적용|
 
 |💾노트 임시 저장 기능💾|
 |:---:|
-|<img src="./docs/images/note_draft.gif" width="600"/>|
+|<img src="./docs/images/note_draft.gif" width="800"/>|
 |로컬 스토리지를 활용한 임시 저장 기능 제공
 useCallback을 활용하여 임시 저장 로직 메모이제이션, 성능 최적화|
 
 |🔗노트 링크 임베드 기능🔗|
 |:---:|
-|<img src="./docs/images/note_embed.gif" width="600"/>|
+|<img src="./docs/images/note_embed.gif" width="800"/>|
 |노트에 첨부된 링크 클릭 시 링크 콘텐츠 임베드 뷰 제공
 임베드 불가능한 경우 바로가기 버튼으로 일관된 사용자 경험 유지|
 
 |🃏프로필 카드 생성&저장 기능🃏|
 |:---:|
-|<img src="./docs/images/profile_card.gif" width="600"/>|
+|<img src="./docs/images/profile_card.gif" width="800"/>|
 |motion을 활용한 카드 플립 애니메이션 효과 적용
 scale 조정으로 보다 선명한 화질로 이미지 저장|
 
