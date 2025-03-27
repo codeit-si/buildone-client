@@ -64,7 +64,7 @@ prefetchQuery를 사용하여 렌더링 지연 시간 단축|
 
 |📖모든 할 일 및 목표별 할 일 페이지📖|
 |:---:|
-|<img src="./docs/images/todo.gif" width="800"/>|
+|<video src="https://github.com/user-attachments/assets/c9d6238c-affd-43af-abda-6c55616ae788" width="800"/>|
 |할 일 상태별 필터링 제공 및 무한 스크롤 지원
 Intersection Observer를 활용하여 성능 최적화|
 
